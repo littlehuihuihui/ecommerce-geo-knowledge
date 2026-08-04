@@ -276,12 +276,12 @@
     .review-dashboard {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 30px;
+      gap: 40px;
       align-items: center;
       background: var(--glass);
       border: 1px solid var(--glass-border);
       border-radius: 16px;
-      padding: 30px;
+      padding: 36px;
       position: relative;
       overflow: hidden;
     }
@@ -316,14 +316,14 @@
     .review-dimensions {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
 
     .dim-item {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid var(--glass-border);
       border-radius: 10px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       transition: all 0.3s ease;
       cursor: pointer;
     }
@@ -338,18 +338,18 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .dim-icon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 8px;
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.1));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
+      font-size: 20px;
       flex-shrink: 0;
     }
 
@@ -361,37 +361,37 @@
     }
 
     .dim-name {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
       color: var(--text);
       margin: 0;
     }
 
     .dim-tag {
-      font-size: 10px;
-      padding: 2px 8px;
+      font-size: 11px;
+      padding: 3px 10px;
       border-radius: 4px;
       background: var(--glass-highlight);
       color: var(--text-muted);
     }
 
     .dim-desc {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin: 0 0 10px;
+      line-height: 1.6;
+      margin: 0 0 12px;
     }
 
     .dim-bar {
-      height: 4px;
+      height: 6px;
       background: var(--glass-highlight);
-      border-radius: 2px;
+      border-radius: 3px;
       overflow: hidden;
     }
 
     .dim-bar-fill {
       height: 100%;
-      border-radius: 2px;
+      border-radius: 3px;
       transition: width 1s ease;
     }
 
@@ -934,7 +934,7 @@
       <div class="review-dashboard">
         <div class="review-chart-wrapper">
           <div class="chart-glow"></div>
-          <div id="reviewRadarChart" style="width: 100%; height: 420px;"></div>
+          <div id="reviewRadarChart" style="width: 100%; height: 400px;"></div>
         </div>
         <div class="review-dimensions">
           <div class="dim-item" data-index="0">
@@ -1111,7 +1111,7 @@
         splitNumber: 4,
         axisName: {
           color: '#94a3b8',
-          fontSize: 12,
+          fontSize: 13,
           fontWeight: 500
         },
         splitLine: {
