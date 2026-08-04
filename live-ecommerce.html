@@ -305,12 +305,44 @@
 
     .chart-glow {
       position: absolute;
-      width: 350px;
-      height: 350px;
+      width: 320px;
+      height: 320px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, transparent 70%);
-      filter: blur(20px);
+      background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, transparent 70%);
+      filter: blur(30px);
       pointer-events: none;
+    }
+
+    .chart-center-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .chart-center-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .chart-center-value {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .chart-center-unit {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
     }
 
     .review-dimensions {
@@ -934,7 +966,12 @@
       <div class="review-dashboard">
         <div class="review-chart-wrapper">
           <div class="chart-glow"></div>
-          <div id="reviewRadarChart" style="width: 100%; height: 400px;"></div>
+          <div class="chart-center-title">
+            <div class="chart-center-label">综合评分</div>
+            <div class="chart-center-value">81</div>
+            <div class="chart-center-unit">分</div>
+          </div>
+          <div id="reviewRadarChart" style="width: 100%; height: 380px;"></div>
         </div>
         <div class="review-dimensions">
           <div class="dim-item" data-index="0">
@@ -1077,27 +1114,34 @@
       backgroundColor: 'transparent',
       tooltip: {
         trigger: 'item',
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        borderColor: 'rgba(239, 68, 68, 0.3)',
+        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+        borderColor: 'rgba(239, 68, 68, 0.4)',
+        borderWidth: 1,
+        padding: [12, 16],
         textStyle: {
           color: '#e2e8f0',
-          fontSize: 12
+          fontSize: 13
         },
         formatter: function(params) {
           const values = params.value;
-          const indicators = params.name;
-          let result = `<div style="font-weight: 600; margin-bottom: 6px;">${params.name}</div>`;
+          let result = `<div style="font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #fff;">${params.name}</div>`;
           const dimNames = ['数据复盘', '流量复盘', '转化复盘', '商品复盘', '主播复盘', '问题诊断', '优化计划'];
+          const colors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6', '#14b8a6'];
           values.forEach((v, i) => {
-            result += `<div style="display: flex; justify-content: space-between; gap: 20px;">
-              <span>${dimNames[i]}</span>
-              <span style="color: #ef4444; font-weight: 600;">${v}%</span>
+            result += `<div style="display: flex; justify-content: space-between; align-items: center; gap: 24px; margin: 6px 0;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 6px; height: 6px; border-radius: 50%; background: ${colors[i]};"></span>
+                ${dimNames[i]}
+              </span>
+              <span style="font-weight: 600; color: ${colors[i]};">${v}%</span>
             </div>`;
           });
           return result;
         }
       },
       radar: {
+        center: ['50%', '50%'],
+        radius: '60%',
         indicator: [
           { name: '数据复盘', max: 100 },
           { name: '流量复盘', max: 100 },
@@ -1108,33 +1152,37 @@
           { name: '优化计划', max: 100 }
         ],
         shape: 'polygon',
-        splitNumber: 4,
+        splitNumber: 5,
         axisName: {
-          color: '#94a3b8',
+          color: '#cbd5e1',
           fontSize: 13,
-          fontWeight: 500
+          fontWeight: 500,
+          fontFamily: 'Noto Sans SC, sans-serif'
         },
         splitLine: {
           lineStyle: {
-            color: 'rgba(239, 68, 68, 0.15)'
+            color: 'rgba(239, 68, 68, 0.12)',
+            type: 'dashed'
           }
         },
         splitArea: {
           show: true,
           areaStyle: {
             color: [
+              'rgba(239, 68, 68, 0.01)',
               'rgba(239, 68, 68, 0.02)',
+              'rgba(239, 68, 68, 0.03)',
               'rgba(239, 68, 68, 0.04)',
-              'rgba(239, 68, 68, 0.06)',
-              'rgba(239, 68, 68, 0.08)'
+              'rgba(239, 68, 68, 0.05)'
             ]
           }
         },
         axisLine: {
           lineStyle: {
-            color: 'rgba(239, 68, 68, 0.2)'
+            color: 'rgba(239, 68, 68, 0.25)'
           }
-        }
+        },
+        triggerEvent: true
       },
       series: [
         {
@@ -1145,24 +1193,31 @@
               value: [92, 78, 85, 88, 75, 70, 82],
               name: '本场表现',
               symbol: 'circle',
-              symbolSize: 6,
+              symbolSize: 8,
               itemStyle: {
-                color: '#ef4444'
+                color: '#ef4444',
+                borderColor: '#fff',
+                borderWidth: 2,
+                shadowColor: 'rgba(239, 68, 68, 0.6)',
+                shadowBlur: 10
               },
               lineStyle: {
                 color: '#ef4444',
-                width: 2,
-                shadowColor: 'rgba(239, 68, 68, 0.5)',
-                shadowBlur: 10
+                width: 2.5,
+                shadowColor: 'rgba(239, 68, 68, 0.4)',
+                shadowBlur: 15
               },
               areaStyle: {
                 color: new echarts.graphic.RadialGradient(0.5, 0.5, 1, [
-                  { offset: 0, color: 'rgba(239, 68, 68, 0.3)' },
-                  { offset: 1, color: 'rgba(239, 68, 68, 0.05)' }
+                  { offset: 0, color: 'rgba(239, 68, 68, 0.35)' },
+                  { offset: 0.7, color: 'rgba(239, 68, 68, 0.15)' },
+                  { offset: 1, color: 'rgba(239, 68, 68, 0.02)' }
                 ])
               }
             }
-          ]
+          ],
+          animationDuration: 1500,
+          animationEasing: 'cubicOut'
         }
       ]
     };
@@ -1178,7 +1233,7 @@
     const dimItems = document.querySelectorAll('.dim-item');
     dimItems.forEach((item, index) => {
       item.addEventListener('mouseenter', function() {
-        // 可以在这里加高亮效果
+        // 高亮效果可以后续扩展
       });
     });
   </script>
