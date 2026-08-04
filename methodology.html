@@ -1,0 +1,632 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>分析方法论工具箱 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(167, 139, 250, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* 分类标签 */
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .tab:hover {
+      background: var(--glass-highlight);
+      color: var(--text);
+    }
+
+    .tab.active {
+      background: var(--accent-2-soft);
+      color: var(--accent-2);
+      border-color: transparent;
+    }
+
+    /* 方法卡片 */
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    .method-card {
+      padding: 24px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .method-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .method-card:hover::before {
+      opacity: 1;
+    }
+
+    .method-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .method-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(167, 139, 250, 0.1));
+    }
+
+    .method-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 4px;
+      color: var(--text);
+    }
+
+    .method-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .method-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .method-section {
+      margin-bottom: 14px;
+    }
+
+    .method-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .method-section-title::before {
+      content: '';
+      width: 3px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .method-formula {
+      font-size: 13px;
+      padding: 10px 12px;
+      background: var(--bg-elevated);
+      border-radius: 8px;
+      color: var(--accent);
+      font-family: "JetBrains Mono", monospace;
+      border: 1px solid var(--glass-border);
+      line-height: 1.5;
+    }
+
+    .method-scenarios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .scenario-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--glass-highlight);
+      color: var(--text-muted);
+    }
+
+    .method-industries {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 14px;
+    }
+
+    .industry-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .industry-tag.purple {
+      background: var(--accent-2-soft);
+      color: var(--accent-2);
+    }
+
+    .industry-tag.green {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+    }
+
+    .industry-tag.yellow {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+    }
+
+    /* 难度星级 */
+    .difficulty {
+      display: flex;
+      gap: 2px;
+    }
+
+    .star {
+      font-size: 12px;
+      color: var(--warning);
+    }
+
+    .star.empty {
+      color: var(--glass-border);
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .stats-bar {
+        gap: 24px;
+      }
+
+      .stat-num {
+        font-size: 22px;
+      }
+
+      .methods-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+      <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1 class="page-title">分析方法论工具箱</h1>
+    <p class="page-desc">跨行业通用的数据分析方法论，从用户分层到财务分析，体系化掌握</p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">10</div>
+        <div class="stat-label">分析方法</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">应用领域</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">覆盖行业</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 分类标签 -->
+    <div class="category-tabs" id="categoryTabs">
+      <span class="tab active" data-category="all">全部方法</span>
+      <span class="tab" data-category="user">用户分析</span>
+      <span class="tab" data-category="marketing">营销增长</span>
+      <span class="tab" data-category="operation">运营效率</span>
+      <span class="tab" data-category="finance">财务分析</span>
+      <span class="tab" data-category="strategy">战略决策</span>
+    </div>
+
+    <!-- 方法卡片网格 -->
+    <div class="methods-grid" id="methodsGrid">
+      <!-- 由 JS 动态生成 -->
+    </div>
+  </div>
+
+  <script>
+    // 方法论数据
+    const methods = [
+      {
+        name: "RFM 模型",
+        subtitle: "Recency · Frequency · Monetary",
+        icon: "👥",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "基于最近一次购买时间(R)、购买频率(F)、购买金额(M)三个维度，对用户进行价值分层的经典方法。",
+        formula: "R值：最近一次购买距今天数（越小越好）\nF值：统计周期内购买次数（越大越好）\nM值：统计周期内购买金额（越大越好）\n→ 组合打分 → 8类用户分层",
+        scenarios: ["用户分层运营", "精准营销", "会员体系设计", "流失预警"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "电商", color: "purple" },
+          { name: "文旅", color: "yellow" }
+        ],
+        reference: "零售/index.html"
+      },
+      {
+        name: "漏斗分析",
+        subtitle: "Funnel Analysis",
+        icon: "📊",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 1,
+        desc: "将用户转化路径拆解为多个环节，通过各环节转化率分析流失原因，找到优化突破口。",
+        formula: "转化率 = 下一环节人数 ÷ 上一环节人数 × 100%\n整体转化率 = 最终成交人数 ÷ 初始人数 × 100%",
+        scenarios: ["转化路径优化", "注册转化", "购买转化", "活动效果评估"],
+        industries: [
+          { name: "电商", color: "purple" },
+          { name: "零售", color: "" },
+          { name: "文旅", color: "yellow" }
+        ],
+        reference: "电商/index.html"
+      },
+      {
+        name: "同期群分析",
+        subtitle: "Cohort Analysis",
+        icon: "📈",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 3,
+        desc: "按用户首次行为时间分组，追踪不同群组在后续周期的行为变化，真实反映留存趋势。",
+        formula: "第N日留存率 = 第N日活跃的同期群用户数 ÷ 同期群总用户数 × 100%\n按获客渠道/版本/地区等维度分组对比",
+        scenarios: ["留存分析", "产品迭代效果", "渠道质量评估", "生命周期价值"],
+        industries: [
+          { name: "电商", color: "purple" },
+          { name: "零售", color: "" },
+          { name: "新能源", color: "green" }
+        ],
+        reference: "零售/index.html"
+      },
+      {
+        name: "ABC 分类法",
+        subtitle: "帕累托法则 · 80/20",
+        icon: "📦",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 1,
+        desc: "根据价值将物品/客户分为ABC三类，重点管理A类（20%占80%价值），优化资源配置。",
+        formula: "A类：累计占比 0-70%（重点管理）\nB类：累计占比 70-90%（常规管理）\nC类：累计占比 90-100%（简化管理）",
+        scenarios: ["库存管理", "客户分级", "商品分级", "供应商管理"],
+        industries: [
+          { name: "物流", color: "" },
+          { name: "零售", color: "" },
+          { name: "制造", color: "green" }
+        ],
+        reference: "物流/index.html"
+      },
+      {
+        name: "杜邦分析",
+        subtitle: "DuPont Analysis",
+        icon: "💰",
+        category: "finance",
+        categoryName: "财务分析",
+        difficulty: 3,
+        desc: "将净资产收益率(ROE)拆解为净利率、资产周转率、权益乘数三个因子，层层归因。",
+        formula: "ROE = 净利率 × 资产周转率 × 权益乘数\n= (净利润÷营收) × (营收÷总资产) × (总资产÷净资产)",
+        scenarios: ["盈利能力分析", "经营效率诊断", "财务归因", "对标分析"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "制造", color: "green" },
+          { name: "新能源", color: "green" }
+        ],
+        reference: "零售/index.html"
+      },
+      {
+        name: "归因模型",
+        subtitle: "Attribution Model",
+        icon: "🎯",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 4,
+        desc: "将转化功劳分配给各个营销触点的方法，衡量不同渠道的真实贡献。",
+        formula: "常见模型：\n• 首次触点：100%归第一个渠道\n• 末次触点：100%归最后一个渠道\n• 线性：平均分配\n• 时间衰减：越近权重越高\n• 数据驱动：基于算法计算",
+        scenarios: ["渠道效果评估", "预算分配", "营销ROI优化", "用户路径分析"],
+        industries: [
+          { name: "电商", color: "purple" },
+          { name: "零售", color: "" },
+          { name: "文旅", color: "yellow" }
+        ],
+        reference: "电商/index.html"
+      },
+      {
+        name: "价格弹性模型",
+        subtitle: "Price Elasticity",
+        icon: "📐",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 4,
+        desc: "衡量价格变动对需求量的影响程度，找到最优定价点实现收益最大化。",
+        formula: "需求价格弹性 = 需求量变动% ÷ 价格变动%\n|E| > 1：富有弹性（降价增收入）\n|E| < 1：缺乏弹性（涨价增收入）",
+        scenarios: ["定价策略", "促销效果预测", "收益管理", "竞品价格应对"],
+        industries: [
+          { name: "文旅", color: "yellow" },
+          { name: "零售", color: "" },
+          { name: "电商", color: "purple" }
+        ],
+        reference: "旅游业/index.html"
+      },
+      {
+        name: "竞品对标分析",
+        subtitle: "Competitive Benchmarking",
+        icon: "⚔️",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 2,
+        desc: "从多维度与竞争对手对比，识别自身优势与差距，制定竞争策略。",
+        formula: "对标维度：\n• 产品/服务维度\n• 价格维度\n• 渠道维度\n• 用户体验维度\n• 财务指标维度\n→ 雷达图可视化对比",
+        scenarios: ["竞争策略制定", "产品优化方向", "市场定位", "投资决策"],
+        industries: [
+          { name: "新能源", color: "green" },
+          { name: "文旅", color: "yellow" },
+          { name: "电商", color: "purple" }
+        ],
+        reference: "新能源/index.html"
+      },
+      {
+        name: "收益管理",
+        subtitle: "Yield Management",
+        icon: "💎",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 5,
+        desc: "通过动态定价和库存分配，在固定产能下实现收益最大化的高级方法。",
+        formula: "核心思想：\n• 价格歧视：对不同客群定不同价\n• 库存控制：预留高价房/座位\n• 超售策略：应对no-show\n目标：RevPAR / 收益最大化",
+        scenarios: ["酒店收益管理", "航空机票定价", "景区门票定价", "演唱会票务"],
+        industries: [
+          { name: "文旅", color: "yellow" },
+          { name: "电商", color: "purple" }
+        ],
+        reference: "旅游业/index.html"
+      },
+      {
+        name: "牛鞭效应分析",
+        subtitle: "Bullwhip Effect",
+        icon: "📉",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 3,
+        desc: "供应链中需求信息从下游到上游逐级放大的现象，导致库存波动加剧。",
+        formula: "牛鞭效应 = 上游订单波动方差 ÷ 下游需求波动方差\n波动放大倍数越大，牛鞭效应越严重",
+        scenarios: ["供应链优化", "库存波动分析", "需求预测改进", "信息共享机制"],
+        industries: [
+          { name: "物流", color: "" },
+          { name: "制造", color: "green" },
+          { name: "零售", color: "" }
+        ],
+        reference: "物流/index.html"
+      }
+    ];
+
+    // 当前筛选
+    let currentCategory = 'all';
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      renderMethods();
+      
+      // 绑定分类标签
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentCategory = this.dataset.category;
+          renderMethods();
+        });
+      });
+      
+      // 导航搜索
+      document.getElementById('navSearch').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          const query = this.value.toLowerCase();
+          const filtered = methods.filter(m => 
+            m.name.toLowerCase().includes(query) ||
+            m.desc.toLowerCase().includes(query)
+          );
+          if (filtered.length > 0) {
+            document.getElementById('methodsGrid').scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    // 渲染方法卡片
+    function renderMethods() {
+      const grid = document.getElementById('methodsGrid');
+      
+      let filtered = methods;
+      if (currentCategory !== 'all') {
+        filtered = methods.filter(m => m.category === currentCategory);
+      }
+      
+      grid.innerHTML = filtered.map(m => renderMethodCard(m)).join('');
+      
+      // 绑定卡片点击
+      document.querySelectorAll('.method-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const ref = this.dataset.reference;
+          if (ref) {
+            // 可以跳转到相关页面
+            // window.location.href = ref;
+          }
+        });
+      });
+    }
+
+    // 渲染单个方法卡片
+    function renderMethodCard(method) {
+      const stars = Array(5).fill(0).map((_, i) => 
+        i < method.difficulty ? '<span class="star">★</span>' : '<span class="star empty">★</span>'
+      ).join('');
+      
+      return `
+        <div class="card method-card" data-reference="${method.reference}">
+          <div class="method-header">
+            <div class="method-icon">${method.icon}</div>
+            <div style="flex: 1;">
+              <h3 class="method-title">${method.name}</h3>
+              <div class="method-subtitle">${method.subtitle}</div>
+            </div>
+            <div class="difficulty" title="难度：${method.difficulty}/5">
+              ${stars}
+            </div>
+          </div>
+          
+          <p class="method-desc">${method.desc}</p>
+          
+          <div class="method-section">
+            <div class="method-section-title">核心公式</div>
+            <div class="method-formula">${method.formula.replace(/\n/g, '<br>')}</div>
+          </div>
+          
+          <div class="method-section">
+            <div class="method-section-title">适用场景</div>
+            <div class="method-scenarios">
+              ${method.scenarios.map(s => `<span class="scenario-tag">${s}</span>`).join('')}
+            </div>
+          </div>
+          
+          <div class="method-industries">
+            <span style="font-size: 11px; color: var(--text-muted); margin-right: 4px;">应用行业：</span>
+            ${method.industries.map(i => `<span class="industry-tag ${i.color}">${i.name}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+
+
+

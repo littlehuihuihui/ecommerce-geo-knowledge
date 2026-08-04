@@ -1,0 +1,809 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>金融行业 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59, 130, 246, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      font-size: 24px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+
+    /* 指标分类 */
+    .metric-category {
+      margin-bottom: 32px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 16px;
+      padding-left: 12px;
+      border-left: 3px solid #3b82f6;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .metric-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
+    }
+
+    .metric-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .metric-formula {
+      font-size: 12px;
+      color: #3b82f6;
+      font-family: 'Courier New', monospace;
+      margin: 0 0 8px;
+      padding: 4px 8px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .metric-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 分析框架 */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .framework-card {
+      padding: 24px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .framework-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+    }
+
+    .framework-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .framework-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .framework-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .framework-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #3b82f6;
+    }
+
+    /* 客户分层 */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .tier-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .tier-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .tier-aum {
+      font-size: 13px;
+      color: #3b82f6;
+      font-weight: 500;
+      margin: 0 0 12px;
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .tier-features li {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+
+    /* 典型场景 */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .scenario-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .scenario-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .scenario-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .scenario-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .scenario-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+  
+    /* 北极星指标 */
+    .north-star-section {
+      margin-bottom: 48px;
+    }
+
+    .north-star-card {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.08));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .north-star-icon {
+      font-size: 64px;
+      flex-shrink: 0;
+    }
+
+    .north-star-content {
+      flex: 1;
+    }
+
+    .north-star-label {
+      font-size: 12px;
+      color: #3b82f6;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .north-star-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 10px;
+    }
+
+    .north-star-formula {
+      font-size: 13px;
+      color: #3b82f6;
+      font-family: "JetBrains Mono", monospace;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: rgba(59, 130, 246, 0.1);
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .north-star-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .north-star-why {
+      flex-shrink: 0;
+      width: 280px;
+      padding-left: 32px;
+      border-left: 1px solid var(--glass-border);
+    }
+
+    .north-star-why-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .north-star-why-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .north-star-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .north-star-why {
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+        padding-left: 0;
+        padding-top: 20px;
+        width: 100%;
+      }
+    }
+</style>
+</head>
+<body>
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="零售/index.html" class="nav-dropdown-item">零售行业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item active">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <header class="page-header">
+    <h1 class="page-title">金融行业</h1>
+    <p class="page-desc">
+      银行、证券、保险等金融领域的数据分析体系，风控、营销、运营三大核心方向
+    </p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">28+</div>
+        <div class="stat-label">核心指标</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">分析维度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">分析框架</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">典型场景</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- 北极星指标 -->
+    <section class="section north-star-section">
+      <div class="north-star-card">
+        <div class="north-star-icon">⭐</div>
+        <div class="north-star-content">
+          <div class="north-star-label">North Star Metric</div>
+          <h2 class="north-star-name">AUM 管理资产规模</h2>
+          <div class="north-star-formula">所有客户管理资产之和</div>
+          <p class="north-star-desc">
+            金融行业（尤其是财富管理）的核心规模指标，反映平台的资产管理能力和客户信任度。AUM 规模直接决定了管理费收入。
+          </p>
+        </div>
+        <div class="north-star-why">
+          <div class="north-star-why-title">💡 为什么是它？</div>
+          <p class="north-star-why-text">
+            开户数只看数量不看质量，收入只看短期不看长期。AUM 同时反映了客户数量、客户质量和客户信任度，是财富管理业务的核心护城河。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心指标体系 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">📊</span>
+        金融核心指标体系
+      </h2>
+      <p class="section-desc">风控、客户、营销、产品、收入、合规六大维度的经典指标</p>
+
+      <div class="metric-category">
+        <h3 class="category-title">🛡️ 风控指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">贷款逾期的比例，是信用风险的核心指标，按逾期天数分M1/M2/M3+</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">不良贷款占比，银行监管核心指标，通常指逾期90天以上的贷款</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">坏账率 / 核销率</h3>
+            <div class="metric-formula">核销贷款 ÷ 总贷款余额</div>
+            <p class="metric-desc">最终无法收回的贷款比例，反映真实的损失情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">风险敞口</h3>
+            <div class="metric-formula">各类风险暴露的总金额</div>
+            <p class="metric-desc">面临风险的资产总额，包括信用风险、市场风险、操作风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">通过率</h3>
+            <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
+            <p class="metric-desc">信贷审批的通过比例，平衡风险与业务规模</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">👥 客户规模指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">客户托管的总资产金额</div>
+            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">累计/新增开户客户数</div>
+            <p class="metric-desc">客户数量规模，反映获客能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">有交易/登录行为的用户数</div>
+            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">AUM ÷ 客户数</div>
+            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">📈 营销转化指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增客户数</div>
+            <p class="metric-desc">获取一个新客户的成本，衡量获客效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
+            <p class="metric-desc">营销活动的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">激活率</h3>
+            <div class="metric-formula">激活客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
+            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💹 产品运营指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">收益率</h3>
+            <div class="metric-formula">产品收益 ÷ 产品本金</div>
+            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品销量</h3>
+            <div class="metric-formula">产品销售金额/份额</div>
+            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
+            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">总持有天数 ÷ 客户数</div>
+            <p class="metric-desc">客户平均持有产品的时间长度</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💰 收入利润指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
+            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入</h3>
+            <div class="metric-formula">手续费及佣金收入</div>
+            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA 资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 总资产</div>
+            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROE 净资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 净资产</div>
+            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">⚖️ 合规反欺诈</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数</div>
+            <p class="metric-desc">欺诈交易的比例，反欺诈效果的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">识别出的可疑交易数量</div>
+            <p class="metric-desc">反洗钱监测中发现的可疑交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规检查通过率</h3>
+            <div class="metric-formula">通过检查项 ÷ 总检查项</div>
+            <p class="metric-desc">合规检查的通过比例，反映合规水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案件损失率</h3>
+            <div class="metric-formula">案件损失金额 ÷ 总交易额</div>
+            <p class="metric-desc">操作风险案件造成的损失比例</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分析框架 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🧩</span>
+        金融数据分析框架
+      </h2>
+      <p class="section-desc">金融行业经典的风险与运营分析方法论</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">📊</div>
+          <h3 class="framework-name">信用评分模型</h3>
+          <ul class="framework-list">
+            <li><strong>申请评分卡 A卡</strong> - 贷前准入评估</li>
+            <li><strong>行为评分卡 B卡</strong> - 贷中行为监控</li>
+            <li><strong>催收评分卡 C卡</strong> - 贷后催收策略</li>
+            <li><strong>FICO 评分</strong> - 国际通用信用评分</li>
+            <li>基于历史数据预测违约概率</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">👥</div>
+          <h3 class="framework-name">客户价值分层</h3>
+          <ul class="framework-list">
+            <li><strong>RFM 模型</strong> - 最近、频率、金额</li>
+            <li><strong>客户生命周期价值</strong> - LTV 预测</li>
+            <li><strong>财富等级分层</strong> - 大众/富裕/高净值/私行</li>
+            <li><strong>风险等级分层</strong> - 保守/稳健/平衡/进取</li>
+            <li>不同层级采用差异化服务策略</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">⚖️</div>
+          <h3 class="framework-name">风险定价模型</h3>
+          <ul class="framework-list">
+            <li><strong>基于风险的定价</strong> - 高风险高定价</li>
+            <li><strong>利率敏感性分析</strong> - 价格弹性</li>
+            <li><strong>客户价值定价</strong> - 综合收益考量</li>
+            <li><strong>竞争定价</strong> - 市场对标分析</li>
+            <li>平衡风险、收益与市场竞争力</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🏦</div>
+          <h3 class="framework-name">资产负债管理 ALM</h3>
+          <ul class="framework-list">
+            <li><strong>久期匹配</strong> - 资产负债期限匹配</li>
+            <li><strong>利率风险</strong> - 利率变动影响分析</li>
+            <li><strong>流动性管理</strong> - 流动性缺口分析</li>
+            <li><strong>资本充足率</strong> - 巴塞尔协议要求</li>
+            <li>银行整体的风险与收益平衡</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 客户分层 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">👑</span>
+        财富客户分层模型
+      </h2>
+      <p class="section-desc">银行/财富管理行业经典的客户分层体系</p>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <h3 class="tier-name">私人银行</h3>
+          <p class="tier-aum">AUM > 600万</p>
+          <ul class="tier-features">
+            <li>👑 1对1 专属理财师</li>
+            <li>💎 定制化资产配置</li>
+            <li>🎯 另类投资机会</li>
+            <li>🎁 高端增值服务</li>
+            <li>💰 贡献 50%+ 收入</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">高净值</h3>
+          <p class="tier-aum">AUM 100-600万</p>
+          <ul class="tier-features">
+            <li>🎯 专属理财顾问</li>
+            <li>📈 标准化资产配置</li>
+            <li>💼 专属理财产品</li>
+            <li>🎁 贵宾服务权益</li>
+            <li>💰 贡献 30% 收入</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">富裕客户</h3>
+          <p class="tier-aum">AUM 20-100万</p>
+          <ul class="tier-features">
+            <li>📱 线上+线下服务</li>
+            <li>💹 标准化理财推荐</li>
+            <li>🎯 重点营销对象</li>
+            <li>🎁 基础贵宾权益</li>
+            <li>💰 贡献 15% 收入</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">大众客户</h3>
+          <p class="tier-aum">AUM < 20万</p>
+          <ul class="tier-features">
+            <li>📱 纯线上自助服务</li>
+            <li>💳 标准化产品</li>
+            <li>📢 大众化营销</li>
+            <li>🎁 基础服务</li>
+            <li>💰 贡献 5% 收入</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 典型分析场景 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">💡</span>
+        典型分析场景
+      </h2>
+      <p class="section-desc">金融数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">🛡️</div>
+          <h3 class="scenario-name">信用风险评估</h3>
+          <p class="scenario-desc">构建信用评分模型，评估客户违约概率，优化审批策略和额度管理</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🕵️</div>
+          <h3 class="scenario-name">反欺诈检测</h3>
+          <p class="scenario-desc">基于规则和机器学习的实时欺诈识别，降低欺诈损失，提升用户体验</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🎯</div>
+          <h3 class="scenario-name">精准营销与交叉销售</h3>
+          <p class="scenario-desc">客户分群与产品推荐模型，提升营销转化率和客户持有产品数</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">⚠️</div>
+          <h3 class="scenario-name">客户流失预警</h3>
+          <p class="scenario-desc">识别高流失风险客户，分析流失原因，制定挽留策略，降低客户流失率</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📊</div>
+          <h3 class="scenario-name">资产配置优化</h3>
+          <p class="scenario-desc">基于客户风险偏好和市场环境，优化资产配置组合，提升收益风险比</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+

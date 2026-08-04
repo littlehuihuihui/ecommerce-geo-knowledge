@@ -1,0 +1,1490 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>业务问题拆解 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(251, 191, 36, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--warning), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* 筛选栏 */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      background: var(--glass);
+      color: var(--text);
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .filter-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .filter-tag:hover {
+      background: var(--glass-highlight);
+      color: var(--text);
+    }
+
+    .filter-tag.active {
+      background: var(--warning-soft);
+      color: var(--warning);
+      border-color: transparent;
+    }
+
+    /* 题目卡片 */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .question-card {
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+
+    .question-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .question-meta {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .question-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--glass-highlight);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .question-tag.difficulty-easy {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+    }
+
+    .question-tag.difficulty-medium {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+    }
+
+    .question-tag.difficulty-hard {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--danger);
+    }
+
+    .question-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .question-card.expanded .question-answer {
+      max-height: 1000px;
+    }
+
+    .answer-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .answer-label::before {
+      content: '💡';
+      font-size: 14px;
+    }
+
+    .answer-content {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding-left: 20px;
+      border-left: 2px solid var(--accent-soft);
+    }
+
+    .answer-content ul {
+      margin: 8px 0;
+      padding-left: 20px;
+    }
+
+    .answer-content li {
+      margin-bottom: 6px;
+    }
+
+    .answer-content strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .expand-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      text-align: right;
+      opacity: 0.6;
+    }
+
+    .question-card.expanded .expand-hint {
+      display: none;
+    }
+
+    /* 分类标题 */
+    .category-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .category-title .icon {
+      font-size: 22px;
+    }
+
+    .category-title .count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      background: var(--glass-highlight);
+      padding: 2px 10px;
+      border-radius: 100px;
+    }
+
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .stats-bar {
+        gap: 24px;
+      }
+
+      .stat-num {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+      <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1 class="page-title">业务问题拆解</h1>
+    <p class="page-desc">各行业经典业务问题的结构化分析思路，展示数据驱动的问题解决能力</p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">35+</div>
+        <div class="stat-label">业务问题</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">覆盖行业</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">难度分级</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 筛选栏 -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="搜索题目..." id="searchInput" />
+      </div>
+      <div class="filter-tags" id="filterTags">
+        <span class="filter-tag active" data-category="all">全部</span>
+        <span class="filter-tag" data-category="general">通用</span>
+        <span class="filter-tag" data-category="retail">零售</span>
+        <span class="filter-tag" data-category="ecommerce">电商</span>
+        <span class="filter-tag" data-category="logistics">物流</span>
+        <span class="filter-tag" data-category="tourism">文旅</span>
+        <span class="filter-tag" data-category="newenergy">新能源</span>
+        <span class="filter-tag" data-category="manufacturing">制造</span>
+      </div>
+    </div>
+
+    <!-- 题目列表 -->
+    <div id="questionsContainer">
+      <!-- 由 JS 动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-icon">🤔</div>
+      <div style="font-size: 15px;">没有找到匹配的题目</div>
+    </div>
+  </div>
+
+  <script>
+    // 面试题数据
+    const questions = [
+      // ===== 通用 =====
+      {
+        category: "general",
+        categoryName: "通用数据分析",
+        icon: "📊",
+        list: [
+          {
+            title: "销售额下降了，你怎么分析原因？",
+            difficulty: "easy",
+            answer: `
+              <p>这是数据分析中最经典的问题，考察结构化分析框架能力。</p>
+              <ul>
+                <li><strong>第一步：确认数据真实性</strong> — 排除数据统计错误、口径变化、系统bug</li>
+                <li><strong>第二步：拆解维度定位问题</strong>
+                  <ul>
+                    <li>按时间：是突然下降还是持续下降？哪天开始的？</li>
+                    <li>按区域：哪些地区/门店下降最多？</li>
+                    <li>按品类：哪些商品下降最多？是新品还是老品？</li>
+                    <li>按用户：新客还是老客下降？高价值还是低价值用户？</li>
+                    <li>按渠道：线上还是线下？哪个渠道？</li>
+                  </ul>
+                </li>
+                <li><strong>第三步：公式拆解找根因</strong>
+                  <ul>
+                    <li>销售额 = 客流量 × 转化率 × 客单价</li>
+                    <li>是客流少了？还是转化低了？还是客单价降了？</li>
+                  </ul>
+                </li>
+                <li><strong>第四步：外部因素验证</strong> — 竞品活动？节假日？天气？政策？</li>
+                <li><strong>第五步：给出建议</strong> — 针对找到的原因给出可落地的优化方案</li>
+              </ul>
+              <p><strong>关键：</strong>不要一上来就瞎猜原因，要有结构化的分析框架，先拆解再定位。</p>
+            `
+          },
+          {
+            title: "如何评估一个新功能的效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>核心方法：A/B 测试</strong>
+                  <ul>
+                    <li>设置对照组（无新功能）和实验组（有新功能）</li>
+                    <li>随机分流，确保两组用户特征一致</li>
+                    <li>统计显著性检验（p值 < 0.05）</li>
+                  </ul>
+                </li>
+                <li><strong>评估指标体系</strong>
+                  <ul>
+                    <li>核心指标：功能使用率、核心行为转化率</li>
+                    <li>反向指标：有没有导致其他指标下降？</li>
+                    <li>长期指标：留存、LTV影响</li>
+                  </ul>
+                </li>
+                <li><strong>如果不能做A/B测试</strong>
+                  <ul>
+                    <li>前后对比法（注意排除时间因素）</li>
+                    <li>倾向得分匹配（PSM）</li>
+                    <li>断点回归（RDD）</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何做用户分群？有哪些方法？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>规则分群（简单直接）</strong>
+                  <ul>
+                    <li>RFM 分群：按最近购买、频率、金额分层</li>
+                    <li>生命周期分群：新客/成长/成熟/衰退/流失</li>
+                    <li>价值分群：高价值/中价值/低价值</li>
+                  </ul>
+                </li>
+                <li><strong>算法分群（更精细）</strong>
+                  <ul>
+                    <li>K-Means 聚类：最常用，需要先确定K值</li>
+                    <li>层次聚类：可以看到分群层级关系</li>
+                    <li>DBSCAN：可以发现任意形状的簇，能识别异常点</li>
+                  </ul>
+                </li>
+                <li><strong>分群后要做什么？</strong>
+                  <ul>
+                    <li>给每个群起名字、画画像</li>
+                    <li>制定差异化运营策略</li>
+                    <li>追踪分群变化（迁移矩阵）</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "数据分析师和数据产品经理有什么区别？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>数据分析师</strong>
+                  <ul>
+                    <li>核心：发现问题、解释原因、给出建议</li>
+                    <li>产出：分析报告、洞察结论、数据看板</li>
+                    <li>更偏"分析"，回答"为什么"和"怎么办"</li>
+                  </ul>
+                </li>
+                <li><strong>数据产品经理</strong>
+                  <ul>
+                    <li>核心：设计数据产品、让数据用起来</li>
+                    <li>产出：数据平台、BI系统、指标体系、数据工具</li>
+                    <li>更偏"产品"，思考"怎么让数据更好用"</li>
+                  </ul>
+                </li>
+                <li><strong>两者关系</strong>
+                  <ul>
+                    <li>分析师是数据产品的用户</li>
+                    <li>数据产品经理把分析师的需求产品化</li>
+                    <li>好的数据产品能让分析师效率提升10倍</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "你做过的最有成就感的项目是什么？",
+            difficulty: "medium",
+            answer: `
+              <p>项目经验类问题，用 STAR 法则梳理你的项目经历：</p>
+              <ul>
+                <li><strong>S - Situation</strong>：背景是什么？遇到了什么问题？</li>
+                <li><strong>T - Task</strong>：你的任务是什么？目标是什么？</li>
+                <li><strong>A - Action</strong>：你做了什么？<strong>重点讲你自己的贡献，不是团队的</strong></li>
+                <li><strong>R - Result</strong>：结果怎么样？有数据量化吗？</li>
+              </ul>
+              <p><strong>加分点：</strong></p>
+              <ul>
+                <li>有具体的数字（提升了XX%，节省了XX万）</li>
+                <li>体现了你的思考，而不只是执行</li>
+                <li>有复盘和反思，从中学到了什么</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 零售 =====
+      {
+        category: "retail",
+        categoryName: "零售行业",
+        icon: "🏪",
+        list: [
+          {
+            title: "坪效下降了，怎么分析？",
+            difficulty: "medium",
+            answer: `
+              <p>坪效 = 销售额 ÷ 营业面积，是零售最核心的效率指标。</p>
+              <ul>
+                <li><strong>先拆分子指标</strong>
+                  <ul>
+                    <li>坪效 = 客流 × 转化率 × 客单价 ÷ 面积</li>
+                    <li>看是哪个因子导致的下降</li>
+                  </ul>
+                </li>
+                <li><strong>按门店类型拆解</strong>
+                  <ul>
+                    <li>是所有门店都降，还是个别门店？</li>
+                    <li>新店还是老店？大店还是小店？</li>
+                    <li>商圈类型：购物中心/社区/街边？</li>
+                  </ul>
+                </li>
+                <li><strong>常见原因</strong>
+                  <ul>
+                    <li>客流端：周边竞品开业、商圈衰退、交通变化</li>
+                    <li>转化端：商品结构问题、服务质量下降、价格没竞争力</li>
+                    <li>客单端：促销减少、高客单商品卖不动、连带率下降</li>
+                    <li>供给端：缺货严重、新品不给力</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "库存周转天数太高，怎么优化？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>先定位问题</strong>
+                  <ul>
+                    <li>是所有品类都高，还是个别品类？</li>
+                    <li>是新品还是老品？畅销品还是滞销品？</li>
+                    <li>是采购多了，还是卖不动？</li>
+                  </ul>
+                </li>
+                <li><strong>优化方向</strong>
+                  <ul>
+                    <li><strong>需求预测</strong>：提升预测准确率，减少盲目采购
+                      <ul>
+                        <li>用历史销售数据做预测</li>
+                        <li>考虑季节、促销、竞品等因素</li>
+                      </ul>
+                    </li>
+                    <li><strong>ABC分类管理</strong>：
+                      <ul>
+                        <li>A类（高价值）：严格控制，小批量多频次</li>
+                        <li>C类（低价值）：可以多备点，减少管理成本</li>
+                      </ul>
+                    </li>
+                    <li><strong>滞销品处理</strong>：
+                      <ul>
+                        <li>促销清仓、捆绑销售、调拨到其他门店</li>
+                        <li>退货给供应商（如果合同允许）</li>
+                      </ul>
+                    </li>
+                    <li><strong>供应链优化</strong>：
+                      <ul>
+                        <li>缩短采购周期</li>
+                        <li>VMI（供应商管理库存）</li>
+                        <li>JIT（准时制）</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何设计会员体系？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>第一步：用户分层</strong>
+                  <ul>
+                    <li>用RFM模型或消费金额分层</li>
+                    <li>一般分3-5级，太多太复杂用户记不住</li>
+                    <li>每层要有明确的晋升门槛和权益差异</li>
+                  </ul>
+                </li>
+                <li><strong>第二步：权益设计</strong>
+                  <ul>
+                    <li><strong>物质权益</strong>：折扣、积分、生日礼、免运费</li>
+                    <li><strong>服务权益</strong>：专属客服、优先发货、退换货特权</li>
+                    <li><strong>身份权益</strong>：专属标识、专属活动、新品优先体验</li>
+                    <li>原则：高等级权益要让人"羡慕"，才有升级动力</li>
+                  </ul>
+                </li>
+                <li><strong>第三步：成长机制</strong>
+                  <ul>
+                    <li>消费1元=1积分？还是不同品类不同积分？</li>
+                    <li>保级机制：一年内要消费多少才能保级</li>
+                    <li>降级机制：达不到就降级，制造焦虑感</li>
+                  </ul>
+                </li>
+                <li><strong>第四步：效果评估</strong>
+                  <ul>
+                    <li>会员消费占比、会员复购率</li>
+                    <li>各等级用户迁移情况</li>
+                    <li>会员 vs 非会员的价值差异</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "同店销售增长（SSSG）为负，说明什么？",
+            difficulty: "medium",
+            answer: `
+              <p>SSSG（Same Store Sales Growth）是剔除新店影响后的可比门店增长，更能反映真实经营能力。</p>
+              <ul>
+                <li><strong>SSSG为负的含义</strong>
+                  <ul>
+                    <li>老店销售在下滑，增长全靠新店撑着</li>
+                    <li>这是很危险的信号，说明品牌内生增长乏力</li>
+                    <li>新店总有开不动的一天，到时候就会整体下滑</li>
+                  </ul>
+                </li>
+                <li><strong>分析思路</strong>
+                  <ul>
+                    <li>按店龄拆解：是开了几年的店在下滑？</li>
+                    <li>按区域拆解：哪些区域问题最严重？</li>
+                    <li>按品类拆解：是品类结构问题吗？</li>
+                    <li>对标竞品：是行业问题还是我们自己的问题？</li>
+                  </ul>
+                </li>
+                <li><strong>常见原因</strong>
+                  <ul>
+                    <li>品牌老化，消费者审美疲劳</li>
+                    <li>竞品分流，被抢走了市场份额</li>
+                    <li>商品力下降，新品不给力</li>
+                    <li>价格策略问题，涨价导致客流流失</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 电商 =====
+      {
+        category: "ecommerce",
+        categoryName: "电商行业",
+        icon: "🛒",
+        list: [
+          {
+            title: "转化率突然下降，怎么排查？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>第一步：确认数据</strong> — 排除统计错误、埋点问题</li>
+                <li><strong>第二步：定位环节</strong>
+                  <ul>
+                    <li>转化率是个漏斗：曝光→点击→加购→下单→支付</li>
+                    <li>哪个环节掉得最厉害？</li>
+                  </ul>
+                </li>
+                <li><strong>第三步：拆解维度</strong>
+                  <ul>
+                    <li>流量端：是哪个渠道的流量变了？</li>
+                    <li>商品端：是哪些商品转化降了？</li>
+                    <li>用户端：新客还是老客？</li>
+                    <li>端：App/小程序/PC？iOS/Android？</li>
+                  </ul>
+                </li>
+                <li><strong>第四步：验证假设</strong>
+                  <ul>
+                    <li>是不是改版了？（页面变化影响转化）</li>
+                    <li>是不是涨价了？（价格敏感用户流失）</li>
+                    <li>是不是缺货了？（想买买不到）</li>
+                    <li>是不是竞品搞活动了？（被抢走了）</li>
+                    <li>是不是支付通道出问题了？（技术故障）</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "归因模型有哪些？怎么选？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>常见归因模型</strong>
+                  <ul>
+                    <li><strong>首次触点</strong>：100%归第一个渠道 — 适合拉新</li>
+                    <li><strong>末次触点</strong>：100%归最后一个渠道 — 最简单最常用</li>
+                    <li><strong>线性归因</strong>：平均分配给所有触点 — 公平但不准确</li>
+                    <li><strong>时间衰减</strong>：越近的触点权重越高 — 符合决策路径</li>
+                    <li><strong>U型归因</strong>：首次和末次各40%，中间分20% — 重视首尾</li>
+                    <li><strong>数据驱动归因</strong>：用算法算每个触点的真实贡献 — 最科学</li>
+                  </ul>
+                </li>
+                <li><strong>怎么选？</strong>
+                  <ul>
+                    <li>看业务目标：拉新看首次，转化看末次</li>
+                    <li>看用户路径：路径短用末次，路径长用时间衰减</li>
+                    <li>看数据条件：有足够数据可以用算法归因</li>
+                  </ul>
+                </li>
+                <li><strong>注意点</strong>
+                  <ul>
+                    <li>没有完美的归因模型，都是近似</li>
+                    <li>关键是前后一致，用同一套标准对比</li>
+                    <li>归因结果是辅助决策，不是真理</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "GEO和SEO有什么区别？",
+            difficulty: "medium",
+            answer: `
+              <p>GEO（Generative Engine Optimization）生成式引擎优化，是AI时代的新课题。</p>
+              <ul>
+                <li><strong>SEO（搜索引擎优化）</strong>
+                  <ul>
+                    <li>目标：在搜索结果中排名靠前</li>
+                    <li>用户看到链接，自己点进去看</li>
+                    <li>核心：关键词、外链、内容质量</li>
+                    <li>可追踪：有明确的排名、点击数据</li>
+                  </ul>
+                </li>
+                <li><strong>GEO（生成式引擎优化）</strong>
+                  <ul>
+                    <li>目标：被AI引用、推荐、总结</li>
+                    <li>AI直接给出答案，用户可能不点开链接</li>
+                    <li>核心：结构化事实、权威性、实体一致性</li>
+                    <li>难追踪：不知道AI有没有引用你</li>
+                  </ul>
+                </li>
+                <li><strong>GEO的关键指标</strong>
+                  <ul>
+                    <li>AI可见性与引用份额</li>
+                    <li>结构化事实覆盖度</li>
+                    <li>实体一致性</li>
+                    <li>权威背书与UGC证据密度</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何提升复购率？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>先诊断问题</strong>
+                  <ul>
+                    <li>是哪个环节流失的？首购后多久流失？</li>
+                    <li>哪些品类复购低？哪些用户群复购低？</li>
+                    <li>对标行业：我们的复购率算什么水平？</li>
+                  </ul>
+                </li>
+                <li><strong>提升策略</strong>
+                  <ul>
+                    <li><strong>产品层面</strong>：
+                      <ul>
+                        <li>消耗品：提升产品体验，让用户用完还想买</li>
+                        <li>非消耗品：拓展品类，让用户有理由再来</li>
+                      </ul>
+                    </li>
+                    <li><strong>运营层面</strong>：
+                      <ul>
+                        <li>会员体系：积分、等级、专属权益</li>
+                        <li>周期性触达：补货提醒、新品通知</li>
+                        <li>个性化推荐：猜你喜欢</li>
+                      </ul>
+                    </li>
+                    <li><strong>营销层面</strong>：
+                      <ul>
+                        <li>复购优惠券：首购后发复购券</li>
+                        <li>订阅制：定期自动发货，锁定长期用户</li>
+                        <li>拼团/裂变：老带新</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 物流 =====
+      {
+        category: "logistics",
+        categoryName: "物流供应链",
+        icon: "🚚",
+        list: [
+          {
+            title: "如何降低物流成本？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>先拆解成本结构</strong>
+                  <ul>
+                    <li>仓储成本：租金、人工、设备、损耗</li>
+                    <li>运输成本：运费、燃油、过路费、车辆折旧</li>
+                    <li>管理成本：系统、管理人员</li>
+                    <li>看哪块占比最高，从大头入手</li>
+                  </ul>
+                </li>
+                <li><strong>仓储优化</strong>
+                  <ul>
+                    <li>提升库容利用率：优化货架布局、采用高位货架</li>
+                    <li>提升人效：ABC分类、拣货路径优化、自动化设备</li>
+                    <li>降低库存：提升周转，减少呆滞库存</li>
+                  </ul>
+                </li>
+                <li><strong>运输优化</strong>
+                  <ul>
+                    <li>提升装载率：拼货、路线规划、装载算法</li>
+                    <li>降低空驶率：返程带货、循环取货</li>
+                    <li>网络优化：仓网布局、前置仓、区域配送中心</li>
+                    <li>模式选择：自营 vs 外包，快递 vs 快运 vs 专线</li>
+                  </ul>
+                </li>
+                <li><strong>供应链协同</strong>
+                  <ul>
+                    <li>需求预测准确率提升，减少紧急补货</li>
+                    <li>与供应商信息共享，减少牛鞭效应</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "什么是牛鞭效应？怎么应对？",
+            difficulty: "hard",
+            answer: `
+              <p><strong>牛鞭效应</strong>：供应链中，需求信息从下游到上游逐级放大的现象。</p>
+              <ul>
+                <li><strong>为什么会产生？</strong>
+                  <ul>
+                    <li>需求预测修正：每个环节都在预测，都加安全库存</li>
+                    <li>批量订货：为了省运费，凑整下单</li>
+                    <li>价格波动：促销时囤货，平时不买</li>
+                    <li>短缺博弈：供不应求时多订货抢货</li>
+                    <li>信息不对称：上游不知道真实需求</li>
+                  </ul>
+                </li>
+                <li><strong>有什么危害？</strong>
+                  <ul>
+                    <li>库存波动大，要么缺货要么积压</li>
+                    <li>产能利用率不稳定</li>
+                    <li>成本高，服务水平还低</li>
+                  </ul>
+                </li>
+                <li><strong>怎么应对？</strong>
+                  <ul>
+                    <li><strong>信息共享</strong>：让上游看到真实的终端销售数据（POS数据）</li>
+                    <li><strong>VMI</strong>：供应商管理库存，上游帮下游补货</li>
+                    <li><strong>CPFR</strong>：协同规划、预测与补货</li>
+                    <li><strong>减少批量</strong>：小批量多频次订货</li>
+                    <li><strong>稳定价格</strong>：减少促销，天天低价</li>
+                    <li><strong>缩短提前期</strong>：越快响应，波动越小</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "库存准确率低，怎么提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>先找原因</strong>
+                  <ul>
+                    <li>是入库错了？出库错了？还是盘点错了？</li>
+                    <li>是哪些品类/库位错得最多？</li>
+                    <li>是人为操作失误，还是系统问题？</li>
+                  </ul>
+                </li>
+                <li><strong>常见原因</strong>
+                  <ul>
+                    <li>入库环节：收货点数不准、SKU混淆</li>
+                    <li>出库环节：拣货错发、漏发</li>
+                    <li>库内管理：货位乱放、私自挪用、破损未登记</li>
+                    <li>系统问题：单据未及时录入、系统bug</li>
+                  </ul>
+                </li>
+                <li><strong>提升方法</strong>
+                  <ul>
+                    <li><strong>流程标准化</strong>：每个环节有SOP，按规矩来</li>
+                    <li><strong>技术手段</strong>：
+                      <ul>
+                        <li>条码/RFID：扫码出入库，减少人工错误</li>
+                        <li>PDA：实时同步系统，避免单据延迟</li>
+                        <li>电子标签拣货：减少拣货错误</li>
+                      </ul>
+                    </li>
+                    <li><strong>盘点机制</strong>：
+                      <ul>
+                        <li>循环盘点：每天盘一部分，不用停业</li>
+                        <li>重点盘点：高价值/高动销商品重点盘</li>
+                        <li>差异分析：每次盘点后分析原因，持续改进</li>
+                      </ul>
+                    </li>
+                    <li><strong>绩效考核</strong>：准确率和绩效挂钩</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 文旅 =====
+      {
+        category: "tourism",
+        categoryName: "文旅行业",
+        icon: "🏖️",
+        list: [
+          {
+            title: "什么是收益管理？核心思路是什么？",
+            difficulty: "hard",
+            answer: `
+              <p><strong>收益管理（Yield Management）</strong>：在固定产能下，通过动态定价和库存分配，实现收益最大化。</p>
+              <ul>
+                <li><strong>核心思想</strong>
+                  <ul>
+                    <li>把合适的产品，以合适的价格，卖给合适的人，在合适的时间</li>
+                    <li>本质是价格歧视：对不同价格敏感度的人收不同的价</li>
+                  </ul>
+                </li>
+                <li><strong>适用条件</strong>
+                  <ul>
+                    <li>产能相对固定（酒店房间数、景区承载量）</li>
+                    <li>产品不可存储（今晚的空房明天就没了）</li>
+                    <li>需求可以细分（商务客vs旅游客，提前订vs临时订）</li>
+                    <li>可以提前预售</li>
+                  </ul>
+                </li>
+                <li><strong>核心方法</strong>
+                  <ul>
+                    <li><strong>需求预测</strong>：预测未来每天的需求</li>
+                    <li><strong>动态定价</strong>：需求高涨价，需求低降价</li>
+                    <li><strong>库存控制</strong>：预留房间给高价客，不被低价客占满</li>
+                    <li><strong>超售</strong>：考虑no-show，适当超卖</li>
+                  </ul>
+                </li>
+                <li><strong>核心指标</strong>
+                  <ul>
+                    <li>RevPAR = 平均房价 × 入住率（最核心）</li>
+                    <li>Yield = 实际收入 ÷ 理论最大收入</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "RevPAR怎么提升？",
+            difficulty: "medium",
+            answer: `
+              <p>RevPAR = 平均房价（ADR） × 入住率（OCC），是酒店业最核心的指标。</p>
+              <ul>
+                <li><strong>两个抓手</strong>
+                  <ul>
+                    <li>提升房价：但可能导致入住率下降</li>
+                    <li>提升入住率：但可能需要降价</li>
+                    <li>关键是找到平衡点，让乘积最大</li>
+                  </ul>
+                </li>
+                <li><strong>具体方法</strong>
+                  <ul>
+                    <li><strong>收益管理</strong>：
+                      <ul>
+                        <li>动态定价：周末/节假日涨价，平日降价</li>
+                        <li>提前预订折扣：早鸟价，锁定需求</li>
+                        <li>连住优惠：提升平均入住天数</li>
+                      </ul>
+                    </li>
+                    <li><strong>渠道管理</strong>：
+                      <ul>
+                        <li>提升直订比例，减少OTA佣金</li>
+                        <li>不同渠道差异化定价</li>
+                      </ul>
+                    </li>
+                    <li><strong>产品优化</strong>：
+                      <ul>
+                        <li>房型升级：卖更贵的房型</li>
+                        <li>增值服务：早餐、SPA、接送机</li>
+                        <li>套餐打包：房+餐+景点</li>
+                      </ul>
+                    </li>
+                    <li><strong>营销推广</strong>：
+                      <ul>
+                        <li>淡季促销，提升入住率</li>
+                        <li>会员体系，提升复购</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "景区淡季客流少，怎么破？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>先分析淡季原因</strong>
+                  <ul>
+                    <li>是季节性原因（冬天没人去海边）？</li>
+                    <li>是工作日/周末差异？</li>
+                    <li>是我们自己的问题，还是全行业都这样？</li>
+                  </ul>
+                </li>
+                <li><strong>产品策略</strong>
+                  <ul>
+                    <li>开发淡季特色产品：冬季温泉、夏季避暑</li>
+                    <li>主题活动：灯光节、音乐节、美食节</li>
+                    <li>差异化体验：淡季人少体验好，主打"错峰出游"</li>
+                  </ul>
+                </li>
+                <li><strong>价格策略</strong>
+                  <ul>
+                    <li>淡季降价：但要注意不要降太多影响品牌</li>
+                    <li>套票优惠：门票+酒店+餐饮打包</li>
+                    <li>年卡/季卡：锁定长期用户</li>
+                  </ul>
+                </li>
+                <li><strong>客群拓展</strong>
+                  <ul>
+                    <li>从观光客转向度假客：住得久，消费高</li>
+                    <li>从个人客转向团队客：企业团建、会议</li>
+                    <li>从外地客转向本地客：周边游、周末游</li>
+                  </ul>
+                </li>
+                <li><strong>渠道策略</strong>
+                  <ul>
+                    <li>和旅行社合作，推淡季线路</li>
+                    <li>和企业合作，做员工福利</li>
+                    <li>和OTA合作，参与淡季促销活动</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 新能源 =====
+      {
+        category: "newenergy",
+        categoryName: "新能源汽车",
+        icon: "⚡",
+        list: [
+          {
+            title: "如何分析新能源汽车市场竞争格局？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>市场整体</strong>
+                  <ul>
+                    <li>市场规模：销量、增速、渗透率</li>
+                    <li>市场结构：纯电vs插混，高端vs中端vs低端</li>
+                    <li>增长动力：政策驱动还是产品驱动？</li>
+                  </ul>
+                </li>
+                <li><strong>竞争格局</strong>
+                  <ul>
+                    <li>集中度：CR3/CR5/CR10是多少？在提升还是下降？</li>
+                    <li>阵营划分：新势力（蔚小理）、传统（比亚迪、吉利）、跨界（华为、小米）</li>
+                    <li>价格带分布：各玩家在哪个价格段竞争？</li>
+                  </ul>
+                </li>
+                <li><strong>核心竞争力分析</strong>
+                  <ul>
+                    <li>产品力：续航、智能化、设计、安全</li>
+                    <li>成本控制：电池成本、规模效应</li>
+                    <li>渠道能力：直营店数量、覆盖城市</li>
+                    <li>品牌力：品牌认知、用户口碑</li>
+                    <li>供应链：自研vs外采，供应链稳定性</li>
+                  </ul>
+                </li>
+                <li><strong>趋势判断</strong>
+                  <ul>
+                    <li>价格战会持续吗？谁能活到最后？</li>
+                    <li>技术路线：纯电vs增程vs插混，哪个是未来？</li>
+                    <li>智能化竞争：自动驾驶、智能座舱</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "产能利用率低，怎么提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>先定位问题</strong>
+                  <ul>
+                    <li>是所有工厂都低，还是个别工厂？</li>
+                    <li>是哪个环节是瓶颈？冲压？焊装？涂装？总装？</li>
+                    <li>利用率低的原因：需求不足？还是供给有问题？</li>
+                  </ul>
+                </li>
+                <li><strong>如果是需求不足</strong>
+                  <ul>
+                    <li>提升销量：降价、促销、新车型</li>
+                    <li>拓展出口：国内卖不动就卖到国外</li>
+                    <li>代工生产：帮其他品牌造车，赚加工费</li>
+                  </ul>
+                </li>
+                <li><strong>如果是供给有问题</strong>
+                  <ul>
+                    <li>设备故障多：加强维保、提升OEE</li>
+                    <li>缺零部件：供应链保供、找备选供应商</li>
+                    <li>人员不足：招人、培训、提升人效</li>
+                    <li>工艺问题：优化工艺、减少停线</li>
+                  </ul>
+                </li>
+                <li><strong>长期策略</strong>
+                  <ul>
+                    <li>柔性生产：一条线能生产多种车型</li>
+                    <li>产能规划：不要盲目扩产，按需建设</li>
+                    <li>共享产能：和其他车企共享工厂</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估供应链风险？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>识别风险点</strong>
+                  <ul>
+                    <li><strong>供应风险</strong>：供应商断供、产能不足、质量问题</li>
+                    <li><strong>物流风险</strong>：运输中断、关税、地缘政治</li>
+                    <li><strong>价格风险</strong>：原材料涨价、汇率波动</li>
+                    <li><strong>技术风险</strong>：技术路线变化、专利问题</li>
+                  </ul>
+                </li>
+                <li><strong>评估维度</strong>
+                  <ul>
+                    <li><strong>单一依赖度</strong>：某个物料只有一家供应商？风险高</li>
+                    <li><strong>地域集中度</strong>：供应商都在同一个地区？地震/疫情就全完了</li>
+                    <li><strong>物料重要性</strong>：缺了它就停产？还是可以替代？</li>
+                    <li><strong>供应商健康度</strong>：供应商财务状况好不好？会不会倒闭？</li>
+                  </ul>
+                </li>
+                <li><strong>风险量化</strong>
+                  <ul>
+                    <li>风险评分 = 发生概率 × 影响程度</li>
+                    <li>按分数排序，重点关注高风险项</li>
+                    <li>供应风险暴露指数：量化整体风险水平</li>
+                  </ul>
+                </li>
+                <li><strong>应对策略</strong>
+                  <ul>
+                    <li><strong>多源采购</strong>：不要把鸡蛋放一个篮子</li>
+                    <li><strong>安全库存</strong>：关键物料备库存</li>
+                    <li><strong>垂直整合</strong>：自己造电池、自己造芯片</li>
+                    <li><strong>长期协议</strong>：和供应商签长单锁价锁量</li>
+                    <li><strong>备选方案</strong>：提前找好替代方案</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 制造 =====
+      {
+        category: "manufacturing",
+        categoryName: "制造业",
+        icon: "🏭",
+        list: [
+          {
+            title: "OEE是什么？怎么提升？",
+            difficulty: "medium",
+            answer: `
+              <p><strong>OEE（Overall Equipment Effectiveness）设备综合效率</strong>，衡量设备利用效率。</p>
+              <ul>
+                <li><strong>公式</strong>
+                  <ul>
+                    <li>OEE = 时间稼动率 × 性能稼动率 × 良品率</li>
+                    <li>时间稼动率 = 实际运行时间 ÷ 计划运行时间（反映停机损失）</li>
+                    <li>性能稼动率 = 实际产量 ÷ 理论产量（反映速度损失）</li>
+                    <li>良品率 = 合格品数量 ÷ 总产量（反映质量损失）</li>
+                  </ul>
+                </li>
+                <li><strong>世界级水平</strong>：OEE ≥ 85%</li>
+                <li><strong>怎么提升？</strong>
+                  <ul>
+                    <li><strong>提升时间稼动率（减少停机）</strong>：
+                      <ul>
+                        <li>减少故障停机：预防性维保、预测性维护</li>
+                        <li>减少换型时间：SMED快速换模</li>
+                        <li>减少待料：供应链保供</li>
+                      </ul>
+                    </li>
+                    <li><strong>提升性能稼动率（提升速度）</strong>：
+                      <ul>
+                        <li>设备优化：让设备跑得更快</li>
+                        <li>减少小停机：频繁的短暂停</li>
+                        <li>工艺优化：减少减速运行</li>
+                      </ul>
+                    </li>
+                    <li><strong>提升良品率（减少不良）</strong>：
+                      <ul>
+                        <li>质量管控：SPC统计过程控制</li>
+                        <li>根因分析：5Why、鱼骨图</li>
+                        <li>防错设计：Poka-Yoke</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "良率突然下降，怎么分析？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>第一步：确认问题</strong>
+                  <ul>
+                    <li>是真的降了，还是检测标准变了？</li>
+                    <li>降了多少？从什么时候开始的？</li>
+                  </ul>
+                </li>
+                <li><strong>第二步：定位范围</strong>
+                  <ul>
+                    <li>是所有产品都降，还是个别产品？</li>
+                    <li>是所有产线都降，还是个别产线？</li>
+                    <li>是所有班次都降，还是个别班次？</li>
+                    <li>是哪个工序出的问题？</li>
+                  </ul>
+                </li>
+                <li><strong>第三步：5M1E分析</strong>
+                  <ul>
+                    <li><strong>人（Man）</strong>：是不是换了新人？操作不熟练？</li>
+                    <li><strong>机（Machine）</strong>：设备是不是出问题了？参数变了？</li>
+                    <li><strong>料（Material）</strong>：原材料是不是换批次了？供应商换了？</li>
+                    <li><strong>法（Method）</strong>：工艺是不是改了？作业指导书变了？</li>
+                    <li><strong>测（Measurement）</strong>：检测设备准不准？检测方法对不对？</li>
+                    <li><strong>环（Environment）</strong>：温湿度是不是变了？环境有污染？</li>
+                  </ul>
+                </li>
+                <li><strong>第四步：验证根因</strong>
+                  <ul>
+                    <li>找到可疑因素后，做对比验证</li>
+                    <li>改回去，看良率是不是恢复了</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何做生产成本控制？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>先拆解成本结构</strong>
+                  <ul>
+                    <li>直接材料：原材料、零部件（一般占比最大）</li>
+                    <li>直接人工：生产工人工资</li>
+                    <li>制造费用：设备折旧、水电、辅料、管理人员工资</li>
+                    <li>看哪块占比最高，重点抓</li>
+                  </ul>
+                </li>
+                <li><strong>材料成本控制</strong>
+                  <ul>
+                    <li>采购降本：招标、议价、集中采购、长期协议</li>
+                    <li>国产化替代：进口件换成国产的</li>
+                    <li>设计降本：优化产品设计，减少用料</li>
+                    <li>损耗控制：减少生产过程中的浪费、报废</li>
+                    <li>库存优化：减少库存资金占用</li>
+                  </ul>
+                </li>
+                <li><strong>人工成本控制</strong>
+                  <ul>
+                    <li>提升人效：自动化、工艺优化、培训</li>
+                    <li>优化排班：按需排班，减少闲时</li>
+                    <li>绩效考核：多劳多得，提升积极性</li>
+                  </ul>
+                </li>
+                <li><strong>制造费用控制</strong>
+                  <ul>
+                    <li>提升设备利用率：OEE提升，减少闲置</li>
+                    <li>节能降耗：水电气节约</li>
+                    <li>减少浪费：精益生产、消除七大浪费</li>
+                  </ul>
+                </li>
+                <li><strong>注意点</strong>
+                  <ul>
+                    <li>降本不能牺牲质量，否则得不偿失</li>
+                    <li>降本要算总账，不能只看单项</li>
+                    <li>要和供应商共赢，不要一味压价</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      }
+    ];
+
+    // 当前筛选
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      renderQuestions();
+      
+      // 搜索
+      document.getElementById('searchInput').addEventListener('input', function(e) {
+        currentSearch = e.target.value.trim().toLowerCase();
+        renderQuestions();
+      });
+      
+      // 筛选标签
+      document.querySelectorAll('.filter-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+          document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentCategory = this.dataset.category;
+          renderQuestions();
+        });
+      });
+    });
+
+    // 渲染题目
+    function renderQuestions() {
+      const container = document.getElementById('questionsContainer');
+      const emptyState = document.getElementById('emptyState');
+      
+      // 筛选
+      let filteredCategories = questions.filter(cat => {
+        const matchCategory = currentCategory === 'all' || cat.category === currentCategory;
+        if (!matchCategory) return false;
+        
+        // 搜索筛选
+        if (currentSearch) {
+          const hasMatch = cat.list.some(q => 
+            q.title.toLowerCase().includes(currentSearch) ||
+            q.answer.toLowerCase().includes(currentSearch)
+          );
+          return hasMatch;
+        }
+        return true;
+      });
+      
+      // 空状态
+      const totalQuestions = filteredCategories.reduce((sum, cat) => sum + cat.list.length, 0);
+      if (filteredCategories.length === 0 || totalQuestions === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      
+      // 渲染
+      let html = '';
+      filteredCategories.forEach(cat => {
+        let filteredList = cat.list;
+        if (currentSearch) {
+          filteredList = cat.list.filter(q => 
+            q.title.toLowerCase().includes(currentSearch) ||
+            q.answer.toLowerCase().includes(currentSearch)
+          );
+        }
+        
+        if (filteredList.length === 0) return;
+        
+        html += `
+          <h2 class="category-title">
+            <span class="icon">${cat.icon}</span>
+            ${cat.categoryName}
+            <span class="count">${filteredList.length} 题</span>
+          </h2>
+          <div class="question-list">
+            ${filteredList.map((q, i) => renderQuestionCard(q, cat.category + '_' + i)).join('')}
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+      
+      // 绑定展开/收起
+      document.querySelectorAll('.question-card').forEach(card => {
+        card.addEventListener('click', function() {
+          this.classList.toggle('expanded');
+        });
+      });
+    }
+
+    // 渲染单个题目卡片
+    function renderQuestionCard(question, id) {
+      const difficultyMap = {
+        easy: { label: '简单', class: 'difficulty-easy' },
+        medium: { label: '中等', class: 'difficulty-medium' },
+        hard: { label: '困难', class: 'difficulty-hard' }
+      };
+      const diff = difficultyMap[question.difficulty];
+      
+      return `
+        <div class="card question-card" id="${id}">
+          <div class="question-header">
+            <h3 class="question-title">${question.title}</h3>
+            <div class="question-meta">
+              <span class="question-tag ${diff.class}">${diff.label}</span>
+            </div>
+          </div>
+          <div class="question-answer">
+            <div class="answer-label">分析思路</div>
+            <div class="answer-content">${question.answer}</div>
+          </div>
+          <div class="expand-hint">点击展开答案 →</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,597 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>行业知识图谱 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(52, 211, 153, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* 图谱容器 */
+    .graph-wrapper {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+
+    #graphChart {
+      width: 100%;
+      height: 600px;
+    }
+
+    /* 图例说明 */
+    .legend-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .icon {
+      font-size: 24px;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .legend-card {
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .legend-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .legend-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 6px;
+    }
+
+    .legend-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* 产业链说明 */
+    .chain-section {
+      margin-bottom: 40px;
+    }
+
+    .chain-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .chain-card {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .chain-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .chain-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+
+    .chain-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .chain-industries {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .chain-tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--glass-highlight);
+      color: var(--text);
+    }
+
+    /* 关系列表 */
+    .relations-section {
+      margin-bottom: 40px;
+    }
+
+    .relation-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 12px;
+    }
+
+    .relation-item {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+    }
+
+    .relation-from {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .relation-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+    }
+
+    .relation-to {
+      font-weight: 500;
+      color: var(--accent-2);
+    }
+
+    .relation-desc {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      #graphChart {
+        height: 400px;
+      }
+
+      .chain-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+      <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1 class="page-title">行业知识图谱</h1>
+    <p class="page-desc">7大行业产业链关系可视化，理解上下游关联与价值传导</p>
+  </div>
+
+  <div class="container">
+    <!-- 图谱 -->
+    <div class="graph-wrapper">
+      <div id="graphChart"></div>
+    </div>
+
+    <!-- 产业链分层 -->
+    <div class="chain-section">
+      <h2 class="section-title">
+        <span class="icon">🏗️</span>
+        产业链分层
+      </h2>
+      <div class="chain-cards">
+        <div class="card chain-card">
+          <div class="chain-icon">⛏️</div>
+          <h3 class="chain-title">上游 · 原材料</h3>
+          <p class="chain-desc">提供基础原材料和核心零部件，是产业链的起点</p>
+          <div class="chain-industries">
+            <span class="chain-tag">🧲 磁性材料</span>
+            <span class="chain-tag">🏺 陶瓷建材</span>
+          </div>
+        </div>
+        <div class="card chain-card">
+          <div class="chain-icon">🏭</div>
+          <h3 class="chain-title">中游 · 制造与服务</h3>
+          <p class="chain-desc">将原材料加工成产品，或提供核心流通服务</p>
+          <div class="chain-industries">
+            <span class="chain-tag">⚡ 新能源汽车</span>
+            <span class="chain-tag">🚚 物流供应链</span>
+          </div>
+        </div>
+        <div class="card chain-card">
+          <div class="chain-icon">🛒</div>
+          <h3 class="chain-title">下游 · 终端消费</h3>
+          <p class="chain-desc">直接面向消费者，实现产品最终价值</p>
+          <div class="chain-industries">
+            <span class="chain-tag">🏪 零售</span>
+            <span class="chain-tag">🛍️ 电商</span>
+            <span class="chain-tag">🏖️ 文旅</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 核心关系 -->
+    <div class="relations-section">
+      <h2 class="section-title">
+        <span class="icon">🔗</span>
+        核心关联关系
+      </h2>
+      <div class="relation-list">
+        <div class="card relation-item">
+          <span class="relation-from">磁材</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">新能源</span>
+          <span class="relation-desc">永磁电机核心材料</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">陶瓷</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">新能源</span>
+          <span class="relation-desc">结构陶瓷/电池隔膜</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">新能源</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">物流</span>
+          <span class="relation-desc">动力电池运输需求</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">新能源</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">零售</span>
+          <span class="relation-desc">终端门店销售</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">物流</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">电商</span>
+          <span class="relation-desc">履约配送核心支撑</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">物流</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">零售</span>
+          <span class="relation-desc">仓储配送一体化</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">电商</span>
+          <span class="relation-arrow">↔</span>
+          <span class="relation-to">零售</span>
+          <span class="relation-desc">线上线下全渠道</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">文旅</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">零售</span>
+          <span class="relation-desc">景区商业消费</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">陶瓷</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">零售</span>
+          <span class="relation-desc">建材家居零售</span>
+        </div>
+        <div class="card relation-item">
+          <span class="relation-from">电商</span>
+          <span class="relation-arrow">→</span>
+          <span class="relation-to">文旅</span>
+          <span class="relation-desc">OTA在线预订</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 图例 -->
+    <div class="legend-section">
+      <h2 class="section-title">
+        <span class="icon">🎨</span>
+        节点说明
+      </h2>
+      <div class="legend-grid">
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #38bdf8;"></div>
+          <div>
+            <h3 class="legend-name">新能源汽车</h3>
+            <p class="legend-desc">中游制造，产业链核心枢纽，连接上游材料和下游销售</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #a78bfa;"></div>
+          <div>
+            <h3 class="legend-name">跨境电商</h3>
+            <p class="legend-desc">下游渠道，连接生产与消费，依赖物流履约</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #34d399;"></div>
+          <div>
+            <h3 class="legend-name">零售行业</h3>
+            <p class="legend-desc">终端消费，所有行业的最终出口，全渠道融合</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #fbbf24;"></div>
+          <div>
+            <h3 class="legend-name">文旅行业</h3>
+            <p class="legend-desc">服务消费，带动零售、餐饮等周边消费</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #f87171;"></div>
+          <div>
+            <h3 class="legend-name">物流供应链</h3>
+            <p class="legend-desc">基础设施，连接所有行业的流通纽带</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #94a3b8;"></div>
+          <div>
+            <h3 class="legend-name">磁性材料</h3>
+            <p class="legend-desc">上游原材料，新能源电机核心部件</p>
+          </div>
+        </div>
+        <div class="card legend-card">
+          <div class="legend-dot" style="background: #fb923c;"></div>
+          <div>
+            <h3 class="legend-name">陶瓷建材</h3>
+            <p class="legend-desc">上游材料，应用于建筑、新能源、电子等领域</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 初始化图谱
+    const chart = echarts.init(document.getElementById('graphChart'));
+
+    const option = {
+      backgroundColor: 'transparent',
+      tooltip: {
+        formatter: function(params) {
+          if (params.dataType === 'node') {
+            return `<div style="font-weight:600; margin-bottom:4px;">${params.name}</div>
+                    <div style="font-size:12px; color:#94a3b8;">${params.data.desc || ''}</div>
+                    <div style="font-size:11px; color:#64748b; margin-top:4px;">点击跳转详情 →</div>`;
+          } else {
+            return `<div style="font-size:12px;">${params.data.source} → ${params.data.target}</div>
+                    <div style="font-size:11px; color:#94a3b8;">${params.data.relation || ''}</div>`;
+          }
+        },
+        backgroundColor: 'rgba(15, 23, 42, 0.95)',
+        borderColor: 'rgba(148, 163, 184, 0.2)',
+        borderWidth: 1,
+        textStyle: {
+          color: '#e2e8f0'
+        }
+      },
+      legend: {
+        show: false
+      },
+      series: [
+        {
+          type: 'graph',
+          layout: 'force',
+          force: {
+            repulsion: 800,
+            gravity: 0.1,
+            edgeLength: [100, 200],
+            friction: 0.6
+          },
+          roam: true,
+          draggable: true,
+          label: {
+            show: true,
+            position: 'bottom',
+            distance: 10,
+            fontSize: 14,
+            fontWeight: 500,
+            color: '#e2e8f0'
+          },
+          edgeLabel: {
+            show: true,
+            fontSize: 11,
+            color: '#64748b',
+            formatter: function(params) {
+              return params.data.relation;
+            }
+          },
+          lineStyle: {
+            color: 'source',
+            curveness: 0.15,
+            width: 2,
+            opacity: 0.6
+          },
+          emphasis: {
+            focus: 'adjacency',
+            lineStyle: {
+              width: 4,
+              opacity: 1
+            },
+            label: {
+              fontSize: 16,
+              fontWeight: 600
+            }
+          },
+          data: [
+            {
+              name: '磁性材料',
+              symbolSize: 50,
+              itemStyle: { color: '#94a3b8' },
+              desc: '上游原材料行业',
+              url: '磁材/portfolio-sitihua-digital-platform.html',
+              category: 0
+            },
+            {
+              name: '陶瓷建材',
+              symbolSize: 50,
+              itemStyle: { color: '#fb923c' },
+              desc: '上游材料行业',
+              url: '陶瓷/index.html',
+              category: 0
+            },
+            {
+              name: '新能源汽车',
+              symbolSize: 70,
+              itemStyle: { color: '#38bdf8' },
+              desc: '中游制造，产业链核心',
+              url: '新能源/index.html',
+              category: 1
+            },
+            {
+              name: '物流供应链',
+              symbolSize: 65,
+              itemStyle: { color: '#f87171' },
+              desc: '基础设施，全行业纽带',
+              url: '物流/index.html',
+              category: 1
+            },
+            {
+              name: '零售行业',
+              symbolSize: 65,
+              itemStyle: { color: '#34d399' },
+              desc: '终端消费，全行业出口',
+              url: '零售/index.html',
+              category: 2
+            },
+            {
+              name: '跨境电商',
+              symbolSize: 55,
+              itemStyle: { color: '#a78bfa' },
+              desc: '线上渠道，新型零售',
+              url: '电商/index.html',
+              category: 2
+            },
+            {
+              name: '文旅行业',
+              symbolSize: 55,
+              itemStyle: { color: '#fbbf24' },
+              desc: '服务消费',
+              url: '旅游业/index.html',
+              category: 2
+            }
+          ],
+          links: [
+            { source: '磁性材料', target: '新能源汽车', relation: '永磁电机' },
+            { source: '陶瓷建材', target: '新能源汽车', relation: '结构陶瓷' },
+            { source: '新能源汽车', target: '物流供应链', relation: '电池运输' },
+            { source: '新能源汽车', target: '零售行业', relation: '终端销售' },
+            { source: '物流供应链', target: '电商', relation: '履约配送' },
+            { source: '物流供应链', target: '零售行业', relation: '仓储配送' },
+            { source: '电商', target: '零售行业', relation: '全渠道融合' },
+            { source: '文旅行业', target: '零售行业', relation: '商业消费' },
+            { source: '陶瓷建材', target: '零售行业', relation: '建材零售' },
+            { source: '电商', target: '文旅行业', relation: 'OTA预订' }
+          ]
+        }
+      ]
+    };
+
+    chart.setOption(option);
+
+    // 点击节点跳转
+    chart.on('click', function(params) {
+      if (params.dataType === 'node' && params.data.url) {
+        window.location.href = params.data.url;
+      }
+    });
+
+    // 响应式
+    window.addEventListener('resize', function() {
+      chart.resize();
+    });
+  </script>
+</body>
+</html>
+
+
+

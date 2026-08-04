@@ -1,0 +1,777 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>在线教育 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(236, 72, 153, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ec4899, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      font-size: 24px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+
+    /* 指标分类 */
+    .metric-category {
+      margin-bottom: 32px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 16px;
+      padding-left: 12px;
+      border-left: 3px solid #ec4899;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .metric-card:hover {
+      border-color: #ec4899;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(236, 72, 153, 0.1);
+    }
+
+    .metric-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .metric-formula {
+      font-size: 12px;
+      color: #ec4899;
+      font-family: 'Courier New', monospace;
+      margin: 0 0 8px;
+      padding: 4px 8px;
+      background: rgba(236, 72, 153, 0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .metric-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 分析框架 */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .framework-card {
+      padding: 24px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .framework-card:hover {
+      border-color: #ec4899;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(236, 72, 153, 0.15);
+    }
+
+    .framework-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .framework-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .framework-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .framework-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #ec4899;
+    }
+
+    /* 漏斗模型 */
+    .funnel-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .funnel-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .funnel-bar {
+      height: 48px;
+      background: linear-gradient(90deg, rgba(236, 72, 153, 0.3), rgba(244, 114, 182, 0.2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .funnel-bar:hover {
+      background: linear-gradient(90deg, rgba(236, 72, 153, 0.4), rgba(244, 114, 182, 0.3));
+    }
+
+    .funnel-rate {
+      width: 80px;
+      text-align: right;
+      font-size: 12px;
+      color: #ec4899;
+      font-weight: 500;
+      margin-left: 12px;
+    }
+
+    /* 典型场景 */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .scenario-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .scenario-card:hover {
+      border-color: #ec4899;
+      transform: translateY(-2px);
+    }
+
+    .scenario-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .scenario-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .scenario-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+  
+    /* 北极星指标 */
+    .north-star-section {
+      margin-bottom: 48px;
+    }
+
+    .north-star-card {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.08));
+      border: 1px solid rgba(236, 72, 153, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .north-star-icon {
+      font-size: 64px;
+      flex-shrink: 0;
+    }
+
+    .north-star-content {
+      flex: 1;
+    }
+
+    .north-star-label {
+      font-size: 12px;
+      color: #ec4899;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .north-star-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 10px;
+    }
+
+    .north-star-formula {
+      font-size: 13px;
+      color: #ec4899;
+      font-family: "JetBrains Mono", monospace;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: rgba(236, 72, 153, 0.1);
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .north-star-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .north-star-why {
+      flex-shrink: 0;
+      width: 280px;
+      padding-left: 32px;
+      border-left: 1px solid var(--glass-border);
+    }
+
+    .north-star-why-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .north-star-why-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .north-star-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .north-star-why {
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+        padding-left: 0;
+        padding-top: 20px;
+        width: 100%;
+      }
+    }
+</style>
+</head>
+<body>
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="零售/index.html" class="nav-dropdown-item">零售行业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item active">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <header class="page-header">
+    <h1 class="page-title">在线教育</h1>
+    <p class="page-desc">
+      从获客到续费的全链路数据驱动增长，转化漏斗、学习效果与用户留存的精细化运营
+    </p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">26+</div>
+        <div class="stat-label">核心指标</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">分析维度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">分析框架</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">典型场景</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- 北极星指标 -->
+    <section class="section north-star-section">
+      <div class="north-star-card">
+        <div class="north-star-icon">⭐</div>
+        <div class="north-star-content">
+          <div class="north-star-label">North Star Metric</div>
+          <h2 class="north-star-name">续费率</h2>
+          <div class="north-star-formula">续费用户数 ÷ 到期用户数 × 100%</div>
+          <p class="north-star-desc">
+            在线教育的核心质量指标，反映课程质量、教学效果和用户满意度。高续费率意味着用户认可课程价值，愿意持续学习。
+          </p>
+        </div>
+        <div class="north-star-why">
+          <div class="north-star-why-title">💡 为什么是它？</div>
+          <p class="north-star-why-text">
+            获客成本高是教育行业的痛点，只看新增不看留存就是"漏水的桶"。续费率直接反映了课程质量和用户满意度，是教育业务能否健康发展的关键。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心指标体系 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">📊</span>
+        在线教育核心指标体系
+      </h2>
+      <p class="section-desc">获客、转化、学习、留存、活跃、收入六大维度的经典指标</p>
+
+      <div class="metric-category">
+        <h3 class="category-title">🎯 获客指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增付费用户</div>
+            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点，健康值 < 客单价的1/3</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">线索量</h3>
+            <div class="metric-formula">留下联系方式的用户数</div>
+            <p class="metric-desc">有效销售线索数量，是转化漏斗的起点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">注册用户 ÷ 访问用户</div>
+            <p class="metric-desc">从访问到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道ROI</h3>
+            <div class="metric-formula">渠道带来收入 ÷ 渠道投入</div>
+            <p class="metric-desc">各获客渠道的投入产出比，指导投放优化</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💳 转化指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">试听率</h3>
+            <div class="metric-formula">试听用户 ÷ 线索/注册用户</div>
+            <p class="metric-desc">用户参与试听课的比例，是转化的关键第一步</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">报名转化率</h3>
+            <div class="metric-formula">付费用户 ÷ 试听用户</div>
+            <p class="metric-desc">从试听到付费的转化率，是销售能力的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">整体用户的付费转化比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的消费金额</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">📚 学习指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">完课率</h3>
+            <div class="metric-formula">完成课程用户 ÷ 购买课程用户</div>
+            <p class="metric-desc">课程完成比例，直接影响续费率和用户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出勤率</h3>
+            <div class="metric-formula">实际上课人数 ÷ 应上课人数</div>
+            <p class="metric-desc">直播课/小班课的出勤比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">作业提交率</h3>
+            <div class="metric-formula">提交作业用户 ÷ 上课用户</div>
+            <p class="metric-desc">作业完成情况，反映学习投入度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习时长</h3>
+            <div class="metric-formula">人均每日/每周学习时间</div>
+            <p class="metric-desc">用户学习投入的时间长度，反映学习粘性</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">🔄 留存指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">续费率</h3>
+            <div class="metric-formula">续费用户 ÷ 到期用户</div>
+            <p class="metric-desc">课程到期后续费的比例，是在线教育的生命线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">购买多次用户 ÷ 付费用户</div>
+            <p class="metric-desc">用户购买多门课程的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转介绍率</h3>
+            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
+            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费</div>
+            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">👥 用户活跃指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">DAU / MAU</h3>
+            <div class="metric-formula">日活 / 月活用户数</div>
+            <p class="metric-desc">用户活跃度基础指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日/7日留存</h3>
+            <div class="metric-formula">第N天仍活跃用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户留存曲线，反映产品粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃率</h3>
+            <div class="metric-formula">活跃用户 ÷ 总用户</div>
+            <p class="metric-desc">付费用户的活跃比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习频次</h3>
+            <div class="metric-formula">周/月学习次数</div>
+            <p class="metric-desc">用户平均学习频率，反映学习习惯</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💰 收入指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">总销售额，反映业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户</div>
+            <p class="metric-desc">每活跃用户平均收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">毛利率</h3>
+            <div class="metric-formula">(收入 - 成本) ÷ 收入</div>
+            <p class="metric-desc">课程毛利率，反映盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退费率</h3>
+            <div class="metric-formula">退费金额 ÷ 总销售额</div>
+            <p class="metric-desc">退费比例，反映课程质量和用户满意度</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分析框架 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🧩</span>
+        在线教育分析框架
+      </h2>
+      <p class="section-desc">在线教育经典的增长与运营分析方法论</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🔻</div>
+          <h3 class="framework-name">学习转化漏斗</h3>
+          <ul class="framework-list">
+            <li><strong>曝光</strong> - 广告/内容曝光量</li>
+            <li><strong>点击</strong> - 点击进入落地页</li>
+            <li><strong>注册/留资</strong> - 留下联系方式</li>
+            <li><strong>试听</strong> - 参与试听课</li>
+            <li><strong>付费</strong> - 购买正价课</li>
+            <li><strong>完课</strong> - 完成课程学习</li>
+            <li><strong>续费/转介绍</strong> - 长期价值</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🏴‍☠️</div>
+          <h3 class="framework-name">AARRR 海盗模型</h3>
+          <ul class="framework-list">
+            <li><strong>Acquisition 获客</strong> - 渠道投放与内容引流</li>
+            <li><strong>Activation 激活</strong> - 注册→试听→首次学习</li>
+            <li><strong>Retention 留存</strong> - 持续学习与课程完课</li>
+            <li><strong>Revenue 收入</strong> - 付费转化与续费</li>
+            <li><strong>Referral 推荐</strong> - 转介绍与裂变增长</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">👥</div>
+          <h3 class="framework-name">用户分层运营</h3>
+          <ul class="framework-list">
+            <li><strong>潜在用户</strong> - 访问/注册未付费</li>
+            <li><strong>试听用户</strong> - 参与试听课</li>
+            <li><strong>付费用户</strong> - 购买正价课程</li>
+            <li><strong>高价值用户</strong> - 多门课/高客单</li>
+            <li><strong>推荐用户</strong> - 主动转介绍</li>
+            <li>不同层级采用不同运营策略</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📚</div>
+          <h3 class="framework-name">课程生命周期</h3>
+          <ul class="framework-list">
+            <li><strong>研发期</strong> - 课程设计与制作</li>
+            <li><strong>测试期</strong> - 小范围测试与迭代</li>
+            <li><strong>成长期</strong> - 大规模推广与销售</li>
+            <li><strong>成熟期</strong> - 稳定销售与运营</li>
+            <li><strong>衰退期</strong> - 销量下降与迭代/下架</li>
+            <li>全周期数据监控与优化</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 转化漏斗可视化 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🔻</span>
+        经典转化漏斗模型
+      </h2>
+      <p class="section-desc">在线教育从曝光到续费的完整转化路径</p>
+      <div class="funnel-container">
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 100%;">曝光 → 点击</div>
+          <div class="funnel-rate">~5%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 85%;">点击 → 注册/留资</div>
+          <div class="funnel-rate">~20%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 70%;">注册 → 试听</div>
+          <div class="funnel-rate">~30%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 55%;">试听 → 付费</div>
+          <div class="funnel-rate">~15%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 40%;">付费 → 完课</div>
+          <div class="funnel-rate">~60%</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-bar" style="width: 25%;">完课 → 续费</div>
+          <div class="funnel-rate">~50%</div>
+        </div>
+      </div>
+      <p style="text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 16px;">
+        * 数据为行业参考值，具体因品类、客单价、运营模式而异
+      </p>
+    </section>
+
+    <!-- 典型分析场景 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">💡</span>
+        典型分析场景
+      </h2>
+      <p class="section-desc">在线教育数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">📢</div>
+          <h3 class="scenario-name">获客渠道ROI分析</h3>
+          <p class="scenario-desc">各渠道获客成本、转化质量、LTV对比，优化投放预算分配</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🔻</div>
+          <h3 class="scenario-name">转化漏斗优化</h3>
+          <p class="scenario-desc">定位漏斗各环节流失原因，针对性优化落地页、试听体验和销售话术</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📚</div>
+          <h3 class="scenario-name">完课率提升</h3>
+          <p class="scenario-desc">分析学习行为数据，识别流失节点，优化课程设计和学习提醒机制</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🔄</div>
+          <h3 class="scenario-name">续费率提升</h3>
+          <p class="scenario-desc">构建续费预测模型，识别高流失风险用户，制定精准挽留策略</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🚀</div>
+          <h3 class="scenario-name">转介绍裂变增长</h3>
+          <p class="scenario-desc">设计裂变机制，分析分享行为和转化效果，实现低成本用户增长</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+

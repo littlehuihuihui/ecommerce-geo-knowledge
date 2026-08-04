@@ -1,0 +1,884 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>学习路径 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(248, 113, 113, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* 路径切换标签 */
+    .path-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .path-tab {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .path-tab:hover {
+      background: var(--glass-highlight);
+      color: var(--text);
+    }
+
+    .path-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      border-color: transparent;
+    }
+
+    /* 技能树时间线 */
+    .skill-tree {
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .skill-tree::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2), var(--success));
+      opacity: 0.3;
+    }
+
+    .stage {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .stage-dot {
+      position: absolute;
+      left: -33px;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+      z-index: 1;
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stage-icon {
+      font-size: 28px;
+    }
+
+    .stage-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .stage-duration {
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--glass-highlight);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .stage-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0 0 16px;
+      line-height: 1.6;
+    }
+
+    .skill-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .skill-card {
+      padding: 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+    }
+
+    .skill-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .skill-name .icon {
+      font-size: 16px;
+    }
+
+    .skill-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0 0 10px;
+    }
+
+    .skill-level {
+      display: flex;
+      gap: 3px;
+    }
+
+    .level-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--glass-border);
+    }
+
+    .level-dot.filled {
+      background: var(--accent);
+    }
+
+    /* 行业入门指南 */
+    .industry-section {
+      margin-top: 60px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 0 0 32px;
+    }
+
+    .industry-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .industry-card {
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .industry-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .industry-icon {
+      font-size: 32px;
+    }
+
+    .industry-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .industry-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0 0 16px;
+    }
+
+    .industry-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .industry-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .industry-step:last-child {
+      border-bottom: none;
+    }
+
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .step-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* 推荐资源 */
+    .resources-section {
+      margin-top: 60px;
+    }
+
+    .resource-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .resource-card {
+      padding: 20px;
+    }
+
+    .resource-type {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .resource-type.book { background: var(--accent-2-soft); color: var(--accent-2); }
+    .resource-type.course { background: rgba(52, 211, 153, 0.15); color: var(--success); }
+    .resource-type.tool { background: rgba(251, 191, 36, 0.15); color: var(--warning); }
+    .resource-type.website { background: rgba(248, 113, 113, 0.15); color: var(--danger); }
+
+    .resource-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+
+    .resource-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .skill-tree {
+        padding-left: 30px;
+      }
+
+      .skill-tree::before {
+        left: 10px;
+      }
+
+      .stage-dot {
+        left: -28px;
+      }
+
+      .skill-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+      <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1 class="page-title">学习路径规划</h1>
+    <p class="page-desc">从入门到精通，体系化掌握行业数据分析能力</p>
+  </div>
+
+  <div class="container">
+    <!-- 路径切换 -->
+    <div class="path-tabs">
+      <span class="path-tab active" data-path="analyst">数据分析师</span>
+      <span class="path-tab" data-path="product">数据产品经理</span>
+      <span class="path-tab" data-path="bi">BI 工程师</span>
+    </div>
+
+    <!-- 技能树 -->
+    <div id="skillTree">
+      <!-- 由 JS 动态生成 -->
+    </div>
+
+    <!-- 行业入门指南 -->
+    <div class="industry-section">
+      <h2 class="section-title">各行业入门指南</h2>
+      <p class="section-subtitle">快速了解一个行业，4步建立认知框架</p>
+      <div class="industry-grid">
+        <!-- 零售 -->
+        <div class="card industry-card" onclick="window.location.href='零售/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🏪</span>
+            <h3 class="industry-name">零售行业</h3>
+          </div>
+          <p class="industry-desc">最贴近生活的行业，数据体系成熟，入门友好</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解人货场</strong>：人（客流/会员）、货（商品/库存）、场（门店/渠道）</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：销售额、坪效、人效、客单价、连带率、库存周转</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：RFM、ABC分类、同店分析、品类管理</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：门店经营分析、会员运营分析、促销效果评估</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 电商 -->
+        <div class="card industry-card" onclick="window.location.href='电商/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🛒</span>
+            <h3 class="industry-name">电商行业</h3>
+          </div>
+          <p class="industry-desc">数据最丰富的行业，玩法最多，迭代最快</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解流量漏斗</strong>：曝光→点击→加购→下单→支付→复购</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：GMV、转化率、客单价、复购率、CAC、LTV</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：归因分析、A/B测试、用户分层、同期群分析</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：转化漏斗优化、用户增长分析、营销ROI评估</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 物流 -->
+        <div class="card industry-card" onclick="window.location.href='物流/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🚚</span>
+            <h3 class="industry-name">物流供应链</h3>
+          </div>
+          <p class="industry-desc">实体经济的血管，重视效率与成本，门槛适中</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解供应链</strong>：采购→仓储→运输→配送，端到端链路</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：库存周转、OTD、装载率、物流费用率、完美订单率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：ABC分类、牛鞭效应、安全库存、网络优化</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：库存优化、配送路线规划、成本分析</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 文旅 -->
+        <div class="card industry-card" onclick="window.location.href='旅游业/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🏖️</span>
+            <h3 class="industry-name">文旅行业</h3>
+          </div>
+          <p class="industry-desc">服务消费代表，收益管理是核心，有意思有挑战</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解业务模式</strong>：门票+住宿+餐饮+零售，多业态组合</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：RevPAR、OCC、ADR、入园人次、NPS</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：收益管理、动态定价、需求预测、渠道管理</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：定价策略优化、客流预测、会员运营</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 新能源 -->
+        <div class="card industry-card" onclick="window.location.href='新能源/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">⚡</span>
+            <h3 class="industry-name">新能源汽车</h3>
+          </div>
+          <p class="industry-desc">风口行业，产业链长，薪资高，需要一定行业知识</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解产业链</strong>：上游材料→中游电池/整车→下游销售/服务</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：销量、市占率、产能利用率、毛利率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：竞品对标、供应链风险分析、市场细分</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：竞争格局分析、用户画像、渠道效率分析</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 制造 -->
+        <div class="card industry-card" onclick="window.location.href='陶瓷/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🏭</span>
+            <h3 class="industry-name">制造业</h3>
+          </div>
+          <p class="industry-desc">实体经济根基，重视生产效率与质量，需求稳定</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解生产流程</strong>：原料→加工→组装→质检→入库</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：OEE、良率、产能利用率、制造成本</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：精益生产、6S、SPC、5Why分析</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：OEE提升、良率改善、成本控制</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- 推荐资源 -->
+    <div class="resources-section">
+      <h2 class="section-title">推荐学习资源</h2>
+      <p class="section-subtitle">精选书籍、课程、工具，帮你高效学习</p>
+      <div class="resource-cards">
+        <div class="card resource-card">
+          <span class="resource-type book">书籍</span>
+          <h3 class="resource-name">《精益数据分析》</h3>
+          <p class="resource-desc">数据分析入门必读，涵盖各行业的数据分析框架和方法，案例丰富</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type book">书籍</span>
+          <h3 class="resource-name">《数据化管理》</h3>
+          <p class="resource-desc">零售行业数据分析经典，黄成明著，人货场体系讲得非常透彻</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type book">书籍</span>
+          <h3 class="resource-name">《供应链管理》</h3>
+          <p class="resource-desc">苏尼尔·乔普拉著，物流供应链入门经典，系统全面</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type book">书籍</span>
+          <h3 class="resource-name">《收益管理》</h3>
+          <p class="resource-desc">酒店/文旅行业必看，动态定价与库存管理的方法论</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type course">课程</span>
+          <h3 class="resource-name">SQL 必知必会</h3>
+          <p class="resource-desc">数据分析师基本功，刷完 LeetCode SQL 50题就够用了</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type course">课程</span>
+          <h3 class="resource-name">统计学基础</h3>
+          <p class="resource-desc">描述统计、假设检验、回归分析，是数据分析的理论基础</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type tool">工具</span>
+          <h3 class="resource-name">Excel 高级功能</h3>
+          <p class="resource-desc">数据透视表、VLOOKUP、函数公式，职场必备技能</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type tool">工具</span>
+          <h3 class="resource-name">BI 工具</h3>
+          <p class="resource-desc">Tableau / Power BI / FineBI，选一个深入学习，做可视化看板</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type tool">工具</span>
+          <h3 class="resource-name">Python 数据分析</h3>
+          <p class="resource-desc">Pandas / NumPy / Matplotlib，处理复杂数据和自动化分析</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type website">网站</span>
+          <h3 class="resource-name">人人都是产品经理</h3>
+          <p class="resource-desc">数据产品经理必看，有很多行业案例和方法论文章</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type website">网站</span>
+          <h3 class="resource-name">36氪 / 虎嗅</h3>
+          <p class="resource-desc">了解行业动态和商业逻辑，培养商业敏感度</p>
+        </div>
+        <div class="card resource-card">
+          <span class="resource-type website">网站</span>
+          <h3 class="resource-name">行业报告网站</h3>
+          <p class="resource-desc">艾瑞、易观、QuestMobile，看行业报告快速了解一个行业</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 学习路径数据
+    const paths = {
+      analyst: {
+        name: '数据分析师',
+        stages: [
+          {
+            icon: '🌱',
+            title: '入门阶段',
+            duration: '1-3 个月',
+            desc: '打好基础，掌握核心工具和思维方式',
+            skills: [
+              { name: 'Excel 高级功能', icon: '📊', desc: '数据透视表、VLOOKUP、常用函数', level: 3 },
+              { name: 'SQL 基础', icon: '💾', desc: '增删改查、多表关联、子查询', level: 3 },
+              { name: '统计学基础', icon: '📐', desc: '描述统计、概率分布、假设检验', level: 2 },
+              { name: '数据思维', icon: '🧠', desc: '结构化思维、逻辑推理、业务理解', level: 2 }
+            ]
+          },
+          {
+            icon: '🌿',
+            title: '进阶阶段',
+            duration: '3-6 个月',
+            desc: '深入分析方法，能独立完成分析项目',
+            skills: [
+              { name: 'SQL 进阶', icon: '💾', desc: '窗口函数、性能优化、复杂查询', level: 4 },
+              { name: 'BI 可视化', icon: '📈', desc: 'Tableau/PowerBI、看板设计、数据讲故事', level: 3 },
+              { name: '分析方法论', icon: '🔍', desc: '漏斗分析、同期群、RFM、ABC分类', level: 4 },
+              { name: 'Python 基础', icon: '🐍', desc: 'Pandas、NumPy、数据清洗和处理', level: 2 },
+              { name: '业务理解', icon: '💼', desc: '深入1-2个行业，理解业务逻辑', level: 3 }
+            ]
+          },
+          {
+            icon: '🌳',
+            title: '高级阶段',
+            duration: '6-12 个月',
+            desc: '成为领域专家，能驱动业务决策',
+            skills: [
+              { name: '高级分析方法', icon: '🎯', desc: '归因分析、A/B测试、预测建模', level: 4 },
+              { name: '机器学习基础', icon: '🤖', desc: '分类、回归、聚类、特征工程', level: 3 },
+              { name: '数据体系建设', icon: '🏗️', desc: '指标体系、数据治理、数据文化', level: 4 },
+              { name: '业务洞察', icon: '💡', desc: '发现问题、定位根因、给出建议', level: 5 },
+              { name: '沟通表达', icon: '🗣️', desc: '汇报技巧、向上管理、跨部门协作', level: 4 }
+            ]
+          },
+          {
+            icon: '🏆',
+            title: '专家阶段',
+            duration: '1-3 年',
+            desc: '行业专家，战略层面思考，带团队',
+            skills: [
+              { name: '战略思维', icon: '♟️', desc: '行业趋势、竞争格局、战略规划', level: 5 },
+              { name: '团队管理', icon: '👥', desc: '招人、培养、绩效管理、团队建设', level: 4 },
+              { name: '数据驱动文化', icon: '🌟', desc: '推动组织数据化转型', level: 5 }
+            ]
+          }
+        ]
+      },
+      product: {
+        name: '数据产品经理',
+        stages: [
+          {
+            icon: '🌱',
+            title: '入门阶段',
+            duration: '1-3 个月',
+            desc: '产品基础 + 数据基础，双能力起步',
+            skills: [
+              { name: '产品经理基础', icon: '📋', desc: '需求分析、PRD、原型设计、项目管理', level: 3 },
+              { name: 'SQL 基础', icon: '💾', desc: '能自己查数，不依赖分析师', level: 3 },
+              { name: '数据分析基础', icon: '📊', desc: '理解指标、会看报表、能做简单分析', level: 3 },
+              { name: '数据仓库概念', icon: '🏢', desc: '了解数仓分层、维度建模基本概念', level: 2 }
+            ]
+          },
+          {
+            icon: '🌿',
+            title: '进阶阶段',
+            duration: '3-6 个月',
+            desc: '深入数据产品，能独立负责一个产品',
+            skills: [
+              { name: 'BI 产品设计', icon: '📈', desc: '看板设计、指标体系、自助分析', level: 4 },
+              { name: '数据中台', icon: '🏛️', desc: '数据资产管理、数据服务、数据中台架构', level: 3 },
+              { name: '用户画像', icon: '👤', desc: '标签体系、画像系统、分群应用', level: 3 },
+              { name: 'A/B 实验平台', icon: '🧪', desc: '实验设计、分流、统计显著性', level: 3 },
+              { name: '数据治理', icon: '🛡️', desc: '数据质量、元数据、数据安全', level: 3 }
+            ]
+          },
+          {
+            icon: '🌳',
+            title: '高级阶段',
+            duration: '6-12 个月',
+            desc: '资深数据产品，能规划数据产品体系',
+            skills: [
+              { name: '数据产品体系', icon: '🏗️', desc: '从0到1搭建数据产品矩阵', level: 4 },
+              { name: '算法产品', icon: '🤖', desc: '推荐系统、风控模型、AI产品', level: 3 },
+              { name: '商业化', icon: '💰', desc: '数据产品商业化、SaaS模式', level: 3 },
+              { name: '行业深度', icon: '🎯', desc: '深入理解行业，做行业解决方案', level: 4 }
+            ]
+          },
+          {
+            icon: '🏆',
+            title: '专家阶段',
+            duration: '1-3 年',
+            desc: '数据产品专家，战略层面规划',
+            skills: [
+              { name: '数据战略', icon: '♟️', desc: '公司级数据战略规划', level: 5 },
+              { name: '组织设计', icon: '🏢', desc: '数据团队搭建、数据组织架构', level: 4 },
+              { name: '行业影响力', icon: '🌟', desc: '行业布道、标准制定', level: 5 }
+            ]
+          }
+        ]
+      },
+      bi: {
+        name: 'BI 工程师',
+        stages: [
+          {
+            icon: '🌱',
+            title: '入门阶段',
+            duration: '1-3 个月',
+            desc: 'SQL + BI工具，快速上手做报表',
+            skills: [
+              { name: 'SQL 精通', icon: '💾', desc: '复杂查询、性能优化、存储过程', level: 4 },
+              { name: 'BI 工具', icon: '📊', desc: 'Tableau/PowerBI/FineBI 至少精通一个', level: 4 },
+              { name: '数据建模', icon: '🏗️', desc: '维度建模、星型模型、雪花模型', level: 3 },
+              { name: 'Excel 高级', icon: '📈', desc: '复杂报表、宏、VBA基础', level: 3 }
+            ]
+          },
+          {
+            icon: '🌿',
+            title: '进阶阶段',
+            duration: '3-6 个月',
+            desc: '数仓开发 + ETL，能做完整项目',
+            skills: [
+              { name: '数据仓库', icon: '🏢', desc: '数仓分层、ODS/DWD/DWS/ADS', level: 4 },
+              { name: 'ETL 工具', icon: '🔄', desc: 'Kettle/DataX/Informatica', level: 3 },
+              { name: 'Python 开发', icon: '🐍', desc: '数据脚本、自动化、简单爬虫', level: 3 },
+              { name: 'Linux 基础', icon: '🐧', desc: '常用命令、Shell脚本', level: 2 },
+              { name: '性能优化', icon: '⚡', desc: 'SQL优化、索引、查询调优', level: 3 }
+            ]
+          },
+          {
+            icon: '🌳',
+            title: '高级阶段',
+            duration: '6-12 个月',
+            desc: '大数据技术栈，架构能力',
+            skills: [
+              { name: '大数据组件', icon: '🐘', desc: 'Hadoop、Spark、Hive、Flink', level: 4 },
+              { name: '实时数仓', icon: '⚡', desc: 'Kafka、Flink、实时计算', level: 3 },
+              { name: '数据治理', icon: '🛡️', desc: '数据质量、元数据、血缘', level: 3 },
+              { name: '系统架构', icon: '🏛️', desc: '数据平台架构设计、技术选型', level: 4 }
+            ]
+          },
+          {
+            icon: '🏆',
+            title: '专家阶段',
+            duration: '1-3 年',
+            desc: '数据架构师，公司级数据平台',
+            skills: [
+              { name: '数据平台架构', icon: '🏗️', desc: '从0到1搭建数据平台', level: 5 },
+              { name: '技术选型', icon: '🔧', desc: '技术栈选型、成本评估', level: 5 },
+              { name: '团队管理', icon: '👥', desc: '带团队、做技术规划', level: 4 }
+            ]
+          }
+        ]
+      }
+    };
+
+    let currentPath = 'analyst';
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      renderSkillTree();
+      
+      // 绑定路径切换
+      document.querySelectorAll('.path-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.path-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentPath = this.dataset.path;
+          renderSkillTree();
+        });
+      });
+    });
+
+    // 渲染技能树
+    function renderSkillTree() {
+      const container = document.getElementById('skillTree');
+      const path = paths[currentPath];
+      
+      let html = '<div class="skill-tree">';
+      
+      path.stages.forEach((stage, index) => {
+        html += `
+          <div class="stage">
+            <div class="stage-dot"></div>
+            <div class="stage-header">
+              <span class="stage-icon">${stage.icon}</span>
+              <h2 class="stage-title">${stage.title}</h2>
+              <span class="stage-duration">${stage.duration}</span>
+            </div>
+            <p class="stage-desc">${stage.desc}</p>
+            <div class="skill-cards">
+              ${stage.skills.map(skill => renderSkillCard(skill)).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    // 渲染技能卡片
+    function renderSkillCard(skill) {
+      const dots = Array(5).fill(0).map((_, i) => 
+        i < skill.level ? '<span class="level-dot filled"></span>' : '<span class="level-dot"></span>'
+      ).join('');
+      
+      return `
+        <div class="skill-card">
+          <h4 class="skill-name">
+            <span class="icon">${skill.icon}</span>
+            ${skill.name}
+          </h4>
+          <p class="skill-desc">${skill.desc}</p>
+          <div class="skill-level">${dots}</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+
+
+

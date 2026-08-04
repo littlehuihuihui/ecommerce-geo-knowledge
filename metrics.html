@@ -1,0 +1,694 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>指标字典 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56, 189, 248, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    /* 筛选栏 */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      background: var(--glass);
+      color: var(--text);
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .filter-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .filter-tag:hover {
+      background: var(--glass-highlight);
+      color: var(--text);
+    }
+
+    .filter-tag.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: transparent;
+    }
+
+    /* 指标卡片网格 */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      padding: 20px;
+      cursor: pointer;
+    }
+
+    .metric-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .metric-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .metric-category {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--glass-highlight);
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .metric-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .metric-formula {
+      font-size: 12px;
+      padding: 8px 12px;
+      background: var(--bg-elevated);
+      border-radius: 6px;
+      color: var(--accent);
+      font-family: "JetBrains Mono", monospace;
+      margin-bottom: 12px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .metric-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .metric-tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .metric-tag.purple {
+      background: var(--accent-2-soft);
+      color: var(--accent-2);
+    }
+
+    .metric-tag.green {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--success);
+    }
+
+    .metric-tag.yellow {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--warning);
+    }
+
+    /* 分类区块 */
+    .category-section {
+      margin-bottom: 48px;
+    }
+
+    .category-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-title .icon {
+      font-size: 24px;
+    }
+
+    .category-title .count {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      background: var(--glass-highlight);
+      padding: 2px 10px;
+      border-radius: 100px;
+    }
+
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 15px;
+    }
+
+    /* 高亮搜索词 */
+    .highlight {
+      background: rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .stats-bar {
+        gap: 24px;
+      }
+
+      .stat-num {
+        font-size: 22px;
+      }
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+    <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <div class="page-header">
+    <h1 class="page-title">指标字典</h1>
+    <p class="page-desc">覆盖 12 大行业的核心数据指标，包含定义、公式与适用场景</p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num" id="totalMetrics">0</div>
+        <div class="stat-label">总指标数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12</div>
+        <div class="stat-label">覆盖行业</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12</div>
+        <div class="stat-label">分类维度</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 筛选栏 -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" placeholder="搜索指标名称、定义、公式..." id="searchInput" />
+      </div>
+      <div class="filter-tags" id="filterTags">
+        <span class="filter-tag active" data-category="all">全部</span>
+        <span class="filter-tag" data-category="retail">零售</span>
+        <span class="filter-tag" data-category="logistics">物流</span>
+        <span class="filter-tag" data-category="tourism">文旅</span>
+        <span class="filter-tag" data-category="ecommerce">电商</span>
+        <span class="filter-tag" data-category="newenergy">新能源</span>
+        <span class="filter-tag" data-category="manufacturing">制造</span>
+        <span class="filter-tag" data-category="saas">SaaS</span>
+        <span class="filter-tag" data-category="game">游戏</span>
+        <span class="filter-tag" data-category="finance">金融</span>
+        <span class="filter-tag" data-category="education">在线教育</span>
+        <span class="filter-tag" data-category="liveecommerce">直播电商</span>
+        <span class="filter-tag" data-category="locallife">本地生活</span>
+      </div>
+    </div>
+
+    <!-- 指标列表 -->
+    <div id="metricsContainer">
+      <!-- 由 JS 动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-icon">🔍</div>
+      <div class="empty-state-text">没有找到匹配的指标，换个关键词试试？</div>
+    </div>
+  </div>
+
+  <script>
+    // 指标数据
+    const metrics = [
+      // ===== 零售行业 =====
+      { name: "销售额", category: "retail", categoryName: "零售", icon: "🏪", desc: "一定周期内门店/企业实现的销售总收入，是最核心的经营指标。", formula: "销售额 = 客单价 × 交易笔数 = 客流量 × 转化率 × 客单价", tags: ["核心指标", "销售"] },
+      { name: "坪效", category: "retail", categoryName: "零售", icon: "🏪", desc: "每平方米营业面积产生的销售额，衡量门店空间利用效率。", formula: "坪效 = 销售额 ÷ 营业面积", tags: ["效率指标"] },
+      { name: "人效", category: "retail", categoryName: "零售", icon: "🏪", desc: "人均销售额，衡量人力资源利用效率。", formula: "人效 = 销售额 ÷ 员工人数", tags: ["效率指标"] },
+      { name: "客流量", category: "retail", categoryName: "零售", icon: "🏪", desc: "一定周期内进入门店的顾客数量，是销售的基础。", formula: "客流量 = 进店人数（可通过客流统计设备获取）", tags: ["流量指标"] },
+      { name: "客单价", category: "retail", categoryName: "零售", icon: "🏪", desc: "平均每笔交易的金额，反映顾客消费能力。", formula: "客单价 = 销售额 ÷ 交易笔数", tags: ["核心指标"] },
+      { name: "连带率", category: "retail", categoryName: "零售", icon: "🏪", desc: "平均每笔交易购买的商品件数，反映交叉销售能力。", formula: "连带率 = 销售总件数 ÷ 交易笔数", tags: ["销售指标"] },
+      { name: "SSSG（同店销售增长）", category: "retail", categoryName: "零售", icon: "🏪", desc: "Same Store Sales Growth，可比门店销售额同比增长率，剔除新店影响。", formula: "SSSG = (本期同店销售额 - 去年同期同店销售额) ÷ 去年同期同店销售额", tags: ["增长指标"] },
+      { name: "动销率", category: "retail", categoryName: "零售", icon: "🏪", desc: "有销售记录的SKU占总SKU的比例，反映商品结构健康度。", formula: "动销率 = 有销售的SKU数 ÷ 总SKU数 × 100%", tags: ["商品指标"] },
+      { name: "售罄率", category: "retail", categoryName: "零售", icon: "🏪", desc: "一定周期内销售数量占进货数量的比例，衡量商品销售速度。", formula: "售罄率 = 累计销售数量 ÷ 总进货数量 × 100%", tags: ["商品指标"] },
+      { name: "库存周转天数", category: "retail", categoryName: "零售", icon: "🏪", desc: "库存从入库到销售出去平均需要的天数，越短越好。", formula: "库存周转天数 = 平均库存 ÷ 日均销售成本", tags: ["库存指标", "通用"] },
+      { name: "缺货率", category: "retail", categoryName: "零售", icon: "🏪", desc: "顾客需求的商品缺货的比例，直接影响销售损失。", formula: "缺货率 = 缺货次数 ÷ 总需求次数 × 100%", tags: ["库存指标"] },
+      { name: "呆滞库存占比", category: "retail", categoryName: "零售", icon: "🏪", desc: "长期未销售的库存占总库存的比例，反映库存健康度。", formula: "呆滞库存占比 = 呆滞库存金额 ÷ 总库存金额 × 100%", tags: ["库存指标", "通用"] },
+      { name: "复购率", category: "retail", categoryName: "零售", icon: "🏪", desc: "一定周期内重复购买的会员占比，反映用户忠诚度。", formula: "复购率 = 复购会员数 ÷ 总购买会员数 × 100%", tags: ["会员指标", "通用"] },
+      { name: "RFM 分层", category: "retail", categoryName: "零售", icon: "🏪", desc: "基于最近一次购买时间(Recency)、购买频率(Frequency)、购买金额(Monetary)对用户进行价值分层。", formula: "R值 + F值 + M值 → 用户分层（重要价值/重要发展/重要保持/重要挽留等）", tags: ["会员指标", "分析模型", "通用"] },
+      { name: "促销 ROI", category: "retail", categoryName: "零售", icon: "🏪", desc: "促销活动的投入产出比，衡量营销效率。", formula: "促销ROI = (促销带来的增量销售额 - 促销成本) ÷ 促销成本", tags: ["营销指标"] },
+      { name: "CAC（获客成本）", category: "retail", categoryName: "零售", icon: "🏪", desc: "Customer Acquisition Cost，获取一个新客户的平均成本。", formula: "CAC = 营销总费用 ÷ 新增客户数", tags: ["营销指标", "通用"] },
+
+      // ===== 物流行业 =====
+      { name: "库存周转天数", category: "logistics", categoryName: "物流", icon: "🚚", desc: "库存从入库到出库平均需要的天数，衡量仓储运营效率。", formula: "库存周转天数 = 平均库存金额 ÷ 日均销售成本", tags: ["仓储指标", "通用"] },
+      { name: "库容利用率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "仓库实际使用容量占总容量的比例，衡量空间利用效率。", formula: "库容利用率 = 已使用库容 ÷ 总库容 × 100%", tags: ["仓储指标"] },
+      { name: "库存准确率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "系统库存与实际库存的一致程度，账实相符率。", formula: "库存准确率 = 账实相符的SKU数 ÷ 盘点总SKU数 × 100%", tags: ["仓储指标"] },
+      { name: "订单准时发货率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "在承诺时间内完成发货的订单占比。", formula: "准时发货率 = 准时发货订单数 ÷ 总发货订单数 × 100%", tags: ["仓储指标", "服务指标"] },
+      { name: "拣货准确率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "拣货作业中准确无误的比例。", formula: "拣货准确率 = (总拣货行数 - 错误行数) ÷ 总拣货行数 × 100%", tags: ["仓储指标"] },
+      { name: "准时送达率 (OTD)", category: "logistics", categoryName: "物流", icon: "🚚", desc: "On Time Delivery，按约定时间准时送达的订单比例。", formula: "OTD = 准时送达订单数 ÷ 总送达订单数 × 100%", tags: ["运输指标", "核心指标"] },
+      { name: "车辆装载率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "车辆实际装载量占额定载重的比例，衡量运输资源利用率。", formula: "装载率 = 实际装载重量(体积) ÷ 额定载重(容积) × 100%", tags: ["运输指标", "效率指标"] },
+      { name: "吨公里成本", category: "logistics", categoryName: "物流", icon: "🚚", desc: "每吨货物运输一公里的成本，衡量运输效率的核心指标。", formula: "吨公里成本 = 运输总成本 ÷ (运输重量 × 运输距离)", tags: ["运输指标", "成本指标"] },
+      { name: "配送破损率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "运输过程中发生破损的货物比例。", formula: "破损率 = 破损件数 ÷ 总运输件数 × 100%", tags: ["运输指标", "质量指标"] },
+      { name: "平均配送时效", category: "logistics", categoryName: "物流", icon: "🚚", desc: "从发货到签收的平均时间，衡量配送速度。", formula: "平均配送时效 = 总配送时长 ÷ 总订单数", tags: ["运输指标"] },
+      { name: "返程空驶率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "车辆返程时空载行驶的比例，越低越好。", formula: "空驶率 = 空驶里程 ÷ 总行驶里程 × 100%", tags: ["运输指标", "效率指标"] },
+      { name: "完美订单率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "同时满足准时、准确、完好、单证齐全的订单比例，供应链综合服务水平。", formula: "完美订单率 = 准时率 × 准确率 × 完好率 × 单证准确率", tags: ["供应链指标", "核心指标"] },
+      { name: "需求预测准确率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "需求预测与实际需求的吻合程度，影响库存和补货。", formula: "预测准确率 = 1 - |实际值 - 预测值| ÷ 实际值", tags: ["供应链指标"] },
+      { name: "订单履约周期", category: "logistics", categoryName: "物流", icon: "🚚", desc: "从下单到收货的完整周期，衡量供应链响应速度。", formula: "履约周期 = 下单时间 → 收货时间的总时长", tags: ["供应链指标"] },
+      { name: "物流费用率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流费用占销售额的比例，衡量物流成本控制水平。", formula: "物流费用率 = 物流总费用 ÷ 销售额 × 100%", tags: ["成本指标", "核心指标"] },
+      { name: "单件物流成本", category: "logistics", categoryName: "物流", icon: "🚚", desc: "平均每件包裹的物流成本。", formula: "单件物流成本 = 物流总费用 ÷ 总订单数", tags: ["成本指标"] },
+
+      // ===== 文旅行业 =====
+      { name: "入园人次", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "一定周期内进入景区/乐园的总人数，最核心的客流指标。", formula: "入园人次 = 实际入园游客数量（含年卡/免票）", tags: ["核心指标", "客流"] },
+      { name: "平均票价 (ASP)", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "Average Selling Price，平均每张票的实际售价。", formula: "ASP = 门票总收入 ÷ 售票张数", tags: ["收入指标"] },
+      { name: "票券核销率", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "已售出票券中实际被使用的比例，反映预售转化效果。", formula: "核销率 = 已核销票数 ÷ 已售票数 × 100%", tags: ["运营指标"] },
+      { name: "提前购票占比", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "提前（非当日）购票的游客比例，用于客流预测。", formula: "提前购票占比 = 提前购票人数 ÷ 总购票人数 × 100%", tags: ["运营指标"] },
+      { name: "RevPAR", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "Revenue Per Available Room，每间可售房收入，酒店业核心指标。", formula: "RevPAR = 客房总收入 ÷ 可售房总数 = 平均房价 × 入住率", tags: ["酒店指标", "核心指标"] },
+      { name: "入住率 (OCC)", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "Occupancy Rate，实际售出房间占可售房间的比例。", formula: "OCC = 实际售出房晚数 ÷ 可售房晚数 × 100%", tags: ["酒店指标"] },
+      { name: "平均房价 (ADR)", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "Average Daily Rate，平均每间售出客房的房价。", formula: "ADR = 客房总收入 ÷ 售出房晚数", tags: ["酒店指标"] },
+      { name: "收益捕获率 (Yield)", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "实际收益与理论最大收益的比值，衡量收益管理效果。", formula: "Yield = 实际客房收入 ÷ (客房总数 × 最高房价) × 100%", tags: ["酒店指标", "收益管理"] },
+      { name: "渠道销售占比", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "各销售渠道（OTA/直销/旅行社等）的销售额占比。", formula: "渠道占比 = 该渠道销售额 ÷ 总销售额 × 100%", tags: ["渠道指标", "通用"] },
+      { name: "直订占比", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "通过自有渠道（官网/小程序/电话）直接预订的比例，越高佣金成本越低。", formula: "直订占比 = 直订订单数 ÷ 总订单数 × 100%", tags: ["渠道指标"] },
+      { name: "复购率", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "一定周期内重复消费的用户比例，反映用户忠诚度。", formula: "复购率 = 复购用户数 ÷ 总消费用户数 × 100%", tags: ["用户指标", "通用"] },
+      { name: "NPS / 满意度", category: "tourism", categoryName: "文旅", icon: "🏖️", desc: "Net Promoter Score，净推荐值，衡量用户口碑与推荐意愿。", formula: "NPS = 推荐者占比(9-10分) - 贬损者占比(0-6分)", tags: ["用户指标", "体验指标", "通用"] },
+
+      // ===== 电商行业 =====
+      { name: "GMV", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "Gross Merchandise Volume，成交总额，包含付款和未付款的订单金额。", formula: "GMV = 访客数 × 转化率 × 客单价", tags: ["核心指标", "通用"] },
+      { name: "转化率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "访问用户中完成购买的比例，电商最核心的转化指标。", formula: "转化率 = 下单用户数 ÷ 访客数 × 100%", tags: ["核心指标", "转化", "通用"] },
+      { name: "支付成功率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "下单后成功完成支付的比例，受支付渠道、网络等影响。", formula: "支付成功率 = 成功支付订单数 ÷ 下单订单数 × 100%", tags: ["转化指标"] },
+      { name: "取消率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "下单后被取消的订单比例，反映订单质量。", formula: "取消率 = 取消订单数 ÷ 总下单数 × 100%", tags: ["运营指标"] },
+      { name: "拒收率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "COD（货到付款）订单中被拒收的比例，跨境电商尤其关注。", formula: "拒收率 = 拒收订单数 ÷ 发货订单数 × 100%", tags: ["运营指标"] },
+      { name: "履约时效", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "从下单到签收的平均时长，衡量物流履约速度。", formula: "履约时效 = 总履约时长 ÷ 总订单数", tags: ["物流指标", "通用"] },
+      { name: "SLA 达成率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "Service Level Agreement，承诺服务水平的达成比例。", formula: "SLA达成率 = 达成SLA的订单数 ÷ 总订单数 × 100%", tags: ["服务指标", "通用"] },
+      { name: "AI 可见性与引用份额", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "GEO核心指标，品牌/产品在AI搜索结果中被提及和引用的比例。", formula: "AI引用份额 = 品牌被AI引用次数 ÷ 行业总引用次数 × 100%", tags: ["GEO指标", "AI时代"] },
+      { name: "结构化事实覆盖度", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "GEO指标，品牌/产品的结构化信息（参数、价格、评价等）被AI掌握的程度。", formula: "结构化事实覆盖度 = 已覆盖事实点 ÷ 总事实点 × 100%", tags: ["GEO指标", "AI时代"] },
+
+      // ===== 新能源汽车 =====
+      { name: "销量 / 市占率", category: "newenergy", categoryName: "新能源", icon: "⚡", desc: "一定周期内的汽车销售量及在整体市场中的占有率。", formula: "市占率 = 品牌销量 ÷ 市场总销量 × 100%", tags: ["核心指标"] },
+      { name: "产能利用率", category: "newenergy", categoryName: "新能源", icon: "⚡", desc: "实际产量占设计产能的比例，衡量生产效率。", formula: "产能利用率 = 实际产量 ÷ 设计产能 × 100%", tags: ["生产指标", "通用"] },
+      { name: "电池能量密度", category: "newenergy", categoryName: "新能源", icon: "⚡", desc: "单位重量/体积电池储存的电量，核心技术指标。", formula: "能量密度 = 电池容量 ÷ 电池重量(Wh/kg) 或 ÷ 体积(Wh/L)", tags: ["技术指标"] },
+      { name: "充电基础设施覆盖率", category: "newenergy", categoryName: "新能源", icon: "⚡", desc: "充电桩/站在区域内的覆盖程度，影响用户体验。", formula: "覆盖率 = 已建充电桩数 ÷ 规划需求数 × 100%", tags: ["基建指标"] },
+
+      // ===== 制造业 =====
+      { name: "OEE（设备综合效率）", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "Overall Equipment Effectiveness，设备综合效率，衡量设备利用效率。", formula: "OEE = 时间稼动率 × 性能稼动率 × 良品率", tags: ["生产指标", "核心指标"] },
+      { name: "良率 / 不良品率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "合格产品占总产品的比例，衡量生产质量。", formula: "良率 = 合格品数量 ÷ 总生产数量 × 100%", tags: ["质量指标", "通用"] },
+      { name: "产值", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "一定周期内生产的产品总价值。", formula: "产值 = 产量 × 产品单价", tags: ["生产指标"] },
+      { name: "毛利率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "毛利占销售收入的比例，反映盈利能力。", formula: "毛利率 = (销售收入 - 销售成本) ÷ 销售收入 × 100%", tags: ["财务指标", "通用"] },
+      { name: "制造成本", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "生产过程中发生的各项成本总和，包括直接材料、直接人工、制造费用。", formula: "制造成本 = 直接材料 + 直接人工 + 制造费用", tags: ["成本指标"] },
+      { name: "经销商分级", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "根据销量、回款、配合度等对经销商进行等级划分。", formula: "综合评分 = 销量(40%) + 回款(30%) + 配合度(20%) + 增长(10%)", tags: ["渠道指标"] },
+
+      // ===== SaaS / 企业服务 =====
+      { name: "MRR（月度经常性收入）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Monthly Recurring Revenue，每月稳定的订阅收入，SaaS最核心指标。", formula: "MRR = 所有活跃订阅用户的月费之和", tags: ["核心指标", "收入"] },
+      { name: "ARR（年度经常性收入）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Annual Recurring Revenue，年度经常性收入，MRR的年化。", formula: "ARR = MRR × 12", tags: ["收入指标"] },
+      { name: "ARPU（每用户平均收入）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Average Revenue Per User，平均每个用户贡献的收入。", formula: "ARPU = 总收入 ÷ 付费用户数", tags: ["收入指标", "通用"] },
+      { name: "客户流失率（Churn）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "一定周期内流失的客户占比，SaaS的生命线指标。", formula: "客户流失率 = 流失客户数 ÷ 期初客户数 × 100%", tags: ["核心指标", "留存"] },
+      { name: "收入流失率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "因客户流失导致的收入损失比例，比客户数流失更重要。", formula: "收入流失率 = 流失MRR ÷ 期初MRR × 100%", tags: ["留存指标"] },
+      { name: "NDR（净收入留存率）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Net Dollar Retention，净收入留存，考虑扩张和流失后的留存。", formula: "NDR = (期初MRR + 扩张MRR - 流失MRR - 收缩MRR) ÷ 期初MRR", tags: ["核心指标", "留存"] },
+      { name: "GRR（总收入留存率）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Gross Revenue Retention，毛收入留存，只考虑流失不考虑扩张。", formula: "GRR = (期初MRR - 流失MRR - 收缩MRR) ÷ 期初MRR", tags: ["留存指标"] },
+      { name: "CAC（客户获取成本）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Customer Acquisition Cost，获取一个新客户的平均成本。", formula: "CAC = 销售与营销总费用 ÷ 新增客户数", tags: ["获客指标", "通用"] },
+      { name: "LTV（客户终身价值）", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "Life Time Value，客户在整个生命周期贡献的总价值。", formula: "LTV = ARPU × 客户生命周期 = ARPU ÷ 月流失率", tags: ["核心指标", "通用"] },
+      { name: "LTV / CAC 比值", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "客户终身价值与获客成本的比值，衡量商业模式健康度。", formula: "LTV/CAC = 客户终身价值 ÷ 获客成本（健康值 > 3）", tags: ["核心指标", "效率"] },
+      { name: "CAC 回收期", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "收回获客成本需要的时间，越短越好。", formula: "CAC回收期 = CAC ÷ 月均ARPU（月）", tags: ["效率指标"] },
+      { name: "新增 MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "新客户带来的MRR增量。", formula: "新增MRR = 新客户订阅收入之和", tags: ["增长指标"] },
+      { name: "扩张 MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "老客户增购/升级带来的MRR增量。", formula: "扩张MRR = 老客户增购收入之和", tags: ["增长指标"] },
+      { name: "流失 MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "客户流失导致的MRR损失。", formula: "流失MRR = 流失客户的MRR之和", tags: ["流失指标"] },
+      { name: "净新增 MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "新增+扩张-流失后的净MRR增长。", formula: "净新增MRR = 新增MRR + 扩张MRR - 流失MRR", tags: ["增长指标"] },
+      { name: "DAU / MAU", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "日活跃用户/月活跃用户，比值反映产品粘性。", formula: "DAU/MAU = 日活 ÷ 月活 × 100%", tags: ["活跃指标", "通用"] },
+      { name: "激活率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "注册用户中完成关键动作（激活）的比例。", formula: "激活率 = 激活用户数 ÷ 注册用户数 × 100%", tags: ["转化指标"] },
+
+      // ===== 游戏行业 =====
+      { name: "DAU（日活跃用户）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Daily Active Users，每日活跃用户数，衡量游戏热度。", formula: "DAU = 当日登录游戏的独立用户数", tags: ["核心指标", "通用"] },
+      { name: "MAU（月活跃用户）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Monthly Active Users，每月活跃用户数，衡量用户规模。", formula: "MAU = 当月登录游戏的独立用户数", tags: ["规模指标", "通用"] },
+      { name: "DAU / MAU 比值", category: "game", categoryName: "游戏", icon: "🎮", desc: "日活与月活的比值，反映用户粘性和产品吸引力。", formula: "DAU/MAU = 平均DAU ÷ MAU × 100%", tags: ["粘性指标", "通用"] },
+      { name: "次日留存率", category: "game", categoryName: "游戏", icon: "🎮", desc: "新用户次日仍登录的比例，衡量新手体验质量。", formula: "次日留存 = 次日登录用户 ÷ 当日新增用户 × 100%", tags: ["留存指标", "核心指标"] },
+      { name: "7日留存率", category: "game", categoryName: "游戏", icon: "🎮", desc: "新用户第7日仍登录的比例，衡量中期留存。", formula: "7日留存 = 第7日登录用户 ÷ 当日新增用户 × 100%", tags: ["留存指标"] },
+      { name: "30日留存率", category: "game", categoryName: "游戏", icon: "🎮", desc: "新用户第30日仍登录的比例，衡量长期留存。", formula: "30日留存 = 第30日登录用户 ÷ 当日新增用户 × 100%", tags: ["留存指标"] },
+      { name: "付费率", category: "game", categoryName: "游戏", icon: "🎮", desc: "付费用户占活跃用户的比例，衡量变现能力。", formula: "付费率 = 付费用户数 ÷ 活跃用户数 × 100%", tags: ["核心指标", "变现"] },
+      { name: "ARPU（每用户平均收入）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Average Revenue Per User，平均每个活跃用户的收入。", formula: "ARPU = 总收入 ÷ 活跃用户数", tags: ["收入指标", "通用"] },
+      { name: "ARPPU（每付费用户平均收入）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Average Revenue Per Paying User，平均每个付费用户的收入。", formula: "ARPPU = 总收入 ÷ 付费用户数", tags: ["收入指标"] },
+      { name: "LTV（用户终身价值）", category: "game", categoryName: "游戏", icon: "🎮", desc: "用户从进入游戏到流失的整个生命周期贡献的总收入。", formula: "LTV = ARPU × 平均生命周期 = ARPU ÷ 月流失率", tags: ["核心指标", "通用"] },
+      { name: "首充转化率", category: "game", categoryName: "游戏", icon: "🎮", desc: "新用户中完成首次充值的比例，衡量付费转化效果。", formula: "首充转化率 = 首充用户数 ÷ 新增用户数 × 100%", tags: ["转化指标"] },
+      { name: "平均在线时长", category: "game", categoryName: "游戏", icon: "🎮", desc: "用户平均每天在游戏中的时长，反映产品吸引力。", formula: "平均在线时长 = 总在线时长 ÷ 活跃用户数", tags: ["粘性指标"] },
+      { name: "PCU（最高同时在线）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Peak Concurrent Users，同时在线人数峰值，衡量游戏热度峰值。", formula: "PCU = 当日同时在线最高人数", tags: ["热度指标"] },
+
+      // ===== 金融行业 =====
+      { name: "逾期率", category: "finance", categoryName: "金融", icon: "💰", desc: "逾期贷款占总贷款的比例，衡量信贷资产质量。", formula: "逾期率 = 逾期贷款余额 ÷ 总贷款余额 × 100%", tags: ["核心指标", "风控"] },
+      { name: "不良率", category: "finance", categoryName: "金融", icon: "💰", desc: "不良贷款占总贷款的比例，更严格的资产质量指标。", formula: "不良率 = 不良贷款余额 ÷ 总贷款余额 × 100%", tags: ["风控指标", "核心指标"] },
+      { name: "坏账率 / 核销率", category: "finance", categoryName: "金融", icon: "💰", desc: "最终核销的坏账占比，实际损失率。", formula: "坏账率 = 核销坏账金额 ÷ 总放款金额 × 100%", tags: ["风控指标"] },
+      { name: "拨备覆盖率", category: "finance", categoryName: "金融", icon: "💰", desc: "贷款损失准备金覆盖不良贷款的比例，风险抵御能力。", formula: "拨备覆盖率 = 贷款损失准备 ÷ 不良贷款余额 × 100%", tags: ["风控指标"] },
+      { name: "AUM（管理资产规模）", category: "finance", categoryName: "金融", icon: "💰", desc: "Assets Under Management，管理的客户资产总规模。", formula: "AUM = 所有客户管理资产之和", tags: ["规模指标", "核心指标"] },
+      { name: "CAC（获客成本）", category: "finance", categoryName: "金融", icon: "💰", desc: "获取一个新客户的平均成本，金融行业获客成本通常较高。", formula: "CAC = 营销总费用 ÷ 新增客户数", tags: ["获客指标", "通用"] },
+      { name: "转化率", category: "finance", categoryName: "金融", icon: "💰", desc: "从线索到开户/购买产品的转化比例。", formula: "转化率 = 转化客户数 ÷ 线索数 × 100%", tags: ["转化指标", "通用"] },
+      { name: "净息差（NIM）", category: "finance", categoryName: "金融", icon: "💰", desc: "Net Interest Margin，利息收入与利息支出的差额占生息资产的比例。", formula: "净息差 = (利息收入 - 利息支出) ÷ 生息资产平均余额", tags: ["核心指标", "盈利"] },
+      { name: "ROA（资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Assets，净利润与总资产的比值，资产盈利能力。", formula: "ROA = 净利润 ÷ 平均总资产 × 100%", tags: ["盈利指标", "通用"] },
+      { name: "ROE（净资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Equity，净利润与净资产的比值，股东回报水平。", formula: "ROE = 净利润 ÷ 平均净资产 × 100%", tags: ["盈利指标", "通用"] },
+      { name: "欺诈率", category: "finance", categoryName: "金融", icon: "💰", desc: "欺诈交易占总交易的比例，反欺诈效果指标。", formula: "欺诈率 = 欺诈交易数 ÷ 总交易数 × 100%", tags: ["风控指标"] },
+      { name: "交叉销售率", category: "finance", categoryName: "金融", icon: "💰", desc: "客户购买多个产品的比例，衡量客户深度运营效果。", formula: "交叉销售率 = 购买多产品客户数 ÷ 总客户数 × 100%", tags: ["运营指标"] },
+
+      // ===== 在线教育 =====
+      { name: "CAC（获客成本）", category: "education", categoryName: "在线教育", icon: "📚", desc: "获取一个新付费用户的平均成本，教育行业获客成本高。", formula: "CAC = 营销总费用 ÷ 新增付费用户数", tags: ["核心指标", "获客"] },
+      { name: "注册转化率", category: "education", categoryName: "在线教育", icon: "📚", desc: "从访客到注册用户的转化比例。", formula: "注册转化率 = 注册用户数 ÷ 访客数 × 100%", tags: ["转化指标"] },
+      { name: "试听率", category: "education", categoryName: "在线教育", icon: "📚", desc: "注册用户中参加试听课程的比例。", formula: "试听率 = 试听用户数 ÷ 注册用户数 × 100%", tags: ["转化指标"] },
+      { name: "报名转化率", category: "education", categoryName: "在线教育", icon: "📚", desc: "试听用户中最终报名付费的比例，核心转化指标。", formula: "报名转化率 = 付费用户数 ÷ 试听用户数 × 100%", tags: ["核心指标", "转化"] },
+      { name: "完课率", category: "education", categoryName: "在线教育", icon: "📚", desc: "报名用户中完成课程学习的比例，衡量学习效果和体验。", formula: "完课率 = 完课用户数 ÷ 报名用户数 × 100%", tags: ["核心指标", "学习"] },
+      { name: "续费率", category: "education", categoryName: "在线教育", icon: "📚", desc: "课程到期后续费的用户比例，核心留存指标。", formula: "续费率 = 续费用户数 ÷ 到期用户数 × 100%", tags: ["核心指标", "留存"] },
+      { name: "复购率", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户购买多门课程的比例，衡量用户价值。", formula: "复购率 = 复购用户数 ÷ 总付费用户数 × 100%", tags: ["留存指标"] },
+      { name: "转介绍率", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户推荐带来的新用户比例，口碑传播效果。", formula: "转介绍率 = 推荐新用户数 ÷ 总新用户数 × 100%", tags: ["增长指标"] },
+      { name: "LTV（用户终身价值）", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户整个生命周期贡献的总收入。", formula: "LTV = 客单价 × 平均购买次数", tags: ["核心指标", "通用"] },
+      { name: "DAU / MAU", category: "education", categoryName: "在线教育", icon: "📚", desc: "日活跃/月活跃用户，比值反映学习粘性。", formula: "DAU/MAU = 日活 ÷ 月活 × 100%", tags: ["活跃指标", "通用"] },
+      { name: "GMV", category: "education", categoryName: "在线教育", icon: "📚", desc: "总成交额，包含所有课程销售收入。", formula: "GMV = 课程单价 × 销售数量", tags: ["规模指标", "通用"] },
+      { name: "退费率", category: "education", categoryName: "在线教育", icon: "📚", desc: "退费用户占总付费用户的比例，反映课程质量和满意度。", formula: "退费率 = 退费用户数 ÷ 付费用户数 × 100%", tags: ["质量指标"] },
+
+      // ===== 直播电商 =====
+      { name: "GMV", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播总成交额，直播电商最核心的结果指标。", formula: "GMV = 客单价 × 订单数", tags: ["核心指标", "通用"] },
+      { name: "累计观看人数", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播期间累计观看的独立用户数，反映直播覆盖规模。", formula: "累计观看UV = 整场直播独立访客数", tags: ["流量指标"] },
+      { name: "平均停留时长", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "用户平均在直播间停留的时间，直播间吸引力的核心指标。", formula: "平均停留时长 = 总观看时长 ÷ 观看人数", tags: ["核心指标", "粘性"] },
+      { name: "互动率", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "有互动行为的用户占比，整体反映直播间活跃度。", formula: "互动率 = 互动用户数 ÷ 观看用户数 × 100%", tags: ["互动指标"] },
+      { name: "商品点击率", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "用户点击商品的比例，反映商品吸引力和讲解效果。", formula: "商品点击率 = 点击商品用户 ÷ 观看用户 × 100%", tags: ["转化指标"] },
+      { name: "加购率", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "点击后加入购物车的比例，反映购买意向。", formula: "加购率 = 加购用户 ÷ 点击商品用户 × 100%", tags: ["转化指标"] },
+      { name: "下单转化率", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "从观看用户到下单用户的整体转化比例。", formula: "下单转化率 = 下单用户 ÷ 观看用户 × 100%", tags: ["核心指标", "转化"] },
+      { name: "UV 价值", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "每个观看用户贡献的销售额，衡量流量变现效率。", formula: "UV价值 = GMV ÷ 观看UV", tags: ["效率指标", "核心指标"] },
+      { name: "GPM", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "千次曝光带来的销售额，衡量流量质量和转化效率。", formula: "GPM = GMV ÷ 千次曝光", tags: ["效率指标"] },
+      { name: "客单价", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "平均每笔订单的金额，反映消费水平。", formula: "客单价 = GMV ÷ 订单数", tags: ["收入指标", "通用"] },
+      { name: "退货率", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "退货订单比例，反映商品质量和直播真实性。", formula: "退货率 = 退货订单 ÷ 总订单 × 100%", tags: ["质量指标"] },
+      { name: "投流 ROI", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "付费投流的投入产出比，衡量推广效果。", formula: "投流ROI = 带来GMV ÷ 投放消耗", tags: ["投流指标"] },
+
+      // ===== 本地生活 / O2O =====
+      { name: "GMV", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平台总交易额，本地生活最核心的规模指标。", formula: "GMV = 订单量 × 客单价", tags: ["核心指标", "通用"] },
+      { name: "商家总数", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平台入驻商家总数量，反映供给端规模。", formula: "商家总数 = 累计入驻商家数", tags: ["供给指标"] },
+      { name: "活跃商家数", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "有订单/有营业的活跃商家数量，反映供给端健康度。", formula: "活跃商家数 = 当期有交易的商家数", tags: ["供给指标"] },
+      { name: "用户总数", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平台注册用户总规模，反映需求端规模。", formula: "用户总数 = 累计注册用户数", tags: ["需求指标"] },
+      { name: "活跃用户数", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "有下单/浏览行为的活跃用户数。", formula: "活跃用户数 = 当期有行为的用户数", tags: ["活跃指标", "通用"] },
+      { name: "下单频次", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "用户平均下单次数，反映用户粘性和消费习惯。", formula: "下单频次 = 订单数 ÷ 活跃用户数", tags: ["粘性指标"] },
+      { name: "客单价", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平均每笔订单的金额，反映消费水平。", formula: "客单价 = GMV ÷ 订单数", tags: ["收入指标", "通用"] },
+      { name: "复购率", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "用户重复购买的比例，反映用户忠诚度。", formula: "复购率 = 多次下单用户 ÷ 下单用户 × 100%", tags: ["留存指标", "通用"] },
+      { name: "平均配送时效", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "从下单到送达的平均时间，核心体验指标。", formula: "平均配送时效 = 总配送时长 ÷ 订单数", tags: ["配送指标", "核心指标"] },
+      { name: "准时率", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "按时送达的订单比例，衡量配送服务质量。", formula: "准时率 = 准时送达订单 ÷ 总订单 × 100%", tags: ["配送指标"] },
+      { name: "补贴率", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "补贴金额占GMV的比例，反映烧钱程度。", formula: "补贴率 = 补贴金额 ÷ GMV × 100%", tags: ["运营指标"] },
+      { name: "Take Rate（抽佣率）", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平台抽佣比例，反映变现能力。", formula: "Take Rate = 平台收入 ÷ GMV × 100%", tags: ["盈利指标", "核心指标"] },
+    ];
+
+    // 当前筛选状态
+    let currentCategory = 'all';
+    let currentSearch = '';
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      // 设置总数
+      document.getElementById('totalMetrics').textContent = metrics.length;
+      
+      // 渲染指标
+      renderMetrics();
+      
+      // 绑定搜索
+      document.getElementById('searchInput').addEventListener('input', function(e) {
+        currentSearch = e.target.value.trim().toLowerCase();
+        renderMetrics();
+      });
+      
+      // 绑定导航搜索
+      document.getElementById('navSearch').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          document.getElementById('searchInput').value = this.value;
+          currentSearch = this.value.trim().toLowerCase();
+          renderMetrics();
+          document.getElementById('searchInput').focus();
+        }
+      });
+      
+      // 绑定筛选标签
+      document.querySelectorAll('.filter-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+          document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentCategory = this.dataset.category;
+          renderMetrics();
+        });
+      });
+      
+      // 从URL获取搜索词
+      const urlParams = new URLSearchParams(window.location.search);
+      const q = urlParams.get('q');
+      if (q) {
+        document.getElementById('searchInput').value = q;
+        currentSearch = q.toLowerCase();
+        renderMetrics();
+      }
+    });
+
+    // 渲染指标
+    function renderMetrics() {
+      const container = document.getElementById('metricsContainer');
+      const emptyState = document.getElementById('emptyState');
+      
+      // 筛选
+      let filtered = metrics.filter(m => {
+        const matchCategory = currentCategory === 'all' || m.category === currentCategory;
+        const matchSearch = !currentSearch || 
+          m.name.toLowerCase().includes(currentSearch) ||
+          m.desc.toLowerCase().includes(currentSearch) ||
+          m.formula.toLowerCase().includes(currentSearch) ||
+          m.tags.some(t => t.toLowerCase().includes(currentSearch));
+        return matchCategory && matchSearch;
+      });
+      
+      // 空状态
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+      
+      emptyState.style.display = 'none';
+      
+      // 按分类分组
+      const grouped = {};
+      filtered.forEach(m => {
+        if (!grouped[m.categoryName]) {
+          grouped[m.categoryName] = { icon: m.icon, items: [] };
+        }
+        grouped[m.categoryName].items.push(m);
+      });
+      
+      // 渲染
+      let html = '';
+      for (const [catName, catData] of Object.entries(grouped)) {
+        html += `
+          <div class="category-section">
+            <h2 class="category-title">
+              <span class="icon">${catData.icon}</span>
+              ${catName}
+              <span class="count">${catData.items.length} 个指标</span>
+            </h2>
+            <div class="metrics-grid">
+              ${catData.items.map(m => renderMetricCard(m)).join('')}
+            </div>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    // 渲染单个指标卡片
+    function renderMetricCard(metric) {
+      const highlight = (text) => {
+        if (!currentSearch) return text;
+        const regex = new RegExp(`(${currentSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+      };
+      
+      const tagColors = ['', 'purple', 'green', 'yellow'];
+      
+      return `
+        <div class="card metric-card">
+          <div class="metric-header">
+            <h3 class="metric-name">${highlight(metric.name)}</h3>
+            <span class="metric-category">${metric.categoryName}</span>
+          </div>
+          <p class="metric-desc">${highlight(metric.desc)}</p>
+          <div class="metric-formula">${highlight(metric.formula)}</div>
+          <div class="metric-tags">
+            ${metric.tags.map((t, i) => `<span class="metric-tag ${tagColors[i % tagColors.length]}">${t}</span>`).join('')}
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+
+

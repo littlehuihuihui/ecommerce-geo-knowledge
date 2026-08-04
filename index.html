@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>多行业数据百科 · 知识框架与实战案例</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    /* ========== 首页专属样式 ========== */
+    .hero {
+      position: relative;
+      padding: 80px 24px 100px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(99, 102, 241, 0.12), transparent),
+        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(14, 165, 233, 0.1), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black, transparent);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, black, transparent);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-title {
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin: 0 0 20px;
+      background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0 0 40px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 48px;
+    }
+
+    .hero-stat {
+      text-align: center;
+    }
+
+    .hero-stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ========== 区块通用 ========== */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ========== 行业卡片网格 ========== */
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .industry-card {
+      position: relative;
+      padding: 28px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .industry-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .industry-card:hover::before {
+      opacity: 1;
+    }
+
+    .industry-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .industry-card.new-energy .industry-icon {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+    }
+
+    .industry-card.tourism .industry-icon {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1));
+    }
+
+    .industry-card.logistics .industry-icon {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
+    }
+
+    .industry-card.ecommerce .industry-icon {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(139, 92, 246, 0.1));
+    }
+
+    .industry-card.ceramics .industry-icon {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(239, 68, 68, 0.1));
+    }
+
+    .industry-card.retail .industry-icon {
+      background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(16, 185, 129, 0.1));
+    }
+
+    .industry-card.magnetic .industry-icon {
+      background: linear-gradient(135deg, rgba(148, 163, 184, 0.2), rgba(100, 116, 139, 0.1));
+    }
+
+    .industry-card.game .industry-icon {
+      background: linear-gradient(135deg, rgba(251, 146, 60, 0.2), rgba(245, 158, 11, 0.1));
+    }
+
+    .industry-card.finance .industry-icon {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
+    }
+
+    .industry-card.education .industry-icon {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 114, 182, 0.1));
+    }
+
+    .industry-card.live-ecommerce .industry-icon {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.1));
+    }
+
+    .industry-card.local-life .industry-icon {
+      background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(6, 182, 212, 0.1));
+    }
+
+    .industry-name {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: var(--text);
+    }
+
+    .industry-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    .industry-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .industry-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .industry-arrow {
+      margin-left: auto;
+      color: var(--text-muted);
+      font-size: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .industry-card:hover .industry-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* ========== 对比矩阵 ========== */
+    .matrix-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius);
+      border: 1px solid var(--glass-border);
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      min-width: 800px;
+    }
+
+    .matrix-table thead {
+      background: var(--glass);
+    }
+
+    .matrix-table th {
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text);
+      border-bottom: 1px solid var(--glass-border);
+      white-space: nowrap;
+    }
+
+    .matrix-table th:first-child {
+      position: sticky;
+      left: 0;
+      background: var(--glass);
+      z-index: 1;
+    }
+
+    .matrix-table td {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--glass-border);
+      color: var(--text-muted);
+    }
+
+    .matrix-table td:first-child {
+      position: sticky;
+      left: 0;
+      background: var(--bg-elevated);
+      font-weight: 500;
+      color: var(--text);
+      backdrop-filter: blur(10px);
+    }
+
+    .matrix-table tbody tr:hover {
+      background: var(--glass-highlight);
+    }
+
+    .matrix-table tbody tr:hover td:first-child {
+      background: var(--glass-highlight);
+    }
+
+    .matrix-table .check {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .matrix-table .partial {
+      color: var(--warning);
+    }
+
+    /* ========== 内容分类 ========== */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .category-card {
+      padding: 32px;
+    }
+
+    .category-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .category-card.knowledge .category-icon {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
+    }
+
+    .category-card.practice .category-icon {
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(139, 92, 246, 0.1));
+    }
+
+    .category-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
+
+    .category-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin: 0 0 24px;
+    }
+
+    .category-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .category-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .category-list li:last-child {
+      border-bottom: none;
+    }
+
+    .category-list .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .category-list .count {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--glass-highlight);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ========== 响应式 ========== */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 20px 80px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+      }
+
+      .hero-stats {
+        gap: 24px;
+      }
+
+      .hero-stat-num {
+        font-size: 28px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .industries-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
+          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索行业、指标..." id="searchInput" />
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero 区 -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        持续更新中 · 10 大行业 · 10 份知识框架
+      </div>
+      <h1 class="hero-title">
+        多行业<span class="highlight">数据百科</span><br />
+        知识框架与分析工具箱
+      </h1>
+      <p class="hero-subtitle">
+        覆盖新能源、文旅、物流、制造、SaaS、游戏、金融、在线教育、直播电商、本地生活十大行业<br />
+        从核心指标体系到分析方法论，体系化的数据产品知识库
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">10</div>
+          <div class="hero-stat-label">行业覆盖</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">10</div>
+          <div class="hero-stat-label">知识框架</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-label">分析方法</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">150+</div>
+          <div class="hero-stat-label">核心指标</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 行业导航 -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">行业导航</h2>
+      <p class="section-desc">点击进入对应行业的知识框架</p>
+    </div>
+    <div class="industries-grid">
+      <!-- 新能源 -->
+      <a href="新能源/index.html" class="card industry-card new-energy" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">⚡</div>
+        <h3 class="industry-name">新能源汽车</h3>
+        <p class="industry-desc">
+          新能源汽车行业数据分析知识框架，涵盖品牌竞争格局、电池技术路线、充电基础设施与供应链核心物料。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 15+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 旅游业 -->
+      <a href="旅游业/index.html" class="card industry-card tourism" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">🏖️</div>
+        <h3 class="industry-name">文旅行业</h3>
+        <p class="industry-desc">
+          文旅行业收益管理与市场分析，包含门票客流、酒店住宿、渠道分析、用户画像与六大分析模型。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 20+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 物流 -->
+      <a href="物流/index.html" class="card industry-card logistics" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">🚚</div>
+        <h3 class="industry-name">物流供应链</h3>
+        <p class="industry-desc">
+          物流与供应链管理数据分析体系，仓储、运输、供应链协同、成本效率四大模块，27 项核心指标。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 27+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 制造业 -->
+      <a href="manufacturing.html" class="card industry-card manufacturing" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">🏭</div>
+        <h3 class="industry-name">制造业</h3>
+        <p class="industry-desc">
+          制造业通用数据分析体系，OEE设备综合效率、生产效率、质量管控、成本分析等核心指标与分析方法。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 20+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- SaaS -->
+      <a href="saas.html" class="card industry-card saas" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">☁️</div>
+        <h3 class="industry-name">SaaS / 企业服务</h3>
+        <p class="industry-desc">
+          订阅经济下的数据分析体系，MRR、Churn、LTV/CAC等核心指标，从获客到留存的全生命周期增长框架。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 20+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 游戏 -->
+      <a href="game.html" class="card industry-card game" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">🎮</div>
+        <h3 class="industry-name">游戏行业</h3>
+        <p class="industry-desc">
+          数据驱动程度最高的行业之一，DAU、留存、付费、LTV等核心指标，从获客到变现的全生命周期精细化运营。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 30+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 金融 -->
+      <a href="finance.html" class="card industry-card finance" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">💰</div>
+        <h3 class="industry-name">金融行业</h3>
+        <p class="industry-desc">
+          银行、证券、保险等金融领域的数据分析体系，风控、营销、运营三大核心方向，信用评分与反欺诈模型。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 28+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 在线教育 -->
+      <a href="education.html" class="card industry-card education" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">📚</div>
+        <h3 class="industry-name">在线教育</h3>
+        <p class="industry-desc">
+          从获客到续费的全链路数据驱动增长，转化漏斗、学习效果与用户留存的精细化运营，完课率与续费率提升。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 26+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 直播电商 -->
+      <a href="live-ecommerce.html" class="card industry-card live-ecommerce" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">🎥</div>
+        <h3 class="industry-name">直播电商</h3>
+        <p class="industry-desc">
+          人货场三位一体的实时电商模式，从流量获取到成交转化的全链路数据驱动运营，主播绩效与选品分析。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 28+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+
+      <!-- 本地生活 -->
+      <a href="local-life.html" class="card industry-card local-life" style="text-decoration: none; color: inherit;">
+        <div class="industry-icon">📍</div>
+        <h3 class="industry-name">本地生活 / O2O</h3>
+        <p class="industry-desc">
+          商家、用户、骑手三方的双边市场模型，从供需匹配到配送效率的全链路数据运营，商圈运营与补贴策略。
+        </p>
+        <div class="industry-meta">
+          <span class="industry-meta-item">📚 1 份资料</span>
+          <span class="industry-meta-item">🎯 核心指标 26+</span>
+          <span class="industry-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 行业对比矩阵 -->
+  <section class="section" style="background: var(--bg-elevated); max-width: 100%; padding-left: 0; padding-right: 0;">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+      <div class="section-header">
+        <h2 class="section-title">行业核心指标对比矩阵</h2>
+        <p class="section-desc">一张表看懂各行业的数据体系差异</p>
+      </div>
+      <div class="matrix-wrapper card">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>新能源</th>
+              <th>文旅</th>
+              <th>物流</th>
+              <th>电商</th>
+              <th>零售</th>
+              <th>制造</th>
+              <th>SaaS</th>
+              <th>游戏</th>
+              <th>金融</th>
+              <th>在线教育</th>
+              <th>直播电商</th>
+              <th>本地生活</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>核心收入指标</td>
+              <td>销量 / 市占率</td>
+              <td>GMV / 客单价</td>
+              <td>单票收入</td>
+              <td>GMV / 客单价</td>
+              <td>销售额 / 坪效</td>
+              <td>产值 / 毛利率</td>
+              <td>MRR / ARR</td>
+              <td>ARPU / LTV</td>
+              <td>净息差 / AUM</td>
+              <td>GMV / 客单价</td>
+              <td>GMV / UV价值</td>
+              <td>GMV / Take Rate</td>
+            </tr>
+            <tr>
+              <td>效率指标</td>
+              <td>产能利用率</td>
+              <td>RevPAR / OCC</td>
+              <td>库存周转 / 装载率</td>
+              <td>转化率 / 履约时效</td>
+              <td>人效 / 坪效</td>
+              <td>OEE / 良率</td>
+              <td>LTV/CAC</td>
+              <td>DAU/MAU</td>
+              <td>ROA / ROE</td>
+              <td>完课率 / 续费率</td>
+              <td>GPM / 转化率</td>
+              <td>配送时效 / 完单率</td>
+            </tr>
+            <tr>
+              <td>留存指标</td>
+              <td class="partial">复购率</td>
+              <td class="check">复购率</td>
+              <td class="partial">客户留存</td>
+              <td class="check">复购率</td>
+              <td class="check">复购率</td>
+              <td class="partial">客户留存</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">客户留存</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">复购率</td>
+              <td class="check">复购率</td>
+            </tr>
+            <tr>
+              <td>用户/会员</td>
+              <td class="partial">车主画像</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">B端客户</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">经销商</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+            </tr>
+            <tr>
+              <td>渠道分析</td>
+              <td class="partial">渠道分布</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">运输方式</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">经销商分级</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">渠道买量</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+              <td class="check">✅ 核心</td>
+            </tr>
+            <tr>
+              <td>质量/体验</td>
+              <td class="partial">故障率</td>
+              <td class="check">NPS / 满意度</td>
+              <td class="check">破损率 / 异常率</td>
+              <td class="check">店铺健康分</td>
+              <td class="partial">NPS</td>
+              <td class="check">不良品率</td>
+              <td class="check">NPS / 满意度</td>
+              <td class="check">差评率</td>
+              <td class="check">满意度</td>
+              <td class="check">完课率 / NPS</td>
+              <td class="check">退货率 / 差评</td>
+              <td class="check">差评率</td>
+            </tr>
+            <tr>
+              <td>成本指标</td>
+              <td class="check">BOM 成本</td>
+              <td class="partial">运营成本</td>
+              <td class="check">✅ 核心</td>
+              <td class="partial">履约成本</td>
+              <td class="partial">营销成本</td>
+              <td class="check">制造成本</td>
+              <td class="check">CAC</td>
+              <td class="check">买量成本</td>
+              <td class="check">风险成本</td>
+              <td class="check">获客成本</td>
+              <td class="check">投流成本</td>
+              <td class="check">配送/补贴成本</td>
+            </tr>
+            <tr>
+              <td>典型分析模型</td>
+              <td>竞品对标</td>
+              <td>收益管理</td>
+              <td>ABC 分类</td>
+              <td>归因模型</td>
+              <td>RFM / 漏斗</td>
+              <td>SPC / 鱼骨图</td>
+              <td>AARRR /  cohort</td>
+              <td>AARRR / 漏斗</td>
+              <td>信用评分</td>
+              <td>转化漏斗</td>
+              <td>人货场模型</td>
+              <td>双边市场</td>
+            </tr>
+            <tr>
+              <td>资料数量</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>3 份</td>
+              <td>5 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+              <td>1 份</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 内容体系 -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">内容体系</h2>
+      <p class="section-desc">体系化的行业知识框架与分析工具</p>
+    </div>
+    <div class="category-grid" style="grid-template-columns: 1fr;">
+      <div class="card category-card knowledge">
+        <div class="category-icon">📖</div>
+        <h3 class="category-title">知识框架</h3>
+        <p class="category-desc">
+          每个行业的完整指标体系、分析方法论与知识结构，适合快速建立行业认知、体系化学习与日常查阅。
+        </p>
+        <ul class="category-list">
+          <li><span class="dot"></span>新能源汽车行业知识框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>文旅行业收益管理框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>物流供应链管理框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>制造业经营分析框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>SaaS 增长分析框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>游戏运营分析框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>金融风控与运营框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>在线教育增长框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>直播电商人货场框架 <span class="count">1</span></li>
+          <li><span class="dot"></span>本地生活双边市场框架 <span class="count">1</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具箱 -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">分析工具箱</h2>
+      <p class="section-desc">通用方法与学习资源，提升你的数据分析能力</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;">
+      <a href="methodology.html" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 24px; cursor: pointer; transition: all 0.3s ease; height: 100%;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(167, 139, 250, 0.1)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px;">🔧</div>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--text);">分析方法论</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px;">RFM、漏斗、ABC分类、杜邦分析等10种通用分析方法</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent);">10种方法</span>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--accent-2-soft); color: var(--accent-2);">6大领域</span>
+          </div>
+        </div>
+      </a>
+      <a href="graph.html" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 24px; cursor: pointer; transition: all 0.3s ease; height: 100%;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(16, 185, 129, 0.1)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px;">🕸️</div>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--text);">行业知识图谱</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px;">7大行业产业链关系可视化，理解上下游关联与价值传导</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(52, 211, 153, 0.15); color: var(--success);">关系图</span>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--glass-highlight); color: var(--text-muted);">产业链</span>
+          </div>
+        </div>
+      </a>
+      <a href="interview.html" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 24px; cursor: pointer; transition: all 0.3s ease; height: 100%;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px;">💼</div>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--text);">业务问题拆解</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px;">各行业经典业务问题的结构化分析思路，展示数据驱动的问题解决能力</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(251, 191, 36, 0.15); color: var(--warning);">35+问题</span>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--glass-highlight); color: var(--text-muted);">7个行业</span>
+          </div>
+        </div>
+      </a>
+      <a href="learning-path.html" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 24px; cursor: pointer; transition: all 0.3s ease; height: 100%;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(239, 68, 68, 0.1)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px;">📚</div>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--text);">学习路径</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px;">从入门到精通，分析师/产品经理/BI工程师三条成长路径</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: rgba(248, 113, 113, 0.15); color: var(--danger);">3条路径</span>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--glass-highlight); color: var(--text-muted);">4个阶段</span>
+          </div>
+        </div>
+      </a>
+      <a href="rag/search.html" style="text-decoration: none; color: inherit;">
+        <div class="card" style="padding: 24px; cursor: pointer; transition: all 0.3s ease; height: 100%; border: 1px solid rgba(56, 189, 248, 0.3); background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(167, 139, 250, 0.05));">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(167, 139, 250, 0.2)); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px;">✨</div>
+          <h3 style="font-size: 18px; font-weight: 600; margin: 0 0 8px; color: var(--text);">智能搜索 <span style="font-size: 11px; padding: 2px 6px; background: var(--accent-soft); color: var(--accent); border-radius: 4px; vertical-align: middle;">RAG</span></h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0 0 16px;">基于语义理解的知识检索，用自然语言找到你想要的答案</p>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--accent-soft); color: var(--accent);">语义搜索</span>
+            <span style="font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--accent-2-soft); color: var(--accent-2);">向量检索</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>多行业数据百科 · 知识框架与分析工具箱</p>
+    <p style="margin-top: 8px;">持续更新中 · 最后更新：2026年8月</p>
+  </footer>
+
+  <script>
+    // 简单搜索功能
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const query = this.value.trim().toLowerCase();
+        if (query) {
+          // 跳转到指标字典页面并带上搜索词
+          window.location.href = 'metrics.html?q=' + encodeURIComponent(query);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
