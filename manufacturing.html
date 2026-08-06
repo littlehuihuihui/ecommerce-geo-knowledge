@@ -9,11 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
   <style>
+    /* 制造业主题色：科技蓝 */
+    :root {
+      --accent-2: #38bdf8;
+      --accent-2-soft: rgba(56, 189, 248, 0.15);
+    }
+
     .page-header {
       padding: 60px 24px 40px;
       text-align: center;
       background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(167, 139, 250, 0.12), transparent);
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56, 189, 248, 0.12), transparent);
     }
 
     .page-title {
@@ -107,7 +113,7 @@
     .metric-card:hover {
       border-color: var(--accent-2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(167, 139, 250, 0.1);
+      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.1);
     }
 
     .metric-name {
@@ -153,14 +159,14 @@
     .sub-industry-card:hover {
       border-color: var(--accent-2);
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(167, 139, 250, 0.15);
+      box-shadow: 0 12px 32px rgba(56, 189, 248, 0.15);
     }
 
     .sub-industry-icon {
       width: 56px;
       height: 56px;
       border-radius: 14px;
-      background: linear-gradient(135deg, rgba(167, 139, 250, 0.2), rgba(139, 92, 246, 0.1));
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -204,14 +210,6 @@
     .sub-link:hover {
       background: var(--accent-2-soft);
       color: var(--accent-2);
-    }
-
-    .sub-link-type {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--accent-soft);
-      color: var(--accent);
     }
 
     .sub-link-arrow {
@@ -263,8 +261,8 @@
     }
 
     .north-star-card {
-      background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(167, 139, 250, 0.08));
-      border: 1px solid rgba(167, 139, 250, 0.3);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.08));
+      border: 1px solid rgba(56, 189, 248, 0.3);
       border-radius: 16px;
       padding: 32px;
       display: flex;
@@ -283,7 +281,7 @@
 
     .north-star-label {
       font-size: 12px;
-      color: #a78bfa;
+      color: #38bdf8;
       font-weight: 600;
       margin-bottom: 8px;
       text-transform: uppercase;
@@ -299,11 +297,11 @@
 
     .north-star-formula {
       font-size: 13px;
-      color: #a78bfa;
+      color: #38bdf8;
       font-family: "JetBrains Mono", monospace;
       margin-bottom: 12px;
       padding: 6px 12px;
-      background: rgba(167, 139, 250, 0.1);
+      background: rgba(56, 189, 248, 0.1);
       border-radius: 6px;
       display: inline-block;
     }
@@ -375,7 +373,7 @@
         <span class="nav-link nav-dropdown-toggle active">知识框架</span>
         <div class="nav-dropdown-menu">
           <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
           <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
           <a href="manufacturing.html" class="nav-dropdown-item active">制造业 <span class="badge">1份</span></a>
           <a href="零售/index.html" class="nav-dropdown-item">零售行业 <span class="badge">1份</span></a>
@@ -532,6 +530,7 @@
       </div>
     </section>
   </div>
+  <script src="common.js"></script>
 </body>
 </html>
 

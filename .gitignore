@@ -11,3 +11,6 @@ rag/**/chroma/
 *.sqlite3
 .env
 .env.*
+test_*.js
+test_*.html_1.js
+_fix_*.py

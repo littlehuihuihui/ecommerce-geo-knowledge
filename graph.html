@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,424 +6,532 @@
   <title>行业知识图谱 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="common.css" />
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
   <style>
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(52, 211, 153, 0.12), transparent);
+    :root {
+      --theme-color: #8b5cf6;
+      --theme-color-rgb: 139, 92, 246;
+      --theme-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
     }
 
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* 页面容器 */
+    .graph-page {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding-top: var(--nav-height);
+    }
+
+    /* 顶部工具栏 */
+    .graph-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--glass-border);
+      flex-shrink: 0;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .graph-title {
+      font-size: 20px;
+      font-weight: 600;
+      background: var(--theme-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
+    .industry-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
+    .industry-tab {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .industry-tab:hover {
+      border-color: var(--theme-color);
+      color: var(--text);
+    }
+
+    .industry-tab.active {
+      background: var(--theme-gradient);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box input {
+      width: 200px;
+      padding: 8px 12px 8px 36px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: var(--bg-dark);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--theme-color);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+
+    .search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+    }
+
+    .control-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .control-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .control-btn:hover {
+      border-color: var(--theme-color);
+      color: var(--theme-color);
+      background: rgba(139, 92, 246, 0.1);
     }
 
     /* 图谱容器 */
-    .graph-wrapper {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      margin-bottom: 40px;
+    .graph-container {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
     }
 
     #graphChart {
       width: 100%;
-      height: 600px;
+      height: 100%;
     }
 
-    /* 图例说明 */
-    .legend-section {
-      margin-bottom: 40px;
+    /* 图例 */
+    .graph-legend {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 16px;
+      z-index: 100;
     }
 
-    .section-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin: 0 0 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-title .icon {
-      font-size: 24px;
-    }
-
-    .legend-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .legend-card {
-      padding: 20px;
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .legend-dot {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 4px;
-    }
-
-    .legend-name {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0 0 6px;
-    }
-
-    .legend-desc {
+    .legend-title {
       font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin: 0;
-    }
-
-    /* 产业链说明 */
-    .chain-section {
-      margin-bottom: 40px;
-    }
-
-    .chain-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .chain-card {
-      padding: 24px;
-      text-align: center;
-    }
-
-    .chain-icon {
-      font-size: 40px;
+      font-weight: 600;
       margin-bottom: 12px;
-    }
-
-    .chain-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0 0 8px;
-    }
-
-    .chain-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0 0 16px;
-    }
-
-    .chain-industries {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      justify-content: center;
-    }
-
-    .chain-tag {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      background: var(--glass-highlight);
       color: var(--text);
     }
 
-    /* 关系列表 */
-    .relations-section {
-      margin-bottom: 40px;
-    }
-
-    .relation-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 12px;
-    }
-
-    .relation-item {
-      padding: 16px 20px;
+    .legend-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 14px;
-    }
-
-    .relation-from {
-      font-weight: 500;
-      color: var(--accent);
-    }
-
-    .relation-arrow {
-      color: var(--text-muted);
-      font-size: 18px;
-    }
-
-    .relation-to {
-      font-weight: 500;
-      color: var(--accent-2);
-    }
-
-    .relation-desc {
-      margin-left: auto;
+      gap: 10px;
+      margin-bottom: 8px;
       font-size: 12px;
       color: var(--text-muted);
     }
 
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* 统计信息 */
+    .graph-stats {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 16px;
+      z-index: 100;
+      text-align: right;
+    }
+
+    .stats-item {
+      margin-bottom: 8px;
+    }
+
+    .stats-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .stats-value {
+      font-size: 20px;
+      font-weight: 700;
+      background: var(--theme-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stats-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 详情面板 */
+    .detail-panel {
+      position: absolute;
+      top: 50%;
+      right: 24px;
+      transform: translateY(-50%) translateX(120%);
+      width: 320px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      z-index: 200;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .detail-panel.show {
+      transform: translateY(-50%) translateX(0);
+    }
+
+    .detail-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: var(--glass-border);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .detail-close:hover {
+      background: var(--theme-color);
+      color: white;
+    }
+
+    .detail-header {
+      margin-bottom: 20px;
+    }
+
+    .detail-category {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .detail-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .detail-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .detail-section {
+      margin-top: 18px;
+    }
+
+    .detail-section-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-formula {
+      background: var(--bg-dark);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      line-height: 1.6;
+      border-left: 3px solid var(--theme-color);
+    }
+
+    .detail-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .detail-tag {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: var(--glass-border);
+      color: var(--text-muted);
+    }
+
+    .detail-related {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .related-node {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--theme-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .related-node:hover {
+      background: var(--theme-color);
+      color: white;
+    }
+
+    /* 响应式 */
     @media (max-width: 768px) {
-      .page-title {
-        font-size: 28px;
+      .graph-toolbar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
       }
-
-      #graphChart {
-        height: 400px;
+      
+      .toolbar-left, .toolbar-right {
+        width: 100%;
+        justify-content: center;
       }
-
-      .chain-cards {
-        grid-template-columns: 1fr;
+      
+      .industry-tabs {
+        justify-content: center;
+      }
+      
+      .detail-panel {
+        right: 16px;
+        left: 16px;
+        width: auto;
+      }
+      
+      .graph-legend, .graph-stats {
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+      }
+      
+      .graph-stats {
+        left: auto;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 顶部导航栏 -->
-      <nav class="encyclopedia-nav">
-    <a href="index.html" class="nav-logo">
-      <span class="nav-logo-icon">百</span>
-      <span>行业数据百科</span>
-    </a>
-    <div class="nav-links">
-      <a href="index.html" class="nav-link">首页</a>
-      <a href="metrics.html" class="nav-link">指标字典</a>
-      <a href="methodology.html" class="nav-link">方法论</a>
-      <a href="graph.html" class="nav-link">知识图谱</a>
-      <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
+  <!-- 导航栏 -->
+  <nav class="encyclopedia-nav">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <div class="logo-icon">百</div>
+        <span class="logo-text">行业数据百科</span>
+      </div>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link">首页</a>
+        <a href="metrics.html" class="nav-link">指标字典</a>
+        <a href="methodology.html" class="nav-link">方法论</a>
+        <a href="graph.html" class="nav-link active">知识图谱</a>
+        <a href="interview.html" class="nav-link">业务问题拆解</a>
+        <a href="learning-path.html" class="nav-link">学习路径</a>
         <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
-          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
-          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-toggle">
+            知识框架 ▾
+          </div>
+          <div class="nav-dropdown-menu">
+            <a href="ecommerce.html" class="dropdown-item">电商行业</a>
+            <a href="saas.html" class="dropdown-item">SaaS / 企业服务</a>
+            <a href="game.html" class="dropdown-item">游戏行业</a>
+            <a href="finance.html" class="dropdown-item">金融行业</a>
+            <a href="manufacturing.html" class="dropdown-item">制造业</a>
+            <a href="live-ecommerce.html" class="dropdown-item">直播电商</a>
+            <a href="education.html" class="dropdown-item">在线教育</a>
+            <a href="local-life.html" class="dropdown-item">本地生活</a>
+            <a href="healthcare.html" class="dropdown-item">医疗健康</a>
+            <a href="fmcg.html" class="dropdown-item">快消品 / FMCG</a>
+            <a href="新能源/index.html" class="dropdown-item">新能源汽车</a>
+            <a href="物流/index.html" class="dropdown-item">物流供应链</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="nav-right">
       <div class="nav-search">
-        <span class="nav-search-icon">🔍</span>
-        <input type="text" placeholder="搜索..." />
+        <input type="text" id="navSearch" placeholder="搜索..." />
       </div>
     </div>
   </nav>
 
-  <!-- 页面头部 -->
-  <div class="page-header">
-    <h1 class="page-title">行业知识图谱</h1>
-    <p class="page-desc">7大行业产业链关系可视化，理解上下游关联与价值传导</p>
-  </div>
+  <div class="graph-page">
+    <!-- 顶部工具栏 -->
+    <div class="graph-toolbar">
+      <div class="toolbar-left">
+        <div class="graph-title">🗺️ 行业知识图谱</div>
+        <div class="industry-tabs" id="industryTabs">
+          <!-- 由JS动态生成 -->
+        </div>
+      </div>
+      <div class="toolbar-right">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="搜索节点..." />
+        </div>
+        <div class="control-btns">
+          <button class="control-btn" id="zoomIn" title="放大">➕</button>
+          <button class="control-btn" id="zoomOut" title="缩小">➖</button>
+          <button class="control-btn" id="resetView" title="重置视图">🎯</button>
+          <button class="control-btn" id="fullscreen" title="全屏">⛶</button>
+        </div>
+      </div>
+    </div>
 
-  <div class="container">
-    <!-- 图谱 -->
-    <div class="graph-wrapper">
+    <!-- 图谱容器 -->
+    <div class="graph-container">
       <div id="graphChart"></div>
-    </div>
-
-    <!-- 产业链分层 -->
-    <div class="chain-section">
-      <h2 class="section-title">
-        <span class="icon">🏗️</span>
-        产业链分层
-      </h2>
-      <div class="chain-cards">
-        <div class="card chain-card">
-          <div class="chain-icon">⛏️</div>
-          <h3 class="chain-title">上游 · 原材料</h3>
-          <p class="chain-desc">提供基础原材料和核心零部件，是产业链的起点</p>
-          <div class="chain-industries">
-            <span class="chain-tag">🧲 磁性材料</span>
-            <span class="chain-tag">🏺 陶瓷建材</span>
-          </div>
+      
+      <!-- 图例 -->
+      <div class="graph-legend">
+        <div class="legend-title">节点类型</div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"></div>
+          <span>行业中心</span>
         </div>
-        <div class="card chain-card">
-          <div class="chain-icon">🏭</div>
-          <h3 class="chain-title">中游 · 制造与服务</h3>
-          <p class="chain-desc">将原材料加工成产品，或提供核心流通服务</p>
-          <div class="chain-industries">
-            <span class="chain-tag">⚡ 新能源汽车</span>
-            <span class="chain-tag">🚚 物流供应链</span>
-          </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #3b82f6;"></div>
+          <span>核心指标</span>
         </div>
-        <div class="card chain-card">
-          <div class="chain-icon">🛒</div>
-          <h3 class="chain-title">下游 · 终端消费</h3>
-          <p class="chain-desc">直接面向消费者，实现产品最终价值</p>
-          <div class="chain-industries">
-            <span class="chain-tag">🏪 零售</span>
-            <span class="chain-tag">🛍️ 电商</span>
-            <span class="chain-tag">🏖️ 文旅</span>
-          </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #10b981;"></div>
+          <span>分析方法</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: #f59e0b;"></div>
+          <span>业务场景</span>
         </div>
       </div>
-    </div>
 
-    <!-- 核心关系 -->
-    <div class="relations-section">
-      <h2 class="section-title">
-        <span class="icon">🔗</span>
-        核心关联关系
-      </h2>
-      <div class="relation-list">
-        <div class="card relation-item">
-          <span class="relation-from">磁材</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">新能源</span>
-          <span class="relation-desc">永磁电机核心材料</span>
+      <!-- 统计信息 -->
+      <div class="graph-stats">
+        <div class="stats-item">
+          <div class="stats-value" id="nodeCount">0</div>
+          <div class="stats-label">知识节点</div>
         </div>
-        <div class="card relation-item">
-          <span class="relation-from">陶瓷</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">新能源</span>
-          <span class="relation-desc">结构陶瓷/电池隔膜</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">新能源</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">物流</span>
-          <span class="relation-desc">动力电池运输需求</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">新能源</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">零售</span>
-          <span class="relation-desc">终端门店销售</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">物流</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">电商</span>
-          <span class="relation-desc">履约配送核心支撑</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">物流</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">零售</span>
-          <span class="relation-desc">仓储配送一体化</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">电商</span>
-          <span class="relation-arrow">↔</span>
-          <span class="relation-to">零售</span>
-          <span class="relation-desc">线上线下全渠道</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">文旅</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">零售</span>
-          <span class="relation-desc">景区商业消费</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">陶瓷</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">零售</span>
-          <span class="relation-desc">建材家居零售</span>
-        </div>
-        <div class="card relation-item">
-          <span class="relation-from">电商</span>
-          <span class="relation-arrow">→</span>
-          <span class="relation-to">文旅</span>
-          <span class="relation-desc">OTA在线预订</span>
+        <div class="stats-item">
+          <div class="stats-value" id="linkCount">0</div>
+          <div class="stats-label">关联关系</div>
         </div>
       </div>
-    </div>
 
-    <!-- 图例 -->
-    <div class="legend-section">
-      <h2 class="section-title">
-        <span class="icon">🎨</span>
-        节点说明
-      </h2>
-      <div class="legend-grid">
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #38bdf8;"></div>
-          <div>
-            <h3 class="legend-name">新能源汽车</h3>
-            <p class="legend-desc">中游制造，产业链核心枢纽，连接上游材料和下游销售</p>
+      <!-- 详情面板 -->
+      <div class="detail-panel" id="detailPanel">
+        <button class="detail-close" id="detailClose">✕</button>
+        <div class="detail-header">
+          <span class="detail-category" id="detailCategory">核心指标</span>
+          <h3 class="detail-name" id="detailName">GMV</h3>
+          <p class="detail-desc" id="detailDesc">成交总额，电商行业最核心的规模指标</p>
+        </div>
+        <div class="detail-section" id="formulaSection">
+          <div class="detail-section-title">📐 计算公式</div>
+          <div class="detail-formula" id="detailFormula">GMV = 访客数 × 转化率 × 客单价</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-section-title">🎯 应用场景</div>
+          <div class="detail-tags" id="detailScenarios">
+            <!-- 由JS动态生成 -->
           </div>
         </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #a78bfa;"></div>
-          <div>
-            <h3 class="legend-name">跨境电商</h3>
-            <p class="legend-desc">下游渠道，连接生产与消费，依赖物流履约</p>
-          </div>
-        </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #34d399;"></div>
-          <div>
-            <h3 class="legend-name">零售行业</h3>
-            <p class="legend-desc">终端消费，所有行业的最终出口，全渠道融合</p>
-          </div>
-        </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #fbbf24;"></div>
-          <div>
-            <h3 class="legend-name">文旅行业</h3>
-            <p class="legend-desc">服务消费，带动零售、餐饮等周边消费</p>
-          </div>
-        </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #f87171;"></div>
-          <div>
-            <h3 class="legend-name">物流供应链</h3>
-            <p class="legend-desc">基础设施，连接所有行业的流通纽带</p>
-          </div>
-        </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #94a3b8;"></div>
-          <div>
-            <h3 class="legend-name">磁性材料</h3>
-            <p class="legend-desc">上游原材料，新能源电机核心部件</p>
-          </div>
-        </div>
-        <div class="card legend-card">
-          <div class="legend-dot" style="background: #fb923c;"></div>
-          <div>
-            <h3 class="legend-name">陶瓷建材</h3>
-            <p class="legend-desc">上游材料，应用于建筑、新能源、电子等领域</p>
+        <div class="detail-section">
+          <div class="detail-section-title">🔗 相关节点</div>
+          <div class="detail-related" id="detailRelated">
+            <!-- 由JS动态生成 -->
           </div>
         </div>
       </div>
@@ -431,167 +539,882 @@
   </div>
 
   <script>
-    // 初始化图谱
-    const chart = echarts.init(document.getElementById('graphChart'));
-
-    const option = {
-      backgroundColor: 'transparent',
-      tooltip: {
-        formatter: function(params) {
-          if (params.dataType === 'node') {
-            return `<div style="font-weight:600; margin-bottom:4px;">${params.name}</div>
-                    <div style="font-size:12px; color:#94a3b8;">${params.data.desc || ''}</div>
-                    <div style="font-size:11px; color:#64748b; margin-top:4px;">点击跳转详情 →</div>`;
-          } else {
-            return `<div style="font-size:12px;">${params.data.source} → ${params.data.target}</div>
-                    <div style="font-size:11px; color:#94a3b8;">${params.data.relation || ''}</div>`;
-          }
-        },
-        backgroundColor: 'rgba(15, 23, 42, 0.95)',
-        borderColor: 'rgba(148, 163, 184, 0.2)',
-        borderWidth: 1,
-        textStyle: {
-          color: '#e2e8f0'
-        }
-      },
-      legend: {
-        show: false
-      },
-      series: [
-        {
-          type: 'graph',
-          layout: 'force',
-          force: {
-            repulsion: 800,
-            gravity: 0.1,
-            edgeLength: [100, 200],
-            friction: 0.6
+    // 12个行业的知识图谱数据
+    const graphData = {
+      ecommerce: {
+        name: '电商行业',
+        centerColor: '#ec4899',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'GMV', desc: '成交总额，电商行业最核心的规模指标，衡量平台整体交易规模', formula: 'GMV = 访客数 × 转化率 × 客单价', scenarios: ['衡量平台规模', '业绩考核', '增长分析'], related: ['转化率', '客单价', 'UV价值'] },
+              { name: '转化率', desc: '访问用户中完成购买的比例，衡量流量变现效率', formula: '转化率 = 成交用户数 ÷ 访客数 × 100%', scenarios: ['流量质量评估', '页面优化', '转化漏斗分析'], related: ['GMV', '客单价', 'UV价值'] },
+              { name: '客单价', desc: '平均每个订单的金额，衡量用户消费能力', formula: '客单价 = GMV ÷ 成交订单数', scenarios: ['用户价值分析', '商品策略', '交叉销售'], related: ['GMV', '复购率', '转化率'] },
+              { name: '复购率', desc: '一定周期内重复购买的用户比例，衡量用户忠诚度', formula: '复购率 = 复购用户数 ÷ 总购买用户数 × 100%', scenarios: ['用户留存', '会员体系', 'CRM运营'], related: ['用户生命周期', 'LTV', '留存率'] },
+              { name: 'UV价值', desc: '每个访客带来的平均收入，衡量流量质量和变现效率', formula: 'UV价值 = GMV ÷ 访客数', scenarios: ['流量投放评估', '渠道ROI', '流量优化'], related: ['GMV', '转化率', 'ROI'] },
+              { name: 'ROI', desc: '投资回报率，衡量营销投入的产出效果', formula: 'ROI = 营销产出 ÷ 营销投入 × 100%', scenarios: ['投放效果评估', '预算分配', '渠道优化'], related: ['UV价值', '获客成本', 'LTV'] }
+            ]
           },
-          roam: true,
-          draggable: true,
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '漏斗分析', desc: '将用户转化路径拆解为多个环节，分析各环节流失率', formula: '各环节转化率 = 下一环节用户数 ÷ 上一环节用户数', scenarios: ['转化优化', '用户路径分析', '流失诊断'], related: ['转化率', 'AARRR模型', '用户画像'] },
+              { name: 'RFM模型', desc: '基于最近购买、购买频率、购买金额三维度的用户价值分层', formula: 'R值+F值+M值 → 组合打分 → 8类用户分层', scenarios: ['用户分层', '精准营销', '会员体系'], related: ['用户画像', '复购率', 'LTV'] },
+              { name: '同期群分析', desc: '按用户首次行为时间分组，追踪不同群组的留存变化', formula: '第N日留存率 = 第N日活跃同期群用户数 ÷ 同期群总用户数', scenarios: ['留存分析', '产品迭代效果', '渠道质量评估'], related: ['留存率', 'LTV', '用户生命周期'] },
+              { name: 'A/B测试', desc: '通过对照实验验证产品或运营策略的效果', formula: '统计显著性检验 + 效果量评估', scenarios: ['产品优化', '运营策略验证', 'UI/UX测试'], related: ['转化率', '漏斗分析', '假设检验'] },
+              { name: '归因分析', desc: '分析各渠道对转化的贡献度，优化营销预算分配', formula: '末次归因/首次归因/线性归因/时间衰减归因', scenarios: ['渠道效果评估', '预算分配', '营销优化'], related: ['ROI', '获客成本', '渠道分析'] },
+              { name: '用户画像', desc: '基于用户行为、属性、消费等数据构建的用户标签体系', formula: '属性标签 + 行为标签 + 消费标签 + 偏好标签', scenarios: ['精准营销', '产品优化', '个性化推荐'], related: ['RFM模型', '用户分层', '聚类分析'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '获客优化', desc: '通过渠道分析和优化，降低获客成本，提高获客质量', scenarios: ['渠道投放', '拉新活动', '品牌营销'], related: ['获客成本', 'ROI', '归因分析'] },
+              { name: '转化提升', desc: '优化用户购买路径，提升各环节转化率', scenarios: ['页面优化', '购物车优化', '结算流程优化'], related: ['转化率', '漏斗分析', 'A/B测试'] },
+              { name: '用户留存', desc: '通过运营手段提升用户留存和复购', scenarios: ['会员体系', '用户召回', '内容运营'], related: ['复购率', '留存率', 'RFM模型'] },
+              { name: '商品运营', desc: '基于销售数据优化商品结构和定价策略', scenarios: ['选品策略', '价格优化', '库存管理'], related: ['客单价', 'GMV', 'ABC分类法'] },
+              { name: '活动运营', desc: '策划和评估营销活动，提升活动ROI', scenarios: ['大促活动', '日常营销', '会员活动'], related: ['GMV', 'ROI', '促销效果评估'] },
+              { name: '流量运营', desc: '管理和优化流量结构，提升流量价值', scenarios: ['流量投放', 'SEO/SEM', '内容引流'], related: ['UV价值', 'ROI', '渠道分析'] }
+            ]
+          }
+        ]
+      },
+      saas: {
+        name: 'SaaS行业',
+        centerColor: '#34d399',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'MRR', desc: '月度经常性收入，SaaS最核心的收入指标', formula: 'MRR = 付费用户数 × ARPU', scenarios: ['收入规模衡量', '增长趋势分析', '预测'], related: ['ARR', 'NDR', 'ARPU'] },
+              { name: 'NDR', desc: '净收入留存率，衡量现有客户收入的增长能力', formula: 'NDR = (期初MRR + 扩张MRR - 流失MRR - 收缩MRR) ÷ 期初MRR', scenarios: ['客户健康度', '产品价值评估', '增长质量'], related: ['MRR', 'churn率', 'LTV'] },
+              { name: 'CAC', desc: '获客成本，获取一个新客户的平均成本', formula: 'CAC = 总获客投入 ÷ 新增客户数', scenarios: ['获客效率', '渠道评估', '预算规划'], related: ['LTV', 'ROI', '回收期'] },
+              { name: 'LTV', desc: '用户生命周期价值，一个客户在整个生命周期的贡献', formula: 'LTV = ARPU × 平均生命周期 = ARPU ÷ churn率', scenarios: ['客户价值评估', '定价策略', '获客策略'], related: ['CAC', 'ARPU', 'churn率'] },
+              { name: 'churn率', desc: '客户流失率，衡量客户留存情况', formula: 'churn率 = 流失客户数 ÷ 期初客户数 × 100%', scenarios: ['客户健康度', '产品质量评估', '客户成功'], related: ['NDR', '留存率', 'LTV'] },
+              { name: 'ARPU', desc: '每用户平均收入，衡量单客户变现能力', formula: 'ARPU = 总收入 ÷ 付费用户数', scenarios: ['定价策略', '客户分层', '增值服务'], related: ['MRR', 'LTV', '客户分层'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: 'AARRR模型', desc: '用户生命周期五阶段：获取、激活、留存、变现、推荐', formula: '获客→激活→留存→变现→推荐', scenarios: ['用户增长', '产品运营', '增长黑客'], related: ['漏斗分析', '留存率', 'LTV'] },
+              { name: '客户分层', desc: '基于客户价值、规模、行业等维度对客户进行分层', formula: '价值维度 + 规模维度 + 行业维度', scenarios: ['客户成功', '精准运营', '资源分配'], related: ['RFM模型', '用户画像', '聚类分析'] },
+              { name: 'Cohort分析', desc: '同期群分析，追踪不同群组客户的留存和收入变化', formula: '按获客时间分组 → 追踪各群组指标变化', scenarios: ['留存分析', '产品迭代效果', ' cohort分析'], related: ['留存率', 'NDR', 'churn率'] },
+              { name: '健康度评分', desc: '基于多维度指标构建客户健康度评分体系', formula: '使用频率 + 功能覆盖 + 满意度 + 付费情况', scenarios: ['流失预警', '客户成功', '主动运营'], related: ['churn率', 'NDR', '客户成功'] },
+              { name: 'NPS分析', desc: '净推荐值，衡量客户满意度和推荐意愿', formula: 'NPS = 推荐者% - 贬损者%', scenarios: ['客户满意度', '产品体验', '口碑营销'], related: ['客户健康度', 'churn率', '留存率'] },
+              { name: '单位经济', desc: '分析单个客户的收入成本结构和盈利能力', formula: 'LTV/CAC > 3 为健康', scenarios: ['商业模式验证', '定价策略', '增长策略'], related: ['LTV', 'CAC', '回收期'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '流失预警', desc: '基于客户行为数据提前识别高流失风险客户', scenarios: ['客户成功', '主动干预', '留存提升'], related: ['churn率', '健康度评分', 'NDR'] },
+              { name: '客户成功', desc: '帮助客户成功使用产品，提升留存和增购', scenarios: ['客户运营', '增购upsell', '留存提升'], related: ['NDR', 'churn率', '健康度评分'] },
+              { name: '定价策略', desc: '基于客户价值和市场竞争制定最优定价方案', scenarios: ['价格优化', '套餐设计', '增值服务'], related: ['ARPU', 'LTV', '单位经济'] },
+              { name: '产品分析', desc: '分析产品功能使用情况，指导产品迭代', scenarios: ['产品优化', '功能优先级', '用户体验'], related: ['用户画像', '留存率', 'A/B测试'] },
+              { name: '增长策略', desc: '制定和优化用户增长策略和路径', scenarios: ['增长规划', '渠道优化', '转化提升'], related: ['AARRR模型', 'CAC', 'LTV'] },
+              { name: '客户分层运营', desc: '针对不同价值客户提供差异化服务', scenarios: ['资源优化', '精准运营', '客户成功'], related: ['客户分层', 'ARPU', '健康度评分'] }
+            ]
+          }
+        ]
+      },
+      game: {
+        name: '游戏行业',
+        centerColor: '#fb923c',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'DAU', desc: '日活跃用户数，衡量游戏用户规模和活跃度', formula: 'DAU = 当日登录过的去重用户数', scenarios: ['用户规模', '活跃度', '运营效果'], related: ['MAU', '留存率', '在线时长'] },
+              { name: '留存率', desc: '新增用户在后续日期的留存比例', formula: '第N日留存率 = 第N日活跃新增用户数 ÷ 当日新增用户数', scenarios: ['产品质量', '运营效果', '用户粘性'], related: ['DAU', 'LTV', '流失召回'] },
+              { name: '付费率', desc: '活跃用户中付费用户的比例', formula: '付费率 = 付费用户数 ÷ 活跃用户数 × 100%', scenarios: ['变现能力', '付费设计', '运营活动'], related: ['ARPU', 'LTV', '收入'] },
+              { name: 'ARPU', desc: '每用户平均收入，衡量用户变现能力', formula: 'ARPU = 总收入 ÷ 活跃用户数', scenarios: ['变现效率', '用户价值', '付费设计'], related: ['付费率', 'LTV', '收入'] },
+              { name: 'LTV', desc: '用户生命周期价值，用户整个生命周期的贡献', formula: 'LTV = ARPU × 平均生命周期', scenarios: ['用户价值', '投放策略', 'ROI评估'], related: ['ARPU', '留存率', 'CAC'] },
+              { name: '在线时长', desc: '用户平均每日游戏时长，衡量用户粘性', formula: '人均在线时长 = 总游戏时长 ÷ 活跃用户数', scenarios: ['用户粘性', '内容丰富度', '产品质量'], related: ['DAU', '留存率', '用户活跃度'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '用户分层', desc: '基于付费能力、活跃度、游戏阶段等对用户分层', formula: '付费分层 + 活跃分层 + 等级分层', scenarios: ['精准运营', '活动设计', '客服资源'], related: ['RFM模型', '用户画像', '付费率'] },
+              { name: '漏斗分析', desc: '分析用户注册、新手、付费等关键路径的转化', formula: '各环节转化率 = 下一环节用户数 ÷ 上一环节用户数', scenarios: ['新手优化', '付费转化', '活动效果'], related: ['转化率', 'AARRR模型', '留存率'] },
+              { name: 'A/B测试', desc: '通过对照实验验证版本、活动、玩法的效果', formula: '对照组 vs 实验组 + 统计显著性检验', scenarios: ['版本迭代', '活动优化', '玩法验证'], related: ['转化率', '留存率', '假设检验'] },
+              { name: 'Cohort分析', desc: '同期群分析，追踪不同批次用户的留存和付费', formula: '按注册时间分组 → 追踪各群组指标变化', scenarios: ['留存分析', '版本效果', '渠道质量'], related: ['留存率', 'LTV', 'DAU'] },
+              { name: '行为分析', desc: '深入分析用户游戏内行为和偏好', formula: '行为序列 + 时长分布 + 功能使用', scenarios: ['产品优化', '内容设计', '玩法调整'], related: ['用户画像', '在线时长', '留存率'] },
+              { name: '流失预警', desc: '基于用户行为数据预测流失风险', formula: '登录频率下降 + 消费下降 + 活跃度下降', scenarios: ['流失召回', '用户运营', '留存提升'], related: ['留存率', 'DAU', '用户分层'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '流失召回', desc: '针对流失用户设计召回策略和活动', scenarios: ['用户召回', '活动运营', '流失挽回'], related: ['留存率', '流失预警', 'DAU'] },
+              { name: '付费优化', desc: '优化付费设计，提升付费率和ARPU', scenarios: ['付费设计', '活动运营', '商城优化'], related: ['付费率', 'ARPU', 'LTV'] },
+              { name: '活动运营', desc: '策划和评估游戏内运营活动效果', scenarios: ['节日活动', '版本活动', '日常活动'], related: ['DAU', '收入', 'A/B测试'] },
+              { name: '版本分析', desc: '分析版本更新对用户和收入的影响', scenarios: ['版本迭代', '功能验证', '效果评估'], related: ['留存率', 'DAU', 'A/B测试'] },
+              { name: '服务器规划', desc: '基于用户规模和活跃度规划服务器资源', scenarios: ['开服规划', '合服决策', '资源优化'], related: ['DAU', '在线时长', '并发数'] },
+              { name: '公会/社交', desc: '分析游戏内社交系统的效果和影响', scenarios: ['社交优化', '公会运营', '粘性提升'], related: ['留存率', '在线时长', '用户活跃度'] }
+            ]
+          }
+        ]
+      },
+      finance: {
+        name: '金融行业',
+        centerColor: '#3b82f6',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'AUM', desc: '管理资产规模，财富管理业务的核心规模指标', formula: 'AUM = 所有客户管理资产之和', scenarios: ['业务规模', '市场地位', '收入基础'], related: ['客户数', '人均AUM', 'ROE'] },
+              { name: '不良率', desc: '不良贷款占比，衡量资产质量和风险水平', formula: '不良率 = 不良贷款余额 ÷ 总贷款余额 × 100%', scenarios: ['风险控制', '资产质量', '拨备计提'], related: ['拨备覆盖率', 'ROE', '风险定价'] },
+              { name: '通过率', desc: '信贷申请的通过比例，衡量风控松紧程度', formula: '通过率 = 通过申请数 ÷ 总申请数 × 100%', scenarios: ['风控策略', '获客质量', '业务规模'], related: ['不良率', '风险定价', '获客成本'] },
+              { name: 'ROE', desc: '净资产收益率，衡量盈利能力和资本效率', formula: 'ROE = 净利润 ÷ 净资产 × 100%', scenarios: ['盈利能力', '股东回报', '经营效率'], related: ['杜邦分析', '净利率', '资产周转率'] },
+              { name: '客户数', desc: '有效客户数量，衡量业务规模和市场覆盖', formula: '有效客户数 = 有资产/交易的去重客户数', scenarios: ['业务规模', '市场份额', '获客效果'], related: ['AUM', '人均AUM', '获客成本'] },
+              { name: '人均AUM', desc: '户均管理资产规模，衡量客户质量和价值', formula: '人均AUM = AUM ÷ 客户数', scenarios: ['客户分层', '价值挖掘', '精准营销'], related: ['AUM', '客户数', '客户分层'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '信用评分', desc: '基于多维度数据构建信用风险评分模型', formula: '特征工程 + 模型训练 + 评分卡', scenarios: ['信贷审批', '风险定价', '额度管理'], related: ['通过率', '不良率', '风险定价'] },
+              { name: '客户分层', desc: '基于资产、风险、行为等维度对客户分层', formula: '资产分层 + 风险分层 + 行为分层', scenarios: ['精准营销', '差异化服务', '资源分配'], related: ['人均AUM', 'AUM', '用户画像'] },
+              { name: '风险定价', desc: '基于风险水平制定差异化定价策略', formula: '定价 = 无风险利率 + 风险溢价 + 运营成本', scenarios: ['产品定价', '利率优化', '风险管理'], related: ['不良率', '信用评分', 'ROE'] },
+              { name: '反欺诈', desc: '识别和防范欺诈行为的技术和方法', formula: '规则引擎 + 机器学习 + 关联网络', scenarios: ['欺诈识别', '风险控制', '损失预防'], related: ['不良率', '信用评分', '通过率'] },
+              { name: 'ALM管理', desc: '资产负债管理，匹配资产和负债的期限和风险', formula: '久期匹配 + 缺口管理 + 流动性管理', scenarios: ['利率风险管理', '流动性管理', '资本管理'], related: ['ROE', '不良率', '资本充足率'] },
+              { name: '杜邦分析', desc: '将ROE拆解为净利率、资产周转率、权益乘数', formula: 'ROE = 净利率 × 资产周转率 × 权益乘数', scenarios: ['盈利能力分析', '经营效率诊断', '财务归因'], related: ['ROE', '净利率', '资产周转率'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '信用评估', desc: '评估借款人的信用风险和还款能力', scenarios: ['信贷审批', '额度管理', '定价策略'], related: ['信用评分', '不良率', '风险定价'] },
+              { name: '反欺诈', desc: '识别和防范各类欺诈行为', scenarios: ['申请欺诈', '交易欺诈', '身份盗用'], related: ['反欺诈', '不良率', '信用评分'] },
+              { name: '精准营销', desc: '基于客户画像进行精准产品推荐和营销', scenarios: ['产品推荐', '客户激活', '价值提升'], related: ['客户分层', '用户画像', 'AUM'] },
+              { name: '流失预警', desc: '提前识别高流失风险客户并干预', scenarios: ['客户挽留', '价值保全', '客户成功'], related: ['客户分层', 'AUM', '留存率'] },
+              { name: '资产配置', desc: '为客户提供个性化资产配置建议', scenarios: ['财富管理', '投资顾问', '产品组合'], related: ['AUM', '客户分层', '人均AUM'] },
+              { name: '风险管理', desc: '全面管理信用、市场、操作等各类风险', scenarios: ['风险监控', '风险预警', '资本管理'], related: ['不良率', 'ALM管理', 'ROE'] }
+            ]
+          }
+        ]
+      },
+      manufacturing: {
+        name: '制造业',
+        centerColor: '#38bdf8',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'OEE', desc: '设备综合效率，衡量设备利用效率的黄金标准', formula: 'OEE = 时间稼动率 × 性能稼动率 × 良品率', scenarios: ['设备管理', '生产效率', '持续改进'], related: ['良率', '产能利用率', '设备故障率'] },
+              { name: '良率', desc: '合格产品占总产出的比例，衡量质量水平', formula: '良率 = 合格产品数 ÷ 总产品数 × 100%', scenarios: ['质量管理', '工艺优化', '成本控制'], related: ['OEE', 'SPC', '六西格玛'] },
+              { name: '产能利用率', desc: '实际产出占设计产能的比例', formula: '产能利用率 = 实际产量 ÷ 设计产能 × 100%', scenarios: ['生产计划', '投资决策', '资源配置'], related: ['OEE', '交付准时率', '库存周转'] },
+              { name: '库存周转率', desc: '库存周转的速度，衡量库存管理效率', formula: '库存周转率 = 销售成本 ÷ 平均库存', scenarios: ['库存管理', '资金效率', '供应链优化'], related: ['安全库存', 'EOQ', 'ABC分类法'] },
+              { name: '交付准时率', desc: '准时交付的订单比例，衡量供应链可靠性', formula: '准时交付率 = 准时交付订单数 ÷ 总订单数 × 100%', scenarios: ['客户满意度', '供应链管理', '生产计划'], related: ['产能利用率', '库存周转', 'OEE'] },
+              { name: '设备故障率', desc: '设备故障发生的频率，衡量设备可靠性', formula: '设备故障率 = 故障次数 ÷ 设备运行总时长', scenarios: ['设备维护', '可靠性管理', '备件管理'], related: ['OEE', 'MTBF', 'MTTR'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: 'SPC', desc: '统计过程控制，用统计方法监控过程波动', formula: '控制图 + 3σ + 判异准则', scenarios: ['质量控制', '过程监控', '异常预警'], related: ['良率', '六西格玛', 'PDCA'] },
+              { name: '六西格玛', desc: '以数据为基础的质量改进方法论', formula: 'DMAIC：定义→测量→分析→改进→控制', scenarios: ['质量改进', '流程优化', '缺陷减少'], related: ['SPC', '良率', 'FMEA'] },
+              { name: '鱼骨图/5Why', desc: '根因分析方法，层层深入找到问题根本原因', formula: '5次为什么追问 + 人/机/料/法/环/测', scenarios: ['问题分析', '根因定位', '质量改进'], related: ['PDCA', '六西格玛', 'FMEA'] },
+              { name: 'ABC分类法', desc: '按价值将物料/产品分为ABC三类，差异化管理', formula: 'A类：前20%占80%价值，B类：中间30%占15%，C类：后50%占5%', scenarios: ['库存管理', '物料管理', '采购策略'], related: ['库存周转率', '安全库存', 'EOQ'] },
+              { name: 'FMEA', desc: '失效模式与影响分析，提前识别潜在风险', formula: '严重度 × 发生度 × 探测度 = RPN', scenarios: ['风险预防', '设计评审', '工艺优化'], related: ['六西格玛', 'SPC', '良率'] },
+              { name: 'PDCA循环', desc: '计划-执行-检查-处理的持续改进循环', formula: 'Plan→Do→Check→Act，循环往复', scenarios: ['持续改进', '质量管理', '项目管理'], related: ['六西格玛', 'SPC', '鱼骨图'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '质量改进', desc: '持续提升产品质量，降低缺陷率', scenarios: ['质量管控', '工艺优化', '供应商质量'], related: ['良率', '六西格玛', 'SPC'] },
+              { name: '设备管理', desc: '提升设备可靠性和利用效率', scenarios: ['预防性维护', 'TPM', '备件管理'], related: ['OEE', '设备故障率', 'MTBF'] },
+              { name: '库存优化', desc: '优化库存水平，平衡服务水平和成本', scenarios: ['库存控制', '安全库存', '呆滞库存'], related: ['库存周转率', 'ABC分类法', 'EOQ'] },
+              { name: '生产计划', desc: '制定合理的生产计划，平衡供需', scenarios: ['主生产计划', '物料需求计划', '排程优化'], related: ['产能利用率', '交付准时率', '库存周转'] },
+              { name: '供应链', desc: '优化供应链整体效率和韧性', scenarios: ['供应商管理', '采购优化', '物流优化'], related: ['交付准时率', '库存周转率', 'ABC分类法'] },
+              { name: '成本控制', desc: '降低生产成本，提升盈利能力', scenarios: ['材料成本', '人工成本', '能源成本'], related: ['OEE', '良率', '库存周转率'] }
+            ]
+          }
+        ]
+      },
+      'live-ecommerce': {
+        name: '直播电商',
+        centerColor: '#ef4444',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'UV价值', desc: '每个观众贡献的GMV，衡量直播变现效率', formula: 'UV价值 = GMV ÷ 观看UV', scenarios: ['直播效率', '人货场匹配', '复盘核心'], related: ['GMV', '转化率', 'GPM'] },
+              { name: '观看UV', desc: '直播观看独立访客数，衡量流量规模', formula: '观看UV = 去重的观看用户数', scenarios: ['流量规模', '引流效果', '热度评估'], related: ['停留时长', '互动率', 'UV价值'] },
+              { name: '转化率', desc: '观众中下单购买的比例', formula: '转化率 = 下单用户数 ÷ 观看UV × 100%', scenarios: ['转化效率', '主播能力', '选品质量'], related: ['UV价值', 'GMV', '停留时长'] },
+              { name: '停留时长', desc: '观众平均停留时间，衡量内容吸引力', formula: '人均停留时长 = 总观看时长 ÷ 观看UV', scenarios: ['内容质量', '主播能力', '留存优化'], related: ['互动率', '转化率', '观看UV'] },
+              { name: '互动率', desc: '观众互动的比例，衡量直播间活跃度', formula: '互动率 = 互动用户数 ÷ 观看UV × 100%', scenarios: ['活跃度', '算法推荐', '粉丝粘性'], related: ['停留时长', '转化率', '粉丝团'] },
+              { name: 'GPM', desc: '千次观看成交金额，衡量流量利用效率', formula: 'GPM = GMV ÷ 观看UV × 1000', scenarios: ['投放评估', '流量效率', '直播间质量'], related: ['UV价值', 'ROI', '转化率'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '人货场模型', desc: '从主播、商品、场景三个维度分析直播', formula: '人(主播) + 货(商品) + 场(直播间) = 直播效果', scenarios: ['直播诊断', '优化方向', '能力评估'], related: ['UV价值', '转化率', '直播复盘'] },
+              { name: '直播复盘', desc: '系统性复盘直播表现，找到优化点', formula: '数据复盘 + 问题诊断 + 优化计划', scenarios: ['持续优化', '经验沉淀', '能力提升'], related: ['UV价值', '漏斗分析', '人货场模型'] },
+              { name: '漏斗分析', desc: '拆解直播用户转化路径各环节', formula: '曝光→进入→停留→互动→点击→下单→支付', scenarios: ['转化优化', '流失诊断', '环节改进'], related: ['转化率', '停留时长', 'UV价值'] },
+              { name: 'GMV拆解', desc: '将GMV拆解为多个驱动因子', formula: 'GMV = 观看UV × 转化率 × 客单价', scenarios: ['归因分析', '增长策略', '目标拆解'], related: ['UV价值', '转化率', '客单价'] },
+              { name: '主播评估', desc: '多维度评估主播能力和表现', formula: '销售能力 + 互动能力 + 专业度 + 控场能力', scenarios: ['主播考核', '培训方向', '排班优化'], related: ['转化率', '互动率', '停留时长'] },
+              { name: '选品分析', desc: '分析商品销售表现，优化选品策略', formula: '销量 + 转化率 + 毛利 + 退货率', scenarios: ['选品优化', '排品策略', '供应链'], related: ['GMV', '转化率', '客单价'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '直播复盘', desc: '每场直播后系统性复盘和优化', scenarios: ['日常复盘', '大促复盘', '月度总结'], related: ['直播复盘', 'UV价值', '人货场模型'] },
+              { name: '主播培养', desc: '培养和提升主播能力', scenarios: ['新人培训', '能力提升', '绩效考核'], related: ['主播评估', '转化率', '互动率'] },
+              { name: '选品策略', desc: '优化选品和排品策略', scenarios: ['日常选品', '大促选品', '供应链管理'], related: ['选品分析', 'GMV', '客单价'] },
+              { name: '流量投放', desc: '优化付费流量投放，提升ROI', scenarios: ['千川投放', 'DOU+', '流量采买'], related: ['GPM', 'ROI', 'UV价值'] },
+              { name: '转化提升', desc: '优化直播间各环节转化率', scenarios: ['话术优化', '场景优化', '福利设计'], related: ['转化率', '漏斗分析', '停留时长'] },
+              { name: '粉丝运营', desc: '运营粉丝，提升粘性和复购', scenarios: ['粉丝团', '会员体系', '私域运营'], related: ['互动率', '复购率', '停留时长'] }
+            ]
+          }
+        ]
+      },
+      education: {
+        name: '在线教育',
+        centerColor: '#ec4899',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: '续费率', desc: '到期用户续费的比例，教育行业核心质量指标', formula: '续费率 = 续费用户数 ÷ 到期用户数 × 100%', scenarios: ['课程质量', '用户满意度', '收入增长'], related: ['完课率', 'LTV', '获客成本'] },
+              { name: '完课率', desc: '完成课程的用户比例，衡量学习效果', formula: '完课率 = 完成课程用户数 ÷ 报名用户数 × 100%', scenarios: ['课程质量', '学习效果', '运营效果'], related: ['续费率', '出勤率', '学习效果'] },
+              { name: '转化率', desc: '体验课/试听课用户转付费的比例', formula: '转化率 = 付费用户数 ÷ 体验用户数 × 100%', scenarios: ['获客效率', '销售能力', '课程质量'], related: ['获客成本', 'ROI', '续费率'] },
+              { name: '获客成本', desc: '获取一个付费客户的平均成本', formula: '获客成本 = 总获客投入 ÷ 新增付费客户数', scenarios: ['获客效率', '渠道评估', '预算规划'], related: ['LTV', 'ROI', '转化率'] },
+              { name: 'LTV', desc: '用户生命周期价值，用户整个生命周期的贡献', formula: 'LTV = 客单价 × 续费率 × 平均生命周期', scenarios: ['用户价值', '定价策略', '获客策略'], related: ['续费率', '客单价', '获客成本'] },
+              { name: '出勤率', desc: '用户上课出勤的比例，衡量学习积极性', formula: '出勤率 = 实际上课人次 ÷ 应上课人次 × 100%', scenarios: ['学习效果', '运营效果', '课程质量'], related: ['完课率', '续费率', '学习效果'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '学习漏斗', desc: '拆解用户从接触到续费的完整转化路径', formula: '曝光→点击→注册→体验→付费→上课→完课→续费', scenarios: ['转化优化', '流失诊断', '环节改进'], related: ['转化率', '完课率', '续费率'] },
+              { name: '用户生命周期', desc: '分析用户全生命周期各阶段特征和需求', formula: '获客→激活→留存→变现→推荐', scenarios: ['用户运营', '生命周期管理', '价值提升'], related: ['LTV', '续费率', '完课率'] },
+              { name: '效果评估', desc: '评估课程和教学的实际效果', formula: '学习成绩提升 + 满意度 + 续费率 + 完课率', scenarios: ['课程优化', '教学质量', '产品迭代'], related: ['完课率', '续费率', '出勤率'] },
+              { name: '用户分层', desc: '基于学习阶段、付费能力、活跃度等分层', formula: '学习阶段 + 付费能力 + 活跃度 + 学习效果', scenarios: ['精准运营', '差异化服务', '资源分配'], related: ['用户画像', 'LTV', '续费率'] },
+              { name: 'Cohort分析', desc: '同期群分析，追踪不同批次用户的留存和续费', formula: '按注册时间分组 → 追踪各群组指标变化', scenarios: ['留存分析', '课程效果', '渠道质量'], related: ['续费率', '完课率', 'LTV'] },
+              { name: 'A/B测试', desc: '通过对照实验验证课程、运营策略的效果', formula: '对照组 vs 实验组 + 统计显著性检验', scenarios: ['课程优化', '运营策略', 'UI/UX测试'], related: ['转化率', '续费率', '完课率'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '获客优化', desc: '优化获客渠道和转化，降低获客成本', scenarios: ['渠道投放', '落地页优化', '销售转化'], related: ['获客成本', '转化率', 'ROI'] },
+              { name: '转化优化', desc: '优化体验课转付费的转化效率', scenarios: ['销售培训', '课程设计', '运营活动'], related: ['转化率', '获客成本', '续费率'] },
+              { name: '学习效果', desc: '提升学习效果和用户满意度', scenarios: ['课程优化', '教学方法', '学习服务'], related: ['完课率', '续费率', '出勤率'] },
+              { name: '续费提升', desc: '提升用户续费率，增加LTV', scenarios: ['续费运营', '课程质量', '用户服务'], related: ['续费率', 'LTV', '完课率'] },
+              { name: '老师评估', desc: '评估老师教学质量和效果', scenarios: ['绩效考核', '培训提升', '排班优化'], related: ['完课率', '续费率', '出勤率'] },
+              { name: '课程设计', desc: '设计和优化课程体系和内容', scenarios: ['新课开发', '课程迭代', '体系优化'], related: ['完课率', '续费率', '学习效果'] }
+            ]
+          }
+        ]
+      },
+      'local-life': {
+        name: '本地生活',
+        centerColor: '#14b8a6',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: 'GMV', desc: '交易总额，双边市场的核心规模指标', formula: 'GMV = 订单量 × 客单价', scenarios: ['业务规模', '市场地位', '增长衡量'], related: ['Take Rate', '订单量', '商家数'] },
+              { name: 'Take Rate', desc: '平台抽佣率，衡量平台变现能力和议价权', formula: 'Take Rate = 平台收入 ÷ GMV × 100%', scenarios: ['变现能力', '平台价值', '议价能力'], related: ['GMV', '收入', '商家数'] },
+              { name: '商家数', desc: '平台商家数量，衡量供给侧规模', formula: '有效商家数 = 有交易的去重商家数', scenarios: ['供给规模', '城市覆盖', '商家运营'], related: ['GMV', '用户数', '供需匹配'] },
+              { name: '用户数', desc: '平台用户数量，衡量需求侧规模', formula: '有效用户数 = 有交易的去重用户数', scenarios: ['需求规模', '市场覆盖', '用户运营'], related: ['GMV', '商家数', '复购率'] },
+              { name: '复购率', desc: '用户重复购买的比例，衡量用户粘性', formula: '复购率 = 复购用户数 ÷ 总购买用户数 × 100%', scenarios: ['用户粘性', '平台价值', '运营效果'], related: ['用户数', 'GMV', '留存率'] },
+              { name: '订单量', desc: '平台总订单数，衡量交易频次', formula: '订单量 = 用户数 × 人均订单数', scenarios: ['交易规模', '运营效果', '增长衡量'], related: ['GMV', '客单价', '用户数'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '双边市场', desc: '分析供给和需求两侧的互动和网络效应', formula: '供给侧 + 需求侧 + 平台匹配 = 双边市场', scenarios: ['平台战略', '增长策略', '供需平衡'], related: ['商家数', '用户数', 'GMV'] },
+              { name: '供需匹配', desc: '分析供给和需求的匹配效率和优化空间', formula: '供给能力 × 需求规模 × 匹配效率', scenarios: ['运营优化', '城市策略', '资源配置'], related: ['商家数', '用户数', 'GMV'] },
+              { name: '单位经济', desc: '分析单城市/单订单的收入成本结构', formula: '单均收入 - 单均成本 = 单均利润', scenarios: ['商业模式验证', '城市拓展', '盈利分析'], related: ['Take Rate', 'GMV', '补贴效率'] },
+              { name: '城市拓展', desc: '分析城市拓展的策略和效果', formula: '城市分级 + 进入策略 + 运营策略', scenarios: ['扩张策略', '资源分配', '城市运营'], related: ['GMV', '商家数', '用户数'] },
+              { name: '补贴效率', desc: '分析补贴投入的产出和ROI', formula: '补贴ROI = 增量GMV ÷ 补贴投入', scenarios: ['补贴策略', '预算分配', '增长优化'], related: ['GMV', '获客成本', 'ROI'] },
+              { name: '商家分层', desc: '基于商家价值、规模、品类等对商家分层', formula: '价值分层 + 规模分层 + 品类分层', scenarios: ['商家运营', '资源分配', '精准服务'], related: ['商家数', 'GMV', 'Take Rate'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '商家运营', desc: '商家拓展、运营和服务', scenarios: ['商家拓展', '商家成长', '商家服务'], related: ['商家数', 'GMV', '商家分层'] },
+              { name: '用户留存', desc: '提升用户留存和复购', scenarios: ['用户运营', '会员体系', '活动运营'], related: ['复购率', '用户数', 'GMV'] },
+              { name: '补贴策略', desc: '制定和优化补贴策略', scenarios: ['新用户补贴', '商家补贴', '活动补贴'], related: ['补贴效率', 'ROI', 'GMV'] },
+              { name: '城市拓展', desc: '新城市拓展和运营', scenarios: ['城市进入', '冷启动', '城市运营'], related: ['城市拓展', 'GMV', '商家数'] },
+              { name: '供需平衡', desc: '优化供需匹配和平衡', scenarios: ['峰值运营', '供给调度', '需求引导'], related: ['供需匹配', 'GMV', '订单量'] },
+              { name: '品类运营', desc: '不同品类的差异化运营', scenarios: ['餐饮', '酒旅', '休闲娱乐', '到店服务'], related: ['GMV', '商家数', '订单量'] }
+            ]
+          }
+        ]
+      },
+      healthcare: {
+        name: '医疗健康',
+        centerColor: '#06b6d4',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: '床位使用率', desc: '实际占用床日数占开放床日数的比例', formula: '床位使用率 = 实际占用床日数 ÷ 实际开放床日数 × 100%', scenarios: ['资源利用', '运营效率', '床位管理'], related: ['平均住院日', '门诊量', 'DRG组数'] },
+              { name: '平均住院日', desc: '患者平均住院天数，衡量诊疗效率', formula: '平均住院日 = 总住院日数 ÷ 出院人数', scenarios: ['诊疗效率', '床位周转', '质量评估'], related: ['床位使用率', '药占比', 'DRG组数'] },
+              { name: '药占比', desc: '药品收入占医疗总收入的比例', formula: '药占比 = 药品收入 ÷ 医疗总收入 × 100%', scenarios: ['费用控制', '合理用药', '医保政策'], related: ['DRG/DIP', '成本分析', '门诊量'] },
+              { name: '门诊量', desc: '门诊就诊人次，衡量医院服务量', formula: '门诊量 = 总门诊就诊人次', scenarios: ['服务规模', '患者需求', '资源配置'], related: ['床位使用率', '住院量', '患者满意度'] },
+              { name: '患者满意度', desc: '患者对医疗服务的满意程度', formula: '满意度 = 满意患者数 ÷ 总调查患者数 × 100%', scenarios: ['服务质量', '患者体验', '医院评价'], related: ['门诊量', '床位使用率', '复诊率'] },
+              { name: 'DRG组数', desc: '覆盖的DRG组数，衡量诊疗能力范围', formula: 'DRG组数 = 有病例的DRG组数量', scenarios: ['诊疗能力', '科室建设', '医院等级'], related: ['平均住院日', '药占比', '成本分析'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: 'DRG/DIP', desc: '按疾病诊断相关分组的付费和管理方式', formula: '诊断 + 操作 + 并发症 = DRG分组', scenarios: ['医保支付', '成本控制', '质量管理'], related: ['平均住院日', '药占比', '成本分析'] },
+              { name: '临床路径', desc: '标准化的诊疗流程和路径管理', formula: '标准化诊疗流程 + 变异管理 + 效果评估', scenarios: ['质量控制', '成本控制', '效率提升'], related: ['DRG/DIP', '平均住院日', '良率'] },
+              { name: '运营效率模型', desc: '分析医院运营效率和资源利用', formula: '投入产出比 + 资源利用率 + 周转效率', scenarios: ['运营管理', '资源优化', '绩效评估'], related: ['床位使用率', '平均住院日', '门诊量'] },
+              { name: '满意度分析', desc: '分析患者满意度和影响因素', formula: '满意度调查 + 影响因素分析 + 改进建议', scenarios: ['服务改进', '患者体验', '品牌建设'], related: ['患者满意度', '门诊量', '复诊率'] },
+              { name: '成本分析', desc: '分析医疗服务成本结构和优化空间', formula: '直接成本 + 间接成本 + 分摊成本', scenarios: ['成本控制', '定价策略', '绩效管理'], related: ['DRG/DIP', '药占比', '平均住院日'] },
+              { name: '科室运营', desc: '分析各科室运营表现和效率', formula: '收入 + 成本 + 质量 + 效率', scenarios: ['科室管理', '资源分配', '绩效评估'], related: ['DRG组数', '门诊量', '床位使用率'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '床位优化', desc: '优化床位配置和使用效率', scenarios: ['床位管理', '预约调度', '周转优化'], related: ['床位使用率', '平均住院日', '门诊量'] },
+              { name: '质量评估', desc: '评估医疗质量和安全', scenarios: ['质量管理', '安全管理', '持续改进'], related: ['DRG/DIP', '临床路径', '患者满意度'] },
+              { name: '患者体验', desc: '提升患者就医体验和满意度', scenarios: ['服务优化', '流程改进', '环境改善'], related: ['患者满意度', '门诊量', '复诊率'] },
+              { name: '成本控制', desc: '控制医疗成本，提升运营效率', scenarios: ['成本管理', '预算控制', '耗材管理'], related: ['药占比', 'DRG/DIP', '成本分析'] },
+              { name: '科室运营', desc: '各科室运营管理和优化', scenarios: ['科室建设', '绩效管理', '资源配置'], related: ['科室运营', 'DRG组数', '门诊量'] },
+              { name: '医保管理', desc: '医保政策应对和优化', scenarios: ['医保支付', '费用控制', '政策应对'], related: ['DRG/DIP', '药占比', '成本分析'] }
+            ]
+          }
+        ]
+      },
+      fmcg: {
+        name: '快消品/FMCG',
+        centerColor: '#f97316',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: '库存周转率', desc: '库存周转速度，衡量供应链效率', formula: '库存周转率 = 销售成本 ÷ 平均库存金额', scenarios: ['库存管理', '资金效率', '供应链'], related: ['动销率', '售罄率', '渠道分销'] },
+              { name: '动销率', desc: '有销售的SKU占总SKU的比例', formula: '动销率 = 有销售SKU数 ÷ 总SKU数 × 100%', scenarios: ['商品管理', '品类优化', '库存健康'], related: ['售罄率', '库存周转率', '品类管理'] },
+              { name: '渠道分销', desc: '产品在渠道中的覆盖和分布情况', formula: '分销率 = 有售门店数 ÷ 目标门店数 × 100%', scenarios: ['渠道管理', '市场覆盖', '销售执行'], related: ['市场份额', 'GMV', '动销率'] },
+              { name: '促销ROI', desc: '促销活动的投入产出比', formula: '促销ROI = 增量销售 ÷ 促销投入', scenarios: ['促销评估', '预算分配', '活动优化'], related: ['GMV', '市场份额', '价格弹性'] },
+              { name: '市场份额', desc: '品牌销售额占市场总销售额的比例', formula: '市场份额 = 品牌销售额 ÷ 市场总销售额 × 100%', scenarios: ['竞争地位', '品牌实力', '战略规划'], related: ['GMV', '渠道分销', '促销ROI'] },
+              { name: '售罄率', desc: '一定时间内销售掉的库存比例', formula: '售罄率 = 销售数量 ÷ 进货数量 × 100%', scenarios: ['新品评估', '促销效果', '库存健康'], related: ['动销率', '库存周转率', '促销ROI'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '渠道分销', desc: '分析产品在各渠道的分销情况和优化空间', formula: '分销率 + 陈列质量 + 价格执行', scenarios: ['渠道管理', '销售执行', '市场覆盖'], related: ['渠道分销', '市场份额', '动销率'] },
+              { name: '品类管理', desc: '基于品类角色和表现的商品组合管理', formula: '品类角色 + 品类策略 + 品类评估', scenarios: ['商品组合', '货架管理', '品类优化'], related: ['动销率', '售罄率', '库存周转率'] },
+              { name: '促销评估', desc: '评估促销活动的效果和ROI', formula: '增量销售 + 增量利润 + ROI', scenarios: ['促销优化', '预算分配', '活动设计'], related: ['促销ROI', 'GMV', '价格弹性'] },
+              { name: '供应链优化', desc: '优化供应链效率和成本', formula: '采购 + 生产 + 仓储 + 物流', scenarios: ['成本优化', '效率提升', '库存优化'], related: ['库存周转率', '动销率', '成本分析'] },
+              { name: '价格弹性', desc: '价格变化对销量的影响程度', formula: '价格弹性 = 销量变化% ÷ 价格变化%', scenarios: ['定价策略', '促销设计', '竞争应对'], related: ['促销ROI', '市场份额', 'GMV'] },
+              { name: 'ABC分类法', desc: '按价值将产品/物料分为ABC三类', formula: 'A类：前20%占80%价值，B类：中间30%占15%，C类：后50%占5%', scenarios: ['库存管理', '品类管理', '采购策略'], related: ['库存周转率', '动销率', '品类管理'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '新品上市', desc: '新品上市的策划和效果追踪', scenarios: ['新品研发', '上市推广', '效果评估'], related: ['售罄率', '动销率', '市场份额'] },
+              { name: '渠道健康', desc: '评估和优化渠道健康度', scenarios: ['渠道评估', '经销商管理', '终端执行'], related: ['渠道分销', '动销率', '市场份额'] },
+              { name: '促销ROI', desc: '优化促销活动ROI', scenarios: ['促销策划', '预算分配', '效果评估'], related: ['促销ROI', 'GMV', '价格弹性'] },
+              { name: '库存优化', desc: '优化库存水平和周转', scenarios: ['库存管理', '安全库存', '呆滞库存'], related: ['库存周转率', '动销率', '售罄率'] },
+              { name: '品类策略', desc: '制定和优化品类策略', scenarios: ['品类规划', '商品组合', '货架管理'], related: ['品类管理', '动销率', '市场份额'] },
+              { name: '竞品分析', desc: '分析竞争对手动态和策略', scenarios: ['竞争监控', '策略应对', '市场份额'], related: ['市场份额', '价格弹性', '渠道分销'] }
+            ]
+          }
+        ]
+      },
+      'new-energy': {
+        name: '新能源汽车',
+        centerColor: '#34d399',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: '市占率', desc: '品牌销量占市场总销量的比例', formula: '市占率 = 品牌销量 ÷ 市场总销量 × 100%', scenarios: ['竞争地位', '市场份额', '战略规划'], related: ['销量', '增长率', '品牌力'] },
+              { name: '销量', desc: '汽车销售数量，核心规模指标', formula: '销量 = 批发销量 + 零售销量', scenarios: ['业务规模', '增长衡量', '市场地位'], related: ['市占率', '产能利用率', '收入'] },
+              { name: '毛利率', desc: '销售毛利占收入的比例', formula: '毛利率 = (收入 - 成本) ÷ 收入 × 100%', scenarios: ['盈利能力', '成本控制', '定价策略'], related: ['净利率', 'ROE', '规模效应'] },
+              { name: '单车成本', desc: '每辆车的平均生产成本', formula: '单车成本 = 总生产成本 ÷ 产量', scenarios: ['成本控制', '规模效应', '供应链'], related: ['毛利率', '规模效应', '产能利用率'] },
+              { name: '产能利用率', desc: '实际产量占设计产能的比例', formula: '产能利用率 = 实际产量 ÷ 设计产能 × 100%', scenarios: ['生产效率', '投资决策', '规模效应'], related: ['销量', '单车成本', '毛利率'] },
+              { name: '充电效率', desc: '电池充电速度和效率', formula: '充电效率 = 充电量 ÷ 耗电量 × 100%', scenarios: ['产品竞争力', '用户体验', '技术水平'], related: ['续航里程', '产品力', '用户满意度'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '规模效应', desc: '分析产量增加对单位成本的影响', formula: '产量增加 → 单位固定成本下降 → 单位成本下降', scenarios: ['成本优化', '产能规划', '定价策略'], related: ['单车成本', '产能利用率', '毛利率'] },
+              { name: '竞品对标', desc: '与竞争对手的多维度对比分析', formula: '产品 + 价格 + 渠道 + 品牌 + 服务', scenarios: ['竞争策略', '产品规划', '市场定位'], related: ['市占率', '销量', '毛利率'] },
+              { name: '供应链分析', desc: '分析供应链的稳定性和成本', formula: '原材料 + 零部件 + 生产 + 物流', scenarios: ['成本控制', '风险管理', '供应商管理'], related: ['单车成本', '毛利率', '产能利用率'] },
+              { name: '用户画像', desc: '新能源车主的用户特征和偏好', formula: '属性标签 + 行为标签 + 偏好标签 + 价值标签', scenarios: ['产品规划', '精准营销', '用户运营'], related: ['销量', '市占率', '用户满意度'] },
+              { name: '技术路线分析', desc: '不同技术路线的发展趋势和对比', formula: '纯电 + 插混 + 增程 + 氢燃料', scenarios: ['技术战略', '产品规划', '投资决策'], related: ['充电效率', '续航里程', '产品力'] },
+              { name: 'BCG矩阵', desc: '基于市场增长率和份额的产品组合分析', formula: '明星 + 金牛 + 问题 + 瘦狗', scenarios: ['产品组合', '资源分配', '战略规划'], related: ['市占率', '增长率', '销量'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '产品规划', desc: '产品定义和路线规划', scenarios: ['新品研发', '改款升级', '技术路线'], related: ['技术路线分析', '用户画像', '竞品对标'] },
+              { name: '供应链管理', desc: '供应链管理和优化', scenarios: ['供应商管理', '成本控制', '风险管理'], related: ['供应链分析', '单车成本', '产能利用率'] },
+              { name: '渠道建设', desc: '销售渠道建设和管理', scenarios: ['直营店', '经销商', '线上渠道'], related: ['销量', '市占率', '渠道分销'] },
+              { name: '品牌营销', desc: '品牌建设和营销推广', scenarios: ['品牌建设', '营销活动', '用户增长'], related: ['市占率', '销量', '用户画像'] },
+              { name: '充电网络', desc: '充电基础设施建设和运营', scenarios: ['充电桩', '换电站', '充电服务'], related: ['充电效率', '用户体验', '产品力'] },
+              { name: '用户服务', desc: '用户服务和体验优化', scenarios: ['售后服务', '用户运营', '满意度提升'], related: ['用户满意度', '复购率', '品牌力'] }
+            ]
+          }
+        ]
+      },
+      logistics: {
+        name: '物流供应链',
+        centerColor: '#3b82f6',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#3b82f6',
+            nodes: [
+              { name: '准时送达率', desc: '准时送达的订单比例，核心服务质量指标', formula: '准时送达率 = 准时送达订单数 ÷ 总送达订单数 × 100%', scenarios: ['服务质量', '客户满意度', '运营考核'], related: ['破损率', '成本', '客户满意度'] },
+              { name: '破损率', desc: '货物破损的比例，衡量服务质量', formula: '破损率 = 破损订单数 ÷ 总订单数 × 100%', scenarios: ['质量控制', '操作规范', '包装优化'], related: ['准时送达率', '客户满意度', '成本'] },
+              { name: '单均成本', desc: '每单的平均物流成本', formula: '单均成本 = 总物流成本 ÷ 订单数', scenarios: ['成本控制', '定价策略', '运营效率'], related: ['毛利率', '准时送达率', '产能利用率'] },
+              { name: '库存周转率', desc: '库存周转速度，衡量库存效率', formula: '库存周转率 = 销售成本 ÷ 平均库存', scenarios: ['库存管理', '资金效率', '供应链优化'], related: ['准时送达率', '成本', '安全库存'] },
+              { name: '客户满意度', desc: '客户对物流服务的满意程度', formula: '满意度 = 满意客户数 ÷ 总客户数 × 100%', scenarios: ['服务质量', '客户关系', '品牌建设'], related: ['准时送达率', '破损率', '服务质量'] },
+              { name: '产能利用率', desc: '物流资源的利用效率', formula: '产能利用率 = 实际处理量 ÷ 设计产能 × 100%', scenarios: ['资源配置', '网络规划', '运营效率'], related: ['单均成本', '准时送达率', '规模效应'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '网络优化', desc: '优化物流网络布局和节点设置', formula: '仓库数量 + 位置 + 覆盖范围 + 成本', scenarios: ['网络规划', '成本优化', '服务提升'], related: ['准时送达率', '单均成本', '库存周转率'] },
+              { name: '路径优化', desc: '优化配送路径，提升效率降低成本', formula: 'VRP车辆路径问题 + 启发式算法', scenarios: ['配送优化', '成本控制', '时效提升'], related: ['准时送达率', '单均成本', '车辆利用率'] },
+              { name: '牛鞭效应', desc: '需求波动沿供应链上游放大的现象', formula: '需求波动逐级放大 → 库存过剩或缺货', scenarios: ['需求预测', '库存管理', '供应链协同'], related: ['库存周转率', '安全库存', '需求预测'] },
+              { name: 'EOQ模型', desc: '经济订货批量，最优订货量计算', formula: 'EOQ = √(2DS/H)', scenarios: ['库存管理', '采购优化', '成本控制'], related: ['库存周转率', '安全库存', '成本'] },
+              { name: '安全库存', desc: '应对需求波动的缓冲库存', formula: '安全库存 = 服务水平系数 × 需求标准差 × √提前期', scenarios: ['库存管理', '服务水平', '风险管理'], related: ['库存周转率', '牛鞭效应', '准时送达率'] },
+              { name: 'ABC分类法', desc: '按价值将SKU分为ABC三类差异化管理', formula: 'A类：前20%占80%价值，B类：中间30%占15%，C类：后50%占5%', scenarios: ['库存管理', '采购策略', '仓储优化'], related: ['库存周转率', 'EOQ模型', '安全库存'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '仓储优化', desc: '仓储运营优化和效率提升', scenarios: ['仓库管理', '拣货优化', '库存管理'], related: ['库存周转率', '单均成本', '准时送达率'] },
+              { name: '配送优化', desc: '配送运营优化和时效提升', scenarios: ['路径优化', '调度优化', '末端配送'], related: ['准时送达率', '单均成本', '路径优化'] },
+              { name: '成本控制', desc: '物流成本控制和优化', scenarios: ['成本管理', '预算控制', '效率提升'], related: ['单均成本', '产能利用率', '规模效应'] },
+              { name: '供应链协同', desc: '供应链上下游协同和信息共享', scenarios: ['供应商协同', '信息共享', '需求预测'], related: ['牛鞭效应', '库存周转率', '准时送达率'] },
+              { name: '网络规划', desc: '物流网络规划和优化', scenarios: ['仓库选址', '网络设计', '产能规划'], related: ['网络优化', '产能利用率', '单均成本'] },
+              { name: '客户服务', desc: '客户服务和体验优化', scenarios: ['服务质量', '客户关系', '投诉处理'], related: ['客户满意度', '准时送达率', '破损率'] }
+            ]
+          }
+        ]
+      }
+    };
+
+    // 行业标签配置
+    const industries = [
+      { key: 'ecommerce', name: '电商' },
+      { key: 'saas', name: 'SaaS' },
+      { key: 'game', name: '游戏' },
+      { key: 'finance', name: '金融' },
+      { key: 'manufacturing', name: '制造业' },
+      { key: 'live-ecommerce', name: '直播电商' },
+      { key: 'education', name: '在线教育' },
+      { key: 'local-life', name: '本地生活' },
+      { key: 'healthcare', name: '医疗健康' },
+      { key: 'fmcg', name: '快消品' },
+      { key: 'new-energy', name: '新能源' },
+      { key: 'logistics', name: '物流' }
+    ];
+
+    let chart = null;
+    let currentIndustry = 'ecommerce';
+    let currentNodeData = null;
+
+    // 初始化行业标签
+    function initIndustryTabs() {
+      const container = document.getElementById('industryTabs');
+      container.innerHTML = industries.map(ind => 
+        `<div class="industry-tab ${ind.key === currentIndustry ? 'active' : ''}" data-industry="${ind.key}">${ind.name}</div>`
+      ).join('');
+
+      container.querySelectorAll('.industry-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          container.querySelectorAll('.industry-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          currentIndustry = this.dataset.industry;
+          renderGraph(currentIndustry);
+          hideDetailPanel();
+        });
+      });
+    }
+
+    // 渲染图谱
+    function renderGraph(industryKey) {
+      const data = graphData[industryKey];
+      if (!data) return;
+
+      const nodes = [];
+      const links = [];
+
+      // 中心节点
+      nodes.push({
+        name: data.name,
+        symbolSize: 60,
+        category: -1,
+        itemStyle: {
+          color: {
+            type: 'radial',
+            x: 0.5,
+            y: 0.5,
+            r: 0.5,
+            colorStops: [
+              { offset: 0, color: data.centerColor },
+              { offset: 1, color: data.centerColor + '88' }
+            ]
+          },
+          borderColor: data.centerColor,
+          borderWidth: 3,
+          shadowBlur: 20,
+          shadowColor: data.centerColor
+        },
+        label: {
+          show: true,
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#fff'
+        }
+      });
+
+      // 分类节点和子节点
+      data.categories.forEach((cat, catIndex) => {
+        // 分类节点
+        nodes.push({
+          name: cat.name,
+          symbolSize: 40,
+          category: catIndex,
+          itemStyle: {
+            color: cat.color,
+            borderColor: cat.color,
+            borderWidth: 2,
+            shadowBlur: 15,
+            shadowColor: cat.color + '80'
+          },
           label: {
             show: true,
-            position: 'bottom',
-            distance: 10,
-            fontSize: 14,
-            fontWeight: 500,
-            color: '#e2e8f0'
-          },
-          edgeLabel: {
-            show: true,
-            fontSize: 11,
-            color: '#64748b',
-            formatter: function(params) {
-              return params.data.relation;
-            }
-          },
+            fontSize: 12,
+            fontWeight: '600',
+            color: '#fff'
+          }
+        });
+
+        // 中心到分类的连线
+        links.push({
+          source: data.name,
+          target: cat.name,
           lineStyle: {
-            color: 'source',
-            curveness: 0.15,
+            color: cat.color,
             width: 2,
             opacity: 0.6
+          }
+        });
+
+        // 子节点
+        cat.nodes.forEach(node => {
+          nodes.push({
+            name: node.name,
+            symbolSize: 25,
+            category: catIndex,
+            itemStyle: {
+              color: cat.color + 'cc',
+              borderColor: cat.color,
+              borderWidth: 1.5,
+              shadowBlur: 10,
+              shadowColor: cat.color + '60'
+            },
+            label: {
+              show: true,
+              fontSize: 11,
+              color: '#e2e8f0'
+            },
+            nodeData: node,
+            categoryName: cat.name,
+            categoryColor: cat.color
+          });
+
+          // 分类到子节点的连线
+          links.push({
+            source: cat.name,
+            target: node.name,
+            lineStyle: {
+              color: cat.color,
+              width: 1,
+              opacity: 0.4
+            }
+          });
+        });
+      });
+
+      // 更新统计
+      document.getElementById('nodeCount').textContent = nodes.length;
+      document.getElementById('linkCount').textContent = links.length;
+
+      // ECharts配置
+      const option = {
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          backgroundColor: 'rgba(15, 23, 42, 0.95)',
+          borderColor: 'rgba(139, 92, 246, 0.3)',
+          borderWidth: 1,
+          textStyle: {
+            color: '#e2e8f0',
+            fontSize: 12
+          },
+          formatter: function(params) {
+            if (params.dataType === 'node' && params.data.nodeData) {
+              return `<div style="font-weight:600;margin-bottom:4px;color:${params.data.categoryColor}">${params.data.name}</div>
+                      <div style="font-size:11px;color:#94a3b8;line-height:1.5">${params.data.nodeData.desc}</div>`;
+            }
+            return params.name;
+          }
+        },
+        series: [{
+          type: 'graph',
+          layout: 'force',
+          data: nodes,
+          links: links,
+          categories: data.categories.map(cat => ({ name: cat.name })),
+          roam: true,
+          draggable: true,
+          force: {
+            repulsion: 400,
+            gravity: 0.1,
+            edgeLength: [80, 150],
+            layoutAnimation: true
           },
           emphasis: {
             focus: 'adjacency',
             lineStyle: {
-              width: 4,
-              opacity: 1
+              width: 3
             },
-            label: {
-              fontSize: 16,
-              fontWeight: 600
+            itemStyle: {
+              shadowBlur: 30
             }
           },
-          data: [
-            {
-              name: '磁性材料',
-              symbolSize: 50,
-              itemStyle: { color: '#94a3b8' },
-              desc: '上游原材料行业',
-              url: '磁材/portfolio-sitihua-digital-platform.html',
-              category: 0
-            },
-            {
-              name: '陶瓷建材',
-              symbolSize: 50,
-              itemStyle: { color: '#fb923c' },
-              desc: '上游材料行业',
-              url: '陶瓷/index.html',
-              category: 0
-            },
-            {
-              name: '新能源汽车',
-              symbolSize: 70,
-              itemStyle: { color: '#38bdf8' },
-              desc: '中游制造，产业链核心',
-              url: '新能源/index.html',
-              category: 1
-            },
-            {
-              name: '物流供应链',
-              symbolSize: 65,
-              itemStyle: { color: '#f87171' },
-              desc: '基础设施，全行业纽带',
-              url: '物流/index.html',
-              category: 1
-            },
-            {
-              name: '零售行业',
-              symbolSize: 65,
-              itemStyle: { color: '#34d399' },
-              desc: '终端消费，全行业出口',
-              url: '零售/index.html',
-              category: 2
-            },
-            {
-              name: '跨境电商',
-              symbolSize: 55,
-              itemStyle: { color: '#a78bfa' },
-              desc: '线上渠道，新型零售',
-              url: '电商/index.html',
-              category: 2
-            },
-            {
-              name: '文旅行业',
-              symbolSize: 55,
-              itemStyle: { color: '#fbbf24' },
-              desc: '服务消费',
-              url: '旅游业/index.html',
-              category: 2
-            }
-          ],
-          links: [
-            { source: '磁性材料', target: '新能源汽车', relation: '永磁电机' },
-            { source: '陶瓷建材', target: '新能源汽车', relation: '结构陶瓷' },
-            { source: '新能源汽车', target: '物流供应链', relation: '电池运输' },
-            { source: '新能源汽车', target: '零售行业', relation: '终端销售' },
-            { source: '物流供应链', target: '电商', relation: '履约配送' },
-            { source: '物流供应链', target: '零售行业', relation: '仓储配送' },
-            { source: '电商', target: '零售行业', relation: '全渠道融合' },
-            { source: '文旅行业', target: '零售行业', relation: '商业消费' },
-            { source: '陶瓷建材', target: '零售行业', relation: '建材零售' },
-            { source: '电商', target: '文旅行业', relation: 'OTA预订' }
-          ]
+          animationDuration: 1500,
+          animationEasingUpdate: 'quinticInOut'
+        }]
+      };
+
+      chart.setOption(option, true);
+
+      // 节点点击事件
+      chart.off('click');
+      chart.on('click', function(params) {
+        if (params.dataType === 'node' && params.data.nodeData) {
+          showDetailPanel(params.data);
         }
-      ]
-    };
+      });
+    }
 
-    chart.setOption(option);
+    // 显示详情面板
+    function showDetailPanel(nodeData) {
+      currentNodeData = nodeData;
+      const panel = document.getElementById('detailPanel');
+      const data = nodeData.nodeData;
 
-    // 点击节点跳转
-    chart.on('click', function(params) {
-      if (params.dataType === 'node' && params.data.url) {
-        window.location.href = params.data.url;
+      document.getElementById('detailCategory').textContent = nodeData.categoryName;
+      document.getElementById('detailCategory').style.background = nodeData.categoryColor + '30';
+      document.getElementById('detailCategory').style.color = nodeData.categoryColor;
+      document.getElementById('detailName').textContent = nodeData.name;
+      document.getElementById('detailDesc').textContent = data.desc;
+
+      // 公式
+      const formulaSection = document.getElementById('formulaSection');
+      if (data.formula) {
+        formulaSection.style.display = 'block';
+        document.getElementById('detailFormula').textContent = data.formula;
+      } else {
+        formulaSection.style.display = 'none';
       }
-    });
 
-    // 响应式
+      // 应用场景
+      const scenariosContainer = document.getElementById('detailScenarios');
+      scenariosContainer.innerHTML = data.scenarios.map(s => 
+        `<span class="detail-tag">${s}</span>`
+      ).join('');
+
+      // 相关节点
+      const relatedContainer = document.getElementById('detailRelated');
+      relatedContainer.innerHTML = data.related.map(r => 
+        `<span class="related-node" data-name="${r}">${r}</span>`
+      ).join('');
+
+      // 相关节点点击
+      relatedContainer.querySelectorAll('.related-node').forEach(node => {
+        node.addEventListener('click', function() {
+          const targetName = this.dataset.name;
+          // 高亮目标节点
+          highlightNode(targetName);
+        });
+      });
+
+      panel.classList.add('show');
+    }
+
+    // 隐藏详情面板
+    function hideDetailPanel() {
+      document.getElementById('detailPanel').classList.remove('show');
+      currentNodeData = null;
+    }
+
+    // 高亮节点
+    function highlightNode(nodeName) {
+      // 这里可以实现节点定位和高亮
+      // ECharts的dispatchAction
+      chart.dispatchAction({
+        type: 'highlight',
+        name: nodeName
+      });
+
+      // 2秒后取消高亮
+      setTimeout(() => {
+        chart.dispatchAction({
+          type: 'downplay',
+          name: nodeName
+        });
+      }, 2000);
+    }
+
+    // 搜索功能
+    function initSearch() {
+      const searchInput = document.getElementById('searchInput');
+      let searchTimeout = null;
+
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const keyword = this.value.trim().toLowerCase();
+        
+        searchTimeout = setTimeout(() => {
+          if (!keyword) {
+            // 清空搜索，恢复正常
+            chart.dispatchAction({ type: 'downplay' });
+            return;
+          }
+
+          // 搜索匹配的节点
+          const data = graphData[currentIndustry];
+          let matchedNodes = [];
+          
+          data.categories.forEach(cat => {
+            cat.nodes.forEach(node => {
+              if (node.name.toLowerCase().includes(keyword) || 
+                  node.desc.toLowerCase().includes(keyword)) {
+                matchedNodes.push(node.name);
+              }
+            });
+          });
+
+          // 高亮匹配的节点
+          if (matchedNodes.length > 0) {
+            chart.dispatchAction({ type: 'downplay' });
+            matchedNodes.forEach(name => {
+              chart.dispatchAction({
+                type: 'highlight',
+                name: name
+              });
+            });
+          }
+        }, 300);
+      });
+    }
+
+    // 控制按钮
+    function initControls() {
+      // 放大
+      document.getElementById('zoomIn').addEventListener('click', function() {
+        chart.dispatchAction({
+          type: 'zoom',
+          zoomScale: 1.2
+        });
+      });
+
+      // 缩小
+      document.getElementById('zoomOut').addEventListener('click', function() {
+        chart.dispatchAction({
+          type: 'zoom',
+          zoomScale: 0.8
+        });
+      });
+
+      // 重置视图
+      document.getElementById('resetView').addEventListener('click', function() {
+        renderGraph(currentIndustry);
+      });
+
+      // 全屏
+      document.getElementById('fullscreen').addEventListener('click', function() {
+        const container = document.querySelector('.graph-page');
+        if (!document.fullscreenElement) {
+          container.requestFullscreen();
+        } else {
+          document.exitFullscreen();
+        }
+      });
+
+      // 关闭详情
+      document.getElementById('detailClose').addEventListener('click', hideDetailPanel);
+    }
+
+    // 初始化（script在页面底部，DOM已加载，直接执行）
+    chart = echarts.init(document.getElementById('graphChart'));
+    initIndustryTabs();
+    renderGraph(currentIndustry);
+    initSearch();
+    initControls();
+
+    // 窗口大小变化
     window.addEventListener('resize', function() {
       chart.resize();
     });
   </script>
+  <script src="common.js"></script>
 </body>
 </html>
-
-
-

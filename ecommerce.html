@@ -1,0 +1,485 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电商 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    /* 行业主题色：玫红色 */
+    :root {
+      --theme-color: #ec4899;
+      --theme-color-rgb: 236, 72, 153;
+      --theme-gradient: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">多行业数据百科</span>
+      </a>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-item">首页</a>
+        <a href="metrics.html" class="nav-item">指标字典</a>
+        <a href="methodology.html" class="nav-item">分析方法</a>
+        <div class="nav-dropdown">
+          <span class="nav-item">行业框架 <span class="arrow">▼</span></span>
+          <div class="nav-dropdown-menu">
+            <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车</a>
+            <a href="ecommerce.html" class="nav-dropdown-item">电商</a>
+            <a href="物流/index.html" class="nav-dropdown-item">物流供应链</a>
+            <a href="manufacturing.html" class="nav-dropdown-item">制造业</a>
+            <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务</a>
+            <a href="game.html" class="nav-dropdown-item">游戏行业</a>
+            <a href="finance.html" class="nav-dropdown-item">金融行业</a>
+            <a href="education.html" class="nav-dropdown-item">在线教育</a>
+            <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商</a>
+            <a href="local-life.html" class="nav-dropdown-item">本地生活</a>
+            <a href="healthcare.html" class="nav-dropdown-item">医疗健康</a>
+            <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG</a>
+          </div>
+        </div>
+        <a href="interview.html" class="nav-item">业务问题拆解</a>
+        <a href="learning-path.html" class="nav-item">学习路径</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>电商行业知识框架</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">电商行业</h1>
+          <p class="page-subtitle">E-commerce · 流量 · 转化 · 复购 · 全链路数据分析体系</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 北极星指标 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">North Star Metric</span>
+      </div>
+      <div class="north-star-card">
+        <div class="north-star-left">
+          <div class="ns-name">GMV / 成交总额</div>
+          <div class="ns-formula">访客数 × 转化率 × 客单价</div>
+        </div>
+        <div class="north-star-right">
+          <p>电商行业的核心规模指标，衡量平台或店铺的交易总量。GMV 由流量、转化、客单价三大因子驱动，是电商运营的核心指挥棒，所有运营动作最终都指向 GMV 增长。</p>
+        </div>
+      </div>
+      <div class="ns-why-card">
+        <div class="ns-why-title">为什么是 GMV？</div>
+        <p>流量只看不买是空有流量，利润只看结果不看过程。GMV 同时涵盖了流量、转化、客单价三大核心维度，是电商业务的综合体现，也是最直观的业务健康度指标。</p>
+      </div>
+    </section>
+
+    <!-- 核心指标体系 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">📊 核心指标体系</h2>
+        <span class="section-badge">6大维度</span>
+      </div>
+      <div class="metrics-grid">
+        <!-- 流量指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">🌐</div>
+          <h3 class="mc-title">流量指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">UV / 访客数</span>
+              <span class="mc-desc">独立访客数量</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">PV / 浏览量</span>
+              <span class="mc-desc">页面浏览次数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">访问深度</span>
+              <span class="mc-desc">PV ÷ UV</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">平均停留时长</span>
+              <span class="mc-desc">用户平均停留时间</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">跳失率</span>
+              <span class="mc-desc">只看一页就离开的比例</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 转化指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">🎯</div>
+          <h3 class="mc-title">转化指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">转化率</span>
+              <span class="mc-desc">成交用户 ÷ 访客数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">加购率</span>
+              <span class="mc-desc">加购用户 ÷ 访客数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">收藏率</span>
+              <span class="mc-desc">收藏用户 ÷ 访客数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">下单转化率</span>
+              <span class="mc-desc">下单用户 ÷ 访客数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">支付转化率</span>
+              <span class="mc-desc">支付用户 ÷ 下单用户</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 用户指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">👥</div>
+          <h3 class="mc-title">用户指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">新客数</span>
+              <span class="mc-desc">首次购买用户数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">老客数</span>
+              <span class="mc-desc">再次购买用户数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">复购率</span>
+              <span class="mc-desc">购买2次以上用户占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">客单价</span>
+              <span class="mc-desc">平均每单金额</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">LTV</span>
+              <span class="mc-desc">用户生命周期价值</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 商品指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">📦</div>
+          <h3 class="mc-title">商品指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">SKU 数</span>
+              <span class="mc-desc">在售商品数量</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">动销率</span>
+              <span class="mc-desc">有销量SKU占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">库存周转天数</span>
+              <span class="mc-desc">平均库存周转周期</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">售罄率</span>
+              <span class="mc-desc">已售数量 ÷ 进货数量</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">退货率</span>
+              <span class="mc-desc">退货订单占比</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 营销指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">📢</div>
+          <h3 class="mc-title">营销指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">ROI</span>
+              <span class="mc-desc">投入产出比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">CAC</span>
+              <span class="mc-desc">获客成本</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">点击率 CTR</span>
+              <span class="mc-desc">点击 ÷ 曝光</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">CPC</span>
+              <span class="mc-desc">单次点击成本</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">优惠券使用率</span>
+              <span class="mc-desc">使用优惠券 ÷ 发放优惠券</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 服务指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">🛎️</div>
+          <h3 class="mc-title">服务指标</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">DSR 评分</span>
+              <span class="mc-desc">描述/服务/物流三项评分</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">好评率</span>
+              <span class="mc-desc">好评 ÷ 总评价</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">退款率</span>
+              <span class="mc-desc">退款订单占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">客服响应时长</span>
+              <span class="mc-desc">平均首次响应时间</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">物流时效</span>
+              <span class="mc-desc">平均发货/送达时间</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据分析框架 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">🧠 数据分析框架</h2>
+        <span class="section-badge">4大框架</span>
+      </div>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="fw-icon">🔻</div>
+          <h3 class="fw-title">转化漏斗分析</h3>
+          <p class="fw-desc">从曝光到支付的全链路转化拆解，定位流失最大环节，针对性优化提升整体转化率。</p>
+          <div class="fw-steps">
+            <div class="fw-step">曝光 → 点击 → 访问 → 加购 → 下单 → 支付</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">🔄</div>
+          <h3 class="fw-title">用户生命周期</h3>
+          <p class="fw-desc">将用户 journey 分为引入期、成长期、成熟期、衰退期、流失期，各阶段针对性运营。</p>
+          <div class="fw-steps">
+            <div class="fw-step">引入 → 成长 → 成熟 → 衰退 → 流失</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">💰</div>
+          <h3 class="fw-title">GMV 拆解模型</h3>
+          <p class="fw-desc">将 GMV 层层拆解为可运营的子指标，找到增长杠杆，制定针对性增长策略。</p>
+          <div class="fw-steps">
+            <div class="fw-step">GMV = 流量 × 转化率 × 客单价 × 复购次数</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">📈</div>
+          <h3 class="fw-title">营销效果评估</h3>
+          <p class="fw-desc">从曝光到转化的全链路营销效果追踪，评估各渠道 ROI，优化营销预算分配。</p>
+          <div class="fw-steps">
+            <div class="fw-step">曝光 → 点击 → 转化 → ROI → LTV/CAC</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用户价值分层 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">👥 用户价值分层（RFM）</h2>
+        <span class="section-badge">RFM 模型</span>
+      </div>
+      <div class="user-tier-grid">
+        <div class="tier-card tier-high">
+          <div class="tier-header">
+            <span class="tier-icon">💎</span>
+            <span class="tier-name">高价值用户</span>
+          </div>
+          <div class="tier-metrics">
+            <div class="tier-metric">
+              <span class="tm-label">占比</span>
+              <span class="tm-value">~20%</span>
+            </div>
+            <div class="tier-metric">
+              <span class="tm-label">贡献</span>
+              <span class="tm-value">~80% 收入</span>
+            </div>
+          </div>
+          <ul class="tier-features">
+            <li>最近购买时间近</li>
+            <li>购买频率高</li>
+            <li>购买金额大</li>
+            <li>重点维护，VIP服务</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <div class="tier-header">
+            <span class="tier-icon">⭐</span>
+            <span class="tier-name">潜力用户</span>
+          </div>
+          <div class="tier-metrics">
+            <div class="tier-metric">
+              <span class="tm-label">占比</span>
+              <span class="tm-value">~30%</span>
+            </div>
+            <div class="tier-metric">
+              <span class="tm-label">贡献</span>
+              <span class="tm-value">~15% 收入</span>
+            </div>
+          </div>
+          <ul class="tier-features">
+            <li>有购买但频率不高</li>
+            <li>有提升空间</li>
+            <li>重点转化，提升复购</li>
+            <li>个性化推荐</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <div class="tier-header">
+            <span class="tier-icon">⚠️</span>
+            <span class="tier-name">流失预警</span>
+          </div>
+          <div class="tier-metrics">
+            <div class="tier-metric">
+              <span class="tm-label">占比</span>
+              <span class="tm-value">~50%</span>
+            </div>
+            <div class="tier-metric">
+              <span class="tm-label">贡献</span>
+              <span class="tm-value">~5% 收入</span>
+            </div>
+          </div>
+          <ul class="tier-features">
+            <li>很久没购买</li>
+            <li>购买频率低</li>
+            <li>流失风险高</li>
+            <li>召回活动，优惠券刺激</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 典型分析场景 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 典型分析场景</h2>
+        <span class="section-badge">5大场景</span>
+      </div>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">📉</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">GMV 下降归因</h3>
+            <p class="scenario-desc">GMV 突然下降，如何快速定位原因？是流量少了？转化低了？还是客单价降了？哪个渠道/品类/人群影响最大？</p>
+            <div class="scenario-tags">
+              <span class="tag">指标拆解</span>
+              <span class="tag">维度下钻</span>
+              <span class="tag">归因分析</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🔻</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">转化漏斗优化</h3>
+            <p class="scenario-desc">从曝光到支付，哪个环节流失最大？为什么流失？如何优化？通过 A/B 测试验证优化效果。</p>
+            <div class="scenario-tags">
+              <span class="tag">漏斗分析</span>
+              <span class="tag">A/B测试</span>
+              <span class="tag">用户行为</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📢</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">营销 ROI 评估</h3>
+            <p class="scenario-desc">各个营销渠道的效果如何？哪个渠道 ROI 最高？预算应该怎么分配？如何优化投放策略？</p>
+            <div class="scenario-tags">
+              <span class="tag">渠道分析</span>
+              <span class="tag">ROI分析</span>
+              <span class="tag">预算优化</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🔄</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">复购率提升</h3>
+            <p class="scenario-desc">如何提升用户复购率？什么样的用户更容易复购？什么时候触达效果最好？用什么方式触达？</p>
+            <div class="scenario-tags">
+              <span class="tag">用户分层</span>
+              <span class="tag">留存分析</span>
+              <span class="tag">精准营销</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📦</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">选品策略优化</h3>
+            <p class="scenario-desc">什么样的商品卖得好？为什么？如何优化商品结构？新品应该怎么选？库存怎么管理？</p>
+            <div class="scenario-tags">
+              <span class="tag">商品分析</span>
+              <span class="tag">ABC分类</span>
+              <span class="tag">库存优化</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 电商行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  <script src="common.js"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -316,7 +316,7 @@
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
           <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
           <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
           <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
@@ -565,49 +565,47 @@
     let currentCategory = 'all';
     let currentSearch = '';
 
-    // 初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      // 设置总数
-      document.getElementById('totalMetrics').textContent = metrics.length;
-      
-      // 渲染指标
+    // 初始化（script在页面底部，DOM已加载，直接执行）
+    // 设置总数
+    document.getElementById('totalMetrics').textContent = metrics.length;
+    
+    // 渲染指标
+    renderMetrics();
+    
+    // 绑定搜索
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      currentSearch = e.target.value.trim().toLowerCase();
       renderMetrics();
-      
-      // 绑定搜索
-      document.getElementById('searchInput').addEventListener('input', function(e) {
-        currentSearch = e.target.value.trim().toLowerCase();
+    });
+    
+    // 绑定导航搜索
+    document.getElementById('navSearch').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('searchInput').value = this.value;
+        currentSearch = this.value.trim().toLowerCase();
         renderMetrics();
-      });
-      
-      // 绑定导航搜索
-      document.getElementById('navSearch').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          document.getElementById('searchInput').value = this.value;
-          currentSearch = this.value.trim().toLowerCase();
-          renderMetrics();
-          document.getElementById('searchInput').focus();
-        }
-      });
-      
-      // 绑定筛选标签
-      document.querySelectorAll('.filter-tag').forEach(tag => {
-        tag.addEventListener('click', function() {
-          document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          currentCategory = this.dataset.category;
-          renderMetrics();
-        });
-      });
-      
-      // 从URL获取搜索词
-      const urlParams = new URLSearchParams(window.location.search);
-      const q = urlParams.get('q');
-      if (q) {
-        document.getElementById('searchInput').value = q;
-        currentSearch = q.toLowerCase();
-        renderMetrics();
+        document.getElementById('searchInput').focus();
       }
     });
+    
+    // 绑定筛选标签
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentCategory = this.dataset.category;
+        renderMetrics();
+      });
+    });
+    
+    // 从URL获取搜索词
+    const urlParams = new URLSearchParams(window.location.search);
+    const q = urlParams.get('q');
+    if (q) {
+      document.getElementById('searchInput').value = q;
+      currentSearch = q.toLowerCase();
+      renderMetrics();
+    }
 
     // 渲染指标
     function renderMetrics() {
@@ -688,6 +686,7 @@
       `;
     }
   </script>
+  <script src="common.js"></script>
 </body>
 </html>
 

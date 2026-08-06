@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,14 +6,21 @@
   <title>分析方法论工具箱 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
   <style>
+    /* 方法论主题色：科技蓝紫 */
+    :root {
+      --theme-color: #6366f1;
+      --theme-color-rgb: 99, 102, 241;
+      --theme-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    }
+
     .page-header {
       padding: 60px 24px 40px;
       text-align: center;
       background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(167, 139, 250, 0.12), transparent);
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99, 102, 241, 0.12), transparent);
     }
 
     .page-title {
@@ -47,7 +54,7 @@
     .stat-num {
       font-size: 28px;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      background: var(--theme-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -93,21 +100,62 @@
     }
 
     .tab.active {
-      background: var(--accent-2-soft);
-      color: var(--accent-2);
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
       border-color: transparent;
     }
 
-    /* 方法卡片 */
+    /* 搜索框 */
+    .search-box {
+      max-width: 400px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      background: var(--glass);
+      color: var(--text);
+      font-size: 14px;
+      font-family: var(--font);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-box input:focus {
+      border-color: var(--theme-color);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .search-box input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    /* 方法卡片网格 */
     .methods-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 20px;
     }
 
     .method-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
       padding: 24px;
-      cursor: pointer;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
@@ -118,14 +166,20 @@
       top: 0;
       left: 0;
       width: 4px;
-      height: 100%;
-      background: linear-gradient(180deg, var(--accent), var(--accent-2));
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      height: 0;
+      background: var(--theme-gradient);
+      transition: height 0.3s ease;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .method-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 12px 40px rgba(99, 102, 241, 0.1);
     }
 
     .method-card:hover::before {
-      opacity: 1;
+      height: 100%;
     }
 
     .method-header {
@@ -136,152 +190,177 @@
     }
 
     .method-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
+      font-size: 36px;
       flex-shrink: 0;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(167, 139, 250, 0.1));
     }
 
-    .method-title {
+    .method-info {
+      flex: 1;
+    }
+
+    .method-name {
       font-size: 18px;
       font-weight: 600;
-      margin: 0 0 4px;
       color: var(--text);
+      margin: 0 0 4px;
     }
 
     .method-subtitle {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .method-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0 0 16px;
-    }
-
-    .method-section {
-      margin-bottom: 14px;
-    }
-
-    .method-section-title {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .method-section-title::before {
-      content: '';
-      width: 3px;
-      height: 12px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-
-    .method-formula {
       font-size: 13px;
-      padding: 10px 12px;
-      background: var(--bg-elevated);
-      border-radius: 8px;
-      color: var(--accent);
-      font-family: "JetBrains Mono", monospace;
-      border: 1px solid var(--glass-border);
-      line-height: 1.5;
-    }
-
-    .method-scenarios {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .scenario-tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: var(--glass-highlight);
       color: var(--text-muted);
+      margin: 0;
     }
 
-    .method-industries {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding-top: 14px;
-      border-top: 1px solid var(--glass-border);
-      margin-top: 14px;
-    }
-
-    .industry-tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    .industry-tag.purple {
-      background: var(--accent-2-soft);
-      color: var(--accent-2);
-    }
-
-    .industry-tag.green {
-      background: rgba(52, 211, 153, 0.15);
-      color: var(--success);
-    }
-
-    .industry-tag.yellow {
-      background: rgba(251, 191, 36, 0.15);
-      color: var(--warning);
-    }
-
-    /* 难度星级 */
-    .difficulty {
+    .method-difficulty {
       display: flex;
       gap: 2px;
+      margin-top: 8px;
     }
 
     .star {
       font-size: 12px;
-      color: var(--warning);
+      color: #fbbf24;
     }
 
     .star.empty {
       color: var(--glass-border);
     }
 
+    .method-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .method-formula {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+    }
+
+    .formula-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .formula-text {
+      font-size: 13px;
+      color: var(--text);
+      font-family: 'JetBrains Mono', 'Courier New', monospace;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .method-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 100%;
+      margin-bottom: 4px;
+    }
+
+    .method-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--glass-highlight);
+      color: var(--text-secondary);
+      border: 1px solid var(--glass-border);
+    }
+
+    .industry-tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--glass-highlight);
+      color: var(--text-muted);
+    }
+
+    .industry-tag.green {
+      background: rgba(52, 211, 153, 0.1);
+      color: #34d399;
+    }
+
+    .industry-tag.blue {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+    }
+
+    .industry-tag.orange {
+      background: rgba(251, 146, 60, 0.1);
+      color: #fb923c;
+    }
+
+    .industry-tag.yellow {
+      background: rgba(251, 191, 36, 0.1);
+      color: #fbbf24;
+    }
+
+    .industry-tag.red {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .industry-tag.purple {
+      background: rgba(139, 92, 246, 0.1);
+      color: #8b5cf6;
+    }
+
+    .industry-tag.pink {
+      background: rgba(236, 72, 153, 0.1);
+      color: #ec4899;
+    }
+
+    .industry-tag.cyan {
+      background: rgba(6, 182, 212, 0.1);
+      color: #06b6d4;
+    }
+
+    /* 空状态 */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .empty-text {
+      font-size: 15px;
+    }
+
+    /* 响应式 */
     @media (max-width: 768px) {
-      .page-title {
-        font-size: 28px;
-      }
-
-      .stats-bar {
-        gap: 24px;
-      }
-
-      .stat-num {
-        font-size: 22px;
-      }
-
-      .methods-grid {
-        grid-template-columns: 1fr;
-      }
+      .page-title { font-size: 28px; }
+      .stats-bar { gap: 24px; }
+      .stat-num { font-size: 22px; }
+      .methods-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <!-- 顶部导航栏 -->
-      <nav class="encyclopedia-nav">
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -289,16 +368,16 @@
     <div class="nav-links">
       <a href="index.html" class="nav-link">首页</a>
       <a href="metrics.html" class="nav-link">指标字典</a>
-      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="methodology.html" class="nav-link active">方法论</a>
       <a href="graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
       <a href="learning-path.html" class="nav-link">学习路径</a>
-        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <div class="nav-dropdown">
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
           <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
           <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
           <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
@@ -307,6 +386,8 @@
           <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
           <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
           <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
+          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
         </div>
       </div>
     </div>
@@ -319,49 +400,70 @@
   </nav>
 
   <!-- 页面头部 -->
-  <div class="page-header">
+  <header class="page-header">
     <h1 class="page-title">分析方法论工具箱</h1>
-    <p class="page-desc">跨行业通用的数据分析方法论，从用户分层到财务分析，体系化掌握</p>
+    <p class="page-desc">
+      49个经典数据分析方法，覆盖8大领域，随查随用
+    </p>
     <div class="stats-bar">
       <div class="stat-item">
-        <div class="stat-num">10</div>
+        <div class="stat-num">49</div>
         <div class="stat-label">分析方法</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">应用领域</div>
+        <div class="stat-num">8</div>
+        <div class="stat-label">领域分类</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">7</div>
-        <div class="stat-label">覆盖行业</div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">行业应用</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">⭐</div>
+        <div class="stat-label">难度分级</div>
       </div>
     </div>
-  </div>
+  </header>
 
   <div class="container">
+    <!-- 搜索框 -->
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="搜索分析方法..." />
+    </div>
+
     <!-- 分类标签 -->
     <div class="category-tabs" id="categoryTabs">
-      <span class="tab active" data-category="all">全部方法</span>
-      <span class="tab" data-category="user">用户分析</span>
-      <span class="tab" data-category="marketing">营销增长</span>
-      <span class="tab" data-category="operation">运营效率</span>
-      <span class="tab" data-category="finance">财务分析</span>
-      <span class="tab" data-category="strategy">战略决策</span>
+      <div class="tab active" data-category="all">全部</div>
+      <div class="tab" data-category="user">用户分析</div>
+      <div class="tab" data-category="marketing">营销增长</div>
+      <div class="tab" data-category="operation">运营效率</div>
+      <div class="tab" data-category="finance">财务经营</div>
+      <div class="tab" data-category="strategy">战略决策</div>
+      <div class="tab" data-category="quality">质量生产</div>
+      <div class="tab" data-category="statistics">统计分析</div>
+      <div class="tab" data-category="datascience">数据科学</div>
     </div>
 
     <!-- 方法卡片网格 -->
     <div class="methods-grid" id="methodsGrid">
-      <!-- 由 JS 动态生成 -->
+      <!-- 由JS动态生成 -->
+    </div>
+
+    <!-- 空状态 -->
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-text">没有找到匹配的分析方法</div>
     </div>
   </div>
 
   <script>
-    // 方法论数据
     const methods = [
+      // ========== 用户分析 ==========
       {
-        name: "RFM 模型",
-        subtitle: "Recency · Frequency · Monetary",
         icon: "👥",
+        name: "RFM模型",
+        subtitle: "Recency · Frequency · Monetary",
         category: "user",
         categoryName: "用户分析",
         difficulty: 2,
@@ -370,32 +472,15 @@
         scenarios: ["用户分层运营", "精准营销", "会员体系设计", "流失预警"],
         industries: [
           { name: "零售", color: "" },
-          { name: "电商", color: "purple" },
+          { name: "电商", color: "pink" },
           { name: "文旅", color: "yellow" }
         ],
         reference: "零售/index.html"
       },
       {
-        name: "漏斗分析",
-        subtitle: "Funnel Analysis",
         icon: "📊",
-        category: "marketing",
-        categoryName: "营销增长",
-        difficulty: 1,
-        desc: "将用户转化路径拆解为多个环节，通过各环节转化率分析流失原因，找到优化突破口。",
-        formula: "转化率 = 下一环节人数 ÷ 上一环节人数 × 100%\n整体转化率 = 最终成交人数 ÷ 初始人数 × 100%",
-        scenarios: ["转化路径优化", "注册转化", "购买转化", "活动效果评估"],
-        industries: [
-          { name: "电商", color: "purple" },
-          { name: "零售", color: "" },
-          { name: "文旅", color: "yellow" }
-        ],
-        reference: "电商/index.html"
-      },
-      {
         name: "同期群分析",
         subtitle: "Cohort Analysis",
-        icon: "📈",
         category: "user",
         categoryName: "用户分析",
         difficulty: 3,
@@ -403,50 +488,120 @@
         formula: "第N日留存率 = 第N日活跃的同期群用户数 ÷ 同期群总用户数 × 100%\n按获客渠道/版本/地区等维度分组对比",
         scenarios: ["留存分析", "产品迭代效果", "渠道质量评估", "生命周期价值"],
         industries: [
-          { name: "电商", color: "purple" },
+          { name: "电商", color: "pink" },
           { name: "零售", color: "" },
           { name: "新能源", color: "green" }
         ],
         reference: "零售/index.html"
       },
       {
-        name: "ABC 分类法",
-        subtitle: "帕累托法则 · 80/20",
-        icon: "📦",
-        category: "operation",
-        categoryName: "运营效率",
-        difficulty: 1,
-        desc: "根据价值将物品/客户分为ABC三类，重点管理A类（20%占80%价值），优化资源配置。",
-        formula: "A类：累计占比 0-70%（重点管理）\nB类：累计占比 70-90%（常规管理）\nC类：累计占比 90-100%（简化管理）",
-        scenarios: ["库存管理", "客户分级", "商品分级", "供应商管理"],
+        icon: "🏴‍☠️",
+        name: "AARRR海盗模型",
+        subtitle: "Acquisition · Activation · Retention · Revenue · Referral",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "用户生命周期的5个阶段：获取、激活、留存、变现、推荐，覆盖用户从接触到传播的全链路。",
+        formula: "获客(Acquisition) → 激活(Activation) → 留存(Retention) → 变现(Revenue) → 推荐(Referral)\n每个阶段对应核心指标和优化策略",
+        scenarios: ["用户增长", "产品运营", "增长黑客", "漏斗优化"],
         industries: [
-          { name: "物流", color: "" },
-          { name: "零售", color: "" },
-          { name: "制造", color: "green" }
+          { name: "SaaS", color: "green" },
+          { name: "游戏", color: "orange" },
+          { name: "电商", color: "pink" }
         ],
-        reference: "物流/index.html"
+        reference: "saas.html"
       },
       {
-        name: "杜邦分析",
-        subtitle: "DuPont Analysis",
-        icon: "💰",
-        category: "finance",
-        categoryName: "财务分析",
+        icon: "👤",
+        name: "用户画像分析",
+        subtitle: "User Persona",
+        category: "user",
+        categoryName: "用户分析",
         difficulty: 3,
-        desc: "将净资产收益率(ROE)拆解为净利率、资产周转率、权益乘数三个因子，层层归因。",
-        formula: "ROE = 净利率 × 资产周转率 × 权益乘数\n= (净利润÷营收) × (营收÷总资产) × (总资产÷净资产)",
-        scenarios: ["盈利能力分析", "经营效率诊断", "财务归因", "对标分析"],
+        desc: "通过用户属性、行为、偏好等多维度数据，构建用户标签体系，形成具象化的用户形象。",
+        formula: "基础属性（年龄/性别/地域）+ 行为属性（频次/时段/路径）+ 偏好属性（品类/价格/品牌）\n→ 标签体系 → 用户分群 → 典型画像",
+        scenarios: ["精准营销", "产品设计", "内容推荐", "个性化服务"],
         industries: [
-          { name: "零售", color: "" },
-          { name: "制造", color: "green" },
-          { name: "新能源", color: "green" }
+          { name: "电商", color: "pink" },
+          { name: "金融", color: "blue" },
+          { name: "教育", color: "pink" }
         ],
-        reference: "零售/index.html"
+        reference: "ecommerce.html"
       },
       {
+        icon: "💰",
+        name: "LTV用户生命周期价值",
+        subtitle: "Life Time Value",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 4,
+        desc: "用户在整个生命周期内为企业贡献的总价值，是衡量用户质量和增长效率的核心指标，决定了获客成本的上限。",
+        formula: "LTV = 平均客单价 × 购买频次 × 平均生命周期\n或 LTV = ARPU ÷ 流失率\nLTV/CAC > 3 为健康",
+        scenarios: ["用户价值评估", "获客预算", "ROI测算", "客户成功"],
+        industries: [
+          { name: "SaaS", color: "green" },
+          { name: "游戏", color: "orange" },
+          { name: "电商", color: "pink" }
+        ],
+        reference: "saas.html"
+      },
+      {
+        icon: "📈",
+        name: "留存分析",
+        subtitle: "Retention Analysis",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "分析用户在首次使用后，在后续时间内继续使用产品的比例，是产品粘性和价值的核心体现。",
+        formula: "次日留存 = 次日活跃用户 ÷ 新增用户 × 100%\n7日留存 = 第7日活跃用户 ÷ 新增用户 × 100%\n30日留存 = 第30日活跃用户 ÷ 新增用户 × 100%",
+        scenarios: ["产品健康度", "版本迭代评估", "渠道质量", "用户粘性"],
+        industries: [
+          { name: "游戏", color: "orange" },
+          { name: "SaaS", color: "green" },
+          { name: "教育", color: "pink" }
+        ],
+        reference: "game.html"
+      },
+      {
+        icon: "⚠️",
+        name: "流失预警分析",
+        subtitle: "Churn Prediction",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 4,
+        desc: "通过用户行为数据构建流失预测模型，提前识别高流失风险用户，主动干预以降低流失率。",
+        formula: "流失风险评分 = f(活跃度下降, 访问间隔变长, 功能使用减少, 投诉, 到期时间...)\n基于机器学习模型预测流失概率",
+        scenarios: ["用户留存", "客户成功", "精准召回", "会员运营"],
+        industries: [
+          { name: "SaaS", color: "green" },
+          { name: "游戏", color: "orange" },
+          { name: "金融", color: "blue" }
+        ],
+        reference: "saas.html"
+      },
+
+      // ========== 营销增长 ==========
+      {
+        icon: "📉",
+        name: "漏斗分析",
+        subtitle: "Funnel Analysis",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 1,
+        desc: "将用户转化路径拆解为多个环节，通过各环节转化率分析流失原因，找到优化突破口。",
+        formula: "转化率 = 下一环节人数 ÷ 上一环节人数 × 100%\n整体转化率 = 最终成交人数 ÷ 初始人数 × 100%",
+        scenarios: ["转化路径优化", "注册转化", "购买转化", "活动效果评估"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "零售", color: "" },
+          { name: "文旅", color: "yellow" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "🎯",
         name: "归因模型",
         subtitle: "Attribution Model",
-        icon: "🎯",
         category: "marketing",
         categoryName: "营销增长",
         difficulty: 4,
@@ -454,179 +609,800 @@
         formula: "常见模型：\n• 首次触点：100%归第一个渠道\n• 末次触点：100%归最后一个渠道\n• 线性：平均分配\n• 时间衰减：越近权重越高\n• 数据驱动：基于算法计算",
         scenarios: ["渠道效果评估", "预算分配", "营销ROI优化", "用户路径分析"],
         industries: [
-          { name: "电商", color: "purple" },
+          { name: "电商", color: "pink" },
           { name: "零售", color: "" },
           { name: "文旅", color: "yellow" }
         ],
-        reference: "电商/index.html"
+        reference: "ecommerce.html"
       },
       {
+        icon: "🧪",
+        name: "A/B测试",
+        subtitle: "A/B Testing",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 3,
+        desc: "将用户随机分成两组，分别使用不同方案，通过统计检验比较两组效果差异，得出科学结论。",
+        formula: "对照组(A) vs 实验组(B)\n核心指标对比\n统计显著性检验（p值 < 0.05 为显著）\n样本量 = 2 × (Zα/2 + Zβ)² × p(1-p) / Δ²",
+        scenarios: ["页面优化", "文案测试", "价格测试", "功能迭代"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "SaaS", color: "green" },
+          { name: "游戏", color: "orange" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "📊",
         name: "价格弹性模型",
         subtitle: "Price Elasticity",
-        icon: "📐",
-        category: "strategy",
-        categoryName: "战略决策",
+        category: "marketing",
+        categoryName: "营销增长",
         difficulty: 4,
-        desc: "衡量价格变动对需求量的影响程度，找到最优定价点实现收益最大化。",
-        formula: "需求价格弹性 = 需求量变动% ÷ 价格变动%\n|E| > 1：富有弹性（降价增收入）\n|E| < 1：缺乏弹性（涨价增收入）",
-        scenarios: ["定价策略", "促销效果预测", "收益管理", "竞品价格应对"],
+        desc: "衡量价格变动对需求量的影响程度，帮助制定最优定价策略，找到利润最大化的价格点。",
+        formula: "需求价格弹性 = 需求量变动% ÷ 价格变动%\n|E| > 1：富有弹性（价格敏感）\n|E| < 1：缺乏弹性（价格不敏感）\n最优价格 = 边际成本 × E / (E + 1)",
+        scenarios: ["定价策略", "促销决策", "涨价评估", "差异化定价"],
         industries: [
-          { name: "文旅", color: "yellow" },
           { name: "零售", color: "" },
-          { name: "电商", color: "purple" }
+          { name: "电商", color: "pink" },
+          { name: "快消", color: "orange" }
         ],
-        reference: "旅游业/index.html"
+        reference: "fmcg.html"
       },
       {
-        name: "竞品对标分析",
-        subtitle: "Competitive Benchmarking",
-        icon: "⚔️",
-        category: "strategy",
-        categoryName: "战略决策",
+        icon: "🎉",
+        name: "促销效果评估",
+        subtitle: "Promotion Effectiveness",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 3,
+        desc: "通过对比促销前后的销售数据，评估促销活动对销量、收入、利润的真实影响，避免'促销依赖症'。",
+        formula: "促销增量 = 促销期销量 - 基线销量\n促销ROI = (增量收入 - 促销成本) ÷ 促销成本 × 100%\n基线销量：基于历史数据预测的正常销量",
+        scenarios: ["促销活动评估", "ROI测算", "促销策略优化", "品类管理"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "快消", color: "orange" },
+          { name: "电商", color: "pink" }
+        ],
+        reference: "fmcg.html"
+      },
+      {
+        icon: "📈",
+        name: "渠道ROI分析",
+        subtitle: "Channel ROI Analysis",
+        category: "marketing",
+        categoryName: "营销增长",
         difficulty: 2,
-        desc: "从多维度与竞争对手对比，识别自身优势与差距，制定竞争策略。",
-        formula: "对标维度：\n• 产品/服务维度\n• 价格维度\n• 渠道维度\n• 用户体验维度\n• 财务指标维度\n→ 雷达图可视化对比",
-        scenarios: ["竞争策略制定", "产品优化方向", "市场定位", "投资决策"],
+        desc: "计算各营销渠道的投入产出比，评估渠道质量和效率，优化营销预算分配。",
+        formula: "渠道ROI = (渠道带来的收入 - 渠道成本) ÷ 渠道成本 × 100%\nCAC = 渠道成本 ÷ 渠道带来的新增用户数\nLTV/CAC 比值衡量长期价值",
+        scenarios: ["预算分配", "渠道优化", "获客效率", "营销策略"],
         industries: [
-          { name: "新能源", color: "green" },
-          { name: "文旅", color: "yellow" },
-          { name: "电商", color: "purple" }
+          { name: "电商", color: "pink" },
+          { name: "教育", color: "pink" },
+          { name: "金融", color: "blue" }
         ],
-        reference: "新能源/index.html"
+        reference: "ecommerce.html"
       },
       {
-        name: "收益管理",
-        subtitle: "Yield Management",
-        icon: "💎",
-        category: "strategy",
-        categoryName: "战略决策",
-        difficulty: 5,
-        desc: "通过动态定价和库存分配，在固定产能下实现收益最大化的高级方法。",
-        formula: "核心思想：\n• 价格歧视：对不同客群定不同价\n• 库存控制：预留高价房/座位\n• 超售策略：应对no-show\n目标：RevPAR / 收益最大化",
-        scenarios: ["酒店收益管理", "航空机票定价", "景区门票定价", "演唱会票务"],
+        icon: "📊",
+        name: "帕累托分析",
+        subtitle: "Pareto Analysis · 二八原则",
+        category: "marketing",
+        categoryName: "营销增长",
+        difficulty: 1,
+        desc: "基于80/20法则，识别关键的少数因素（20%的产品/客户/渠道贡献80%的收入/利润），聚焦重点。",
+        formula: "按贡献从大到小排序\n计算累计占比\n找到贡献80%的前N个因素\n→ 聚焦关键少数",
+        scenarios: ["客户分层", "品类管理", "渠道优化", "问题优先级"],
         industries: [
-          { name: "文旅", color: "yellow" },
-          { name: "电商", color: "purple" }
+          { name: "零售", color: "" },
+          { name: "电商", color: "pink" },
+          { name: "制造", color: "cyan" }
         ],
-        reference: "旅游业/index.html"
+        reference: "manufacturing.html"
+      },
+
+      // ========== 运营效率 ==========
+      {
+        icon: "🔤",
+        name: "ABC分类法",
+        subtitle: "ABC Analysis",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 1,
+        desc: "根据价值将物品/客户分为ABC三类，重点管理A类（20%占70%价值），优化资源配置。",
+        formula: "A类：累计占比 0-70%（重点管理）\nB类：累计占比 70-90%（常规管理）\nC类：累计占比 90-100%（简化管理）",
+        scenarios: ["库存管理", "客户分级", "商品分级", "供应商管理"],
+        industries: [
+          { name: "物流", color: "" },
+          { name: "零售", color: "" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "物流/index.html"
       },
       {
+        icon: "🐂",
         name: "牛鞭效应分析",
         subtitle: "Bullwhip Effect",
-        icon: "📉",
         category: "operation",
         categoryName: "运营效率",
         difficulty: 3,
-        desc: "供应链中需求信息从下游到上游逐级放大的现象，导致库存波动加剧。",
-        formula: "牛鞭效应 = 上游订单波动方差 ÷ 下游需求波动方差\n波动放大倍数越大，牛鞭效应越严重",
-        scenarios: ["供应链优化", "库存波动分析", "需求预测改进", "信息共享机制"],
+        desc: "供应链中需求信息从下游到上游逐级放大的现象，导致库存过剩、产能浪费和响应延迟。",
+        formula: "牛鞭效应 = 上游订单波动 ÷ 下游需求波动\n放大倍数越大，供应链效率越低\n成因：需求预测、批量订货、价格波动、短缺博弈",
+        scenarios: ["供应链优化", "库存管理", "需求预测", "信息共享"],
         industries: [
           { name: "物流", color: "" },
-          { name: "制造", color: "green" },
-          { name: "零售", color: "" }
+          { name: "制造", color: "cyan" },
+          { name: "快消", color: "orange" }
         ],
         reference: "物流/index.html"
+      },
+      {
+        icon: "📦",
+        name: "EOQ经济订货批量",
+        subtitle: "Economic Order Quantity",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 3,
+        desc: "在订货成本和库存持有成本之间找到平衡点，确定最优订货批量，使总成本最小。",
+        formula: "EOQ = √(2DS ÷ H)\nD = 年需求量\nS = 每次订货成本\nH = 单位年持有成本",
+        scenarios: ["库存优化", "采购计划", "成本控制", "供应链管理"],
+        industries: [
+          { name: "物流", color: "" },
+          { name: "零售", color: "" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "物流/index.html"
+      },
+      {
+        icon: "🛡️",
+        name: "安全库存模型",
+        subtitle: "Safety Stock",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 3,
+        desc: "为应对需求波动和供应延迟而保留的额外库存，平衡缺货风险和库存成本。",
+        formula: "安全库存 = Z × σL × √L\nZ = 服务水平对应的Z值\nσL = 提前期内需求标准差\nL = 提前期\n再订货点 = 平均日需求 × 提前期 + 安全库存",
+        scenarios: ["库存管理", "缺货预防", "供应链优化", "服务水平管理"],
+        industries: [
+          { name: "物流", color: "" },
+          { name: "零售", color: "" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "物流/index.html"
+      },
+      {
+        icon: "💎",
+        name: "收益管理",
+        subtitle: "Yield Management",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 5,
+        desc: "在固定产能下，通过动态定价和库存分配，将合适的产品卖给合适的客户，实现收益最大化。",
+        formula: "核心思想：价格歧视 + 库存控制\n关键指标：RevPAR（每间可售房收入）\n策略：超额预订、差异化定价、时长控制",
+        scenarios: ["酒店定价", "航空机票", "影院票务", "共享出行"],
+        industries: [
+          { name: "文旅", color: "yellow" },
+          { name: "本地生活", color: "cyan" },
+          { name: "物流", color: "" }
+        ],
+        reference: "旅游业/index.html"
+      },
+      {
+        icon: "📊",
+        name: "供应商评估矩阵",
+        subtitle: "Supplier Evaluation Matrix",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 2,
+        desc: "从质量、价格、交付、服务等多维度对供应商进行综合评估，实现供应商分级和优化管理。",
+        formula: "评估维度：质量、价格、交付、服务、财务、合规\n加权打分 → 综合评分\n分级：战略供应商/重要供应商/普通供应商",
+        scenarios: ["供应商管理", "采购决策", "供应链优化", "风险管控"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "物流", color: "" },
+          { name: "零售", color: "" }
+        ],
+        reference: "manufacturing.html"
+      },
+
+      // ========== 财务经营 ==========
+      {
+        icon: "📊",
+        name: "杜邦分析",
+        subtitle: "DuPont Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 3,
+        desc: "将净资产收益率(ROE)拆解为净利率、资产周转率、权益乘数三个因子，层层归因。",
+        formula: "ROE = 净利率 × 资产周转率 × 权益乘数\n= (净利润÷营收) × (营收÷总资产) × (总资产÷净资产)",
+        scenarios: ["盈利能力分析", "经营效率诊断", "财务归因", "对标分析"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "制造", color: "cyan" },
+          { name: "新能源", color: "green" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "📈",
+        name: "本量利分析",
+        subtitle: "CVP Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 2,
+        desc: "分析成本、销量、利润三者之间的关系，帮助制定生产和定价决策。",
+        formula: "利润 = (单价 - 单位变动成本) × 销量 - 固定成本\n边际贡献 = 单价 - 单位变动成本\n边际贡献率 = 边际贡献 ÷ 单价",
+        scenarios: ["盈亏平衡分析", "定价决策", "目标利润测算", "成本结构分析"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" },
+          { name: "快消", color: "orange" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "💰",
+        name: "边际贡献分析",
+        subtitle: "Contribution Margin Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 2,
+        desc: "衡量产品销售收入扣除变动成本后，对覆盖固定成本和创造利润的贡献能力。",
+        formula: "单位边际贡献 = 单价 - 单位变动成本\n边际贡献率 = 单位边际贡献 ÷ 单价 × 100%\n总边际贡献 = 销售收入 × 边际贡献率",
+        scenarios: ["产品定价", "产品线决策", "亏损产品是否停产", "特殊订单决策"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" },
+          { name: "快消", color: "orange" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "⚖️",
+        name: "盈亏平衡分析",
+        subtitle: "Break-even Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 2,
+        desc: "计算企业达到不盈不亏状态所需的销量或收入，是经营决策的重要参考点。",
+        formula: "盈亏平衡点销量 = 固定成本 ÷ (单价 - 单位变动成本)\n盈亏平衡点收入 = 固定成本 ÷ 边际贡献率\n安全边际率 = (实际销量 - 盈亏销量) ÷ 实际销量",
+        scenarios: ["新项目评估", "经营风险评估", "目标利润规划", "成本控制"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" },
+          { name: "SaaS", color: "green" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "📊",
+        name: "预算差异分析",
+        subtitle: "Budget Variance Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 2,
+        desc: "对比实际结果与预算的差异，分析差异原因，评估经营绩效，指导后续预算调整。",
+        formula: "差异额 = 实际值 - 预算值\n差异率 = 差异额 ÷ 预算值 × 100%\n差异归因：量差、价差、效率差、结构差",
+        scenarios: ["绩效管理", "预算控制", "经营分析", "成本管控"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" },
+          { name: "金融", color: "blue" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "📈",
+        name: "敏感性分析",
+        subtitle: "Sensitivity Analysis",
+        category: "finance",
+        categoryName: "财务经营",
+        difficulty: 3,
+        desc: "分析关键因素变动对结果的影响程度，识别最敏感因素，评估决策风险。",
+        formula: "敏感系数 = 目标值变动% ÷ 因素值变动%\n敏感系数绝对值越大，因素越敏感\n单因素/多因素/情景分析",
+        scenarios: ["投资决策", "风险评估", "利润预测", "项目评估"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "新能源", color: "green" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "finance.html"
+      },
+
+      // ========== 战略决策 ==========
+      {
+        icon: "🏆",
+        name: "竞品对标分析",
+        subtitle: "Competitive Benchmarking",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 2,
+        desc: "将自身产品/服务/运营与竞争对手进行系统性对比，识别差距和机会点。",
+        formula: "对标维度：产品、价格、用户、运营、财务、技术\n差距 = 自身指标 - 竞品指标\n→ 识别优势/劣势/机会/威胁",
+        scenarios: ["战略规划", "产品优化", "运营提升", "市场定位"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "SaaS", color: "green" },
+          { name: "新能源", color: "green" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "💪",
+        name: "SWOT分析",
+        subtitle: "Strengths · Weaknesses · Opportunities · Threats",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 1,
+        desc: "从优势、劣势、机会、威胁四个维度分析内外部环境，制定战略方向。",
+        formula: "内部：优势(S) / 劣势(W)\n外部：机会(O) / 威胁(T)\n战略组合：SO/ST/WO/WT",
+        scenarios: ["战略规划", "市场分析", "竞争分析", "项目评估"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "零售", color: "" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "🌍",
+        name: "PEST分析",
+        subtitle: "Political · Economic · Social · Technological",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 2,
+        desc: "从政治、经济、社会、技术四个维度分析宏观环境，识别外部机遇和风险。",
+        formula: "P(政治)：政策、法规、监管\nE(经济)：GDP、通胀、利率、汇率\nS(社会)：人口、文化、消费习惯\nT(技术)：新技术、创新、基础设施",
+        scenarios: ["战略规划", "市场进入", "风险评估", "行业研究"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "金融", color: "blue" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "⚔️",
+        name: "波特五力模型",
+        subtitle: "Porter's Five Forces",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 3,
+        desc: "从五个竞争力量分析行业竞争结构和吸引力，帮助判断行业盈利潜力。",
+        formula: "五力：\n1. 现有竞争者竞争程度\n2. 新进入者威胁\n3. 替代品威胁\n4. 供应商议价能力\n5. 购买者议价能力",
+        scenarios: ["行业分析", "战略规划", "市场进入", "投资决策"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "🐄",
+        name: "BCG矩阵",
+        subtitle: "Boston Consulting Group Matrix",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 2,
+        desc: "按市场增长率和相对市场份额将业务分为四类，制定不同的投资和发展策略。",
+        formula: "明星业务：高增长、高份额 → 加大投资\n金牛业务：低增长、高份额 → 维持收割\n问题业务：高增长、低份额 → 分析决策\n瘦狗业务：低增长、低份额 → 收缩退出",
+        scenarios: ["业务组合管理", "资源分配", "产品战略", "投资决策"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "快消", color: "orange" },
+          { name: "零售", color: "" }
+        ],
+        reference: "fmcg.html"
+      },
+      {
+        icon: "📊",
+        name: "安索夫矩阵",
+        subtitle: "Ansoff Matrix",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 2,
+        desc: "从产品和市场两个维度，分析企业增长的四种战略选择，评估不同增长路径的风险。",
+        formula: "市场渗透：现有产品+现有市场 → 低风险\n产品开发：新产品+现有市场 → 中风险\n市场开发：现有产品+新市场 → 中风险\n多元化：新产品+新市场 → 高风险",
+        scenarios: ["增长战略", "市场拓展", "产品规划", "风险评估"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "SaaS", color: "green" },
+          { name: "快消", color: "orange" }
+        ],
+        reference: "saas.html"
+      },
+      {
+        icon: "🔗",
+        name: "价值链分析",
+        subtitle: "Value Chain Analysis",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 3,
+        desc: "将企业活动分解为基本活动和支持活动，识别各环节的价值创造和成本，寻找竞争优势来源。",
+        formula: "基本活动：进货物流、生产作业、出货物流、市场销售、服务\n支持活动：企业基础设施、人力资源、技术开发、采购",
+        scenarios: ["竞争优势分析", "运营优化", "成本控制", "战略定位"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "零售", color: "" },
+          { name: "物流", color: "" }
+        ],
+        reference: "manufacturing.html"
+      },
+
+      // ========== 质量生产 ==========
+      {
+        icon: "📈",
+        name: "SPC统计过程控制",
+        subtitle: "Statistical Process Control",
+        category: "quality",
+        categoryName: "质量生产",
+        difficulty: 3,
+        desc: "运用统计方法监控过程波动，区分正常波动和异常波动，及时发现问题，预防缺陷产生。",
+        formula: "控制图：中心线(CL) ± 3σ\nUCL = 均值 + 3σ\nLCL = 均值 - 3σ\n判异准则：点出界、连续同侧、趋势、周期性",
+        scenarios: ["生产过程监控", "质量控制", "过程能力分析", "异常预警"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "医疗", color: "cyan" },
+          { name: "快消", color: "orange" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "σ",
+        name: "六西格玛",
+        subtitle: "Six Sigma",
+        category: "quality",
+        categoryName: "质量生产",
+        difficulty: 4,
+        desc: "以数据为基础，通过DMAIC方法论，系统性地减少缺陷、提升过程能力的质量管理体系。",
+        formula: "σ水平：缺陷率对应的标准差倍数\n6σ = 3.4 DPMO（百万机会缺陷数）\nDMAIC：定义→测量→分析→改进→控制",
+        scenarios: ["质量改进", "流程优化", "成本降低", "客户满意度提升"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "医疗", color: "cyan" },
+          { name: "金融", color: "blue" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "🔄",
+        name: "PDCA循环",
+        subtitle: "Plan · Do · Check · Act",
+        category: "quality",
+        categoryName: "质量生产",
+        difficulty: 1,
+        desc: "计划、执行、检查、处理的持续改进循环，是质量管理和持续改进的基本方法。",
+        formula: "P(计划)：分析现状，找出问题，制定计划\nD(执行)：实施计划\nC(检查)：检查结果，对比目标\nA(处理)：标准化成功经验，遗留问题进入下一轮",
+        scenarios: ["持续改进", "项目管理", "质量提升", "流程优化"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "制造", color: "cyan" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "🐟",
+        name: "鱼骨图 / 5Why",
+        subtitle: "Fishbone Diagram · 5 Whys",
+        category: "quality",
+        categoryName: "质量生产",
+        difficulty: 2,
+        desc: "通过因果分析和连续追问，层层深入，找到问题的根本原因，而不是表面症状。",
+        formula: "鱼骨图：人、机、料、法、环、测\n5Why：连续问5个为什么\n→ 从表面症状追溯到根本原因",
+        scenarios: ["问题分析", "根因追溯", "质量改进", "故障诊断"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "物流", color: "" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "⚠️",
+        name: "FMEA失效模式分析",
+        subtitle: "Failure Mode and Effects Analysis",
+        category: "quality",
+        categoryName: "质量生产",
+        difficulty: 4,
+        desc: "系统性地识别潜在失效模式，评估其风险优先级，提前采取预防措施，降低失效风险。",
+        formula: "RPN风险优先级 = 严重度(S) × 发生度(O) × 探测度(D)\nRPN越高，风险越大，越需要优先改进",
+        scenarios: ["风险预防", "质量设计", "可靠性分析", "安全评估"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "医疗", color: "cyan" },
+          { name: "新能源", color: "green" }
+        ],
+        reference: "manufacturing.html"
+      },
+
+      // ========== 统计分析 ==========
+      {
+        icon: "📊",
+        name: "描述统计分析",
+        subtitle: "Descriptive Statistics",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 1,
+        desc: "对数据进行汇总、概括和可视化，描述数据的集中趋势、离散程度和分布形态。",
+        formula: "集中趋势：均值、中位数、众数\n离散程度：方差、标准差、极差、四分位距\n分布形态：偏度、峰度",
+        scenarios: ["数据探索", "报告撰写", "数据概览", "质量控制"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "金融", color: "blue" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🔗",
+        name: "相关分析",
+        subtitle: "Correlation Analysis",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 2,
+        desc: "衡量两个变量之间线性关系的强度和方向，帮助理解变量间的关联。",
+        formula: "皮尔逊相关系数 r = Cov(X,Y) ÷ (σX × σY)\n取值范围：[-1, 1]\n|r|>0.7 强相关，0.3-0.7 中等，<0.3 弱相关\n注意：相关≠因果",
+        scenarios: ["变量关系探索", "因子分析", "特征选择", "数据洞察"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "金融", color: "blue" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "📈",
+        name: "回归分析",
+        subtitle: "Regression Analysis",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 3,
+        desc: "建立因变量与自变量之间的数学关系模型，用于预测和解释变量影响。",
+        formula: "线性回归：y = β0 + β1x1 + β2x2 + ... + ε\n最小二乘法估计参数\nR²衡量模型拟合优度\n显著性检验：t检验、F检验",
+        scenarios: ["预测建模", "因素分析", "趋势预测", "归因分析"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "经济", color: "" },
+          { name: "制造", color: "cyan" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🧪",
+        name: "假设检验",
+        subtitle: "Hypothesis Testing",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 3,
+        desc: "基于样本数据，对总体参数的假设进行统计检验，判断差异是否显著。",
+        formula: "原假设H0 vs 备择假设H1\n检验统计量 → p值\np < α(0.05) 拒绝原假设（显著）\n常见检验：t检验、卡方检验、F检验",
+        scenarios: ["A/B测试", "效果验证", "差异分析", "科学研究"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "医疗", color: "cyan" },
+          { name: "金融", color: "blue" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "📊",
+        name: "方差分析",
+        subtitle: "ANOVA",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 3,
+        desc: "检验多个总体均值是否相等的统计方法，用于分析一个或多个因素对结果的影响。",
+        formula: "总平方和 = 组间平方和 + 组内平方和\nF = 组间均方 ÷ 组内均方\np < 0.05 说明至少有两组均值显著不同",
+        scenarios: ["多组比较", "因素影响分析", "实验设计", "质量改进"],
+        industries: [
+          { name: "制造", color: "cyan" },
+          { name: "医疗", color: "cyan" },
+          { name: "农业", color: "green" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "⏰",
+        name: "时间序列分析",
+        subtitle: "Time Series Analysis",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 4,
+        desc: "分析随时间变化的数据序列，识别趋势、季节、周期等成分，进行预测。",
+        formula: "成分分解：趋势T + 季节S + 周期C + 随机I\n常见模型：ARIMA、指数平滑、Prophet\n评估指标：MAE、RMSE、MAPE",
+        scenarios: ["销量预测", "趋势分析", "季节性分析", "需求预测"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "金融", color: "blue" },
+          { name: "快消", color: "orange" }
+        ],
+        reference: "fmcg.html"
+      },
+
+      // ========== 数据科学 ==========
+      {
+        icon: "🔮",
+        name: "聚类分析",
+        subtitle: "Clustering",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 3,
+        desc: "无监督学习方法，将相似的数据点自动分组，发现数据的内在结构和模式。",
+        formula: "常见算法：K-Means、层次聚类、DBSCAN\n评估指标：轮廓系数、肘部法则\n应用：用户分群、画像、异常检测",
+        scenarios: ["用户分群", "客户画像", "异常检测", "图像分割"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "金融", color: "blue" },
+          { name: "SaaS", color: "green" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "🎯",
+        name: "分类分析",
+        subtitle: "Classification",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 3,
+        desc: "有监督学习方法，根据已知标签的训练数据，学习分类规则，对新数据进行类别预测。",
+        formula: "常见算法：逻辑回归、SVM、KNN、朴素贝叶斯\n评估指标：准确率、精确率、召回率、F1、AUC",
+        scenarios: ["流失预测", "信用评分", "欺诈检测", "营销响应"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "电商", color: "pink" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "📉",
+        name: "主成分分析",
+        subtitle: "PCA · Principal Component Analysis",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 4,
+        desc: "降维技术，将高维数据投影到低维空间，保留主要信息，去除冗余和噪声。",
+        formula: "协方差矩阵 → 特征值分解 → 选择前k个主成分\n方差解释率 = 前k个特征值之和 ÷ 总特征值之和",
+        scenarios: ["数据降维", "特征提取", "可视化", "去噪"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "图像", color: "" },
+          { name: "生物", color: "green" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🌳",
+        name: "决策树",
+        subtitle: "Decision Tree",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 2,
+        desc: "基于树结构进行决策的机器学习模型，直观可解释，适合分类和回归任务。",
+        formula: "分裂准则：信息增益(ID3)、信息增益率(C4.5)、基尼指数(CART)\n剪枝：预剪枝、后剪枝\n防止过拟合",
+        scenarios: ["规则提取", "客户分层", "风险评估", "决策支持"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "医疗", color: "cyan" },
+          { name: "零售", color: "" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🌲",
+        name: "随机森林",
+        subtitle: "Random Forest",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 4,
+        desc: "集成学习方法，通过构建多棵决策树并综合预测结果，提高预测精度和稳定性。",
+        formula: "Bagging + 随机特征选择\n多棵树投票（分类）或平均（回归）\n优点：抗过拟合、准确率高、能处理高维数据",
+        scenarios: ["精准营销", "风险预测", "推荐系统", "特征重要性"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "电商", color: "pink" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "finance.html"
       }
     ];
 
-    // 当前筛选
+    // 当前状态
     let currentCategory = 'all';
+    let searchKeyword = '';
 
-    // 初始化
-    document.addEventListener('DOMContentLoaded', function() {
-      renderMethods();
-      
-      // 绑定分类标签
-      document.querySelectorAll('.tab').forEach(tab => {
+    // 初始化（script在页面底部，DOM已经加载完成，直接执行）
+    renderMethods();
+    initTabs();
+    initSearch();
+
+    // 初始化分类标签
+    function initTabs() {
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(tab => {
         tab.addEventListener('click', function() {
-          document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          tabs.forEach(t => t.classList.remove('active'));
           this.classList.add('active');
           currentCategory = this.dataset.category;
           renderMethods();
         });
       });
-      
-      // 导航搜索
-      document.getElementById('navSearch').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          const query = this.value.toLowerCase();
-          const filtered = methods.filter(m => 
-            m.name.toLowerCase().includes(query) ||
-            m.desc.toLowerCase().includes(query)
-          );
-          if (filtered.length > 0) {
-            document.getElementById('methodsGrid').scrollIntoView({ behavior: 'smooth' });
-          }
-        }
+    }
+
+    // 初始化搜索
+    function initSearch() {
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', function() {
+        searchKeyword = this.value.toLowerCase().trim();
+        renderMethods();
       });
-    });
+    }
 
     // 渲染方法卡片
     function renderMethods() {
       const grid = document.getElementById('methodsGrid');
+      const emptyState = document.getElementById('emptyState');
       
-      let filtered = methods;
-      if (currentCategory !== 'all') {
-        filtered = methods.filter(m => m.category === currentCategory);
-      }
-      
-      grid.innerHTML = filtered.map(m => renderMethodCard(m)).join('');
-      
-      // 绑定卡片点击
-      document.querySelectorAll('.method-card').forEach(card => {
-        card.addEventListener('click', function() {
-          const ref = this.dataset.reference;
-          if (ref) {
-            // 可以跳转到相关页面
-            // window.location.href = ref;
+      let filtered = methods.filter(m => {
+        // 分类筛选
+        if (currentCategory !== 'all' && m.category !== currentCategory) {
+          return false;
+        }
+        // 搜索筛选
+        if (searchKeyword) {
+          const searchText = (m.name + m.subtitle + m.desc + m.categoryName + m.scenarios.join('')).toLowerCase();
+          if (!searchText.includes(searchKeyword)) {
+            return false;
           }
-        });
+        }
+        return true;
       });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      emptyState.style.display = 'none';
+      grid.innerHTML = filtered.map(m => createMethodCard(m)).join('');
     }
 
-    // 渲染单个方法卡片
-    function renderMethodCard(method) {
+    // 创建方法卡片
+    function createMethodCard(m) {
       const stars = Array(5).fill(0).map((_, i) => 
-        i < method.difficulty ? '<span class="star">★</span>' : '<span class="star empty">★</span>'
+        i < m.difficulty ? '<span class="star">★</span>' : '<span class="star empty">★</span>'
       ).join('');
-      
+
       return `
-        <div class="card method-card" data-reference="${method.reference}">
+        <div class="method-card">
           <div class="method-header">
-            <div class="method-icon">${method.icon}</div>
-            <div style="flex: 1;">
-              <h3 class="method-title">${method.name}</h3>
-              <div class="method-subtitle">${method.subtitle}</div>
-            </div>
-            <div class="difficulty" title="难度：${method.difficulty}/5">
-              ${stars}
+            <div class="method-icon">${m.icon}</div>
+            <div class="method-info">
+              <h3 class="method-name">${m.name}</h3>
+              <p class="method-subtitle">${m.subtitle}</p>
+              <div class="method-difficulty">${stars}</div>
             </div>
           </div>
-          
-          <p class="method-desc">${method.desc}</p>
-          
-          <div class="method-section">
-            <div class="method-section-title">核心公式</div>
-            <div class="method-formula">${method.formula.replace(/\n/g, '<br>')}</div>
+          <p class="method-desc">${m.desc}</p>
+          <div class="method-formula">
+            <div class="formula-label">核心公式</div>
+            <div class="formula-text">${m.formula}</div>
           </div>
-          
-          <div class="method-section">
-            <div class="method-section-title">适用场景</div>
-            <div class="method-scenarios">
-              ${method.scenarios.map(s => `<span class="scenario-tag">${s}</span>`).join('')}
-            </div>
+          <div class="method-tags">
+            <span class="tag-label">适用场景</span>
+            ${m.scenarios.map(s => `<span class="method-tag">${s}</span>`).join('')}
           </div>
-          
-          <div class="method-industries">
-            <span style="font-size: 11px; color: var(--text-muted); margin-right: 4px;">应用行业：</span>
-            ${method.industries.map(i => `<span class="industry-tag ${i.color}">${i.name}</span>`).join('')}
+          <div class="method-tags">
+            <span class="tag-label">应用行业</span>
+            ${m.industries.map(i => `<span class="industry-tag ${i.color}">${i.name}</span>`).join('')}
           </div>
         </div>
       `;
     }
   </script>
+  <script src="common.js"></script>
 </body>
 </html>
-
-
-

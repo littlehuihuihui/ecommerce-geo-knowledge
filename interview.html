@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -332,7 +332,7 @@
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
           <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="旅游业/index.html" class="nav-dropdown-item">文旅行业 <span class="badge">1份</span></a>
+          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
           <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
           <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
@@ -358,11 +358,11 @@
     <p class="page-desc">各行业经典业务问题的结构化分析思路，展示数据驱动的问题解决能力</p>
     <div class="stats-bar">
       <div class="stat-item">
-        <div class="stat-num">35+</div>
+        <div class="stat-num">70+</div>
         <div class="stat-label">业务问题</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">7</div>
+        <div class="stat-num">14</div>
         <div class="stat-label">覆盖行业</div>
       </div>
       <div class="stat-item">
@@ -416,28 +416,28 @@
             title: "销售额下降了，你怎么分析原因？",
             difficulty: "easy",
             answer: `
-              <p>这是数据分析中最经典的问题，考察结构化分析框架能力。</p>
+              <p>这是数据分析最经典的问题，考察结构化分析框架能力。</p>
               <ul>
-                <li><strong>第一步：确认数据真实性</strong> — 排除数据统计错误、口径变化、系统bug</li>
-                <li><strong>第二步：拆解维度定位问题</strong>
+                <li><strong>第一步：确认数据真实性</strong> — 排除统计错误、口径变化、系统bug</li>
+                <li><strong>第二步：多维度拆解定位</strong>
                   <ul>
-                    <li>按时间：是突然下降还是持续下降？哪天开始的？</li>
-                    <li>按区域：哪些地区/门店下降最多？</li>
-                    <li>按品类：哪些商品下降最多？是新品还是老品？</li>
-                    <li>按用户：新客还是老客下降？高价值还是低价值用户？</li>
-                    <li>按渠道：线上还是线下？哪个渠道？</li>
+                    <li>时间维度：突然下降还是持续下降？哪天开始？</li>
+                    <li>区域维度：哪些地区/门店下降最多？</li>
+                    <li>品类维度：哪些商品下降最多？新品还是老品？</li>
+                    <li>用户维度：新客还是老客？高价值还是低价值？</li>
+                    <li>渠道维度：线上还是线下？哪个渠道？</li>
                   </ul>
                 </li>
                 <li><strong>第三步：公式拆解找根因</strong>
                   <ul>
                     <li>销售额 = 客流量 × 转化率 × 客单价</li>
-                    <li>是客流少了？还是转化低了？还是客单价降了？</li>
+                    <li>是客流少了？转化低了？还是客单价降了？</li>
                   </ul>
                 </li>
                 <li><strong>第四步：外部因素验证</strong> — 竞品活动？节假日？天气？政策？</li>
-                <li><strong>第五步：给出建议</strong> — 针对找到的原因给出可落地的优化方案</li>
+                <li><strong>第五步：给出建议</strong> — 针对原因给出可落地的优化方案</li>
               </ul>
-              <p><strong>关键：</strong>不要一上来就瞎猜原因，要有结构化的分析框架，先拆解再定位。</p>
+              <p><strong>关键：</strong>不要一上来就瞎猜，要有结构化框架，先拆解再定位。</p>
             `
           },
           {
@@ -454,245 +454,90 @@
                 </li>
                 <li><strong>评估指标体系</strong>
                   <ul>
-                    <li>核心指标：功能使用率、核心行为转化率</li>
-                    <li>反向指标：有没有导致其他指标下降？</li>
-                    <li>长期指标：留存、LTV影响</li>
+                    <li>核心指标：功能使用率、留存、收入等</li>
+                    <li>辅助指标：使用时长、功能路径、跳出率等</li>
+                    <li>护栏指标：不能让其他核心指标下降</li>
                   </ul>
                 </li>
-                <li><strong>如果不能做A/B测试</strong>
+                <li><strong>分析维度</strong>
                   <ul>
-                    <li>前后对比法（注意排除时间因素）</li>
-                    <li>倾向得分匹配（PSM）</li>
-                    <li>断点回归（RDD）</li>
+                    <li>用户分层：不同用户群的效果差异</li>
+                    <li>时间维度：短期效果 vs 长期效果</li>
+                    <li>归因分析：功能使用与核心指标的因果关系</li>
                   </ul>
                 </li>
               </ul>
             `
           },
           {
-            title: "如何做用户分群？有哪些方法？",
+            title: "数据异常波动，如何快速定位原因？",
             difficulty: "medium",
             answer: `
               <ul>
-                <li><strong>规则分群（简单直接）</strong>
+                <li><strong>1. 确认异常</strong> — 和历史同期比、和上周比、和预测比，确认是真异常</li>
+                <li><strong>2. 下钻维度</strong> — 按地区、渠道、用户群、产品等维度拆解，找到异常最集中的维度</li>
+                <li><strong>3. 时间点</strong> — 找到异常开始的精确时间点，看当时发生了什么</li>
+                <li><strong>4. 排查清单</strong>
                   <ul>
-                    <li>RFM 分群：按最近购买、频率、金额分层</li>
-                    <li>生命周期分群：新客/成长/成熟/衰退/流失</li>
-                    <li>价值分群：高价值/中价值/低价值</li>
+                    <li>数据层：埋点故障、统计错误、口径变更</li>
+                    <li>产品层：版本发布、功能改动、策略调整</li>
+                    <li>运营层：活动上线、投放变化、客服问题</li>
+                    <li>外部层：竞品、政策、节假日、突发事件</li>
                   </ul>
                 </li>
-                <li><strong>算法分群（更精细）</strong>
-                  <ul>
-                    <li>K-Means 聚类：最常用，需要先确定K值</li>
-                    <li>层次聚类：可以看到分群层级关系</li>
-                    <li>DBSCAN：可以发现任意形状的簇，能识别异常点</li>
-                  </ul>
-                </li>
-                <li><strong>分群后要做什么？</strong>
-                  <ul>
-                    <li>给每个群起名字、画画像</li>
-                    <li>制定差异化运营策略</li>
-                    <li>追踪分群变化（迁移矩阵）</li>
-                  </ul>
-                </li>
+                <li><strong>5. 验证假设</strong> — 找到可疑原因后，用数据验证是否匹配</li>
               </ul>
             `
           },
           {
-            title: "数据分析师和数据产品经理有什么区别？",
-            difficulty: "easy",
-            answer: `
-              <ul>
-                <li><strong>数据分析师</strong>
-                  <ul>
-                    <li>核心：发现问题、解释原因、给出建议</li>
-                    <li>产出：分析报告、洞察结论、数据看板</li>
-                    <li>更偏"分析"，回答"为什么"和"怎么办"</li>
-                  </ul>
-                </li>
-                <li><strong>数据产品经理</strong>
-                  <ul>
-                    <li>核心：设计数据产品、让数据用起来</li>
-                    <li>产出：数据平台、BI系统、指标体系、数据工具</li>
-                    <li>更偏"产品"，思考"怎么让数据更好用"</li>
-                  </ul>
-                </li>
-                <li><strong>两者关系</strong>
-                  <ul>
-                    <li>分析师是数据产品的用户</li>
-                    <li>数据产品经理把分析师的需求产品化</li>
-                    <li>好的数据产品能让分析师效率提升10倍</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "你做过的最有成就感的项目是什么？",
-            difficulty: "medium",
-            answer: `
-              <p>项目经验类问题，用 STAR 法则梳理你的项目经历：</p>
-              <ul>
-                <li><strong>S - Situation</strong>：背景是什么？遇到了什么问题？</li>
-                <li><strong>T - Task</strong>：你的任务是什么？目标是什么？</li>
-                <li><strong>A - Action</strong>：你做了什么？<strong>重点讲你自己的贡献，不是团队的</strong></li>
-                <li><strong>R - Result</strong>：结果怎么样？有数据量化吗？</li>
-              </ul>
-              <p><strong>加分点：</strong></p>
-              <ul>
-                <li>有具体的数字（提升了XX%，节省了XX万）</li>
-                <li>体现了你的思考，而不只是执行</li>
-                <li>有复盘和反思，从中学到了什么</li>
-              </ul>
-            `
-          }
-        ]
-      },
-
-      // ===== 零售 =====
-      {
-        category: "retail",
-        categoryName: "零售行业",
-        icon: "🏪",
-        list: [
-          {
-            title: "坪效下降了，怎么分析？",
-            difficulty: "medium",
-            answer: `
-              <p>坪效 = 销售额 ÷ 营业面积，是零售最核心的效率指标。</p>
-              <ul>
-                <li><strong>先拆分子指标</strong>
-                  <ul>
-                    <li>坪效 = 客流 × 转化率 × 客单价 ÷ 面积</li>
-                    <li>看是哪个因子导致的下降</li>
-                  </ul>
-                </li>
-                <li><strong>按门店类型拆解</strong>
-                  <ul>
-                    <li>是所有门店都降，还是个别门店？</li>
-                    <li>新店还是老店？大店还是小店？</li>
-                    <li>商圈类型：购物中心/社区/街边？</li>
-                  </ul>
-                </li>
-                <li><strong>常见原因</strong>
-                  <ul>
-                    <li>客流端：周边竞品开业、商圈衰退、交通变化</li>
-                    <li>转化端：商品结构问题、服务质量下降、价格没竞争力</li>
-                    <li>客单端：促销减少、高客单商品卖不动、连带率下降</li>
-                    <li>供给端：缺货严重、新品不给力</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "库存周转天数太高，怎么优化？",
+            title: "如何搭建一个业务的指标体系？",
             difficulty: "hard",
             answer: `
               <ul>
-                <li><strong>先定位问题</strong>
+                <li><strong>第一步：明确北极星指标</strong> — 业务最核心的一个指标，所有人朝这个方向努力</li>
+                <li><strong>第二步：OSM 模型拆解</strong>
                   <ul>
-                    <li>是所有品类都高，还是个别品类？</li>
-                    <li>是新品还是老品？畅销品还是滞销品？</li>
-                    <li>是采购多了，还是卖不动？</li>
+                    <li>Objective：业务目标是什么？</li>
+                    <li>Strategy：用什么策略达成目标？</li>
+                    <li>Measurement：每个策略用什么指标衡量？</li>
                   </ul>
                 </li>
-                <li><strong>优化方向</strong>
+                <li><strong>第三步：指标分级</strong>
                   <ul>
-                    <li><strong>需求预测</strong>：提升预测准确率，减少盲目采购
-                      <ul>
-                        <li>用历史销售数据做预测</li>
-                        <li>考虑季节、促销、竞品等因素</li>
-                      </ul>
-                    </li>
-                    <li><strong>ABC分类管理</strong>：
-                      <ul>
-                        <li>A类（高价值）：严格控制，小批量多频次</li>
-                        <li>C类（低价值）：可以多备点，减少管理成本</li>
-                      </ul>
-                    </li>
-                    <li><strong>滞销品处理</strong>：
-                      <ul>
-                        <li>促销清仓、捆绑销售、调拨到其他门店</li>
-                        <li>退货给供应商（如果合同允许）</li>
-                      </ul>
-                    </li>
-                    <li><strong>供应链优化</strong>：
-                      <ul>
-                        <li>缩短采购周期</li>
-                        <li>VMI（供应商管理库存）</li>
-                        <li>JIT（准时制）</li>
-                      </ul>
-                    </li>
+                    <li>一级指标：北极星指标（CEO关注）</li>
+                    <li>二级指标：核心驱动因子（部门关注）</li>
+                    <li>三级指标：过程指标（执行层关注）</li>
                   </ul>
                 </li>
+                <li><strong>第四步：维度补充</strong> — 每个指标都要能按用户、渠道、地区、时间等维度下钻</li>
+                <li><strong>第五步：质量保障</strong> — 指标定义、口径、数据来源、负责人都要明确</li>
               </ul>
             `
           },
           {
-            title: "如何设计会员体系？",
-            difficulty: "hard",
-            answer: `
-              <ul>
-                <li><strong>第一步：用户分层</strong>
-                  <ul>
-                    <li>用RFM模型或消费金额分层</li>
-                    <li>一般分3-5级，太多太复杂用户记不住</li>
-                    <li>每层要有明确的晋升门槛和权益差异</li>
-                  </ul>
-                </li>
-                <li><strong>第二步：权益设计</strong>
-                  <ul>
-                    <li><strong>物质权益</strong>：折扣、积分、生日礼、免运费</li>
-                    <li><strong>服务权益</strong>：专属客服、优先发货、退换货特权</li>
-                    <li><strong>身份权益</strong>：专属标识、专属活动、新品优先体验</li>
-                    <li>原则：高等级权益要让人"羡慕"，才有升级动力</li>
-                  </ul>
-                </li>
-                <li><strong>第三步：成长机制</strong>
-                  <ul>
-                    <li>消费1元=1积分？还是不同品类不同积分？</li>
-                    <li>保级机制：一年内要消费多少才能保级</li>
-                    <li>降级机制：达不到就降级，制造焦虑感</li>
-                  </ul>
-                </li>
-                <li><strong>第四步：效果评估</strong>
-                  <ul>
-                    <li>会员消费占比、会员复购率</li>
-                    <li>各等级用户迁移情况</li>
-                    <li>会员 vs 非会员的价值差异</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "同店销售增长（SSSG）为负，说明什么？",
+            title: "如何做用户分群？有哪些常用方法？",
             difficulty: "medium",
             answer: `
-              <p>SSSG（Same Store Sales Growth）是剔除新店影响后的可比门店增长，更能反映真实经营能力。</p>
               <ul>
-                <li><strong>SSSG为负的含义</strong>
+                <li><strong>1. 规则分群（简单直观）</strong>
                   <ul>
-                    <li>老店销售在下滑，增长全靠新店撑着</li>
-                    <li>这是很危险的信号，说明品牌内生增长乏力</li>
-                    <li>新店总有开不动的一天，到时候就会整体下滑</li>
+                    <li>RFM 模型：按最近消费、频率、金额分</li>
+                    <li>价值分层：按消费金额高低分</li>
+                    <li>生命周期：按注册时间/阶段分</li>
                   </ul>
                 </li>
-                <li><strong>分析思路</strong>
+                <li><strong>2. 算法分群（数据驱动）</strong>
                   <ul>
-                    <li>按店龄拆解：是开了几年的店在下滑？</li>
-                    <li>按区域拆解：哪些区域问题最严重？</li>
-                    <li>按品类拆解：是品类结构问题吗？</li>
-                    <li>对标竞品：是行业问题还是我们自己的问题？</li>
+                    <li>K-Means 聚类：最常用的无监督分群</li>
+                    <li>层次聚类：适合探索性分析</li>
+                    <li>DBSCAN：可以发现任意形状的簇</li>
                   </ul>
                 </li>
-                <li><strong>常见原因</strong>
+                <li><strong>3. 分群评估</strong>
                   <ul>
-                    <li>品牌老化，消费者审美疲劳</li>
-                    <li>竞品分流，被抢走了市场份额</li>
-                    <li>商品力下降，新品不给力</li>
-                    <li>价格策略问题，涨价导致客流流失</li>
+                    <li>群内差异小，群间差异大</li>
+                    <li>每个群有明确的业务含义</li>
+                    <li>分群结果可用于差异化运营</li>
                   </ul>
                 </li>
               </ul>
@@ -705,139 +550,1848 @@
       {
         category: "ecommerce",
         categoryName: "电商行业",
-        icon: "🛒",
+        icon: "🛍️",
         list: [
           {
-            title: "转化率突然下降，怎么排查？",
-            difficulty: "medium",
+            title: "GMV 下降了，怎么快速定位原因？",
+            difficulty: "easy",
             answer: `
+              <p>GMV = 访客数 × 转化率 × 客单价，从三大因子拆解：</p>
               <ul>
-                <li><strong>第一步：确认数据</strong> — 排除统计错误、埋点问题</li>
-                <li><strong>第二步：定位环节</strong>
+                <li><strong>流量端</strong>
                   <ul>
-                    <li>转化率是个漏斗：曝光→点击→加购→下单→支付</li>
-                    <li>哪个环节掉得最厉害？</li>
+                    <li>是UV下降了？还是流量质量变差了？</li>
+                    <li>哪个渠道下降最多？免费/付费/自然搜索？</li>
+                    <li>是大盘都降，还是只有我们降？</li>
                   </ul>
                 </li>
-                <li><strong>第三步：拆解维度</strong>
+                <li><strong>转化端</strong>
                   <ul>
-                    <li>流量端：是哪个渠道的流量变了？</li>
-                    <li>商品端：是哪些商品转化降了？</li>
-                    <li>用户端：新客还是老客？</li>
-                    <li>端：App/小程序/PC？iOS/Android？</li>
+                    <li>哪个环节流失最大？浏览→加购→下单→支付</li>
+                    <li>是价格问题？商品问题？还是竞品抢人？</li>
+                    <li>新客转化 vs 老客复购，哪个降得多？</li>
                   </ul>
                 </li>
-                <li><strong>第四步：验证假设</strong>
+                <li><strong>客单价端</strong>
                   <ul>
-                    <li>是不是改版了？（页面变化影响转化）</li>
-                    <li>是不是涨价了？（价格敏感用户流失）</li>
-                    <li>是不是缺货了？（想买买不到）</li>
-                    <li>是不是竞品搞活动了？（被抢走了）</li>
-                    <li>是不是支付通道出问题了？（技术故障）</li>
+                    <li>是高客单商品卖不动了？还是低价品占比上升？</li>
+                    <li>连带率下降了吗？人均购买件数？</li>
+                    <li>促销活动导致客单价降低？</li>
                   </ul>
                 </li>
               </ul>
             `
           },
           {
-            title: "归因模型有哪些？怎么选？",
+            title: "如何提升电商转化率？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>流量精准度</strong> — 提升流量质量，让对的人进来</li>
+                <li><strong>商品详情页优化</strong>
+                  <ul>
+                    <li>主图：点击率、卖点突出</li>
+                    <li>详情：信任背书、痛点解决、场景化</li>
+                    <li>评价：好评率、晒图、问答</li>
+                  </ul>
+                </li>
+                <li><strong>价格与促销</strong>
+                  <ul>
+                    <li>价格锚点、限时优惠、满减凑单</li>
+                    <li>优惠券设计：门槛、面额、有效期</li>
+                  </ul>
+                </li>
+                <li><strong>信任与服务</strong>
+                  <ul>
+                    <li>7天无理由、运费险、正品保障</li>
+                    <li>客服响应速度、专业度</li>
+                  </ul>
+                </li>
+                <li><strong>购物体验</strong> — 页面加载速度、下单流程顺畅度</li>
+                <li><strong>数据驱动</strong> — A/B测试验证每个优化点的效果</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何做电商选品分析？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>市场需求分析</strong>
+                  <ul>
+                    <li>搜索量趋势：用户有没有需求？</li>
+                    <li>市场规模：天花板有多高？</li>
+                    <li>增长趋势：上升期还是下降期？</li>
+                  </ul>
+                </li>
+                <li><strong>竞争分析</strong>
+                  <ul>
+                    <li>竞品数量、价格带分布</li>
+                    <li>头部卖家市场份额</li>
+                    <li>差异化机会在哪里？</li>
+                  </ul>
+                </li>
+                <li><strong>利润测算</strong>
+                  <ul>
+                    <li>成本结构：货本、物流、平台费、推广费</li>
+                    <li>毛利率、净利率测算</li>
+                    <li>盈亏平衡点销量</li>
+                  </ul>
+                </li>
+                <li><strong>供应链评估</strong> — 货源稳定性、产能、账期</li>
+                <li><strong>风险评估</strong> — 季节性、政策风险、侵权风险</li>
+              </ul>
+            `
+          },
+          {
+            title: "电商大促如何做数据复盘？",
             difficulty: "hard",
             answer: `
               <ul>
-                <li><strong>常见归因模型</strong>
+                <li><strong>目标达成分析</strong> — GMV目标完成率、各品类/渠道完成情况</li>
+                <li><strong>流量复盘</strong>
                   <ul>
-                    <li><strong>首次触点</strong>：100%归第一个渠道 — 适合拉新</li>
-                    <li><strong>末次触点</strong>：100%归最后一个渠道 — 最简单最常用</li>
-                    <li><strong>线性归因</strong>：平均分配给所有触点 — 公平但不准确</li>
-                    <li><strong>时间衰减</strong>：越近的触点权重越高 — 符合决策路径</li>
-                    <li><strong>U型归因</strong>：首次和末次各40%，中间分20% — 重视首尾</li>
-                    <li><strong>数据驱动归因</strong>：用算法算每个触点的真实贡献 — 最科学</li>
+                    <li>各渠道流量、转化、ROI对比</li>
+                    <li>流量高峰时段分布</li>
+                    <li>蓄水期→预热期→爆发期→返场期 全链路</li>
                   </ul>
                 </li>
-                <li><strong>怎么选？</strong>
+                <li><strong>商品复盘</strong>
                   <ul>
-                    <li>看业务目标：拉新看首次，转化看末次</li>
-                    <li>看用户路径：路径短用末次，路径长用时间衰减</li>
-                    <li>看数据条件：有足够数据可以用算法归因</li>
+                    <li>爆品/滞销品分析</li>
+                    <li>品类结构、价格带表现</li>
+                    <li>库存售罄率、滞销风险</li>
+                  </ul>
+                </li>
+                <li><strong>用户复盘</strong>
+                  <ul>
+                    <li>新客获取成本和质量</li>
+                    <li>老客复购情况</li>
+                    <li>用户分层表现差异</li>
+                  </ul>
+                </li>
+                <li><strong>投入产出</strong> — 整体ROI、各渠道ROI、营销费用率</li>
+                <li><strong>问题与改进</strong> — 这次踩了哪些坑？下次怎么优化？</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何用RFM模型做电商用户运营？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>R（最近一次消费）</strong> — 反映用户活跃度，越近越有价值</li>
+                <li><strong>F（消费频率）</strong> — 反映用户忠诚度，次数越多越忠诚</li>
+                <li><strong>M（消费金额）</strong> — 反映用户价值，金额越高越重要</li>
+                <li><strong>用户分层与运营策略</strong>
+                  <ul>
+                    <li>重要价值用户（R高F高M高）：VIP服务、专属权益</li>
+                    <li>重要发展用户（R高F低M高）：提升频次、会员体系</li>
+                    <li>重要保持用户（R低F高M高）：召回激活、专属优惠</li>
+                    <li>重要挽留用户（R低F低M高）：流失预警、针对性挽回</li>
+                    <li>一般用户：常规运营、培育提升</li>
+                  </ul>
+                </li>
+                <li><strong>效果评估</strong> — 看分层后用户的迁移情况和价值提升</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== SaaS =====
+      {
+        category: "saas",
+        categoryName: "SaaS / 企业服务",
+        icon: "💻",
+        list: [
+          {
+            title: "SaaS产品的核心指标体系是什么？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>收入类指标</strong>
+                  <ul>
+                    <li>MRR/ARR：月度/年度经常性收入</li>
+                    <li>NRR：净收入留存率（北极星指标）</li>
+                    <li>GRR：总收入留存率</li>
+                    <li>ARPU：每用户平均收入</li>
+                  </ul>
+                </li>
+                <li><strong>获客类指标</strong>
+                  <ul>
+                    <li>CAC：客户获取成本</li>
+                    <li>LTV/CAC：生命周期价值与获客成本比</li>
+                    <li>获客渠道ROI</li>
+                  </ul>
+                </li>
+                <li><strong>留存类指标</strong>
+                  <ul>
+                    <li>客户留存率/流失率</li>
+                    <li>Logo留存 vs 收入留存</li>
+                    <li>客户健康度评分</li>
+                  </ul>
+                </li>
+                <li><strong>产品使用类指标</strong>
+                  <ul>
+                    <li>DAU/MAU：日活/月活</li>
+                    <li>功能渗透率、使用深度</li>
+                    <li>激活率、核心功能使用率</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "为什么NDR是SaaS的北极星指标？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>NDR = 净收入留存率</strong>
+                  <p>(期初MRR + 扩张MRR - 流失MRR - 收缩MRR) ÷ 期初MRR</p>
+                </li>
+                <li><strong>为什么是北极星？</strong>
+                  <ul>
+                    <li><strong>反映产品价值</strong> — 客户愿意持续付费甚至增购，说明产品真有价值</li>
+                    <li><strong>反映商业模式健康度</strong> — NDR > 100%，不获客收入也自然增长</li>
+                    <li><strong>综合维度全面</strong> — 同时衡量了留存、增购、流失、收缩</li>
+                    <li><strong>可预测性强</strong> — NDR稳定的话，未来收入很好预测</li>
+                  </ul>
+                </li>
+                <li><strong>不同水平的含义</strong>
+                  <ul>
+                    <li>NDR > 120%：顶级SaaS，增长非常健康</li>
+                    <li>NDR 100-120%：优秀，有自然增长</li>
+                    <li>NDR 80-100%：一般，需要靠获客维持增长</li>
+                    <li>NDR < 80%：有问题，漏水的桶</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "SaaS客户流失率高，怎么分析原因？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 流失分层</strong>
+                  <ul>
+                    <li>按客户规模：大客户还是小客户流失多？</li>
+                    <li>按生命周期：新客户还是老客户流失多？</li>
+                    <li>按行业/地区：哪个群体流失最多？</li>
+                  </ul>
+                </li>
+                <li><strong>2. 行为数据分析</strong>
+                  <ul>
+                    <li>流失前使用行为有什么变化？</li>
+                    <li>哪些功能用得少的客户更容易流失？</li>
+                    <li>有没有关键行为拐点？</li>
+                  </ul>
+                </li>
+                <li><strong>3. 流失原因分类</strong>
+                  <ul>
+                    <li>产品原因：功能不够、不好用、有bug</li>
+                    <li>服务原因：响应慢、解决不了问题</li>
+                    <li>价格原因：太贵、性价比低</li>
+                    <li>竞争原因：竞品更好、被挖走</li>
+                    <li>业务原因：客户自身业务变化</li>
+                  </ul>
+                </li>
+                <li><strong>4. 流失预警模型</strong> — 用数据预测哪些客户即将流失，提前干预</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估SaaS定价策略是否合理？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>价格敏感度分析</strong>
+                  <ul>
+                    <li>不同价格点的转化率对比</li>
+                    <li>价格弹性系数计算</li>
+                    <li>A/B测试不同定价方案</li>
+                  </ul>
+                </li>
+                <li><strong>价值匹配度</strong>
+                  <ul>
+                    <li>客户感知价值 vs 定价</li>
+                    <li>功能价值与价格梯度匹配</li>
+                    <li>竞品价格对比</li>
+                  </ul>
+                </li>
+                <li><strong>客户分层定价</strong>
+                  <ul>
+                    <li>SMB/中型/企业级 不同定价策略</li>
+                    <li>按使用量/按用户数/按功能 哪种更好？</li>
+                    <li>免费版/基础版/专业版/企业版 阶梯设计</li>
+                  </ul>
+                </li>
+                <li><strong>财务指标</strong>
+                  <ul>
+                    <li>毛利率是否健康（SaaS通常80%+）</li>
+                    <li>LTV/CAC是否合理（>3算健康）</li>
+                    <li>回本周期是否可接受（<12个月）</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "SaaS客户健康度评分怎么做？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>健康度维度</strong>
+                  <ul>
+                    <li><strong>产品使用</strong>：登录频率、功能渗透率、使用深度</li>
+                    <li><strong>价值实现</strong>：核心功能使用、业务指标改善</li>
+                    <li><strong>服务互动</strong>：工单数量、响应满意度、培训参与</li>
+                    <li><strong>商业指标</strong>：付费意愿、增购/减购、合同到期时间</li>
+                    <li><strong>关系强度</strong>：决策人变动、联系人数量</li>
+                  </ul>
+                </li>
+                <li><strong>评分方法</strong>
+                  <ul>
+                    <li>规则打分：每个维度设定权重和打分规则</li>
+                    <li>模型打分：用机器学习预测流失概率</li>
+                    <li>综合评分：0-100分，分健康/预警/高危三档</li>
+                  </ul>
+                </li>
+                <li><strong>应用场景</strong>
+                  <ul>
+                    <li>客户成功团队优先关注高危客户</li>
+                    <li>自动触发干预动作（电话、拜访、专属支持）</li>
+                    <li>预测未来流失率和收入趋势</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 游戏 =====
+      {
+        category: "game",
+        categoryName: "游戏行业",
+        icon: "🎮",
+        list: [
+          {
+            title: "游戏产品的核心指标体系是什么？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>用户规模</strong>
+                  <ul>
+                    <li>DAU/MAU：日活/月活</li>
+                    <li>新增用户、累计用户</li>
+                    <li>DAU/MAU比值：粘性指标</li>
+                  </ul>
+                </li>
+                <li><strong>留存指标</strong>
+                  <ul>
+                    <li>次日/7日/30日留存率</li>
+                    <li>留存曲线、半衰期</li>
+                    <li>分渠道/分版本留存对比</li>
+                  </ul>
+                </li>
+                <li><strong>付费指标</strong>
+                  <ul>
+                    <li>ARPU/ARPPU：每用户/每付费用户平均收入</li>
+                    <li>付费率：付费用户占比</li>
+                    <li>LTV：用户生命周期价值</li>
+                  </ul>
+                </li>
+                <li><strong>行为指标</strong>
+                  <ul>
+                    <li>人均在线时长、游戏局数</li>
+                    <li>功能/关卡渗透率</li>
+                    <li>新手引导完成率</li>
+                  </ul>
+                </li>
+                <li><strong>转化漏斗</strong> — 下载→注册→新手→首充→复购</li>
+              </ul>
+            `
+          },
+          {
+            title: "游戏留存率低，怎么分析优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>分阶段分析</strong>
+                  <ul>
+                    <li>次日留存低：新手体验问题、加载慢、上手难</li>
+                    <li>7日留存低：前期内容消耗快、缺乏目标感</li>
+                    <li>30日留存低：长期玩法不足、社交弱</li>
+                  </ul>
+                </li>
+                <li><strong>新手期分析</strong>
+                  <ul>
+                    <li>新手引导每一步转化率</li>
+                    <li>用户在哪一步流失最多？</li>
+                    <li>是太难了？太无聊了？还是太复杂了？</li>
+                  </ul>
+                </li>
+                <li><strong>内容消耗分析</strong>
+                  <ul>
+                    <li>玩家多久玩完现有内容？</li>
+                    <li>内容消耗速度 vs 更新速度</li>
+                    <li>哪些玩法最受欢迎？</li>
+                  </ul>
+                </li>
+                <li><strong>社交与留存</strong>
+                  <ul>
+                    <li>有好友的玩家留存是不是更高？</li>
+                    <li>公会/帮派对留存的影响</li>
+                    <li>社交关系链强度与留存关系</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估游戏活动效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>参与度指标</strong>
+                  <ul>
+                    <li>活动参与率、参与人数</li>
+                    <li>人均参与次数、活动时长</li>
+                    <li>活动各步骤转化率</li>
+                  </ul>
+                </li>
+                <li><strong>收入指标</strong>
+                  <ul>
+                    <li>活动期间收入、付费率、ARPPU</li>
+                    <li>活动带来的增量收入</li>
+                    <li>活动ROI：收入增量 ÷ 活动成本</li>
+                  </ul>
+                </li>
+                <li><strong>留存与活跃</strong>
+                  <ul>
+                    <li>活动对DAU的提升</li>
+                    <li>活动后留存变化</li>
+                    <li>回流用户召回效果</li>
+                  </ul>
+                </li>
+                <li><strong>用户分层评估</strong>
+                  <ul>
+                    <li>大R/中R/小R/非R 不同表现</li>
+                    <li>新用户 vs 老用户</li>
+                    <li>不同渠道用户差异</li>
+                  </ul>
+                </li>
+                <li><strong>长期影响</strong> — 有没有透支未来消费？有没有伤害用户体验？</li>
+              </ul>
+            `
+          },
+          {
+            title: "游戏付费设计怎么用数据优化？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>付费分层分析</strong>
+                  <ul>
+                    <li>鲸鱼/海豚/小鱼用户占比和贡献</li>
+                    <li>各层级用户的付费点和付费习惯</li>
+                    <li>用户付费升级路径是否顺畅</li>
+                  </ul>
+                </li>
+                <li><strong>付费点设计</strong>
+                  <ul>
+                    <li>哪些道具/礼包卖得最好？</li>
+                    <li>价格带分布是否合理？</li>
+                    <li>首充设计是否有效？</li>
+                  </ul>
+                </li>
+                <li><strong>付费节奏</strong>
+                  <ul>
+                    <li>用户什么时候开始付费？</li>
+                    <li>付费频次和间隔</li>
+                    <li>大R的付费周期和规律</li>
+                  </ul>
+                </li>
+                <li><strong>平衡问题</strong>
+                  <ul>
+                    <li>付费会不会影响游戏平衡？</li>
+                    <li>非付费玩家体验有没有保障？</li>
+                    <li>短期收入 vs 长期留存的平衡</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "游戏版本更新效果怎么评估？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>核心指标变化</strong>
+                  <ul>
+                    <li>DAU/留存/收入 版本前后对比</li>
+                    <li>排除节假日、活动等干扰因素</li>
+                    <li>用同期群对比更准确</li>
+                  </ul>
+                </li>
+                <li><strong>新内容表现</strong>
+                  <ul>
+                    <li>新功能/新玩法渗透率</li>
+                    <li>使用深度和留存</li>
+                    <li>用户反馈和评价</li>
+                  </ul>
+                </li>
+                <li><strong>平衡性分析</strong>
+                  <ul>
+                    <li>职业/角色强度变化</li>
+                    <li>经济系统通胀/通缩</li>
+                    <li>不同付费层级用户体验</li>
+                  </ul>
+                </li>
+                <li><strong>问题与bug</strong> — 崩溃率、闪退、卡顿、bug数量</li>
+                <li><strong>综合评估</strong> — 这次版本是成功的吗？下次怎么优化？</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 金融 =====
+      {
+        category: "finance",
+        categoryName: "金融行业",
+        icon: "💰",
+        list: [
+          {
+            title: "金融风控的核心指标有哪些？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>资产质量指标</strong>
+                  <ul>
+                    <li>不良率：不良贷款占比</li>
+                    <li>逾期率：M1/M2/M3+逾期率</li>
+                    <li>拨备覆盖率：风险抵御能力</li>
+                  </ul>
+                </li>
+                <li><strong>审批指标</strong>
+                  <ul>
+                    <li>通过率：审批通过比例</li>
+                    <li>件均额度：平均放款金额</li>
+                    <li>审批时效：平均审批时长</li>
+                  </ul>
+                </li>
+                <li><strong>催收指标</strong>
+                  <ul>
+                    <li>回款率：催回金额占比</li>
+                    <li>迁徙率：从M0到M1到M2的迁徙</li>
+                    <li>催收ROI：催收投入产出</li>
+                  </ul>
+                </li>
+                <li><strong>定价指标</strong>
+                  <ul>
+                    <li>风险定价：不同风险等级利率</li>
+                    <li>年化利率、综合成本</li>
+                    <li>利差：收入减资金成本减风险成本</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估信用评分模型的效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>区分能力</strong>
+                  <ul>
+                    <li>KS值：好坏客户分布的最大距离（>0.3可用，>0.4优秀）</li>
+                    <li>AUC：ROC曲线下面积（>0.7可用，>0.8优秀）</li>
+                    <li>Gini系数：= 2*AUC - 1</li>
+                  </ul>
+                </li>
+                <li><strong>排序能力</strong>
+                  <ul>
+                    <li>分数越高，违约率越低？</li>
+                    <li>各分数段违约率是否单调递减？</li>
+                    <li>Lorenz曲线、累计好坏比</li>
+                  </ul>
+                </li>
+                <li><strong>校准能力</strong>
+                  <ul>
+                    <li>预测概率和实际违约率是否一致？</li>
+                    <li>校准曲线、Brier分数</li>
+                  </ul>
+                </li>
+                <li><strong>稳定性</strong>
+                  <ul>
+                    <li>PSI：群体稳定性指数（<0.1稳定，0.1-0.2需关注，>0.2漂移）</li>
+                    <li>跨时间验证、跨样本验证</li>
+                  </ul>
+                </li>
+                <li><strong>业务价值</strong> — 用了模型之后，坏账降了多少？通过率提升多少？</li>
+              </ul>
+            `
+          },
+          {
+            title: "反欺诈检测有哪些常用方法？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>规则引擎</strong>
+                  <ul>
+                    <li>黑名单、白名单机制</li>
+                    <li>专家规则：异常行为、异常设备、异常关联</li>
+                    <li>优点：可解释、见效快；缺点：容易被绕过</li>
+                  </ul>
+                </li>
+                <li><strong>有监督模型</strong>
+                  <ul>
+                    <li>用已知欺诈样本训练模型</li>
+                    <li>逻辑回归、随机森林、XGBoost、深度学习</li>
+                    <li>优点：准确率高；缺点：需要样本，新型欺诈发现慢</li>
+                  </ul>
+                </li>
+                <li><strong>无监督方法</strong>
+                  <ul>
+                    <li>异常检测：离群点识别</li>
+                    <li>关系网络：团伙欺诈发现（图计算）</li>
+                    <li>优点：能发现新型欺诈；缺点：误报率高</li>
+                  </ul>
+                </li>
+                <li><strong>设备指纹</strong> — 识别设备唯一性，发现设备复用、模拟器等</li>
+                <li><strong>生物识别</strong> — 人脸识别、声纹识别、行为生物特征</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何做金融产品的精准营销？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>用户分层</strong>
+                  <ul>
+                    <li>按资产分层：大众/富裕/高净值/私行</li>
+                    <li>按风险偏好：保守/稳健/平衡/进取</li>
+                    <li>按生命周期：新手/成长/成熟/衰退</li>
+                  </ul>
+                </li>
+                <li><strong>产品匹配</strong>
+                  <ul>
+                    <li>不同用户适合不同产品</li>
+                    <li>风险承受能力和产品风险等级匹配</li>
+                    <li>资金期限和产品期限匹配</li>
+                  </ul>
+                </li>
+                <li><strong>营销响应模型</strong>
+                  <ul>
+                    <li>预测哪些用户对营销活动最可能响应</li>
+                    <li>Uplift模型：预测营销带来的增量转化</li>
+                    <li>优化触达时机、渠道、话术</li>
+                  </ul>
+                </li>
+                <li><strong>交叉销售</strong>
+                  <ul>
+                    <li>用户已有产品 → 推荐关联产品</li>
+                    <li>理财用户 → 推荐基金、保险</li>
+                    <li>贷款用户 → 推荐信用卡、分期</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "AUM增长怎么拆解和分析？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>AUM增长公式</strong>
+                  <p>期末AUM = 期初AUM + 新增资金 - 流出资金 + 投资收益</p>
+                </li>
+                <li><strong>资金流动分析</strong>
+                  <ul>
+                    <li>新增资金：新客户入金 + 老客户加仓</li>
+                    <li>流出资金：客户赎回 + 客户流失</li>
+                    <li>净流入 = 新增 - 流出</li>
+                  </ul>
+                </li>
+                <li><strong>客户维度拆解</strong>
+                  <ul>
+                    <li>新客户贡献 vs 老客户贡献</li>
+                    <li>不同层级客户的AUM变化</li>
+                    <li>客户迁移：从低层级升到高层级</li>
+                  </ul>
+                </li>
+                <li><strong>产品维度拆解</strong>
+                  <ul>
+                    <li>各产品品类AUM占比和变化</li>
+                    <li>爆款产品贡献</li>
+                    <li>产品结构是否健康</li>
+                  </ul>
+                </li>
+                <li><strong>投资收益分析</strong>
+                  <ul>
+                    <li>市场涨跌带来的AUM变化</li>
+                    <li>客户收益率和满意度</li>
+                    <li>收益对留存和复购的影响</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 直播电商 =====
+      {
+        category: "live-ecommerce",
+        categoryName: "直播电商",
+        icon: "🎥",
+        list: [
+          {
+            title: "直播电商的核心指标体系是什么？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>流量指标</strong>
+                  <ul>
+                    <li>观看UV/PV：直播间观看人数/次数</li>
+                    <li>峰值在线、平均在线</li>
+                    <li>人均观看时长、停留时长</li>
+                    <li>曝光→进入直播间转化率</li>
+                  </ul>
+                </li>
+                <li><strong>互动指标</strong>
+                  <ul>
+                    <li>点赞数、评论数、分享数</li>
+                    <li>关注率、粉丝团新增</li>
+                    <li>互动率：互动用户占比</li>
+                  </ul>
+                </li>
+                <li><strong>转化指标</strong>
+                  <ul>
+                    <li>点击率：商品点击/观看</li>
+                    <li>转化率：下单/观看</li>
+                    <li>支付转化率：支付/下单</li>
+                    <li>UV价值：GMV/观看UV</li>
+                  </ul>
+                </li>
+                <li><strong>GMV指标</strong>
+                  <ul>
+                    <li>总GMV、客单价</li>
+                    <li>各商品GMV占比</li>
+                    <li>GPM：千次观看GMV</li>
+                  </ul>
+                </li>
+                <li><strong>主播指标</strong> — 话术、节奏、控场能力</li>
+              </ul>
+            `
+          },
+          {
+            title: "直播间转化率低，怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>流量精准度</strong>
+                  <ul>
+                    <li>进来的人是不是目标用户？</li>
+                    <li>流量来源：自然流量/付费/粉丝/分享？</li>
+                    <li>不同渠道的转化率对比</li>
+                  </ul>
+                </li>
+                <li><strong>停留时长</strong>
+                  <ul>
+                    <li>用户进来多久就走了？</li>
+                    <li>前30秒留人话术有没有吸引力？</li>
+                    <li>直播间场景、氛围、主播状态</li>
+                  </ul>
+                </li>
+                <li><strong>商品讲解</strong>
+                  <ul>
+                    <li>卖点讲清楚了吗？痛点解决了吗？</li>
+                    <li>有没有建立信任？（背书、测评、对比）</li>
+                    <li>价格有没有吸引力？有没有紧迫感？</li>
+                  </ul>
+                </li>
+                <li><strong>转化路径</strong>
+                  <ul>
+                    <li>下单流程顺畅吗？</li>
+                    <li>库存、规格、选项有没有问题？</li>
+                    <li>优惠券、满减有没有算明白？</li>
+                  </ul>
+                </li>
+                <li><strong>主播能力</strong> — 话术、节奏、逼单技巧、互动能力</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估主播的带货能力？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>流量能力</strong>
+                  <ul>
+                    <li>场均观看人数、峰值在线</li>
+                    <li>拉新能力：新增粉丝、新增关注</li>
+                    <li>停留能力：人均观看时长</li>
+                  </ul>
+                </li>
+                <li><strong>互动能力</strong>
+                  <ul>
+                    <li>互动率：点赞/评论/分享</li>
+                    <li>控场能力：节奏把控、氛围调动</li>
+                    <li>粉丝粘性：粉丝团、复看率</li>
+                  </ul>
+                </li>
+                <li><strong>转化能力</strong>
+                  <ul>
+                    <li>UV价值：每观看带来的GMV</li>
+                    <li>GPM：千次观看GMV</li>
+                    <li>转化率、客单价</li>
+                  </ul>
+                </li>
+                <li><strong>专业能力</strong>
+                  <ul>
+                    <li>产品熟悉度、专业知识</li>
+                    <li>话术逻辑、卖点提炼</li>
+                    <li>答疑能力、应变能力</li>
+                  </ul>
+                </li>
+                <li><strong>综合评估</strong> — 同样的货、同样的流量，不同主播的GMV差异</li>
+              </ul>
+            `
+          },
+          {
+            title: "直播选品策略怎么用数据优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>选品数据维度</strong>
+                  <ul>
+                    <li>市场需求：搜索量、销量趋势</li>
+                    <li>竞争情况：竞品数量、价格带</li>
+                    <li>利润空间：毛利率、佣金率</li>
+                    <li>转化能力：历史点击率、转化率</li>
+                  </ul>
+                </li>
+                <li><strong>货品结构</strong>
+                  <ul>
+                    <li>引流款：低价、高转化、拉人气</li>
+                    <li>利润款：高毛利、主要收入来源</li>
+                    <li>形象款：高品质、提升调性</li>
+                    <li>福利款：秒杀、抽奖、留人</li>
+                  </ul>
+                </li>
+                <li><strong>排品策略</strong>
+                  <ul>
+                    <li>开播顺序：先引流款留人，再利润款变现</li>
+                    <li>价格梯度：从低到高，逐步升单</li>
+                    <li>节奏把控：每款讲解时长、过款速度</li>
+                  </ul>
+                </li>
+                <li><strong>数据复盘</strong> — 每场直播后复盘各款表现，优化下场选品</li>
+              </ul>
+            `
+          },
+          {
+            title: "直播复盘的核心维度有哪些？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>流量复盘</strong>
+                  <ul>
+                    <li>流量来源结构和变化</li>
+                    <li>流量高峰时段和原因</li>
+                    <li>各渠道流量质量（转化、停留）</li>
+                  </ul>
+                </li>
+                <li><strong>转化复盘</strong>
+                  <ul>
+                    <li>整体漏斗：曝光→进入→停留→点击→下单→支付</li>
+                    <li>哪个环节流失最大？</li>
+                    <li>不同时段转化率变化</li>
+                  </ul>
+                </li>
+                <li><strong>商品复盘</strong>
+                  <ul>
+                    <li>各商品GMV、转化率、点击率排名</li>
+                    <li>爆品为什么爆？滞销品为什么不行？</li>
+                    <li>排品顺序和节奏是否合理？</li>
+                  </ul>
+                </li>
+                <li><strong>主播复盘</strong>
+                  <ul>
+                    <li>话术、节奏、状态好不好？</li>
+                    <li>互动做得怎么样？</li>
+                    <li>哪些地方可以改进？</li>
+                  </ul>
+                </li>
+                <li><strong>问题诊断</strong> — 这场直播最大的问题是什么？下次怎么改？</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 本地生活 =====
+      {
+        category: "local-life",
+        categoryName: "本地生活 / O2O",
+        icon: "🏪",
+        list: [
+          {
+            title: "本地生活平台的核心指标有哪些？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>交易指标</strong>
+                  <ul>
+                    <li>GMV：交易总额</li>
+                    <li>Take Rate：平台抽佣率</li>
+                    <li>订单量、客单价</li>
+                  </ul>
+                </li>
+                <li><strong>用户指标</strong>
+                  <ul>
+                    <li>DAU/MAU、下单用户数</li>
+                    <li>下单转化率、复购率</li>
+                    <li>用户留存、用户生命周期价值</li>
+                  </ul>
+                </li>
+                <li><strong>商家指标</strong>
+                  <ul>
+                    <li>商家数量、活跃商家数</li>
+                    <li>商家GMV分布、头部/腰部/尾部</li>
+                    <li>商家留存、商家满意度</li>
+                  </ul>
+                </li>
+                <li><strong>履约指标</strong>
+                  <ul>
+                    <li>配送时效、准时率</li>
+                    <li>配送成本、单均配送费</li>
+                    <li>骑手数量、接单率</li>
+                  </ul>
+                </li>
+                <li><strong>品类指标</strong> — 餐饮/外卖/到店/休闲娱乐 各品类表现</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何提升商家活跃度和留存？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>商家分层运营</strong>
+                  <ul>
+                    <li>头部商家：重点维护、专属服务、资源倾斜</li>
+                    <li>腰部商家：培育提升、运营指导、活动扶持</li>
+                    <li>尾部商家：筛选淘汰、基础服务、自助工具</li>
+                  </ul>
+                </li>
+                <li><strong>价值感知</strong>
+                  <ul>
+                    <li>商家有没有从平台赚到钱？</li>
+                    <li>ROI是不是正的？</li>
+                    <li>数据看板让商家看到效果</li>
+                  </ul>
+                </li>
+                <li><strong>运营支持</strong>
+                  <ul>
+                    <li>商家培训：怎么开店、怎么运营、怎么做活动</li>
+                    <li>运营工具：装修、营销、数据分析</li>
+                    <li>客户经理：一对一服务（大客户）</li>
+                  </ul>
+                </li>
+                <li><strong>激励机制</strong>
+                  <ul>
+                    <li>等级体系：等级越高权益越多</li>
+                    <li>排名激励：榜单、流量奖励</li>
+                    <li>活动激励：参与活动获得资源</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "补贴策略怎么用数据优化？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>补贴目标</strong>
+                  <ul>
+                    <li>拉新：补贴新用户，让他第一次下单</li>
+                    <li>促活：补贴沉默用户，让他回来</li>
+                    <li>留存：补贴老用户，让他别走</li>
+                    <li>竞争：应对竞品补贴，守住市场</li>
+                  </ul>
+                </li>
+                <li><strong>补贴效果评估</strong>
+                  <ul>
+                    <li>增量效果：补贴带来的增量订单/增量GMV</li>
+                    <li>ROI：增量收入 ÷ 补贴成本</li>
+                    <li>留存效果：补贴后用户留存有没有提升</li>
+                    <li>挤出效应：有没有把自然订单变成补贴订单</li>
+                  </ul>
+                </li>
+                <li><strong>补贴精准度</strong>
+                  <ul>
+                    <li>给谁补？只给需要的人补，不要撒胡椒面</li>
+                    <li>补多少？找到最优补贴金额，边际效益最大</li>
+                    <li>什么时候补？用户快要流失的时候补</li>
+                  </ul>
+                </li>
+                <li><strong>长期影响</strong>
+                  <ul>
+                    <li>用户会不会对补贴产生依赖？</li>
+                    <li>停补之后留存怎么样？</li>
+                    <li>对价格敏感度的影响</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "外卖配送效率怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>骑手调度优化</strong>
+                  <ul>
+                    <li>智能派单：距离、方向、负载综合考虑</li>
+                    <li>路径规划：多单配送的最优路线</li>
+                    <li>供需预测：提前预测各区域各时段订单量</li>
+                  </ul>
+                </li>
+                <li><strong>商家出餐效率</strong>
+                  <ul>
+                    <li>商家出餐时长统计和排名</li>
+                    <li>出餐慢的商家重点优化</li>
+                    <li>预订单、备餐提醒</li>
+                  </ul>
+                </li>
+                <li><strong>用户体验</strong>
+                  <ul>
+                    <li>预计送达时间准确度</li>
+                    <li>超时率、投诉率</li>
+                    <li>配送状态实时更新</li>
+                  </ul>
+                </li>
+                <li><strong>成本优化</strong>
+                  <ul>
+                    <li>单均配送成本</li>
+                    <li>骑手人效：人均日单量</li>
+                    <li>动态定价：高峰期溢价调节供需</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "新城市拓展怎么评估效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>开城前测算</strong>
+                  <ul>
+                    <li>市场规模：人口、消费能力、竞品情况</li>
+                    <li>投入测算：地推、商家、补贴、配送</li>
+                    <li>预期回报：GMV预测、回本周期</li>
+                  </ul>
+                </li>
+                <li><strong>开城初期指标</strong>
+                  <ul>
+                    <li>商家端：签约商家数、上线商家数、头部商家覆盖</li>
+                    <li>用户端：下载量、注册量、首单用户数</li>
+                    <li>订单端：日单量、客单价、GMV爬坡速度</li>
+                  </ul>
+                </li>
+                <li><strong>健康度指标</strong>
+                  <ul>
+                    <li>留存：用户次留、7留、30留</li>
+                    <li>复购：用户复购率、复购频次</li>
+                    <li>商家留存、商家活跃度</li>
+                  </ul>
+                </li>
+                <li><strong>投入产出</strong>
+                  <ul>
+                    <li>获客成本：单用户获取成本</li>
+                    <li>补贴效率：每元补贴带来的GMV</li>
+                    <li>UE模型：单均经济模型是否成立</li>
+                  </ul>
+                </li>
+                <li><strong>成功标准</strong> — 什么时候算开城成功？什么时候需要加大投入或收缩？</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 在线教育 =====
+      {
+        category: "education",
+        categoryName: "在线教育",
+        icon: "📚",
+        list: [
+          {
+            title: "在线教育的核心指标体系是什么？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>获客指标</strong>
+                  <ul>
+                    <li>UV/PV、注册量、获客成本CAC</li>
+                    <li>渠道ROI、各渠道转化对比</li>
+                  </ul>
+                </li>
+                <li><strong>转化指标</strong>
+                  <ul>
+                    <li>试听率、报名率、转化率</li>
+                    <li>客单价、首单金额</li>
+                  </ul>
+                </li>
+                <li><strong>学习指标</strong>
+                  <ul>
+                    <li>完课率、出勤率、作业提交率</li>
+                    <li>学习时长、学习频次</li>
+                  </ul>
+                </li>
+                <li><strong>留存指标</strong>
+                  <ul>
+                    <li>续费率、续报率（北极星指标）</li>
+                    <li>课程完成率、用户生命周期</li>
+                  </ul>
+                </li>
+                <li><strong>收入指标</strong> — LTV、收入、毛利率</li>
+              </ul>
+            `
+          },
+          {
+            title: "续费率下降怎么分析和提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 分层定位</strong>
+                  <ul>
+                    <li>哪个年级/学科/班型续费下降最多？</li>
+                    <li>新用户还是老用户？高价值还是低价值？</li>
+                    <li>哪个老师/班主任的续费差？</li>
+                  </ul>
+                </li>
+                <li><strong>2. 原因分析</strong>
+                  <ul>
+                    <li>产品原因：课程质量、教学效果、内容更新</li>
+                    <li>服务原因：班主任服务、答疑响应、家长沟通</li>
+                    <li>价格原因：涨价、竞品更便宜</li>
+                    <li>效果原因：成绩没提升、学习效果不明显</li>
+                  </ul>
+                </li>
+                <li><strong>3. 提升策略</strong>
+                  <ul>
+                    <li>提升教学质量和学习效果</li>
+                    <li>加强班主任服务和家长沟通</li>
+                    <li>续费优惠、早鸟价、老带新</li>
+                    <li>学习效果可视化，让家长看到进步</li>
+                  </ul>
+                </li>
+                <li><strong>4. 数据监控</strong> — 续费漏斗：意向→报名→缴费，每步转化率</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估老师的教学效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>学习效果</strong>
+                  <ul>
+                    <li>学生成绩提升幅度</li>
+                    <li>知识掌握程度（测试正确率）</li>
+                    <li>学习能力提升</li>
+                  </ul>
+                </li>
+                <li><strong>课堂表现</strong>
+                  <ul>
+                    <li>出勤率、完课率</li>
+                    <li>课堂互动率、答题参与度</li>
+                    <li>学生评价、家长评价</li>
+                  </ul>
+                </li>
+                <li><strong>业务指标</strong>
+                  <ul>
+                    <li>续费率、续报率</li>
+                    <li>转介绍率</li>
+                    <li>投诉率</li>
                   </ul>
                 </li>
                 <li><strong>注意点</strong>
                   <ul>
-                    <li>没有完美的归因模型，都是近似</li>
-                    <li>关键是前后一致，用同一套标准对比</li>
-                    <li>归因结果是辅助决策，不是真理</li>
+                    <li>要控制学生基础差异</li>
+                    <li>不能只看成绩，要看进步幅度</li>
+                    <li>长期效果比短期效果更重要</li>
                   </ul>
                 </li>
               </ul>
             `
           },
           {
-            title: "GEO和SEO有什么区别？",
+            title: "完课率低怎么优化？",
             difficulty: "medium",
             answer: `
-              <p>GEO（Generative Engine Optimization）生成式引擎优化，是AI时代的新课题。</p>
               <ul>
-                <li><strong>SEO（搜索引擎优化）</strong>
+                <li><strong>1. 拆解完课漏斗</strong>
                   <ul>
-                    <li>目标：在搜索结果中排名靠前</li>
-                    <li>用户看到链接，自己点进去看</li>
-                    <li>核心：关键词、外链、内容质量</li>
-                    <li>可追踪：有明确的排名、点击数据</li>
+                    <li>报名→开课→上课→完成作业→结课</li>
+                    <li>哪个环节流失最多？</li>
                   </ul>
                 </li>
-                <li><strong>GEO（生成式引擎优化）</strong>
+                <li><strong>2. 原因分析</strong>
                   <ul>
-                    <li>目标：被AI引用、推荐、总结</li>
-                    <li>AI直接给出答案，用户可能不点开链接</li>
-                    <li>核心：结构化事实、权威性、实体一致性</li>
-                    <li>难追踪：不知道AI有没有引用你</li>
+                    <li>课程太难了？跟不上？</li>
+                    <li>课程太简单了？没收获？</li>
+                    <li>课程太长了？没时间？</li>
+                    <li>互动性差？没动力？</li>
                   </ul>
                 </li>
-                <li><strong>GEO的关键指标</strong>
+                <li><strong>3. 优化策略</strong>
                   <ul>
-                    <li>AI可见性与引用份额</li>
-                    <li>结构化事实覆盖度</li>
-                    <li>实体一致性</li>
-                    <li>权威背书与UGC证据密度</li>
+                    <li>课程设计：难度梯度、时长合理、互动设计</li>
+                    <li>学习激励：打卡、积分、排行榜、证书</li>
+                    <li>督学机制：班主任提醒、学习报告、同伴监督</li>
+                    <li>产品体验：播放流畅、笔记功能、倍速播放</li>
+                  </ul>
+                </li>
+                <li><strong>4. 数据驱动</strong> — A/B测试不同优化方案的效果</li>
+              </ul>
+            `
+          },
+          {
+            title: "在线教育获客成本高，怎么优化？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>渠道优化</strong>
+                  <ul>
+                    <li>各渠道CAC对比，砍掉低效渠道</li>
+                    <li>高ROI渠道加大投入</li>
+                    <li>新渠道测试和探索</li>
+                  </ul>
+                </li>
+                <li><strong>转化优化</strong>
+                  <ul>
+                    <li>落地页转化率优化</li>
+                    <li>试听→报名转化率提升</li>
+                    <li>销售话术和跟进流程优化</li>
+                  </ul>
+                </li>
+                <li><strong>转介绍</strong>
+                  <ul>
+                    <li>老带新机制设计</li>
+                    <li>转介绍激励政策</li>
+                    <li>口碑传播和裂变</li>
+                  </ul>
+                </li>
+                <li><strong>内容获客</strong>
+                  <ul>
+                    <li>免费内容引流（公开课、资料包）</li>
+                    <li>短视频/直播获客</li>
+                    <li>SEO/内容营销</li>
+                  </ul>
+                </li>
+                <li><strong>LTV提升</strong> — 提升用户生命周期价值，CAC相对就降了</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 医疗健康 =====
+      {
+        category: "healthcare",
+        categoryName: "医疗健康",
+        icon: "🏥",
+        list: [
+          {
+            title: "医院运营的核心指标有哪些？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>运营效率</strong>
+                  <ul>
+                    <li>床位使用率、床位周转次数</li>
+                    <li>平均住院日、门诊量、手术量</li>
+                    <li>设备使用率、检查等待时间</li>
+                  </ul>
+                </li>
+                <li><strong>医疗质量</strong>
+                  <ul>
+                    <li>治愈率、好转率、死亡率</li>
+                    <li>院内感染率、并发症发生率</li>
+                    <li>医疗差错率、不良事件数</li>
+                  </ul>
+                </li>
+                <li><strong>财务指标</strong>
+                  <ul>
+                    <li>业务收入、药占比、耗占比</li>
+                    <li>次均门诊费用、次均住院费用</li>
+                    <li>医保占比、自付比例</li>
+                  </ul>
+                </li>
+                <li><strong>患者体验</strong>
+                  <ul>
+                    <li>满意度、投诉率</li>
+                    <li>预约挂号等待时间</li>
+                    <li>候诊时间、取药时间</li>
                   </ul>
                 </li>
               </ul>
             `
           },
           {
-            title: "如何提升复购率？",
+            title: "如何提升床位使用率和运营效率？",
             difficulty: "medium",
             answer: `
               <ul>
-                <li><strong>先诊断问题</strong>
+                <li><strong>1. 床位资源优化</strong>
                   <ul>
-                    <li>是哪个环节流失的？首购后多久流失？</li>
-                    <li>哪些品类复购低？哪些用户群复购低？</li>
-                    <li>对标行业：我们的复购率算什么水平？</li>
+                    <li>全院床位统一调配，打破科室壁垒</li>
+                    <li>床位预约和预住院制度</li>
+                    <li>急诊入院和择期入院分流</li>
                   </ul>
                 </li>
-                <li><strong>提升策略</strong>
+                <li><strong>2. 缩短平均住院日</strong>
                   <ul>
-                    <li><strong>产品层面</strong>：
-                      <ul>
-                        <li>消耗品：提升产品体验，让用户用完还想买</li>
-                        <li>非消耗品：拓展品类，让用户有理由再来</li>
-                      </ul>
-                    </li>
-                    <li><strong>运营层面</strong>：
-                      <ul>
-                        <li>会员体系：积分、等级、专属权益</li>
-                        <li>周期性触达：补货提醒、新品通知</li>
-                        <li>个性化推荐：猜你喜欢</li>
-                      </ul>
-                    </li>
-                    <li><strong>营销层面</strong>：
-                      <ul>
-                        <li>复购优惠券：首购后发复购券</li>
-                        <li>订阅制：定期自动发货，锁定长期用户</li>
-                        <li>拼团/裂变：老带新</li>
-                      </ul>
-                    </li>
+                    <li>术前检查门诊完成，入院即手术</li>
+                    <li>加速康复外科（ERAS）</li>
+                    <li>日间手术、日间化疗</li>
+                  </ul>
+                </li>
+                <li><strong>3. 流程优化</strong>
+                  <ul>
+                    <li>检查检验预约和集中安排</li>
+                    <li>出院流程简化，当天出院当天结算</li>
+                    <li>临床路径管理，规范诊疗流程</li>
+                  </ul>
+                </li>
+                <li><strong>4. 数据监控</strong>
+                  <ul>
+                    <li>各科室床位使用率排名</li>
+                    <li>床位紧张预警和调配机制</li>
+                    <li>平均住院日监控和考核</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "患者满意度怎么用数据分析提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>满意度调查设计</strong>
+                  <ul>
+                    <li>多维度：医疗技术、服务态度、环境设施、收费等</li>
+                    <li>分科室、分岗位、分环节</li>
+                    <li>定量评分 + 定性反馈</li>
+                  </ul>
+                </li>
+                <li><strong>数据分析</strong>
+                  <ul>
+                    <li>各科室/各维度满意度排名对比</li>
+                    <li>低分项目和高频投诉分析</li>
+                    <li>不同患者群体满意度差异</li>
+                  </ul>
+                </li>
+                <li><strong>根因分析</strong>
+                  <ul>
+                    <li>满意度低的根本原因是什么？</li>
+                    <li>是人的问题？流程的问题？还是资源的问题？</li>
+                    <li>用鱼骨图/5Why分析</li>
+                  </ul>
+                </li>
+                <li><strong>改进闭环</strong>
+                  <ul>
+                    <li>问题清单 + 责任人 + 改进时限</li>
+                    <li>持续跟踪改进效果</li>
+                    <li>满意度和绩效考核挂钩</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "药品库存管理怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>ABC分类管理</strong>
+                  <ul>
+                    <li>A类药（高价值）：重点管理，严格控制库存</li>
+                    <li>B类药：常规管理</li>
+                    <li>C类药（低价值）：简化管理，保持充足</li>
+                  </ul>
+                </li>
+                <li><strong>需求预测</strong>
+                  <ul>
+                    <li>历史用药数据预测未来需求</li>
+                    <li>考虑季节性、流行病、政策变化</li>
+                    <li>时间序列预测模型</li>
+                  </ul>
+                </li>
+                <li><strong>库存策略</strong>
+                  <ul>
+                    <li>安全库存设定，防止缺货</li>
+                    <li>再订货点和经济订货量</li>
+                    <li>效期管理，近效期预警</li>
+                  </ul>
+                </li>
+                <li><strong>供应链优化</strong>
+                  <ul>
+                    <li>供应商评估和分级</li>
+                    <li>集中采购、带量采购降成本</li>
+                    <li>零库存管理（JIT）</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "DRG/DIP支付改革下，医院怎么做好成本管控？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>理解DRG/DIP</strong>
+                  <ul>
+                    <li>按病种付费，超支不补，结余留用</li>
+                    <li>同一病种打包付费，成本控制是关键</li>
+                    <li>成本高于支付标准就亏，低于就赚</li>
+                  </ul>
+                </li>
+                <li><strong>成本核算</strong>
+                  <ul>
+                    <li>病种成本核算：每个病种实际成本是多少？</li>
+                    <li>成本结构：药费、耗材、检查、人力、床位</li>
+                    <li>找出成本高的病种和环节</li>
+                  </ul>
+                </li>
+                <li><strong>成本管控</strong>
+                  <ul>
+                    <li>临床路径管理，规范诊疗行为</li>
+                    <li>药品耗材集采，降低采购成本</li>
+                    <li>合理检查、合理用药、合理治疗</li>
+                    <li>缩短平均住院日，提高床位周转</li>
+                  </ul>
+                </li>
+                <li><strong>结构优化</strong>
+                  <ul>
+                    <li>优势病种重点发展</li>
+                    <li>亏损病种分析改进</li>
+                    <li>CMI（病例组合指数）提升</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+
+      // ===== 快消品 =====
+      {
+        category: "fmcg",
+        categoryName: "快消品 / FMCG",
+        icon: "🛒",
+        list: [
+          {
+            title: "快消品行业的核心指标有哪些？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>销售指标</strong>
+                  <ul>
+                    <li>销售额、销量、同比/环比增长</li>
+                    <li>市场份额、品类占比</li>
+                    <li>客单价、购买频次</li>
+                  </ul>
+                </li>
+                <li><strong>渠道指标</strong>
+                  <ul>
+                    <li>铺货率、分销网点数</li>
+                    <li>单店产出、动销率</li>
+                    <li>渠道库存、库存周转天数</li>
+                  </ul>
+                </li>
+                <li><strong>产品指标</strong>
+                  <ul>
+                    <li>SKU数量、新品占比</li>
+                    <li>单品贡献度、爆品数量</li>
+                    <li>产品生命周期</li>
+                  </ul>
+                </li>
+                <li><strong>供应链指标</strong>
+                  <ul>
+                    <li>库存周转率（北极星指标）</li>
+                    <li>缺货率、订单满足率</li>
+                    <li>配送时效、物流成本</li>
+                  </ul>
+                </li>
+                <li><strong>品牌指标</strong> — 品牌知名度、美誉度、忠诚度</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何评估新品上市的效果？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>销售表现</strong>
+                  <ul>
+                    <li>销量、销售额、达成率</li>
+                    <li>爬坡速度：多久达到稳定销量</li>
+                    <li>和预期对比、和竞品对比</li>
+                  </ul>
+                </li>
+                <li><strong>渠道表现</strong>
+                  <ul>
+                    <li>铺货率：多少网点上架了</li>
+                    <li>动销率：多少网点有销售</li>
+                    <li>陈列质量：货架位置、排面数</li>
+                  </ul>
+                </li>
+                <li><strong>消费者表现</strong>
+                  <ul>
+                    <li>渗透率：多少消费者买过</li>
+                    <li>复购率：买过的人会不会再买</li>
+                    <li>消费者评价和满意度</li>
+                  </ul>
+                </li>
+                <li><strong>财务表现</strong>
+                  <ul>
+                    <li>毛利率、净利率</li>
+                    <li>营销ROI</li>
+                    <li>回本周期</li>
+                  </ul>
+                </li>
+                <li><strong>对老品影响</strong> — 是增量还是蚕食？</li>
+              </ul>
+            `
+          },
+          {
+            title: "促销活动效果怎么评估？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>销量评估</strong>
+                  <ul>
+                    <li>促销期间销量 vs 基线销量</li>
+                    <li>增量销量：促销带来的额外销量</li>
+                    <li>销量提升幅度</li>
+                  </ul>
+                </li>
+                <li><strong>收入利润评估</strong>
+                  <ul>
+                    <li>促销期间收入、毛利</li>
+                    <li>促销ROI：增量毛利 ÷ 促销成本</li>
+                    <li>盈亏平衡分析</li>
+                  </ul>
+                </li>
+                <li><strong>渠道影响</strong>
+                  <ul>
+                    <li>渠道库存变化</li>
+                    <li>铺货率、动销率变化</li>
+                    <li>渠道积极性</li>
+                  </ul>
+                </li>
+                <li><strong>消费者影响</strong>
+                  <ul>
+                    <li>新用户获取</li>
+                    <li>老用户复购</li>
+                    <li>品牌认知提升</li>
+                  </ul>
+                </li>
+                <li><strong>长期影响</strong>
+                  <ul>
+                    <li>促销后销量会不会回落？</li>
+                    <li>有没有提前消费？</li>
+                    <li>对价格敏感度的影响</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          },
+          {
+            title: "库存周转率低怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 需求预测优化</strong>
+                  <ul>
+                    <li>提高预测准确率，减少库存积压</li>
+                    <li>考虑季节性、促销、新品等因素</li>
+                    <li>滚动预测，动态调整</li>
+                  </ul>
+                </li>
+                <li><strong>2. SKU管理</strong>
+                  <ul>
+                    <li>ABC分类，重点管理高价值SKU</li>
+                    <li>淘汰滞销SKU，减少SKU数量</li>
+                    <li>优化产品组合</li>
+                  </ul>
+                </li>
+                <li><strong>3. 供应链优化</strong>
+                  <ul>
+                    <li>缩短生产周期和采购周期</li>
+                    <li>小批量多频次补货</li>
+                    <li>供应商协同，VMI供应商管理库存</li>
+                  </ul>
+                </li>
+                <li><strong>4. 库存策略</strong>
+                  <ul>
+                    <li>安全库存合理化</li>
+                    <li>滞销品清理和促销</li>
+                    <li>效期管理，先进先出</li>
+                  </ul>
+                </li>
+                <li><strong>5. 渠道库存管理</strong> — 渠道库存也是库存，要管控好</li>
+              </ul>
+            `
+          },
+          {
+            title: "渠道管理的数据分析怎么做？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>渠道健康度评估</strong>
+                  <ul>
+                    <li>各渠道销售占比和增长</li>
+                    <li>渠道利润贡献</li>
+                    <li>渠道库存和周转</li>
+                  </ul>
+                </li>
+                <li><strong>经销商管理</strong>
+                  <ul>
+                    <li>经销商分级：核心/重点/普通</li>
+                    <li>经销商销售能力、库存能力、服务能力</li>
+                    <li>经销商淘汰和优化</li>
+                  </ul>
+                </li>
+                <li><strong>终端管理</strong>
+                  <ul>
+                    <li>铺货率：广度覆盖</li>
+                    <li>动销率：深度动销</li>
+                    <li>陈列质量：生动化陈列</li>
+                  </ul>
+                </li>
+                <li><strong>渠道冲突管理</strong>
+                  <ul>
+                    <li>线上线下价格冲突</li>
+                    <li>区域间窜货</li>
+                    <li>渠道间平衡和协调</li>
+                  </ul>
+                </li>
+                <li><strong>渠道策略优化</strong>
+                  <ul>
+                    <li>渠道结构调整</li>
+                    <li>资源分配优化</li>
+                    <li>新渠道拓展</li>
+                  </ul>
+                </li>
+              </ul>
+            `
+          }
+        ]
+      },
+      // ===== 零售 =====
+      {
+        category: "retail",
+        categoryName: "零售行业",
+        icon: "🏬",
+        list: [
+          {
+            title: "零售门店的核心指标有哪些？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>销售指标</strong>
+                  <ul>
+                    <li>销售额、销量、同比/环比</li>
+                    <li>客单价、件单价、连带率</li>
+                    <li>坪效：每平米销售额</li>
+                  </ul>
+                </li>
+                <li><strong>客流指标</strong>
+                  <ul>
+                    <li>客流量、进店率</li>
+                    <li>成交率、提袋率</li>
+                    <li>客单价、人均购买件数</li>
+                  </ul>
+                </li>
+                <li><strong>商品指标</strong>
+                  <ul>
+                    <li>库存周转天数、动销率</li>
+                    <li>售罄率、缺货率</li>
+                    <li>新品占比、滞销品占比</li>
+                  </ul>
+                </li>
+                <li><strong>会员指标</strong>
+                  <ul>
+                    <li>会员数、会员占比</li>
+                    <li>复购率、复购频次</li>
+                    <li>会员贡献度</li>
+                  </ul>
+                </li>
+                <li><strong>人效指标</strong> — 人均销售额、人效</li>
+              </ul>
+            `
+          },
+          {
+            title: "坪效低怎么提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 商品结构优化</strong>
+                  <ul>
+                    <li>淘汰滞销品，引入高周转商品</li>
+                    <li>优化品类组合，提升连带率</li>
+                    <li>ABC分类，重点陈列高价值商品</li>
+                  </ul>
+                </li>
+                <li><strong>2. 陈列优化</strong>
+                  <ul>
+                    <li>黄金位置放高毛利商品</li>
+                    <li>关联陈列，提升连带率</li>
+                    <li>动线设计，增加停留时间</li>
+                  </ul>
+                </li>
+                <li><strong>3. 价格与促销</strong>
+                  <ul>
+                    <li>定价策略优化</li>
+                    <li>促销活动提升销量</li>
+                    <li>会员营销提升复购</li>
+                  </ul>
+                </li>
+                <li><strong>4. 空间利用</strong>
+                  <ul>
+                    <li>货架利用率最大化</li>
+                    <li>减少仓储面积，增加营业面积</li>
+                    <li>线上线下融合，门店前置仓</li>
+                  </ul>
+                </li>
+                <li><strong>5. 运营效率</strong> — 人员效率、库存效率、供应链效率</li>
+              </ul>
+            `
+          },
+          {
+            title: "库存周转慢怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 商品管理</strong>
+                  <ul>
+                    <li>ABC分类管理，重点关注A类</li>
+                    <li>滞销品及时清退</li>
+                    <li>SKU精简，减少长尾</li>
+                  </ul>
+                </li>
+                <li><strong>2. 需求预测</strong>
+                  <ul>
+                    <li>提高预测准确率</li>
+                    <li>考虑季节性、节假日、促销</li>
+                    <li>滚动预测，动态调整</li>
+                  </ul>
+                </li>
+                <li><strong>3. 补货策略</strong>
+                  <ul>
+                    <li>小批量多频次补货</li>
+                    <li>安全库存合理化</li>
+                    <li>自动补货系统</li>
+                  </ul>
+                </li>
+                <li><strong>4. 供应链优化</strong>
+                  <ul>
+                    <li>缩短采购周期</li>
+                    <li>供应商协同</li>
+                    <li>直采模式减少中间环节</li>
+                  </ul>
+                </li>
+                <li><strong>5. 促销清库存</strong> — 折扣、捆绑、会员专享清理滞销</li>
+              </ul>
+            `
+          },
+          {
+            title: "会员运营怎么做数据分析？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>会员分层</strong>
+                  <ul>
+                    <li>RFM模型分层</li>
+                    <li>等级体系：普通/银卡/金卡/钻石</li>
+                    <li>生命周期：新会员/活跃/沉睡/流失</li>
+                  </ul>
+                </li>
+                <li><strong>会员价值分析</strong>
+                  <ul>
+                    <li>会员贡献占比</li>
+                    <li>客单价、复购率、LTV</li>
+                    <li>不同层级会员价值对比</li>
+                  </ul>
+                </li>
+                <li><strong>会员运营效果</strong>
+                  <ul>
+                    <li>会员活动参与率</li>
+                    <li>优惠券核销率</li>
+                    <li>会员日/会员专享效果</li>
+                  </ul>
+                </li>
+                <li><strong>会员增长</strong>
+                  <ul>
+                    <li>新会员获取成本</li>
+                    <li>会员转化率</li>
+                    <li>老带新效果</li>
+                  </ul>
+                </li>
+                <li><strong>精准营销</strong> — 不同会员群体差异化运营</li>
+              </ul>
+            `
+          },
+          {
+            title: "门店选址怎么用数据分析？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>商圈分析</strong>
+                  <ul>
+                    <li>人口规模、人口密度</li>
+                    <li>年龄结构、收入水平</li>
+                    <li>消费习惯、消费能力</li>
+                  </ul>
+                </li>
+                <li><strong>竞争分析</strong>
+                  <ul>
+                    <li>竞品数量、分布</li>
+                    <li>竞品规模、档次</li>
+                    <li>市场饱和度</li>
+                  </ul>
+                </li>
+                <li><strong>客流分析</strong>
+                  <ul>
+                    <li>人流量、车流量</li>
+                    <li>客流时段分布</li>
+                    <li>客流画像</li>
+                  </ul>
+                </li>
+                <li><strong>财务测算</strong>
+                  <ul>
+                    <li>预期销售额</li>
+                    <li>租金、人力、运营成本</li>
+                    <li>投资回收期、IRR</li>
+                  </ul>
+                </li>
+                <li><strong>模型预测</strong>
+                  <ul>
+                    <li>用已有门店数据建预测模型</li>
+                    <li>多因素回归预测销量</li>
+                    <li>选址评分模型</li>
                   </ul>
                 </li>
               </ul>
@@ -853,250 +2407,183 @@
         icon: "🚚",
         list: [
           {
-            title: "如何降低物流成本？",
-            difficulty: "medium",
+            title: "物流行业的核心指标有哪些？",
+            difficulty: "easy",
             answer: `
               <ul>
-                <li><strong>先拆解成本结构</strong>
+                <li><strong>时效指标</strong>
                   <ul>
-                    <li>仓储成本：租金、人工、设备、损耗</li>
-                    <li>运输成本：运费、燃油、过路费、车辆折旧</li>
-                    <li>管理成本：系统、管理人员</li>
-                    <li>看哪块占比最高，从大头入手</li>
+                    <li>准时送达率（OTD，北极星指标）</li>
+                    <li>平均配送时长</li>
+                    <li>出库时效、分拣时效</li>
                   </ul>
                 </li>
-                <li><strong>仓储优化</strong>
+                <li><strong>成本指标</strong>
                   <ul>
-                    <li>提升库容利用率：优化货架布局、采用高位货架</li>
-                    <li>提升人效：ABC分类、拣货路径优化、自动化设备</li>
-                    <li>降低库存：提升周转，减少呆滞库存</li>
+                    <li>单均配送成本</li>
+                    <li>仓储成本、运输成本</li>
+                    <li>物流费用率</li>
                   </ul>
                 </li>
-                <li><strong>运输优化</strong>
+                <li><strong>质量指标</strong>
                   <ul>
-                    <li>提升装载率：拼货、路线规划、装载算法</li>
-                    <li>降低空驶率：返程带货、循环取货</li>
-                    <li>网络优化：仓网布局、前置仓、区域配送中心</li>
-                    <li>模式选择：自营 vs 外包，快递 vs 快运 vs 专线</li>
+                    <li>破损率、丢失率</li>
+                    <li>差错率、投诉率</li>
+                    <li>客户满意度</li>
                   </ul>
                 </li>
-                <li><strong>供应链协同</strong>
+                <li><strong>效率指标</strong>
                   <ul>
-                    <li>需求预测准确率提升，减少紧急补货</li>
-                    <li>与供应商信息共享，减少牛鞭效应</li>
+                    <li>库存周转率</li>
+                    <li>仓库利用率</li>
+                    <li>车辆满载率、人均处理单量</li>
                   </ul>
                 </li>
+                <li><strong>规模指标</strong> — 订单量、包裹量、网点数</li>
               </ul>
             `
           },
           {
-            title: "什么是牛鞭效应？怎么应对？",
-            difficulty: "hard",
+            title: "配送成本高怎么优化？",
+            difficulty: "medium",
             answer: `
-              <p><strong>牛鞭效应</strong>：供应链中，需求信息从下游到上游逐级放大的现象。</p>
               <ul>
-                <li><strong>为什么会产生？</strong>
+                <li><strong>1. 路径优化</strong>
                   <ul>
-                    <li>需求预测修正：每个环节都在预测，都加安全库存</li>
-                    <li>批量订货：为了省运费，凑整下单</li>
-                    <li>价格波动：促销时囤货，平时不买</li>
-                    <li>短缺博弈：供不应求时多订货抢货</li>
-                    <li>信息不对称：上游不知道真实需求</li>
+                    <li>智能路径规划，减少空驶和绕路</li>
+                    <li>区域划分和订单合并</li>
+                    <li>多点配送顺序优化</li>
                   </ul>
                 </li>
-                <li><strong>有什么危害？</strong>
+                <li><strong>2. 装载优化</strong>
                   <ul>
-                    <li>库存波动大，要么缺货要么积压</li>
-                    <li>产能利用率不稳定</li>
-                    <li>成本高，服务水平还低</li>
+                    <li>提高车辆满载率</li>
+                    <li>拼单配送、集运模式</li>
+                    <li>装载算法优化空间利用</li>
                   </ul>
                 </li>
-                <li><strong>怎么应对？</strong>
+                <li><strong>3. 仓网优化</strong>
                   <ul>
-                    <li><strong>信息共享</strong>：让上游看到真实的终端销售数据（POS数据）</li>
-                    <li><strong>VMI</strong>：供应商管理库存，上游帮下游补货</li>
-                    <li><strong>CPFR</strong>：协同规划、预测与补货</li>
-                    <li><strong>减少批量</strong>：小批量多频次订货</li>
+                    <li>前置仓布局，缩短配送距离</li>
+                    <li>仓网层级设计（中心仓-区域仓-前置仓）</li>
+                    <li>库存分布优化</li>
+                  </ul>
+                </li>
+                <li><strong>4. 人员效率</strong>
+                  <ul>
+                    <li>人效提升，人均日单量</li>
+                    <li>自动化设备替代人工</li>
+                    <li>绩效考核激励</li>
+                  </ul>
+                </li>
+                <li><strong>5. 模式创新</strong> — 众包配送、自提柜、驿站</li>
+              </ul>
+            `
+          },
+          {
+            title: "库存管理的核心方法有哪些？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>分类管理</strong>
+                  <ul>
+                    <li>ABC分类法：按价值分级管理</li>
+                    <li>XYZ分类：按需求波动稳定性</li>
+                    <li>组合矩阵：AX/BY/CZ 不同策略</li>
+                  </ul>
+                </li>
+                <li><strong>补货策略</strong>
+                  <ul>
+                    <li>定量补货：到了再订货点就补</li>
+                    <li>定期补货：固定时间盘点补货</li>
+                    <li>安全库存 + 经济订货量</li>
+                  </ul>
+                </li>
+                <li><strong>需求预测</strong>
+                  <ul>
+                    <li>历史数据预测</li>
+                    <li>季节性、趋势性、周期性</li>
+                    <li>促销、新品等特殊因素</li>
+                  </ul>
+                </li>
+                <li><strong>协同管理</strong>
+                  <ul>
+                    <li>VMI供应商管理库存</li>
+                    <li>JIT准时制</li>
+                    <li>CPFR协同计划预测补货</li>
+                  </ul>
+                </li>
+                <li><strong>绩效考核</strong> — 周转率、缺货率、库存成本</li>
+              </ul>
+            `
+          },
+          {
+            title: "牛鞭效应怎么缓解？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>什么是牛鞭效应？</strong>
+                  <p>需求信息从下游到上游逐级放大，导致库存波动越来越大。</p>
+                </li>
+                <li><strong>产生原因</strong>
+                  <ul>
+                    <li>需求预测修正：每层都加安全库存</li>
+                    <li>批量订货：凑整、凑车、凑单</li>
+                    <li>价格波动：促销导致提前囤货</li>
+                    <li>短缺博弈：缺货时多订，有货时取消</li>
+                  </ul>
+                </li>
+                <li><strong>缓解方法</strong>
+                  <ul>
+                    <li><strong>信息共享</strong>：上下游共享真实需求数据</li>
+                    <li><strong>缩短提前期</strong>：更快的响应，更少的波动</li>
+                    <li><strong>小批量补货</strong>：减少批量效应</li>
                     <li><strong>稳定价格</strong>：减少促销，天天低价</li>
-                    <li><strong>缩短提前期</strong>：越快响应，波动越小</li>
+                    <li><strong>战略伙伴</strong>：VMI、JIT、CPFR等协同模式</li>
                   </ul>
                 </li>
+                <li><strong>技术手段</strong> — 大数据预测、IoT实时监控、AI智能调度</li>
               </ul>
             `
           },
           {
-            title: "库存准确率低，怎么提升？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>先找原因</strong>
-                  <ul>
-                    <li>是入库错了？出库错了？还是盘点错了？</li>
-                    <li>是哪些品类/库位错得最多？</li>
-                    <li>是人为操作失误，还是系统问题？</li>
-                  </ul>
-                </li>
-                <li><strong>常见原因</strong>
-                  <ul>
-                    <li>入库环节：收货点数不准、SKU混淆</li>
-                    <li>出库环节：拣货错发、漏发</li>
-                    <li>库内管理：货位乱放、私自挪用、破损未登记</li>
-                    <li>系统问题：单据未及时录入、系统bug</li>
-                  </ul>
-                </li>
-                <li><strong>提升方法</strong>
-                  <ul>
-                    <li><strong>流程标准化</strong>：每个环节有SOP，按规矩来</li>
-                    <li><strong>技术手段</strong>：
-                      <ul>
-                        <li>条码/RFID：扫码出入库，减少人工错误</li>
-                        <li>PDA：实时同步系统，避免单据延迟</li>
-                        <li>电子标签拣货：减少拣货错误</li>
-                      </ul>
-                    </li>
-                    <li><strong>盘点机制</strong>：
-                      <ul>
-                        <li>循环盘点：每天盘一部分，不用停业</li>
-                        <li>重点盘点：高价值/高动销商品重点盘</li>
-                        <li>差异分析：每次盘点后分析原因，持续改进</li>
-                      </ul>
-                    </li>
-                    <li><strong>绩效考核</strong>：准确率和绩效挂钩</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          }
-        ]
-      },
-
-      // ===== 文旅 =====
-      {
-        category: "tourism",
-        categoryName: "文旅行业",
-        icon: "🏖️",
-        list: [
-          {
-            title: "什么是收益管理？核心思路是什么？",
+            title: "仓网布局怎么规划和优化？",
             difficulty: "hard",
             answer: `
-              <p><strong>收益管理（Yield Management）</strong>：在固定产能下，通过动态定价和库存分配，实现收益最大化。</p>
               <ul>
-                <li><strong>核心思想</strong>
+                <li><strong>需求分析</strong>
                   <ul>
-                    <li>把合适的产品，以合适的价格，卖给合适的人，在合适的时间</li>
-                    <li>本质是价格歧视：对不同价格敏感度的人收不同的价</li>
+                    <li>各区域订单量分布</li>
+                    <li>订单密度和增长趋势</li>
+                    <li>客户分布和时效要求</li>
                   </ul>
                 </li>
-                <li><strong>适用条件</strong>
+                <li><strong>成本分析</strong>
                   <ul>
-                    <li>产能相对固定（酒店房间数、景区承载量）</li>
-                    <li>产品不可存储（今晚的空房明天就没了）</li>
-                    <li>需求可以细分（商务客vs旅游客，提前订vs临时订）</li>
-                    <li>可以提前预售</li>
+                    <li>仓储成本：租金、人力、运营</li>
+                    <li>运输成本：干线、末端配送</li>
+                    <li>库存成本：库存持有成本</li>
                   </ul>
                 </li>
-                <li><strong>核心方法</strong>
+                <li><strong>网络设计</strong>
                   <ul>
-                    <li><strong>需求预测</strong>：预测未来每天的需求</li>
-                    <li><strong>动态定价</strong>：需求高涨价，需求低降价</li>
-                    <li><strong>库存控制</strong>：预留房间给高价客，不被低价客占满</li>
-                    <li><strong>超售</strong>：考虑no-show，适当超卖</li>
+                    <li>几级仓网？（全国仓-区域仓-城市仓-前置仓）</li>
+                    <li>每个层级放多少个仓？</li>
+                    <li>每个仓覆盖哪些区域？</li>
                   </ul>
                 </li>
-                <li><strong>核心指标</strong>
+                <li><strong>优化模型</strong>
                   <ul>
-                    <li>RevPAR = 平均房价 × 入住率（最核心）</li>
-                    <li>Yield = 实际收入 ÷ 理论最大收入</li>
+                    <li>设施选址模型</li>
+                    <li>运输路径优化</li>
+                    <li>库存分布优化</li>
                   </ul>
                 </li>
-              </ul>
-            `
-          },
-          {
-            title: "RevPAR怎么提升？",
-            difficulty: "medium",
-            answer: `
-              <p>RevPAR = 平均房价（ADR） × 入住率（OCC），是酒店业最核心的指标。</p>
-              <ul>
-                <li><strong>两个抓手</strong>
+                <li><strong>权衡取舍</strong>
                   <ul>
-                    <li>提升房价：但可能导致入住率下降</li>
-                    <li>提升入住率：但可能需要降价</li>
-                    <li>关键是找到平衡点，让乘积最大</li>
-                  </ul>
-                </li>
-                <li><strong>具体方法</strong>
-                  <ul>
-                    <li><strong>收益管理</strong>：
-                      <ul>
-                        <li>动态定价：周末/节假日涨价，平日降价</li>
-                        <li>提前预订折扣：早鸟价，锁定需求</li>
-                        <li>连住优惠：提升平均入住天数</li>
-                      </ul>
-                    </li>
-                    <li><strong>渠道管理</strong>：
-                      <ul>
-                        <li>提升直订比例，减少OTA佣金</li>
-                        <li>不同渠道差异化定价</li>
-                      </ul>
-                    </li>
-                    <li><strong>产品优化</strong>：
-                      <ul>
-                        <li>房型升级：卖更贵的房型</li>
-                        <li>增值服务：早餐、SPA、接送机</li>
-                        <li>套餐打包：房+餐+景点</li>
-                      </ul>
-                    </li>
-                    <li><strong>营销推广</strong>：
-                      <ul>
-                        <li>淡季促销，提升入住率</li>
-                        <li>会员体系，提升复购</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "景区淡季客流少，怎么破？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>先分析淡季原因</strong>
-                  <ul>
-                    <li>是季节性原因（冬天没人去海边）？</li>
-                    <li>是工作日/周末差异？</li>
-                    <li>是我们自己的问题，还是全行业都这样？</li>
-                  </ul>
-                </li>
-                <li><strong>产品策略</strong>
-                  <ul>
-                    <li>开发淡季特色产品：冬季温泉、夏季避暑</li>
-                    <li>主题活动：灯光节、音乐节、美食节</li>
-                    <li>差异化体验：淡季人少体验好，主打"错峰出游"</li>
-                  </ul>
-                </li>
-                <li><strong>价格策略</strong>
-                  <ul>
-                    <li>淡季降价：但要注意不要降太多影响品牌</li>
-                    <li>套票优惠：门票+酒店+餐饮打包</li>
-                    <li>年卡/季卡：锁定长期用户</li>
-                  </ul>
-                </li>
-                <li><strong>客群拓展</strong>
-                  <ul>
-                    <li>从观光客转向度假客：住得久，消费高</li>
-                    <li>从个人客转向团队客：企业团建、会议</li>
-                    <li>从外地客转向本地客：周边游、周末游</li>
-                  </ul>
-                </li>
-                <li><strong>渠道策略</strong>
-                  <ul>
-                    <li>和旅行社合作，推淡季线路</li>
-                    <li>和企业合作，做员工福利</li>
-                    <li>和OTA合作，参与淡季促销活动</li>
+                    <li>时效 vs 成本</li>
+                    <li>库存集中度 vs 分散度</li>
+                    <li>自建 vs 外包</li>
                   </ul>
                 </li>
               </ul>
@@ -1109,287 +2596,436 @@
       {
         category: "newenergy",
         categoryName: "新能源汽车",
-        icon: "⚡",
+        icon: "🚗",
         list: [
           {
-            title: "如何分析新能源汽车市场竞争格局？",
-            difficulty: "medium",
+            title: "新能源汽车行业的核心指标有哪些？",
+            difficulty: "easy",
             answer: `
               <ul>
-                <li><strong>市场整体</strong>
+                <li><strong>销量指标</strong>
                   <ul>
-                    <li>市场规模：销量、增速、渗透率</li>
-                    <li>市场结构：纯电vs插混，高端vs中端vs低端</li>
-                    <li>增长动力：政策驱动还是产品驱动？</li>
+                    <li>销量、市占率（北极星指标）</li>
+                    <li>同比/环比增长</li>
+                    <li>上险量、交付量</li>
                   </ul>
                 </li>
-                <li><strong>竞争格局</strong>
+                <li><strong>产品指标</strong>
                   <ul>
-                    <li>集中度：CR3/CR5/CR10是多少？在提升还是下降？</li>
-                    <li>阵营划分：新势力（蔚小理）、传统（比亚迪、吉利）、跨界（华为、小米）</li>
-                    <li>价格带分布：各玩家在哪个价格段竞争？</li>
+                    <li>车型数量、SKU</li>
+                    <li>各车型销量占比</li>
+                    <li>均价、价格带分布</li>
                   </ul>
                 </li>
-                <li><strong>核心竞争力分析</strong>
+                <li><strong>渠道指标</strong>
                   <ul>
-                    <li>产品力：续航、智能化、设计、安全</li>
-                    <li>成本控制：电池成本、规模效应</li>
-                    <li>渠道能力：直营店数量、覆盖城市</li>
-                    <li>品牌力：品牌认知、用户口碑</li>
-                    <li>供应链：自研vs外采，供应链稳定性</li>
+                    <li>门店数量、城市覆盖</li>
+                    <li>单店月销、坪效</li>
+                    <li>渠道库存、周转天数</li>
                   </ul>
                 </li>
-                <li><strong>趋势判断</strong>
+                <li><strong>用户指标</strong>
                   <ul>
-                    <li>价格战会持续吗？谁能活到最后？</li>
-                    <li>技术路线：纯电vs增程vs插混，哪个是未来？</li>
-                    <li>智能化竞争：自动驾驶、智能座舱</li>
+                    <li>订单量、转化率</li>
+                    <li>试驾率、下定率</li>
+                    <li>用户满意度、NPS</li>
                   </ul>
                 </li>
+                <li><strong>供应链指标</strong> — 产能利用率、交付周期</li>
               </ul>
             `
           },
           {
-            title: "产能利用率低，怎么提升？",
+            title: "新能源车企怎么提升市占率？",
             difficulty: "medium",
             answer: `
               <ul>
-                <li><strong>先定位问题</strong>
+                <li><strong>产品力</strong>
                   <ul>
-                    <li>是所有工厂都低，还是个别工厂？</li>
-                    <li>是哪个环节是瓶颈？冲压？焊装？涂装？总装？</li>
-                    <li>利用率低的原因：需求不足？还是供给有问题？</li>
+                    <li>技术领先：续航、智能驾驶、三电技术</li>
+                    <li>产品矩阵：覆盖不同价格带和细分市场</li>
+                    <li>迭代速度：快速改款和升级</li>
                   </ul>
                 </li>
-                <li><strong>如果是需求不足</strong>
+                <li><strong>价格策略</strong>
                   <ul>
-                    <li>提升销量：降价、促销、新车型</li>
-                    <li>拓展出口：国内卖不动就卖到国外</li>
-                    <li>代工生产：帮其他品牌造车，赚加工费</li>
+                    <li>性价比定位</li>
+                    <li>降价/保价策略</li>
+                    <li>不同配置梯度定价</li>
                   </ul>
                 </li>
-                <li><strong>如果是供给有问题</strong>
+                <li><strong>渠道扩张</strong>
                   <ul>
-                    <li>设备故障多：加强维保、提升OEE</li>
-                    <li>缺零部件：供应链保供、找备选供应商</li>
-                    <li>人员不足：招人、培训、提升人效</li>
-                    <li>工艺问题：优化工艺、减少停线</li>
+                    <li>线下门店数量和覆盖</li>
+                    <li>线上线下融合</li>
+                    <li>渠道下沉（三四线城市）</li>
                   </ul>
                 </li>
-                <li><strong>长期策略</strong>
+                <li><strong>品牌营销</strong>
                   <ul>
-                    <li>柔性生产：一条线能生产多种车型</li>
-                    <li>产能规划：不要盲目扩产，按需建设</li>
-                    <li>共享产能：和其他车企共享工厂</li>
+                    <li>品牌建设和用户心智</li>
+                    <li>用户运营和口碑传播</li>
+                    <li>事件营销和话题制造</li>
                   </ul>
                 </li>
+                <li><strong>服务体验</strong> — 充电、售后、软件升级等</li>
               </ul>
             `
           },
           {
-            title: "如何评估供应链风险？",
+            title: "如何分析新能源汽车的销量趋势？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>整体市场</strong>
+                  <ul>
+                    <li>大盘销量和渗透率趋势</li>
+                    <li>政策影响（补贴、购置税、牌照）</li>
+                    <li>季节性因素（季度末冲量、年底翘尾）</li>
+                  </ul>
+                </li>
+                <li><strong>品牌竞争</strong>
+                  <ul>
+                    <li>各品牌市占率变化</li>
+                    <li>头部/腰部/尾部格局</li>
+                    <li>新品牌进入和老品牌退出</li>
+                  </ul>
+                </li>
+                <li><strong>价格带分析</strong>
+                  <ul>
+                    <li>各价格段销量占比</li>
+                    <li>消费升级还是降级？</li>
+                    <li>价格战影响</li>
+                  </ul>
+                </li>
+                <li><strong>细分市场</strong>
+                  <ul>
+                    <li>轿车/SUV/MPV 结构变化</li>
+                    <li>A级/B级/C级 各级别表现</li>
+                    <li>不同区域市场差异</li>
+                  </ul>
+                </li>
+                <li><strong>预测展望</strong> — 短期月度预测、长期趋势判断</li>
+              </ul>
+            `
+          },
+          {
+            title: "充电桩运营的数据分析怎么做？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>利用率指标</strong>
+                  <ul>
+                    <li>充电桩利用率（充电时长/总时长）</li>
+                    <li>日均充电次数、日均充电量</li>
+                    <li>高峰时段、低谷时段</li>
+                  </ul>
+                </li>
+                <li><strong>用户指标</strong>
+                  <ul>
+                    <li>注册用户数、活跃用户数</li>
+                    <li>用户充电频次、充电习惯</li>
+                    <li>用户留存、复充率</li>
+                  </ul>
+                </li>
+                <li><strong>收入成本</strong>
+                  <ul>
+                    <li>充电收入、服务费收入</li>
+                    <li>电费成本、场地成本、运维成本</li>
+                    <li>单桩盈利、投资回收期</li>
+                  </ul>
+                </li>
+                <li><strong>运营效率</strong>
+                  <ul>
+                    <li>故障率、可用率</li>
+                    <li>故障响应时间、修复时间</li>
+                    <li>用户满意度、投诉率</li>
+                  </ul>
+                </li>
+                <li><strong>选址优化</strong> — 哪些站点利用率高？为什么？新站怎么选？</li>
+              </ul>
+            `
+          },
+          {
+            title: "新能源车企怎么做好用户运营？",
             difficulty: "hard",
             answer: `
               <ul>
-                <li><strong>识别风险点</strong>
+                <li><strong>用户分层</strong>
                   <ul>
-                    <li><strong>供应风险</strong>：供应商断供、产能不足、质量问题</li>
-                    <li><strong>物流风险</strong>：运输中断、关税、地缘政治</li>
-                    <li><strong>价格风险</strong>：原材料涨价、汇率波动</li>
-                    <li><strong>技术风险</strong>：技术路线变化、专利问题</li>
+                    <li>潜客、意向、订单、交付、车主</li>
+                    <li>高价值用户、活跃用户、沉默用户</li>
+                    <li>KOC、意见领袖、普通用户</li>
                   </ul>
                 </li>
-                <li><strong>评估维度</strong>
+                <li><strong>全生命周期运营</strong>
                   <ul>
-                    <li><strong>单一依赖度</strong>：某个物料只有一家供应商？风险高</li>
-                    <li><strong>地域集中度</strong>：供应商都在同一个地区？地震/疫情就全完了</li>
-                    <li><strong>物料重要性</strong>：缺了它就停产？还是可以替代？</li>
-                    <li><strong>供应商健康度</strong>：供应商财务状况好不好？会不会倒闭？</li>
+                    <li>售前：种草、试驾、下定</li>
+                    <li>售中：等待交付、交付体验</li>
+                    <li>售后：用车服务、软件升级、保养</li>
+                    <li>换购：复购、推荐、增购</li>
                   </ul>
                 </li>
-                <li><strong>风险量化</strong>
+                <li><strong>社区运营</strong>
                   <ul>
-                    <li>风险评分 = 发生概率 × 影响程度</li>
-                    <li>按分数排序，重点关注高风险项</li>
-                    <li>供应风险暴露指数：量化整体风险水平</li>
+                    <li>APP/小程序社区</li>
+                    <li>用户活动、车友会</li>
+                    <li>UGC内容激励</li>
                   </ul>
                 </li>
-                <li><strong>应对策略</strong>
+                <li><strong>数据驱动</strong>
                   <ul>
-                    <li><strong>多源采购</strong>：不要把鸡蛋放一个篮子</li>
-                    <li><strong>安全库存</strong>：关键物料备库存</li>
-                    <li><strong>垂直整合</strong>：自己造电池、自己造芯片</li>
-                    <li><strong>长期协议</strong>：和供应商签长单锁价锁量</li>
-                    <li><strong>备选方案</strong>：提前找好替代方案</li>
+                    <li>用户行为数据分析</li>
+                    <li>用户画像和标签体系</li>
+                    <li>精准营销和个性化推荐</li>
                   </ul>
                 </li>
+                <li><strong>口碑和转介绍</strong> — 老带新机制、推荐奖励、NPS提升</li>
               </ul>
             `
           }
         ]
       },
 
-      // ===== 制造 =====
+      // ===== 制造业 =====
       {
         category: "manufacturing",
         categoryName: "制造业",
         icon: "🏭",
         list: [
           {
-            title: "OEE是什么？怎么提升？",
-            difficulty: "medium",
+            title: "制造业的核心指标有哪些？",
+            difficulty: "easy",
             answer: `
-              <p><strong>OEE（Overall Equipment Effectiveness）设备综合效率</strong>，衡量设备利用效率。</p>
               <ul>
-                <li><strong>公式</strong>
+                <li><strong>生产效率</strong>
                   <ul>
-                    <li>OEE = 时间稼动率 × 性能稼动率 × 良品率</li>
-                    <li>时间稼动率 = 实际运行时间 ÷ 计划运行时间（反映停机损失）</li>
-                    <li>性能稼动率 = 实际产量 ÷ 理论产量（反映速度损失）</li>
-                    <li>良品率 = 合格品数量 ÷ 总产量（反映质量损失）</li>
+                    <li>OEE 设备综合效率（北极星指标）</li>
+                    <li>产能利用率、生产效率</li>
+                    <li>人均产出、单位产出</li>
                   </ul>
                 </li>
-                <li><strong>世界级水平</strong>：OEE ≥ 85%</li>
-                <li><strong>怎么提升？</strong>
+                <li><strong>质量指标</strong>
                   <ul>
-                    <li><strong>提升时间稼动率（减少停机）</strong>：
-                      <ul>
-                        <li>减少故障停机：预防性维保、预测性维护</li>
-                        <li>减少换型时间：SMED快速换模</li>
-                        <li>减少待料：供应链保供</li>
-                      </ul>
-                    </li>
-                    <li><strong>提升性能稼动率（提升速度）</strong>：
-                      <ul>
-                        <li>设备优化：让设备跑得更快</li>
-                        <li>减少小停机：频繁的短暂停</li>
-                        <li>工艺优化：减少减速运行</li>
-                      </ul>
-                    </li>
-                    <li><strong>提升良品率（减少不良）</strong>：
-                      <ul>
-                        <li>质量管控：SPC统计过程控制</li>
-                        <li>根因分析：5Why、鱼骨图</li>
-                        <li>防错设计：Poka-Yoke</li>
-                      </ul>
-                    </li>
+                    <li>良品率、合格率</li>
+                    <li>不良率、报废率、返工率</li>
+                    <li>客户投诉率、PPM</li>
+                  </ul>
+                </li>
+                <li><strong>成本指标</strong>
+                  <ul>
+                    <li>制造成本、单位成本</li>
+                    <li>材料成本、人工成本、制造费用</li>
+                    <li>降本目标达成率</li>
+                  </ul>
+                </li>
+                <li><strong>交付指标</strong>
+                  <ul>
+                    <li>准时交付率（OTD）</li>
+                    <li>生产周期、交付周期</li>
+                    <li>订单完成率</li>
+                  </ul>
+                </li>
+                <li><strong>设备指标</strong> — 设备故障率、MTBF、MTTR</li>
+              </ul>
+            `
+          },
+          {
+            title: "OEE 低怎么分析和提升？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>OEE 公式</strong>
+                  <p>OEE = 时间稼动率 × 性能稼动率 × 良品率</p>
+                </li>
+                <li><strong>1. 时间稼动率低（停机多）</strong>
+                  <ul>
+                    <li>计划内停机 vs 计划外停机</li>
+                    <li>故障停机：设备老化、维护不足</li>
+                    <li>换型停机：换型时间长、频次高</li>
+                    <li>待料停机：供应链问题</li>
+                  </ul>
+                </li>
+                <li><strong>2. 性能稼动率低（速度慢）</strong>
+                  <ul>
+                    <li>设备速度慢、小停机多</li>
+                    <li>人员操作不熟练</li>
+                    <li>工艺参数不合理</li>
+                  </ul>
+                </li>
+                <li><strong>3. 良品率低（质量差）</strong>
+                  <ul>
+                    <li>来料质量问题</li>
+                    <li>工艺不稳定</li>
+                    <li>人员操作失误</li>
+                  </ul>
+                </li>
+                <li><strong>提升方法</strong> — TPM全员生产维护、SMED快速换模、SPC过程控制</li>
+              </ul>
+            `
+          },
+          {
+            title: "生产计划排程怎么优化？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>需求端</strong>
+                  <ul>
+                    <li>订单预测和需求管理</li>
+                    <li>订单优先级排序</li>
+                    <li>交期承诺和ATP可承诺量</li>
+                  </ul>
+                </li>
+                <li><strong>资源端</strong>
+                  <ul>
+                    <li>产能评估和瓶颈识别</li>
+                    <li>人员、设备、物料可用性</li>
+                    <li>瓶颈资源优先排程</li>
+                  </ul>
+                </li>
+                <li><strong>排程策略</strong>
+                  <ul>
+                    <li>正向排程 vs 逆向排程</li>
+                    <li>平行作业 vs 顺序作业</li>
+                    <li>批量大小和批次优化</li>
+                  </ul>
+                </li>
+                <li><strong>优化目标</strong>
+                  <ul>
+                    <li>准时交付率最大化</li>
+                    <li>生产周期最小化</li>
+                    <li>设备利用率最大化</li>
+                    <li>库存最小化</li>
+                  </ul>
+                </li>
+                <li><strong>系统支持</strong> — APS高级排程系统、MES制造执行系统</li>
+              </ul>
+            `
+          },
+          {
+            title: "质量问题怎么用数据分析根因？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>1. 问题定义</strong>
+                  <ul>
+                    <li>什么质量问题？不良现象是什么？</li>
+                    <li>严重程度、影响范围</li>
+                    <li>什么时候开始的？</li>
+                  </ul>
+                </li>
+                <li><strong>2. 数据收集</strong>
+                  <ul>
+                    <li>不良品数据：数量、比例、趋势</li>
+                    <li>分层数据：哪条线、哪个班、哪个批次、哪个供应商</li>
+                    <li>过程数据：工艺参数、设备参数、环境参数</li>
+                  </ul>
+                </li>
+                <li><strong>3. 分析方法</strong>
+                  <ul>
+                    <li>分层法：按不同维度分层对比</li>
+                    <li>鱼骨图/5Why：人、机、料、法、环、测</li>
+                    <li>SPC控制图：过程是否稳定？有没有异常波动？</li>
+                    <li>相关分析：哪些因素和不良相关？</li>
+                  </ul>
+                </li>
+                <li><strong>4. 验证改进</strong>
+                  <ul>
+                    <li>找到根因后制定改进措施</li>
+                    <li>小范围试验验证效果</li>
+                    <li>标准化推广</li>
                   </ul>
                 </li>
               </ul>
             `
           },
           {
-            title: "良率突然下降，怎么分析？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>第一步：确认问题</strong>
-                  <ul>
-                    <li>是真的降了，还是检测标准变了？</li>
-                    <li>降了多少？从什么时候开始的？</li>
-                  </ul>
-                </li>
-                <li><strong>第二步：定位范围</strong>
-                  <ul>
-                    <li>是所有产品都降，还是个别产品？</li>
-                    <li>是所有产线都降，还是个别产线？</li>
-                    <li>是所有班次都降，还是个别班次？</li>
-                    <li>是哪个工序出的问题？</li>
-                  </ul>
-                </li>
-                <li><strong>第三步：5M1E分析</strong>
-                  <ul>
-                    <li><strong>人（Man）</strong>：是不是换了新人？操作不熟练？</li>
-                    <li><strong>机（Machine）</strong>：设备是不是出问题了？参数变了？</li>
-                    <li><strong>料（Material）</strong>：原材料是不是换批次了？供应商换了？</li>
-                    <li><strong>法（Method）</strong>：工艺是不是改了？作业指导书变了？</li>
-                    <li><strong>测（Measurement）</strong>：检测设备准不准？检测方法对不对？</li>
-                    <li><strong>环（Environment）</strong>：温湿度是不是变了？环境有污染？</li>
-                  </ul>
-                </li>
-                <li><strong>第四步：验证根因</strong>
-                  <ul>
-                    <li>找到可疑因素后，做对比验证</li>
-                    <li>改回去，看良率是不是恢复了</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "如何做生产成本控制？",
+            title: "制造业降本增效怎么用数据驱动？",
             difficulty: "hard",
             answer: `
               <ul>
-                <li><strong>先拆解成本结构</strong>
+                <li><strong>成本结构分析</strong>
                   <ul>
-                    <li>直接材料：原材料、零部件（一般占比最大）</li>
-                    <li>直接人工：生产工人工资</li>
-                    <li>制造费用：设备折旧、水电、辅料、管理人员工资</li>
-                    <li>看哪块占比最高，重点抓</li>
+                    <li>料、工、费 占比和变化</li>
+                    <li>各产品、各产线成本对比</li>
+                    <li>成本差异分析（标准 vs 实际）</li>
                   </ul>
                 </li>
-                <li><strong>材料成本控制</strong>
+                <li><strong>材料降本</strong>
                   <ul>
-                    <li>采购降本：招标、议价、集中采购、长期协议</li>
-                    <li>国产化替代：进口件换成国产的</li>
-                    <li>设计降本：优化产品设计，减少用料</li>
-                    <li>损耗控制：减少生产过程中的浪费、报废</li>
-                    <li>库存优化：减少库存资金占用</li>
+                    <li>采购降本：集中采购、供应商谈判</li>
+                    <li>材料利用率提升：减少浪费</li>
+                    <li>价值工程：材料替代、设计优化</li>
                   </ul>
                 </li>
-                <li><strong>人工成本控制</strong>
+                <li><strong>人工降本</strong>
                   <ul>
-                    <li>提升人效：自动化、工艺优化、培训</li>
-                    <li>优化排班：按需排班，减少闲时</li>
-                    <li>绩效考核：多劳多得，提升积极性</li>
+                    <li>人效提升：人均产出提升</li>
+                    <li>自动化替代：机器换人</li>
+                    <li>流程优化：消除浪费</li>
                   </ul>
                 </li>
-                <li><strong>制造费用控制</strong>
+                <li><strong>效率提升</strong>
                   <ul>
-                    <li>提升设备利用率：OEE提升，减少闲置</li>
-                    <li>节能降耗：水电气节约</li>
-                    <li>减少浪费：精益生产、消除七大浪费</li>
+                    <li>OEE提升：减少停机、提升速度、提升良率</li>
+                    <li>生产周期缩短：在制品减少</li>
+                    <li>库存周转提升：资金占用减少</li>
                   </ul>
                 </li>
-                <li><strong>注意点</strong>
+                <li><strong>质量降本</strong>
                   <ul>
-                    <li>降本不能牺牲质量，否则得不偿失</li>
-                    <li>降本要算总账，不能只看单项</li>
-                    <li>要和供应商共赢，不要一味压价</li>
+                    <li>减少不良品损失</li>
+                    <li>减少返工返修</li>
+                    <li>减少客户索赔</li>
                   </ul>
                 </li>
               </ul>
             `
           }
         ]
-      }
-    ];
-
-    // 当前筛选
+      }    ];    // 当前筛选
     let currentCategory = 'all';
     let currentSearch = '';
 
-    // 初始化
-    document.addEventListener('DOMContentLoaded', function() {
+    // 初始化（script在页面底部，DOM已加载，直接执行）
+    renderCategoryTabs();
+    renderQuestions();
+    
+    // 搜索
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      currentSearch = e.target.value.trim().toLowerCase();
       renderQuestions();
-      
-      // 搜索
-      document.getElementById('searchInput').addEventListener('input', function(e) {
-        currentSearch = e.target.value.trim().toLowerCase();
+    });
+    
+    // 筛选标签
+    document.querySelectorAll('.filter-tag').forEach(tag => {
+      tag.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentCategory = this.dataset.category;
         renderQuestions();
       });
+    });
+
+    // 渲染分类标签
+    function renderCategoryTabs() {
+      const container = document.getElementById('filterTags');
+      let html = '<span class="filter-tag active" data-category="all">全部</span>';
+      questions.forEach(cat => {
+        html += `<span class="filter-tag" data-category="${cat.category}">${cat.categoryName}</span>`;
+      });
+      container.innerHTML = html;
       
-      // 筛选标签
-      document.querySelectorAll('.filter-tag').forEach(tag => {
+      // 绑定点击事件
+      container.querySelectorAll('.filter-tag').forEach(tag => {
         tag.addEventListener('click', function() {
-          document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+          container.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
           this.classList.add('active');
           currentCategory = this.dataset.category;
           renderQuestions();
         });
       });
-    });
+    }
 
     // 渲染题目
     function renderQuestions() {
@@ -1483,6 +3119,7 @@
       `;
     }
   </script>
+  <script src="common.js"></script>
 </body>
 </html>
 

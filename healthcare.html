@@ -1,0 +1,381 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>医疗健康 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    /* 行业主题色：青色 */
+    :root {
+      --theme-color: #06b6d4;
+      --theme-color-rgb: 6, 182, 212;
+      --theme-gradient: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">多行业数据百科</span>
+      </a>
+      <div class="nav-menu">
+        <a href="index.html" class="nav-item">首页</a>
+        <a href="metrics.html" class="nav-item">指标字典</a>
+        <a href="methodology.html" class="nav-item">分析方法</a>
+        <div class="nav-dropdown">
+          <span class="nav-item">行业框架 <span class="arrow">▼</span></span>
+          <div class="nav-dropdown-menu">
+            <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车</a>
+            <a href="ecommerce.html" class="nav-dropdown-item">电商</a>
+            <a href="物流/index.html" class="nav-dropdown-item">物流供应链</a>
+            <a href="manufacturing.html" class="nav-dropdown-item">制造业</a>
+            <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务</a>
+            <a href="game.html" class="nav-dropdown-item">游戏行业</a>
+            <a href="finance.html" class="nav-dropdown-item">金融行业</a>
+            <a href="education.html" class="nav-dropdown-item">在线教育</a>
+            <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商</a>
+            <a href="local-life.html" class="nav-dropdown-item">本地生活</a>
+            <a href="healthcare.html" class="nav-dropdown-item">医疗健康</a>
+            <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG</a>
+          </div>
+        </div>
+        <a href="interview.html" class="nav-item">业务问题拆解</a>
+        <a href="learning-path.html" class="nav-item">学习路径</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>医疗健康行业知识框架</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">医疗健康</h1>
+          <p class="page-subtitle">Healthcare · 医疗质量 · 运营效率 · 患者体验 · 成本控制</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">22+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">分析维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 北极星指标 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">North Star Metric</span>
+      </div>
+      <div class="north-star-card">
+        <div class="north-star-left">
+          <div class="ns-name">床位使用率</div>
+          <div class="ns-formula">实际占用床日数 ÷ 实际开放床日数 × 100%</div>
+        </div>
+        <div class="north-star-right">
+          <p>医院运营效率的核心指标，反映医疗资源利用程度。床位使用率过高说明资源紧张，过低说明资源闲置，合理区间通常在85%-93%。</p>
+        </div>
+      </div>
+      <div class="ns-why-card">
+        <div class="ns-why-title">为什么是床位使用率？</div>
+        <p>门诊量只看数量不看效率，收入只看结果不看资源利用。床位使用率同时反映了医院的资源配置效率、运营管理水平和患者需求匹配度，是医院运营的核心指挥棒。</p>
+      </div>
+    </section>
+
+    <!-- 核心指标体系 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">📊 核心指标体系</h2>
+        <span class="section-badge">5大维度</span>
+      </div>
+      <div class="metrics-grid">
+        <!-- 运营效率指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">🏥</div>
+          <h3 class="mc-title">运营效率</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">床位使用率</span>
+              <span class="mc-desc">床位利用程度</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">平均住院日</span>
+              <span class="mc-desc">患者平均住院天数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">病床周转次数</span>
+              <span class="mc-desc">年床位周转次数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">门诊人次</span>
+              <span class="mc-desc">门诊就诊人数</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">手术量</span>
+              <span class="mc-desc">手术台次</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 医疗质量指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">⚕️</div>
+          <h3 class="mc-title">医疗质量</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">治愈率</span>
+              <span class="mc-desc">治愈患者占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">好转率</span>
+              <span class="mc-desc">好转患者占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">死亡率</span>
+              <span class="mc-desc">住院患者死亡率</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">院内感染率</span>
+              <span class="mc-desc">院内感染发生比例</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">不良事件发生率</span>
+              <span class="mc-desc">医疗不良事件比例</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 患者服务指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">😊</div>
+          <h3 class="mc-title">患者服务</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">患者满意度</span>
+              <span class="mc-desc">患者满意度评分</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">平均等待时间</span>
+              <span class="mc-desc">门诊/检查等待时长</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">预约准时率</span>
+              <span class="mc-desc">预约准时就诊比例</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">投诉率</span>
+              <span class="mc-desc">患者投诉比例</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">复诊率</span>
+              <span class="mc-desc">患者复诊比例</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 财务经营指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">💰</div>
+          <h3 class="mc-title">财务经营</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">门诊收入</span>
+              <span class="mc-desc">门诊业务收入</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">住院收入</span>
+              <span class="mc-desc">住院业务收入</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">次均费用</span>
+              <span class="mc-desc">平均每次就诊费用</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">药占比</span>
+              <span class="mc-desc">药品收入占比</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">成本收入比</span>
+              <span class="mc-desc">运营成本 ÷ 收入</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 资源利用指标 -->
+        <div class="metric-category-card">
+          <div class="mc-icon">🔧</div>
+          <h3 class="mc-title">资源利用</h3>
+          <div class="mc-list">
+            <div class="mc-item">
+              <span class="mc-name">设备使用率</span>
+              <span class="mc-desc">大型设备利用程度</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">医生人均门诊量</span>
+              <span class="mc-desc">医生工作负荷</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">护士床位比</span>
+              <span class="mc-desc">护理人员配置</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">检查报告时效</span>
+              <span class="mc-desc">平均出报告时间</span>
+            </div>
+            <div class="mc-item">
+              <span class="mc-name">手术室利用率</span>
+              <span class="mc-desc">手术室利用程度</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据分析框架 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">🧠 数据分析框架</h2>
+        <span class="section-badge">4大框架</span>
+      </div>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="fw-icon">💳</div>
+          <h3 class="fw-title">DRG/DIP 付费分析</h3>
+          <p class="fw-desc">按疾病诊断相关分组付费模式下的成本和收益分析，优化诊疗路径，控制医疗成本，提升运营效率。</p>
+          <div class="fw-steps">
+            <div class="fw-step">分组 → 成本核算 → 盈亏分析 → 路径优化</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">📋</div>
+          <h3 class="fw-title">临床路径分析</h3>
+          <p class="fw-desc">分析诊疗过程的标准化程度和变异情况，优化临床路径，提升医疗质量，降低医疗成本。</p>
+          <div class="fw-steps">
+            <div class="fw-step">路径定义 → 执行监控 → 变异分析 → 持续优化</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">🏥</div>
+          <h3 class="fw-title">医院运营效率模型</h3>
+          <p class="fw-desc">从床位、人力、设备、物资等多维度评估医院运营效率，找到效率提升空间。</p>
+          <div class="fw-steps">
+            <div class="fw-step">资源配置 → 利用效率 → 产出效果 → 优化建议</div>
+          </div>
+        </div>
+        <div class="framework-card">
+          <div class="fw-icon">😊</div>
+          <h3 class="fw-title">患者满意度分析</h3>
+          <p class="fw-desc">从多个维度分析患者满意度，找到影响满意度的关键因素，针对性提升服务质量。</p>
+          <div class="fw-steps">
+            <div class="fw-step">满意度调查 → 维度分析 → 关键因素 → 改进措施</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 典型分析场景 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 典型分析场景</h2>
+        <span class="section-badge">5大场景</span>
+      </div>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">🛏️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">床位使用率优化</h3>
+            <p class="scenario-desc">床位使用率过高或过低都不好，如何优化床位配置？哪些科室床位紧张？哪些闲置？如何动态调配？</p>
+            <div class="scenario-tags">
+              <span class="tag">运营效率</span>
+              <span class="tag">资源配置</span>
+              <span class="tag">优化分析</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">⚕️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">医疗质量评估</h3>
+            <p class="scenario-desc">各科室医疗质量如何？哪些指标不达标？不良事件原因是什么？如何持续改进医疗质量？</p>
+            <div class="scenario-tags">
+              <span class="tag">质量分析</span>
+              <span class="tag">根因分析</span>
+              <span class="tag">持续改进</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">😊</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">患者满意度分析</h3>
+            <p class="scenario-desc">患者满意度怎么样？哪些方面不满意？影响满意度的关键因素是什么？如何提升患者体验？</p>
+            <div class="scenario-tags">
+              <span class="tag">患者体验</span>
+              <span class="tag">满意度分析</span>
+              <span class="tag">服务优化</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">💰</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">成本控制分析</h3>
+            <p class="scenario-desc">医院运营成本如何？哪些成本可以优化？DRG付费下如何控制成本提升效益？</p>
+            <div class="scenario-tags">
+              <span class="tag">成本分析</span>
+              <span class="tag">DRG</span>
+              <span class="tag">效益分析</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🏥</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">科室运营分析</h3>
+            <p class="scenario-desc">各科室运营情况如何？哪些科室效益好？哪些有提升空间？如何制定科室发展策略？</p>
+            <div class="scenario-tags">
+              <span class="tag">科室分析</span>
+              <span class="tag">运营效率</span>
+              <span class="tag">对标分析</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 医疗健康行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  <script src="common.js"></script>
+</body>
+</html>
