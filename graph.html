@@ -700,7 +700,7 @@
             color: '#f59e0b',
             nodes: [
               { name: '信用评估', desc: '评估借款人的信用风险和还款能力', scenarios: ['信贷审批', '额度管理', '定价策略'], related: ['信用评分', '不良率', '风险定价'] },
-              { name: '反欺诈', desc: '识别和防范各类欺诈行为', scenarios: ['申请欺诈', '交易欺诈', '身份盗用'], related: ['反欺诈', '不良率', '信用评分'] },
+              { name: '欺诈防控', desc: '识别和防范各类欺诈行为', scenarios: ['申请欺诈', '交易欺诈', '身份盗用'], related: ['反欺诈', '不良率', '信用评分'] },
               { name: '精准营销', desc: '基于客户画像进行精准产品推荐和营销', scenarios: ['产品推荐', '客户激活', '价值提升'], related: ['客户分层', '用户画像', 'AUM'] },
               { name: '流失预警', desc: '提前识别高流失风险客户并干预', scenarios: ['客户挽留', '价值保全', '客户成功'], related: ['客户分层', 'AUM', '留存率'] },
               { name: '资产配置', desc: '为客户提供个性化资产配置建议', scenarios: ['财富管理', '投资顾问', '产品组合'], related: ['AUM', '客户分层', '人均AUM'] },
@@ -783,7 +783,7 @@
             name: '业务场景',
             color: '#f59e0b',
             nodes: [
-              { name: '直播复盘', desc: '每场直播后系统性复盘和优化', scenarios: ['日常复盘', '大促复盘', '月度总结'], related: ['直播复盘', 'UV价值', '人货场模型'] },
+              { name: '直播优化', desc: '每场直播后系统性复盘和优化', scenarios: ['日常复盘', '大促复盘', '月度总结'], related: ['直播复盘', 'UV价值', '人货场模型'] },
               { name: '主播培养', desc: '培养和提升主播能力', scenarios: ['新人培训', '能力提升', '绩效考核'], related: ['主播评估', '转化率', '互动率'] },
               { name: '选品策略', desc: '优化选品和排品策略', scenarios: ['日常选品', '大促选品', '供应链管理'], related: ['选品分析', 'GMV', '客单价'] },
               { name: '流量投放', desc: '优化付费流量投放，提升ROI', scenarios: ['千川投放', 'DOU+', '流量采买'], related: ['GPM', 'ROI', 'UV价值'] },
@@ -870,7 +870,7 @@
               { name: '商家运营', desc: '商家拓展、运营和服务', scenarios: ['商家拓展', '商家成长', '商家服务'], related: ['商家数', 'GMV', '商家分层'] },
               { name: '用户留存', desc: '提升用户留存和复购', scenarios: ['用户运营', '会员体系', '活动运营'], related: ['复购率', '用户数', 'GMV'] },
               { name: '补贴策略', desc: '制定和优化补贴策略', scenarios: ['新用户补贴', '商家补贴', '活动补贴'], related: ['补贴效率', 'ROI', 'GMV'] },
-              { name: '城市拓展', desc: '新城市拓展和运营', scenarios: ['城市进入', '冷启动', '城市运营'], related: ['城市拓展', 'GMV', '商家数'] },
+              { name: '城市运营', desc: '新城市拓展和运营', scenarios: ['城市进入', '冷启动', '城市运营'], related: ['城市拓展', 'GMV', '商家数'] },
               { name: '供需平衡', desc: '优化供需匹配和平衡', scenarios: ['峰值运营', '供给调度', '需求引导'], related: ['供需匹配', 'GMV', '订单量'] },
               { name: '品类运营', desc: '不同品类的差异化运营', scenarios: ['餐饮', '酒旅', '休闲娱乐', '到店服务'], related: ['GMV', '商家数', '订单量'] }
             ]
@@ -913,7 +913,7 @@
               { name: '质量评估', desc: '评估医疗质量和安全', scenarios: ['质量管理', '安全管理', '持续改进'], related: ['DRG/DIP', '临床路径', '患者满意度'] },
               { name: '患者体验', desc: '提升患者就医体验和满意度', scenarios: ['服务优化', '流程改进', '环境改善'], related: ['患者满意度', '门诊量', '复诊率'] },
               { name: '成本控制', desc: '控制医疗成本，提升运营效率', scenarios: ['成本管理', '预算控制', '耗材管理'], related: ['药占比', 'DRG/DIP', '成本分析'] },
-              { name: '科室运营', desc: '各科室运营管理和优化', scenarios: ['科室建设', '绩效管理', '资源配置'], related: ['科室运营', 'DRG组数', '门诊量'] },
+              { name: '科室管理', desc: '各科室运营管理和优化', scenarios: ['科室建设', '绩效管理', '资源配置'], related: ['科室运营', 'DRG组数', '门诊量'] },
               { name: '医保管理', desc: '医保政策应对和优化', scenarios: ['医保支付', '费用控制', '政策应对'], related: ['DRG/DIP', '药占比', '成本分析'] }
             ]
           }
@@ -939,7 +939,7 @@
             name: '分析方法',
             color: '#10b981',
             nodes: [
-              { name: '渠道分销', desc: '分析产品在各渠道的分销情况和优化空间', formula: '分销率 + 陈列质量 + 价格执行', scenarios: ['渠道管理', '销售执行', '市场覆盖'], related: ['渠道分销', '市场份额', '动销率'] },
+              { name: '渠道分析', desc: '分析产品在各渠道的分销情况和优化空间', formula: '分销率 + 陈列质量 + 价格执行', scenarios: ['渠道管理', '销售执行', '市场覆盖'], related: ['渠道分销', '市场份额', '动销率'] },
               { name: '品类管理', desc: '基于品类角色和表现的商品组合管理', formula: '品类角色 + 品类策略 + 品类评估', scenarios: ['商品组合', '货架管理', '品类优化'], related: ['动销率', '售罄率', '库存周转率'] },
               { name: '促销评估', desc: '评估促销活动的效果和ROI', formula: '增量销售 + 增量利润 + ROI', scenarios: ['促销优化', '预算分配', '活动设计'], related: ['促销ROI', 'GMV', '价格弹性'] },
               { name: '供应链优化', desc: '优化供应链效率和成本', formula: '采购 + 生产 + 仓储 + 物流', scenarios: ['成本优化', '效率提升', '库存优化'], related: ['库存周转率', '动销率', '成本分析'] },
@@ -953,7 +953,7 @@
             nodes: [
               { name: '新品上市', desc: '新品上市的策划和效果追踪', scenarios: ['新品研发', '上市推广', '效果评估'], related: ['售罄率', '动销率', '市场份额'] },
               { name: '渠道健康', desc: '评估和优化渠道健康度', scenarios: ['渠道评估', '经销商管理', '终端执行'], related: ['渠道分销', '动销率', '市场份额'] },
-              { name: '促销ROI', desc: '优化促销活动ROI', scenarios: ['促销策划', '预算分配', '效果评估'], related: ['促销ROI', 'GMV', '价格弹性'] },
+              { name: '促销优化', desc: '优化促销活动ROI', scenarios: ['促销策划', '预算分配', '效果评估'], related: ['促销ROI', 'GMV', '价格弹性'] },
               { name: '库存优化', desc: '优化库存水平和周转', scenarios: ['库存管理', '安全库存', '呆滞库存'], related: ['库存周转率', '动销率', '售罄率'] },
               { name: '品类策略', desc: '制定和优化品类策略', scenarios: ['品类规划', '商品组合', '货架管理'], related: ['品类管理', '动销率', '市场份额'] },
               { name: '竞品分析', desc: '分析竞争对手动态和策略', scenarios: ['竞争监控', '策略应对', '市场份额'], related: ['市场份额', '价格弹性', '渠道分销'] }
@@ -1090,14 +1090,17 @@
       const data = graphData[industryKey];
       if (!data) return;
 
+      // 每次重新初始化，避免状态残留
+      chart.dispose();
+      chart = echarts.init(document.getElementById('graphChart'));
+
       const nodes = [];
       const links = [];
 
       // 中心节点
       nodes.push({
         name: data.name,
-        symbolSize: 60,
-        category: -1,
+        symbolSize: 70,
         itemStyle: {
           color: {
             type: 'radial',
@@ -1116,7 +1119,7 @@
         },
         label: {
           show: true,
-          fontSize: 14,
+          fontSize: 13,
           fontWeight: 'bold',
           color: '#fff'
         }
@@ -1127,7 +1130,7 @@
         // 分类节点
         nodes.push({
           name: cat.name,
-          symbolSize: 40,
+          symbolSize: 52,
           category: catIndex,
           itemStyle: {
             color: cat.color,
@@ -1138,7 +1141,7 @@
           },
           label: {
             show: true,
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: '600',
             color: '#fff'
           }
@@ -1159,7 +1162,7 @@
         cat.nodes.forEach(node => {
           nodes.push({
             name: node.name,
-            symbolSize: 25,
+            symbolSize: 34,
             category: catIndex,
             itemStyle: {
               color: cat.color + 'cc',
@@ -1170,7 +1173,7 @@
             },
             label: {
               show: true,
-              fontSize: 11,
+              fontSize: 10,
               color: '#e2e8f0'
             },
             nodeData: node,
