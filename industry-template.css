@@ -59,6 +59,11 @@
   flex-wrap: wrap;
 }
 
+.page-title-left {
+  flex: 1;
+  min-width: 0;
+}
+
 .page-title {
   font-size: 36px;
   font-weight: 800;
