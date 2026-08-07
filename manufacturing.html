@@ -1,362 +1,25 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>制造业 · 多行业数据百科</title>
+  <title>制造业数据分析 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
-    /* 制造业主题色：科技蓝 */
     :root {
-      --accent-2: #38bdf8;
-      --accent-2-soft: rgba(56, 189, 248, 0.15);
+      --theme-color: #64748b;
+      --theme-color-rgb: 100, 116, 139;
+      --theme-gradient: linear-gradient(135deg, #64748b 0%, #475569 100%);
     }
-
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56, 189, 248, 0.12), transparent);
-    }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent-2), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-
-    .section {
-      margin-bottom: 48px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-icon {
-      font-size: 24px;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 0 24px;
-    }
-
-    /* 指标体系 */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .metric-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .metric-card:hover {
-      border-color: var(--accent-2);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(56, 189, 248, 0.1);
-    }
-
-    .metric-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .metric-formula {
-      font-size: 12px;
-      color: var(--accent-2);
-      font-family: 'Courier New', monospace;
-      margin: 0 0 8px;
-      padding: 4px 8px;
-      background: var(--accent-2-soft);
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .metric-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* 细分领域 */
-    .sub-industry-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-    }
-
-    .sub-industry-card {
-      padding: 28px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .sub-industry-card:hover {
-      border-color: var(--accent-2);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(56, 189, 248, 0.15);
-    }
-
-    .sub-industry-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(14, 165, 233, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .sub-industry-name {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .sub-industry-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0 0 20px;
-    }
-
-    .sub-industry-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .sub-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: var(--glass-highlight);
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 13px;
-      transition: all 0.2s ease;
-    }
-
-    .sub-link:hover {
-      background: var(--accent-2-soft);
-      color: var(--accent-2);
-    }
-
-    .sub-link-arrow {
-      color: var(--text-muted);
-    }
-
-    /* 分析方法 */
-    .method-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .method-card {
-      padding: 18px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .method-card:hover {
-      border-color: var(--accent-2);
-      transform: translateY(-2px);
-    }
-
-    .method-icon {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .method-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 4px;
-    }
-
-    .method-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin: 0;
-    }
-  
-    /* 北极星指标 */
-    .north-star-section {
-      margin-bottom: 48px;
-    }
-
-    .north-star-card {
-      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(56, 189, 248, 0.08));
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .north-star-icon {
-      font-size: 64px;
-      flex-shrink: 0;
-    }
-
-    .north-star-content {
-      flex: 1;
-    }
-
-    .north-star-label {
-      font-size: 12px;
-      color: #38bdf8;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .north-star-name {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 10px;
-    }
-
-    .north-star-formula {
-      font-size: 13px;
-      color: #38bdf8;
-      font-family: "JetBrains Mono", monospace;
-      margin-bottom: 12px;
-      padding: 6px 12px;
-      background: rgba(56, 189, 248, 0.1);
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .north-star-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .north-star-why {
-      flex-shrink: 0;
-      width: 280px;
-      padding-left: 32px;
-      border-left: 1px solid var(--glass-border);
-    }
-
-    .north-star-why-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .north-star-why-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .north-star-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .north-star-why {
-        border-left: none;
-        border-top: 1px solid var(--glass-border);
-        padding-left: 0;
-        padding-top: 20px;
-        width: 100%;
-      }
-    }
-</style>
+  </style>
 </head>
 <body>
   <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -367,25 +30,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item active">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -397,148 +44,455 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
-  <header class="page-header">
-    <h1 class="page-title">制造业数据分析</h1>
-    <p class="page-desc">
-      涵盖陶瓷建材、磁性材料等细分领域，从生产运营到数字化转型的完整数据体系
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">20+</div>
-        <div class="stat-label">核心指标</div>
+<header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>制造业知识框架</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">分析方法</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">1</div>
-        <div class="stat-label">知识框架</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">⭐</div>
-        <div class="stat-label">北极星指标</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">制造业</h1>
+          <p class="page-subtitle">涵盖陶瓷建材、磁性材料等细分领域，从生产运营到数字化转型的完整数据体系</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析方法</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">1</div>
+            <div class="stat-label">知识框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">⭐</div>
+            <div class="stat-label">北极星指标</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="container">
-    
-    <!-- 北极星指标 -->
-    <section class="section north-star-section">
-      <div class="north-star-card">
-        <div class="north-star-icon">⭐</div>
-        <div class="north-star-content">
-          <div class="north-star-label">North Star Metric</div>
-          <h2 class="north-star-name">OEE 设备综合效率</h2>
-          <div class="north-star-formula">时间稼动率 × 性能稼动率 × 良品率</div>
-          <p class="north-star-desc">
-            制造业的黄金标准指标，衡量设备利用效率的综合指标。OEE 同时考虑了设备的可用时间、运行速度和产品质量三个维度。
-          </p>
+  <main class="container">
+        <!-- 多北极星：按业务阶段切换 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="制造北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="oee">
+            <span class="ns-tab-stage">效率</span>
+            <span class="ns-tab-name">OEE</span>
+            <span class="ns-tab-scene">提产与设备管理期，盯综合效率。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="quality">
+            <span class="ns-tab-stage">质量</span>
+            <span class="ns-tab-name">良率</span>
+            <span class="ns-tab-scene">质量攻关或客诉上升时，良率优先。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="otd">
+            <span class="ns-tab-stage">交付</span>
+            <span class="ns-tab-name">OTD</span>
+            <span class="ns-tab-scene">交期承压或旺季排产，履约优先。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="cost">
+            <span class="ns-tab-stage">成本</span>
+            <span class="ns-tab-name">制造成本</span>
+            <span class="ns-tab-scene">降本增效期，盯成本与库存。</span>
+          </button>
         </div>
-        <div class="north-star-why">
-          <div class="north-star-why-title">💡 为什么是它？</div>
-          <p class="north-star-why-text">
-            只看产量不看质量是粗制滥造，只看质量不看效率是作坊生产。OEE 把设备的时间、速度、质量三个维度整合在一起，是生产效率的终极衡量标准。
-          </p>
+
+        <div class="ns-panel is-active" data-ns="oee" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">OEE</div>
+              <div class="ns-formula">时间稼动率 × 性能稼动率 × 良品率</div>
+            </div>
+            <div class="north-star-right"><p>制造业黄金标准，把设备时间、速度、质量合成一个效率指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>提产与设备管理期，盯综合效率。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是 OEE？</div>
+            <p>只看产量不看质量是粗制滥造。OEE 整合时间、速度、质量三维度。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">OEE 设备综合效率</h3>
+            <div class="metric-formula">可用率 × 性能率 × 良率</div>
+            <p class="metric-desc">衡量设备整体利用效率的核心指标，体现设备实际产出与理论产能的比值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">实际产量 ÷ 设计产能</div>
+            <p class="metric-desc">衡量生产能力利用程度，是产能规划和成本分摊的关键依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">生产效率</h3>
+            <div class="metric-formula">标准工时 ÷ 实际工时</div>
+            <p class="metric-desc">衡量生产效率的指标，反映人员和设备的工作效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备故障率</h3>
+            <div class="metric-formula">故障停机时间 ÷ 总运行时间</div>
+            <p class="metric-desc">设备可靠性指标，是预防性维护和设备管理的重要参考</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">良率 / 合格率</h3>
+            <div class="metric-formula">合格数量 ÷ 总生产数量</div>
+            <p class="metric-desc">产品质量的核心指标，直接影响制造成本和客户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交付准时率 OTD</h3>
+            <div class="metric-formula">准时交付订单 ÷ 总订单数</div>
+            <p class="metric-desc">衡量供应链响应能力，直接影响客户满意度和市场竞争力</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">制造成本</h3>
+            <div class="metric-formula">直接材料 + 直接人工 + 制造费用</div>
+            <p class="metric-desc">产品生产成本的总和，是成本控制和定价决策的核心依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存 ÷ (销售成本 ÷ 天数)</div>
+            <p class="metric-desc">原材料、在制品、成品库存的周转速度，影响资金占用和运营效率</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="quality" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">良率</div>
+              <div class="ns-formula">合格数量 ÷ 总生产数量</div>
+            </div>
+            <div class="north-star-right"><p>质量阶段的核心指标，良率直接决定成本与客户满意度。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>质量攻关或客诉上升时，良率优先。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">良率 / 合格率</h3>
+            <div class="metric-formula">合格数量 ÷ 总生产数量</div>
+            <p class="metric-desc">产品质量的核心指标，直接影响制造成本和客户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">OEE 设备综合效率</h3>
+            <div class="metric-formula">可用率 × 性能率 × 良率</div>
+            <p class="metric-desc">衡量设备整体利用效率的核心指标，体现设备实际产出与理论产能的比值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备故障率</h3>
+            <div class="metric-formula">故障停机时间 ÷ 总运行时间</div>
+            <p class="metric-desc">设备可靠性指标，是预防性维护和设备管理的重要参考</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">生产效率</h3>
+            <div class="metric-formula">标准工时 ÷ 实际工时</div>
+            <p class="metric-desc">衡量生产效率的指标，反映人员和设备的工作效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交付准时率 OTD</h3>
+            <div class="metric-formula">准时交付订单 ÷ 总订单数</div>
+            <p class="metric-desc">衡量供应链响应能力，直接影响客户满意度和市场竞争力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">实际产量 ÷ 设计产能</div>
+            <p class="metric-desc">衡量生产能力利用程度，是产能规划和成本分摊的关键依据</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">制造成本</h3>
+            <div class="metric-formula">直接材料 + 直接人工 + 制造费用</div>
+            <p class="metric-desc">产品生产成本的总和，是成本控制和定价决策的核心依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存 ÷ (销售成本 ÷ 天数)</div>
+            <p class="metric-desc">原材料、在制品、成品库存的周转速度，影响资金占用和运营效率</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="otd" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">OTD</div>
+              <div class="ns-formula">准时交付订单 ÷ 总订单数</div>
+            </div>
+            <div class="north-star-right"><p>交付阶段盯供应链响应，影响客户满意度与竞争力。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>交期承压或旺季排产，履约优先。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">交付准时率 OTD</h3>
+            <div class="metric-formula">准时交付订单 ÷ 总订单数</div>
+            <p class="metric-desc">衡量供应链响应能力，直接影响客户满意度和市场竞争力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">实际产量 ÷ 设计产能</div>
+            <p class="metric-desc">衡量生产能力利用程度，是产能规划和成本分摊的关键依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">生产效率</h3>
+            <div class="metric-formula">标准工时 ÷ 实际工时</div>
+            <p class="metric-desc">衡量生产效率的指标，反映人员和设备的工作效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存 ÷ (销售成本 ÷ 天数)</div>
+            <p class="metric-desc">原材料、在制品、成品库存的周转速度，影响资金占用和运营效率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">OEE 设备综合效率</h3>
+            <div class="metric-formula">可用率 × 性能率 × 良率</div>
+            <p class="metric-desc">衡量设备整体利用效率的核心指标，体现设备实际产出与理论产能的比值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">良率 / 合格率</h3>
+            <div class="metric-formula">合格数量 ÷ 总生产数量</div>
+            <p class="metric-desc">产品质量的核心指标，直接影响制造成本和客户满意度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">制造成本</h3>
+            <div class="metric-formula">直接材料 + 直接人工 + 制造费用</div>
+            <p class="metric-desc">产品生产成本的总和，是成本控制和定价决策的核心依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备故障率</h3>
+            <div class="metric-formula">故障停机时间 ÷ 总运行时间</div>
+            <p class="metric-desc">设备可靠性指标，是预防性维护和设备管理的重要参考</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="cost" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">制造成本</div>
+              <div class="ns-formula">直接材料 + 直接人工 + 制造费用</div>
+            </div>
+            <div class="north-star-right"><p>成本阶段看制造成本与库存周转，支撑定价与利润。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>降本增效期，盯成本与库存。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">制造成本</h3>
+            <div class="metric-formula">直接材料 + 直接人工 + 制造费用</div>
+            <p class="metric-desc">产品生产成本的总和，是成本控制和定价决策的核心依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存 ÷ (销售成本 ÷ 天数)</div>
+            <p class="metric-desc">原材料、在制品、成品库存的周转速度，影响资金占用和运营效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">实际产量 ÷ 设计产能</div>
+            <p class="metric-desc">衡量生产能力利用程度，是产能规划和成本分摊的关键依据</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">生产效率</h3>
+            <div class="metric-formula">标准工时 ÷ 实际工时</div>
+            <p class="metric-desc">衡量生产效率的指标，反映人员和设备的工作效率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">OEE 设备综合效率</h3>
+            <div class="metric-formula">可用率 × 性能率 × 良率</div>
+            <p class="metric-desc">衡量设备整体利用效率的核心指标，体现设备实际产出与理论产能的比值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">良率 / 合格率</h3>
+            <div class="metric-formula">合格数量 ÷ 总生产数量</div>
+            <p class="metric-desc">产品质量的核心指标，直接影响制造成本和客户满意度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">交付准时率 OTD</h3>
+            <div class="metric-formula">准时交付订单 ÷ 总订单数</div>
+            <p class="metric-desc">衡量供应链响应能力，直接影响客户满意度和市场竞争力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备故障率</h3>
+            <div class="metric-formula">故障停机时间 ÷ 总运行时间</div>
+            <p class="metric-desc">设备可靠性指标，是预防性维护和设备管理的重要参考</p>
+          </div>
+          </div>
+        </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 核心指标体系 -->
+<!-- 常用分析方法 -->
     <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">📊</span>
-        制造业通用核心指标
-      </h2>
-      <p class="section-desc">生产运营、质量管控、成本效率三大维度的通用指标体系</p>
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <h3 class="metric-name">OEE 设备综合效率</h3>
-          <div class="metric-formula">可用率 × 性能率 × 良率</div>
-          <p class="metric-desc">衡量设备整体利用效率的核心指标，体现设备实际产出与理论产能的比值</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">良率 / 合格率</h3>
-          <div class="metric-formula">合格数量 ÷ 总生产数量</div>
-          <p class="metric-desc">产品质量的核心指标，直接影响制造成本和客户满意度</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">产能利用率</h3>
-          <div class="metric-formula">实际产量 ÷ 设计产能</div>
-          <p class="metric-desc">衡量生产能力利用程度，是产能规划和成本分摊的关键依据</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">生产效率</h3>
-          <div class="metric-formula">标准工时 ÷ 实际工时</div>
-          <p class="metric-desc">衡量生产效率的指标，反映人员和设备的工作效率</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">制造成本</h3>
-          <div class="metric-formula">直接材料 + 直接人工 + 制造费用</div>
-          <p class="metric-desc">产品生产成本的总和，是成本控制和定价决策的核心依据</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">库存周转天数</h3>
-          <div class="metric-formula">平均库存 ÷ (销售成本 ÷ 天数)</div>
-          <p class="metric-desc">原材料、在制品、成品库存的周转速度，影响资金占用和运营效率</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">交付准时率 OTD</h3>
-          <div class="metric-formula">准时交付订单 ÷ 总订单数</div>
-          <p class="metric-desc">衡量供应链响应能力，直接影响客户满意度和市场竞争力</p>
-        </div>
-        <div class="metric-card">
-          <h3 class="metric-name">设备故障率</h3>
-          <div class="metric-formula">故障停机时间 ÷ 总运行时间</div>
-          <p class="metric-desc">设备可靠性指标，是预防性维护和设备管理的重要参考</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 常用分析方法 -->
-    <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">🔧</span>
-        制造业常用分析方法
-      </h2>
+      <h2 class="section-title"><span class="section-icon">🧩</span>制造业常用分析方法</h2>
       <p class="section-desc">生产运营与质量管理的经典分析工具</p>
-      <div class="method-grid">
-        <div class="method-card">
-          <div class="method-icon">📈</div>
-          <h3 class="method-name">SPC 统计过程控制</h3>
-          <p class="method-desc">用控制图监控生产过程稳定性</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">📈</div>
+          <h3 class="framework-name">SPC 统计过程控制</h3>
+          <ul class="framework-list">
+            <li>用控制图监控生产过程稳定性</li>
+          </ul>
         </div>
-        <div class="method-card">
-          <div class="method-icon">🐟</div>
-          <h3 class="method-name">鱼骨图 / 5Why</h3>
-          <p class="method-desc">质量问题根因分析的经典方法</p>
+        <div class="framework-card">
+          <div class="framework-icon">🐟</div>
+          <h3 class="framework-name">鱼骨图 / 5Why</h3>
+          <ul class="framework-list">
+            <li>质量问题根因分析的经典方法</li>
+          </ul>
         </div>
-        <div class="method-card">
-          <div class="method-icon">📊</div>
-          <h3 class="method-name">ABC 分类法</h3>
-          <p class="method-desc">物料/库存的优先级分类管理</p>
+        <div class="framework-card">
+          <div class="framework-icon">📊</div>
+          <h3 class="framework-name">ABC 分类法</h3>
+          <ul class="framework-list">
+            <li>物料/库存的优先级分类管理</li>
+          </ul>
         </div>
-        <div class="method-card">
-          <div class="method-icon">⚙️</div>
-          <h3 class="method-name">精益生产 / TPM</h3>
-          <p class="method-desc">消除浪费、提升设备效率的体系</p>
+        <div class="framework-card">
+          <div class="framework-icon">⚙️</div>
+          <h3 class="framework-name">精益生产 / TPM</h3>
+          <ul class="framework-list">
+            <li>消除浪费、提升设备效率的体系</li>
+          </ul>
         </div>
-        <div class="method-card">
-          <div class="method-icon">🔄</div>
-          <h3 class="method-name">PDCA 循环</h3>
-          <p class="method-desc">持续改进的基本方法论</p>
+        <div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">PDCA 循环</h3>
+          <ul class="framework-list">
+            <li>持续改进的基本方法论</li>
+          </ul>
         </div>
-        <div class="method-card">
-          <div class="method-icon">🎯</div>
-          <h3 class="method-name">六西格玛</h3>
-          <p class="method-desc">数据驱动的质量改进方法论</p>
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">六西格玛</h3>
+          <ul class="framework-list">
+            <li>数据驱动的质量改进方法论</li>
+          </ul>
         </div>
       </div>
     </section>
-  </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 制造业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
   <script src="common.js"></script>
 </body>
 </html>
-

@@ -308,7 +308,15 @@
       :root { --chart-h: 240px; }
     }
   </style>
-<link rel="stylesheet" href="common.css" /></head>
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #38bdf8;
+      --theme-color-rgb: 56, 189, 248;
+    }
+  </style>
+</head>
 <body>
 <!-- 行业百科统一导航 -->
       <nav class="encyclopedia-nav">
@@ -322,25 +330,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -351,7 +343,8 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+
+<div class="container">
     <header class="header glass">
       <div class="header-main">
         <h1>文旅行业收益管理与市场分析 · 知识框架</h1>
@@ -503,7 +496,522 @@
       </div>
     </section>
 
-    <!-- Tab2：门票与酒店收益指标 -->
+        <!-- 多北极星：按业务阶段切换 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="旅游北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="flow">
+            <span class="ns-tab-stage">客流</span>
+            <span class="ns-tab-name">入园人次</span>
+            <span class="ns-tab-scene">旺季保客流或淡季促访。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="revpar">
+            <span class="ns-tab-stage">收益</span>
+            <span class="ns-tab-name">RevPAR</span>
+            <span class="ns-tab-scene">收益管理或房价策略期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="channel">
+            <span class="ns-tab-stage">渠道</span>
+            <span class="ns-tab-name">直订占比</span>
+            <span class="ns-tab-scene">渠道结构优化或 OTA 谈判期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="user">
+            <span class="ns-tab-stage">用户</span>
+            <span class="ns-tab-name">复购率</span>
+            <span class="ns-tab-scene">会员与复购经营期。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="flow" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">入园人次</div>
+              <div class="ns-formula">完成核销并进入游览区的游客总量</div>
+            </div>
+            <div class="north-star-right"><p>客流阶段的核心规模指标，景区经营的基础盘子。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>旺季保客流或淡季促访。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">入园人次（客流量）</h3>
+            <div class="metric-formula">统计期内完成核销并进入游览区的游客总量</div>
+            <p class="metric-desc">可按日/节假日聚合</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">票券核销率</h3>
+            <div class="metric-formula">已核销票数 ÷ 已售票数</div>
+            <p class="metric-desc">衡量动销与囤票风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">提前购票占比</h3>
+            <div class="metric-formula">出游前 N 天及以上完成购票的订单占比</div>
+            <p class="metric-desc">预订节奏与现金流</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新客占比</h3>
+            <div class="metric-formula">首次消费用户占成交用户的比例</div>
+            <p class="metric-desc">拉新结构</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">平均票价（ASP）</h3>
+            <div class="metric-formula">门票销售收入 ÷ 对应售票张数</div>
+            <p class="metric-desc">反映价格带与折扣结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">NPS / 满意度</h3>
+            <div class="metric-formula">推荐意愿或综合满意度得分</div>
+            <p class="metric-desc">可联动差评率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">周期内二次及以上购买的客户比例</div>
+            <p class="metric-desc">忠诚度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">动态定价执行偏差</h3>
+            <div class="metric-formula">实际成交均价与模型建议价的偏离程度</div>
+            <p class="metric-desc">如 MAPE/偏差率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RevPAR</h3>
+            <div class="metric-formula">客房总收入 ÷ 可售房晚数，或 ADR×OCC</div>
+            <p class="metric-desc">酒店收益管理核心标尺</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">入住率（OCC）</h3>
+            <div class="metric-formula">已出租房晚 ÷ 可售房晚</div>
+            <p class="metric-desc">反映需求热度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均房价（ADR）</h3>
+            <div class="metric-formula">客房收入 ÷ 已出租间夜</div>
+            <p class="metric-desc">反映价格实现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可用房收益效率（Yield）</h3>
+            <div class="metric-formula">实际 RevPAR ÷ 理想满房满价下的理论 RevPAR</div>
+            <p class="metric-desc">收益捕获率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道销售占比</h3>
+            <div class="metric-formula">各渠道订单量或收入占全渠道总量的结构占比</div>
+            <p class="metric-desc">渠道结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">直订占比</h3>
+            <div class="metric-formula">官网/小程序/App 等官方触点订单占比</div>
+            <p class="metric-desc">降佣与私域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道边际贡献</h3>
+            <div class="metric-formula">渠道收入减去佣金、促销与履约增量成本后的净贡献</div>
+            <p class="metric-desc">渠道质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RFM 价值分层占比</h3>
+            <div class="metric-formula">按近度、频次、金额综合评分划分结构</div>
+            <p class="metric-desc">头部/腰部/长尾</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="revpar" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">RevPAR</div>
+              <div class="ns-formula">ADR × OCC</div>
+            </div>
+            <div class="north-star-right"><p>酒店收益管理核心标尺，兼顾房价与入住。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>收益管理或房价策略期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">RevPAR</h3>
+            <div class="metric-formula">客房总收入 ÷ 可售房晚数，或 ADR×OCC</div>
+            <p class="metric-desc">酒店收益管理核心标尺</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">入住率（OCC）</h3>
+            <div class="metric-formula">已出租房晚 ÷ 可售房晚</div>
+            <p class="metric-desc">反映需求热度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均房价（ADR）</h3>
+            <div class="metric-formula">客房收入 ÷ 已出租间夜</div>
+            <p class="metric-desc">反映价格实现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可用房收益效率（Yield）</h3>
+            <div class="metric-formula">实际 RevPAR ÷ 理想满房满价下的理论 RevPAR</div>
+            <p class="metric-desc">收益捕获率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均票价（ASP）</h3>
+            <div class="metric-formula">门票销售收入 ÷ 对应售票张数</div>
+            <p class="metric-desc">反映价格带与折扣结构</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">入园人次（客流量）</h3>
+            <div class="metric-formula">统计期内完成核销并进入游览区的游客总量</div>
+            <p class="metric-desc">可按日/节假日聚合</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">票券核销率</h3>
+            <div class="metric-formula">已核销票数 ÷ 已售票数</div>
+            <p class="metric-desc">衡量动销与囤票风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">动态定价执行偏差</h3>
+            <div class="metric-formula">实际成交均价与模型建议价的偏离程度</div>
+            <p class="metric-desc">如 MAPE/偏差率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">提前购票占比</h3>
+            <div class="metric-formula">出游前 N 天及以上完成购票的订单占比</div>
+            <p class="metric-desc">预订节奏与现金流</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道销售占比</h3>
+            <div class="metric-formula">各渠道订单量或收入占全渠道总量的结构占比</div>
+            <p class="metric-desc">渠道结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">直订占比</h3>
+            <div class="metric-formula">官网/小程序/App 等官方触点订单占比</div>
+            <p class="metric-desc">降佣与私域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道边际贡献</h3>
+            <div class="metric-formula">渠道收入减去佣金、促销与履约增量成本后的净贡献</div>
+            <p class="metric-desc">渠道质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新客占比</h3>
+            <div class="metric-formula">首次消费用户占成交用户的比例</div>
+            <p class="metric-desc">拉新结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">周期内二次及以上购买的客户比例</div>
+            <p class="metric-desc">忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RFM 价值分层占比</h3>
+            <div class="metric-formula">按近度、频次、金额综合评分划分结构</div>
+            <p class="metric-desc">头部/腰部/长尾</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">NPS / 满意度</h3>
+            <div class="metric-formula">推荐意愿或综合满意度得分</div>
+            <p class="metric-desc">可联动差评率</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="channel" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">直订占比</div>
+              <div class="ns-formula">官方触点订单占比</div>
+            </div>
+            <div class="north-star-right"><p>渠道阶段盯结构与边际贡献，降佣增直订。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>渠道结构优化或 OTA 谈判期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">直订占比</h3>
+            <div class="metric-formula">官网/小程序/App 等官方触点订单占比</div>
+            <p class="metric-desc">降佣与私域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道销售占比</h3>
+            <div class="metric-formula">各渠道订单量或收入占全渠道总量的结构占比</div>
+            <p class="metric-desc">渠道结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道边际贡献</h3>
+            <div class="metric-formula">渠道收入减去佣金、促销与履约增量成本后的净贡献</div>
+            <p class="metric-desc">渠道质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">提前购票占比</h3>
+            <div class="metric-formula">出游前 N 天及以上完成购票的订单占比</div>
+            <p class="metric-desc">预订节奏与现金流</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">周期内二次及以上购买的客户比例</div>
+            <p class="metric-desc">忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新客占比</h3>
+            <div class="metric-formula">首次消费用户占成交用户的比例</div>
+            <p class="metric-desc">拉新结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均票价（ASP）</h3>
+            <div class="metric-formula">门票销售收入 ÷ 对应售票张数</div>
+            <p class="metric-desc">反映价格带与折扣结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">票券核销率</h3>
+            <div class="metric-formula">已核销票数 ÷ 已售票数</div>
+            <p class="metric-desc">衡量动销与囤票风险</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">入园人次（客流量）</h3>
+            <div class="metric-formula">统计期内完成核销并进入游览区的游客总量</div>
+            <p class="metric-desc">可按日/节假日聚合</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">动态定价执行偏差</h3>
+            <div class="metric-formula">实际成交均价与模型建议价的偏离程度</div>
+            <p class="metric-desc">如 MAPE/偏差率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RevPAR</h3>
+            <div class="metric-formula">客房总收入 ÷ 可售房晚数，或 ADR×OCC</div>
+            <p class="metric-desc">酒店收益管理核心标尺</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">入住率（OCC）</h3>
+            <div class="metric-formula">已出租房晚 ÷ 可售房晚</div>
+            <p class="metric-desc">反映需求热度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均房价（ADR）</h3>
+            <div class="metric-formula">客房收入 ÷ 已出租间夜</div>
+            <p class="metric-desc">反映价格实现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可用房收益效率（Yield）</h3>
+            <div class="metric-formula">实际 RevPAR ÷ 理想满房满价下的理论 RevPAR</div>
+            <p class="metric-desc">收益捕获率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RFM 价值分层占比</h3>
+            <div class="metric-formula">按近度、频次、金额综合评分划分结构</div>
+            <p class="metric-desc">头部/腰部/长尾</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">NPS / 满意度</h3>
+            <div class="metric-formula">推荐意愿或综合满意度得分</div>
+            <p class="metric-desc">可联动差评率</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="user" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">复购率</div>
+              <div class="ns-formula">二次及以上购买客户比例</div>
+            </div>
+            <div class="north-star-right"><p>用户阶段盯复购与价值分层，做私域与忠诚。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>会员与复购经营期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">周期内二次及以上购买的客户比例</div>
+            <p class="metric-desc">忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新客占比</h3>
+            <div class="metric-formula">首次消费用户占成交用户的比例</div>
+            <p class="metric-desc">拉新结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RFM 价值分层占比</h3>
+            <div class="metric-formula">按近度、频次、金额综合评分划分结构</div>
+            <p class="metric-desc">头部/腰部/长尾</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">NPS / 满意度</h3>
+            <div class="metric-formula">推荐意愿或综合满意度得分</div>
+            <p class="metric-desc">可联动差评率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">直订占比</h3>
+            <div class="metric-formula">官网/小程序/App 等官方触点订单占比</div>
+            <p class="metric-desc">降佣与私域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道边际贡献</h3>
+            <div class="metric-formula">渠道收入减去佣金、促销与履约增量成本后的净贡献</div>
+            <p class="metric-desc">渠道质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">入园人次（客流量）</h3>
+            <div class="metric-formula">统计期内完成核销并进入游览区的游客总量</div>
+            <p class="metric-desc">可按日/节假日聚合</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">平均票价（ASP）</h3>
+            <div class="metric-formula">门票销售收入 ÷ 对应售票张数</div>
+            <p class="metric-desc">反映价格带与折扣结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">票券核销率</h3>
+            <div class="metric-formula">已核销票数 ÷ 已售票数</div>
+            <p class="metric-desc">衡量动销与囤票风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">提前购票占比</h3>
+            <div class="metric-formula">出游前 N 天及以上完成购票的订单占比</div>
+            <p class="metric-desc">预订节奏与现金流</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">动态定价执行偏差</h3>
+            <div class="metric-formula">实际成交均价与模型建议价的偏离程度</div>
+            <p class="metric-desc">如 MAPE/偏差率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RevPAR</h3>
+            <div class="metric-formula">客房总收入 ÷ 可售房晚数，或 ADR×OCC</div>
+            <p class="metric-desc">酒店收益管理核心标尺</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">入住率（OCC）</h3>
+            <div class="metric-formula">已出租房晚 ÷ 可售房晚</div>
+            <p class="metric-desc">反映需求热度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均房价（ADR）</h3>
+            <div class="metric-formula">客房收入 ÷ 已出租间夜</div>
+            <p class="metric-desc">反映价格实现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可用房收益效率（Yield）</h3>
+            <div class="metric-formula">实际 RevPAR ÷ 理想满房满价下的理论 RevPAR</div>
+            <p class="metric-desc">收益捕获率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道销售占比</h3>
+            <div class="metric-formula">各渠道订单量或收入占全渠道总量的结构占比</div>
+            <p class="metric-desc">渠道结构</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<!-- Tab2：门票与酒店收益指标 -->
     <section id="tab2" class="tab-panel" role="tabpanel">
       <div class="module-block">
         <h2 class="module-title"><span>门票</span>门票与客流指标（5 项）</h2>
@@ -1119,6 +1627,7 @@
       URL.revokeObjectURL(url);
     });
   </script>
+  <script src="common.js"></script>
 </body>
 </html>
 

@@ -3,307 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>物流与供应链管理 · 数据分析知识框架</title>
+  <title>物流供应链 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-elevated: rgba(15, 23, 42, 0.72);
-      --glass: rgba(30, 41, 59, 0.45);
-      --glass-border: rgba(148, 163, 184, 0.18);
-      --text: #f1f5f9;
-      --text-muted: #cbd5e1;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --radius: 14px;
-      --shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-      --font: "DM Sans", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-      background-image:
-        radial-gradient(ellipse 120% 80% at 10% -10%, rgba(56, 189, 248, 0.12), transparent 50%),
-        radial-gradient(ellipse 80% 60% at 100% 20%, rgba(99, 102, 241, 0.1), transparent 45%),
-        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(14, 165, 233, 0.08), transparent 50%);
-      background-attachment: fixed;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.25rem 1rem 3rem;
-    }
-
-    .header-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .title-block h1 {
-      margin: 0 0 0.35rem;
-      font-size: clamp(1.25rem, 4vw, 1.65rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .title-block p {
-      margin: 0;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-    }
-
-    .export-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      border: 1px solid var(--glass-border);
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-family: inherit;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-      white-space: nowrap;
-    }
-
-    .export-btn:hover {
-      background: rgba(56, 189, 248, 0.25);
-      border-color: rgba(56, 189, 248, 0.35);
-    }
-
-    .export-btn:active {
-      transform: scale(0.98);
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-      padding: 0.35rem;
-      border-radius: var(--radius);
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
-
-    .tab-btn {
-      flex: 1 1 auto;
-      min-width: min(100%, 140px);
-      padding: 0.65rem 0.85rem;
-      border: none;
-      border-radius: 10px;
-      background: transparent;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.2s, background 0.2s;
-    }
-
-    .tab-btn[aria-selected="true"] {
-      background: rgba(15, 23, 42, 0.65);
-      color: var(--text);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-    }
-
-    .tab-panel {
-      display: none;
-    }
-
-    .tab-panel.is-active {
-      display: block;
-      animation: fadeIn 0.28s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .glass-card {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
-    }
-
-    .kb-card {
-      padding: 1rem 1.1rem;
-    }
-
-    .kb-card h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .kb-card .formula {
-      font-size: 0.78rem;
-      color: var(--accent);
-      font-family: ui-monospace, "Cascadia Code", monospace;
-      margin-bottom: 0.45rem;
-    }
-
-    .kb-card p {
-      margin: 0;
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-    }
-
-    .kb-card .scene {
-      margin-top: 0.55rem;
-      padding-top: 0.55rem;
-      border-top: 1px solid var(--glass-border);
-      font-size: 0.78rem;
-      color: #cbd5e1;
-    }
-
-    .grid-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.85rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .section-title {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      margin: 0 0 0.75rem;
-      color: #e2e8f0;
-    }
-
-    .industry-card {
-      padding: 1.15rem 1.25rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .industry-card dl {
-      margin: 0;
-      display: grid;
-      gap: 0.85rem;
-    }
-
-    .industry-card dt {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--accent);
-      margin-bottom: 0.2rem;
-    }
-
-    .industry-card dd {
-      margin: 0;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius);
-      border: 1px solid var(--glass-border);
-      background: rgba(15, 23, 42, 0.35);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8125rem;
-    }
-
-    th,
-    td {
-      padding: 0.65rem 0.85rem;
-      text-align: left;
-      border-bottom: 1px solid var(--glass-border);
-    }
-
-    th {
-      background: rgba(30, 41, 59, 0.6);
-      color: #e2e8f0;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tbody tr:hover td {
-      background: rgba(56, 189, 248, 0.06);
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.15rem 0.45rem;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      background: var(--accent-soft);
-      color: var(--accent);
-    }
-
-    @media (max-width: 640px) {
-      .tabs {
-        flex-direction: column;
-      }
-
-      .tab-btn {
-        min-width: 100%;
-        text-align: center;
-      }
-
-      th,
-      td {
-        padding: 0.5rem 0.6rem;
-        font-size: 0.75rem;
-      }
+      --theme-color: #0ea5e9;
+      --theme-color-rgb: 14, 165, 233;
+      --theme-gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
     }
   </style>
-<link rel="stylesheet" href="common.css" /></head>
+</head>
 <body>
-<!-- 行业百科统一导航 -->
-      <nav class="encyclopedia-nav">
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -314,25 +30,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item active">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -343,718 +43,927 @@
       </div>
     </div>
   </nav>
-  <div class="page">
-    <header class="header-row">
-      <div class="title-block">
-        <h1>物流与供应链管理 · 数据分析知识框架</h1>
-        <p>指标口径、业务场景与可导出 AI 知识库（JSON）</p>
+
+<header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>物流供应链知识框架</span>
       </div>
-      <button type="button" class="export-btn" id="exportKb" title="扫描页面内知识卡片的 data-* 属性并下载">
-        📦 导出AI知识库(JSON)
-      </button>
-    </header>
-
-    <nav class="tabs" role="tablist" aria-label="知识模块">
-      <button type="button" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-1" id="tab-1">仓储管理指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-2" id="tab-2">运输配送指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-3" id="tab-3">供应链协同指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-4" id="tab-4">成本与效率指标</button>
-    </nav>
-
-    <!-- Tab1 -->
-    <section id="panel-1" class="tab-panel is-active" role="tabpanel" aria-labelledby="tab-1">
-      <article
-        class="glass-card kb-card industry-card"
-        data-name="仓储环节行业特征与数字化"
-        data-module="仓储管理"
-        data-type="industry_context"
-        data-formula="—"
-        data-definition="概括仓储环节核心痛点、分析重点与数字化建设方向，为指标解读提供业务语境。"
-        data-business-scene="规划WMS/自动化、设定库存策略与KPI前对齐团队认知。"
-      >
-        <h3 class="section-title" style="margin-bottom: 1rem">行业特征说明</h3>
-        <dl>
-          <div>
-            <dt>核心痛点</dt>
-            <dd>库存积压与缺货并存、库内作业效率波动、账实不符、库容与动线规划滞后于业务变化。</dd>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">物流供应链</h1>
+          <p class="page-subtitle">仓储 · 运输 · 协同 · 成本效率 — 供应链数据分析知识框架</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">25+</div>
+            <div class="stat-label">核心指标</div>
           </div>
-          <div>
-            <dt>分析重点</dt>
-            <dd>周转与结构（ABC/库龄）、空间与设备利用率、入库至出库全链路时效与准确率、安全库存与补货策略。</dd>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析模块</div>
           </div>
-          <div>
-            <dt>数字化方向</dt>
-            <dd>WMS/TMS 联动、条码与RFID、数字孪生与仿真、预测性补货、AGV/AMR 与波次拣选优化。</dd>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
           </div>
-        </dl>
-      </article>
-
-      <h2 class="section-title">仓储管理指标（7项）</h2>
-      <div class="grid-cards">
-        <article
-          class="glass-card kb-card"
-          data-name="库存周转天数"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="平均库存金额(或数量) / 日均出库金额(或数量)"
-          data-definition="库存平均持有天数，衡量库存流转效率与资金占用。"
-          data-business-scene="通常越小越好；需结合服务水平与缺货率综合评估。"
-        >
-          <h3>库存周转天数</h3>
-          <div class="formula">平均库存 / 日均出库量</div>
-          <p>库存平均持有天数，衡量库存流转效率。</p>
-          <div class="scene">越小越好，衡量企业资金效率（需与服务水平平衡）。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="库容利用率"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="已用储位体积(或面积) / 可用储位总体积(或面积) × 100%"
-          data-definition="仓储空间被有效利用的程度。"
-          data-business-scene="过高可能制约吞吐与拣选效率；过低则单位固定成本高。"
-        >
-          <h3>库容利用率</h3>
-          <div class="formula">已用储位 / 可用储位 × 100%</div>
-          <p>反映仓储空间利用水平，关联坪效与扩容决策。</p>
-          <div class="scene">与动线、堆垛高度与安全规范一并评估。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="库存准确率"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="(1 − |账存−实盘|合计 / 盘点总量) × 100%"
-          data-definition="账面库存与实物库存的一致程度。"
-          data-business-scene="直接影响订单满足与补货决策可信度。"
-        >
-          <h3>库存准确率（账实相符）</h3>
-          <div class="formula">1 − 差异绝对值合计 / 盘点总量</div>
-          <p>衡量系统库存与实物的一致性。</p>
-          <div class="scene">高频循环盘点可提升并及早暴露流程问题。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="订单准时发货率"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="承诺时点前完成出库订单数 / 出库订单总数 × 100%"
-          data-definition="在承诺截单/发货时间前完成出库的订单占比。"
-          data-business-scene="体现仓储履约能力，影响客户体验与渠道评分。"
-        >
-          <h3>订单准时发货率</h3>
-          <div class="formula">准时出库订单 / 总订单 × 100%</div>
-          <p>从仓储视角衡量对下游运输与客户承诺的兑现。</p>
-          <div class="scene">与波次策略、人员排班、设备故障率强相关。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="拣货准确率"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="(1 − 拣货差错行项数 / 拣货总行项数) × 100%"
-          data-definition="拣货作业中行项与数量与订单要求一致的比例。"
-          data-business-scene="差错带来逆向物流与赔付，是质量类核心指标。"
-        >
-          <h3>拣货准确率</h3>
-          <div class="formula">1 − 差错行项 / 总行项</div>
-          <p>反映拣选质量与复核机制有效性。</p>
-          <div class="scene">电子标签、语音拣选、复核台可显著改善。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="收货准确率"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="(1 − 收货差错批次或件数 / 收货总批次或件数) × 100%"
-          data-definition="来货清点、质检与上架信息与ASN/采购单一致程度。"
-          data-business-scene="源头错误会放大为全链路库存与订单问题。"
-        >
-          <h3>收货准确率</h3>
-          <div class="formula">1 − 收货差错 / 收货总量</div>
-          <p>入库环节对主数据与实物一致性的保障。</p>
-          <div class="scene">与供应商协同、ASN 预到货信息质量相关。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="呆滞库存比例"
-          data-module="仓储管理"
-          data-type="indicator"
-          data-formula="呆滞品库存金额 / 总库存金额 × 100%"
-          data-definition="长期无动销或超库龄阈值的库存占总库存比重。"
-          data-business-scene="占比上升提示产品结构、需求预测或促销策略需调整。"
-        >
-          <h3>呆滞库存比例</h3>
-          <div class="formula">呆滞品货值 / 总库存货值 × 100%</div>
-          <p>识别资金沉淀与报废风险。</p>
-          <div class="scene">常与库龄报表、ABC 分类联动治理。</div>
-        </article>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
       </div>
+    </div>
+  </header>
 
-      <h2 class="section-title">库存 ABC 分类管理</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>分类</th>
-              <th>金额/周转贡献</th>
-              <th>管理策略</th>
-              <th>库存控制</th>
-              <th>盘点频率</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="tag">A类</span></td>
-              <td>约70–80% 价值，SKU 占比较少</td>
-              <td>精细管理、重点预测与补货</td>
-              <td>低安全库存+高频监控</td>
-              <td>高（如循环/月度）</td>
-            </tr>
-            <tr>
-              <td><span class="tag">B类</span></td>
-              <td>中间层，价值与品种居中</td>
-              <td>标准化流程、适度自动化</td>
-              <td>经济批量与定期评审</td>
-              <td>中</td>
-            </tr>
-            <tr>
-              <td><span class="tag">C类</span></td>
-              <td>低价值或长尾 SKU 较多</td>
-              <td>简化作业、合并订单/线路</td>
-              <td>较高安全库存或双箱法</td>
-              <td>低（如季度）</td>
-            </tr>
-          </tbody>
-        </table>
+  <main class="container">
+        <!-- 多北极星：按业务阶段切换 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="物流北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="otd">
+            <span class="ns-tab-stage">履约</span>
+            <span class="ns-tab-name">OTD</span>
+            <span class="ns-tab-scene">履约考核或旺季保达期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="wh">
+            <span class="ns-tab-stage">仓储</span>
+            <span class="ns-tab-name">库存准确率</span>
+            <span class="ns-tab-scene">仓配优化或盘点整改期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="cost">
+            <span class="ns-tab-stage">成本</span>
+            <span class="ns-tab-name">单件物流成本</span>
+            <span class="ns-tab-scene">降本增效或预算管控期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="sync">
+            <span class="ns-tab-stage">协同</span>
+            <span class="ns-tab-name">完美订单率</span>
+            <span class="ns-tab-scene">端到端协同与供应商管理期。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="otd" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">OTD</div>
+              <div class="ns-formula">约定窗口内送达订单数 / 配送订单总数 × 100%</div>
+            </div>
+            <div class="north-star-right"><p>客户体验与合同 KPI 的核心指标，承诺窗内签收占比。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>履约考核或旺季保达期。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">业务场景</div>
+            <p>客户体验与合同 KPI 的核心指标。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">准时送达率 OTD</h3>
+            <div class="metric-formula">约定窗口内送达订单数 / 配送订单总数 × 100%</div>
+            <p class="metric-desc">在承诺时间窗内完成签收的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">Σ(签收时间 − 出库时间) / 订单数</div>
+            <p class="metric-desc">从仓库出库到客户签收的时长均值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单准时发货率</h3>
+            <div class="metric-formula">承诺时点前完成出库订单数 / 出库订单总数 × 100%</div>
+            <p class="metric-desc">在承诺截单/发货时间前完成出库的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">签收异常率</h3>
+            <div class="metric-formula">拒收、地址不详、客户不在等异常单 / 配送单 × 100%</div>
+            <p class="metric-desc">未能一次成功签收的配送占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">完美订单率</h3>
+            <div class="metric-formula">无差错、准时、完整的订单数 / 订单总数 × 100%</div>
+            <p class="metric-desc">同时满足时间、数量、单证与货品质量要求的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单履约周期</h3>
+            <div class="metric-formula">客户下单至签收的平均时长</div>
+            <p class="metric-desc">从订单接收到客户签收的端到端周期</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">拣货准确率</h3>
+            <div class="metric-formula">(1 − 拣货差错行项数 / 拣货总行项数) × 100%</div>
+            <p class="metric-desc">拣货作业中行项与数量与订单要求一致的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送破损率</h3>
+            <div class="metric-formula">运输环节破损件数或金额 / 配送总件数或货值 × 100%</div>
+            <p class="metric-desc">配送过程中因装卸、震动等造成的货损比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存准确率</h3>
+            <div class="metric-formula">(1 − |账存−实盘|合计 / 盘点总量) × 100%</div>
+            <p class="metric-desc">账面库存与实物库存的一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应商准时交付率</h3>
+            <div class="metric-formula">准时到货批次 / 总到货批次 × 100%</div>
+            <p class="metric-desc">供应商在约定窗口内完成交付的批次占比</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存金额(或数量) / 日均出库金额(或数量)</div>
+            <p class="metric-desc">库存平均持有天数，衡量库存流转效率与资金占用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库容利用率</h3>
+            <div class="metric-formula">已用储位体积(或面积) / 可用储位总体积(或面积) × 100%</div>
+            <p class="metric-desc">仓储空间被有效利用的程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收货准确率</h3>
+            <div class="metric-formula">(1 − 收货差错批次或件数 / 收货总批次或件数) × 100%</div>
+            <p class="metric-desc">来货清点、质检与上架信息与ASN/采购单一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">呆滞库存比例</h3>
+            <div class="metric-formula">呆滞品库存金额 / 总库存金额 × 100%</div>
+            <p class="metric-desc">长期无动销或超库龄阈值的库存占总库存比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车辆装载率</h3>
+            <div class="metric-formula">实际装载量(体积或重量) / 核定运力 × 100%</div>
+            <p class="metric-desc">运输工具容积或载重被利用的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">吨公里成本</h3>
+            <div class="metric-formula">运输总成本 / 总吨公里数</div>
+            <p class="metric-desc">每单位运输工作量（吨×公里）所分摊的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">返程空驶率</h3>
+            <div class="metric-formula">空驶里程 / 总行驶里程 × 100%</div>
+            <p class="metric-desc">车辆无货行驶里程占总里程比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">需求预测准确率</h3>
+            <div class="metric-formula">1 − |预测−实际| / 实际（或 WAPE 等）</div>
+            <p class="metric-desc">预测需求与实际消费的接近程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应链可视化覆盖率</h3>
+            <div class="metric-formula">关键节点可追踪订单或SKU占比 × 100%</div>
+            <p class="metric-desc">在途、在库、在制关键事件可被系统捕获的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应风险暴露指数</h3>
+            <div class="metric-formula">单源关键物料种类×权重 或 综合评分模型</div>
+            <p class="metric-desc">对单一来源、地缘与合规等风险的量化汇总</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单件物流成本</h3>
+            <div class="metric-formula">物流总成本 / 处理件数或订单数</div>
+            <p class="metric-desc">每件货品或每单分摊的物流费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">物流费用率</h3>
+            <div class="metric-formula">物流总成本 / 销售额 × 100%</div>
+            <p class="metric-desc">物流支出占营业收入的比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均作业效率</h3>
+            <div class="metric-formula">出库行项或件数 / 仓储人时</div>
+            <p class="metric-desc">单位人力时间完成的作业量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单位能耗成本</h3>
+            <div class="metric-formula">能源费用 / 吞吐量（吨、件、托盘）</div>
+            <p class="metric-desc">每单位物流产出所消耗的能源成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自动化投资回收期</h3>
+            <div class="metric-formula">初始投资 / 年度节约成本（或增量毛利）</div>
+            <p class="metric-desc">自动化项目收回投资所需时间</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产周转效率（物流相关）</h3>
+            <div class="metric-formula">营业收入 / 平均物流固定资产净值（或托盘等周转资产）</div>
+            <p class="metric-desc">物流相关资产创造收入的能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存持有成本率</h3>
+            <div class="metric-formula">资金占用+仓储+保险+损耗等 / 平均库存金额 × 100%</div>
+            <p class="metric-desc">持有库存所发生的综合成本占库存金额比例</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="wh" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">库存准确率</div>
+              <div class="ns-formula">(1 − |账存−实盘|合计 / 盘点总量) × 100%</div>
+            </div>
+            <div class="north-star-right"><p>仓储阶段盯准确率、周转与库容，是履约的上游基础。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>仓配优化或盘点整改期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">库存准确率</h3>
+            <div class="metric-formula">(1 − |账存−实盘|合计 / 盘点总量) × 100%</div>
+            <p class="metric-desc">账面库存与实物库存的一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存金额(或数量) / 日均出库金额(或数量)</div>
+            <p class="metric-desc">库存平均持有天数，衡量库存流转效率与资金占用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库容利用率</h3>
+            <div class="metric-formula">已用储位体积(或面积) / 可用储位总体积(或面积) × 100%</div>
+            <p class="metric-desc">仓储空间被有效利用的程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单准时发货率</h3>
+            <div class="metric-formula">承诺时点前完成出库订单数 / 出库订单总数 × 100%</div>
+            <p class="metric-desc">在承诺截单/发货时间前完成出库的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拣货准确率</h3>
+            <div class="metric-formula">(1 − 拣货差错行项数 / 拣货总行项数) × 100%</div>
+            <p class="metric-desc">拣货作业中行项与数量与订单要求一致的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收货准确率</h3>
+            <div class="metric-formula">(1 − 收货差错批次或件数 / 收货总批次或件数) × 100%</div>
+            <p class="metric-desc">来货清点、质检与上架信息与ASN/采购单一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">呆滞库存比例</h3>
+            <div class="metric-formula">呆滞品库存金额 / 总库存金额 × 100%</div>
+            <p class="metric-desc">长期无动销或超库龄阈值的库存占总库存比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均作业效率</h3>
+            <div class="metric-formula">出库行项或件数 / 仓储人时</div>
+            <p class="metric-desc">单位人力时间完成的作业量</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">准时送达率 OTD</h3>
+            <div class="metric-formula">约定窗口内送达订单数 / 配送订单总数 × 100%</div>
+            <p class="metric-desc">在承诺时间窗内完成签收的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">完美订单率</h3>
+            <div class="metric-formula">无差错、准时、完整的订单数 / 订单总数 × 100%</div>
+            <p class="metric-desc">同时满足时间、数量、单证与货品质量要求的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">需求预测准确率</h3>
+            <div class="metric-formula">1 − |预测−实际| / 实际（或 WAPE 等）</div>
+            <p class="metric-desc">预测需求与实际消费的接近程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存持有成本率</h3>
+            <div class="metric-formula">资金占用+仓储+保险+损耗等 / 平均库存金额 × 100%</div>
+            <p class="metric-desc">持有库存所发生的综合成本占库存金额比例</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">Σ(签收时间 − 出库时间) / 订单数</div>
+            <p class="metric-desc">从仓库出库到客户签收的时长均值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">签收异常率</h3>
+            <div class="metric-formula">拒收、地址不详、客户不在等异常单 / 配送单 × 100%</div>
+            <p class="metric-desc">未能一次成功签收的配送占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车辆装载率</h3>
+            <div class="metric-formula">实际装载量(体积或重量) / 核定运力 × 100%</div>
+            <p class="metric-desc">运输工具容积或载重被利用的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">吨公里成本</h3>
+            <div class="metric-formula">运输总成本 / 总吨公里数</div>
+            <p class="metric-desc">每单位运输工作量（吨×公里）所分摊的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送破损率</h3>
+            <div class="metric-formula">运输环节破损件数或金额 / 配送总件数或货值 × 100%</div>
+            <p class="metric-desc">配送过程中因装卸、震动等造成的货损比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">返程空驶率</h3>
+            <div class="metric-formula">空驶里程 / 总行驶里程 × 100%</div>
+            <p class="metric-desc">车辆无货行驶里程占总里程比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应商准时交付率</h3>
+            <div class="metric-formula">准时到货批次 / 总到货批次 × 100%</div>
+            <p class="metric-desc">供应商在约定窗口内完成交付的批次占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单履约周期</h3>
+            <div class="metric-formula">客户下单至签收的平均时长</div>
+            <p class="metric-desc">从订单接收到客户签收的端到端周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应链可视化覆盖率</h3>
+            <div class="metric-formula">关键节点可追踪订单或SKU占比 × 100%</div>
+            <p class="metric-desc">在途、在库、在制关键事件可被系统捕获的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应风险暴露指数</h3>
+            <div class="metric-formula">单源关键物料种类×权重 或 综合评分模型</div>
+            <p class="metric-desc">对单一来源、地缘与合规等风险的量化汇总</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单件物流成本</h3>
+            <div class="metric-formula">物流总成本 / 处理件数或订单数</div>
+            <p class="metric-desc">每件货品或每单分摊的物流费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">物流费用率</h3>
+            <div class="metric-formula">物流总成本 / 销售额 × 100%</div>
+            <p class="metric-desc">物流支出占营业收入的比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单位能耗成本</h3>
+            <div class="metric-formula">能源费用 / 吞吐量（吨、件、托盘）</div>
+            <p class="metric-desc">每单位物流产出所消耗的能源成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自动化投资回收期</h3>
+            <div class="metric-formula">初始投资 / 年度节约成本（或增量毛利）</div>
+            <p class="metric-desc">自动化项目收回投资所需时间</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产周转效率（物流相关）</h3>
+            <div class="metric-formula">营业收入 / 平均物流固定资产净值（或托盘等周转资产）</div>
+            <p class="metric-desc">物流相关资产创造收入的能力</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="cost" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">单件物流成本</div>
+              <div class="ns-formula">物流总成本 / 处理件数或订单数</div>
+            </div>
+            <div class="north-star-right"><p>成本阶段看单件成本与费用率，支撑定价与利润。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>降本增效或预算管控期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">单件物流成本</h3>
+            <div class="metric-formula">物流总成本 / 处理件数或订单数</div>
+            <p class="metric-desc">每件货品或每单分摊的物流费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">物流费用率</h3>
+            <div class="metric-formula">物流总成本 / 销售额 × 100%</div>
+            <p class="metric-desc">物流支出占营业收入的比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">吨公里成本</h3>
+            <div class="metric-formula">运输总成本 / 总吨公里数</div>
+            <p class="metric-desc">每单位运输工作量（吨×公里）所分摊的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存持有成本率</h3>
+            <div class="metric-formula">资金占用+仓储+保险+损耗等 / 平均库存金额 × 100%</div>
+            <p class="metric-desc">持有库存所发生的综合成本占库存金额比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车辆装载率</h3>
+            <div class="metric-formula">实际装载量(体积或重量) / 核定运力 × 100%</div>
+            <p class="metric-desc">运输工具容积或载重被利用的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">返程空驶率</h3>
+            <div class="metric-formula">空驶里程 / 总行驶里程 × 100%</div>
+            <p class="metric-desc">车辆无货行驶里程占总里程比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单位能耗成本</h3>
+            <div class="metric-formula">能源费用 / 吞吐量（吨、件、托盘）</div>
+            <p class="metric-desc">每单位物流产出所消耗的能源成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均作业效率</h3>
+            <div class="metric-formula">出库行项或件数 / 仓储人时</div>
+            <p class="metric-desc">单位人力时间完成的作业量</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存金额(或数量) / 日均出库金额(或数量)</div>
+            <p class="metric-desc">库存平均持有天数，衡量库存流转效率与资金占用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库容利用率</h3>
+            <div class="metric-formula">已用储位体积(或面积) / 可用储位总体积(或面积) × 100%</div>
+            <p class="metric-desc">仓储空间被有效利用的程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自动化投资回收期</h3>
+            <div class="metric-formula">初始投资 / 年度节约成本（或增量毛利）</div>
+            <p class="metric-desc">自动化项目收回投资所需时间</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产周转效率（物流相关）</h3>
+            <div class="metric-formula">营业收入 / 平均物流固定资产净值（或托盘等周转资产）</div>
+            <p class="metric-desc">物流相关资产创造收入的能力</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">准时送达率 OTD</h3>
+            <div class="metric-formula">约定窗口内送达订单数 / 配送订单总数 × 100%</div>
+            <p class="metric-desc">在承诺时间窗内完成签收的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">Σ(签收时间 − 出库时间) / 订单数</div>
+            <p class="metric-desc">从仓库出库到客户签收的时长均值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">签收异常率</h3>
+            <div class="metric-formula">拒收、地址不详、客户不在等异常单 / 配送单 × 100%</div>
+            <p class="metric-desc">未能一次成功签收的配送占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">完美订单率</h3>
+            <div class="metric-formula">无差错、准时、完整的订单数 / 订单总数 × 100%</div>
+            <p class="metric-desc">同时满足时间、数量、单证与货品质量要求的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存准确率</h3>
+            <div class="metric-formula">(1 − |账存−实盘|合计 / 盘点总量) × 100%</div>
+            <p class="metric-desc">账面库存与实物库存的一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单准时发货率</h3>
+            <div class="metric-formula">承诺时点前完成出库订单数 / 出库订单总数 × 100%</div>
+            <p class="metric-desc">在承诺截单/发货时间前完成出库的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拣货准确率</h3>
+            <div class="metric-formula">(1 − 拣货差错行项数 / 拣货总行项数) × 100%</div>
+            <p class="metric-desc">拣货作业中行项与数量与订单要求一致的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收货准确率</h3>
+            <div class="metric-formula">(1 − 收货差错批次或件数 / 收货总批次或件数) × 100%</div>
+            <p class="metric-desc">来货清点、质检与上架信息与ASN/采购单一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">呆滞库存比例</h3>
+            <div class="metric-formula">呆滞品库存金额 / 总库存金额 × 100%</div>
+            <p class="metric-desc">长期无动销或超库龄阈值的库存占总库存比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送破损率</h3>
+            <div class="metric-formula">运输环节破损件数或金额 / 配送总件数或货值 × 100%</div>
+            <p class="metric-desc">配送过程中因装卸、震动等造成的货损比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应商准时交付率</h3>
+            <div class="metric-formula">准时到货批次 / 总到货批次 × 100%</div>
+            <p class="metric-desc">供应商在约定窗口内完成交付的批次占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">需求预测准确率</h3>
+            <div class="metric-formula">1 − |预测−实际| / 实际（或 WAPE 等）</div>
+            <p class="metric-desc">预测需求与实际消费的接近程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单履约周期</h3>
+            <div class="metric-formula">客户下单至签收的平均时长</div>
+            <p class="metric-desc">从订单接收到客户签收的端到端周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应链可视化覆盖率</h3>
+            <div class="metric-formula">关键节点可追踪订单或SKU占比 × 100%</div>
+            <p class="metric-desc">在途、在库、在制关键事件可被系统捕获的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应风险暴露指数</h3>
+            <div class="metric-formula">单源关键物料种类×权重 或 综合评分模型</div>
+            <p class="metric-desc">对单一来源、地缘与合规等风险的量化汇总</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="sync" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">完美订单率</div>
+              <div class="ns-formula">无差错、准时、完整的订单数 / 订单总数 × 100%</div>
+            </div>
+            <div class="north-star-right"><p>供应链协同阶段的综合质量指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>端到端协同与供应商管理期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">完美订单率</h3>
+            <div class="metric-formula">无差错、准时、完整的订单数 / 订单总数 × 100%</div>
+            <p class="metric-desc">同时满足时间、数量、单证与货品质量要求的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应商准时交付率</h3>
+            <div class="metric-formula">准时到货批次 / 总到货批次 × 100%</div>
+            <p class="metric-desc">供应商在约定窗口内完成交付的批次占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">需求预测准确率</h3>
+            <div class="metric-formula">1 − |预测−实际| / 实际（或 WAPE 等）</div>
+            <p class="metric-desc">预测需求与实际消费的接近程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单履约周期</h3>
+            <div class="metric-formula">客户下单至签收的平均时长</div>
+            <p class="metric-desc">从订单接收到客户签收的端到端周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应链可视化覆盖率</h3>
+            <div class="metric-formula">关键节点可追踪订单或SKU占比 × 100%</div>
+            <p class="metric-desc">在途、在库、在制关键事件可被系统捕获的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供应风险暴露指数</h3>
+            <div class="metric-formula">单源关键物料种类×权重 或 综合评分模型</div>
+            <p class="metric-desc">对单一来源、地缘与合规等风险的量化汇总</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">准时送达率 OTD</h3>
+            <div class="metric-formula">约定窗口内送达订单数 / 配送订单总数 × 100%</div>
+            <p class="metric-desc">在承诺时间窗内完成签收的订单占比</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">订单准时发货率</h3>
+            <div class="metric-formula">承诺时点前完成出库订单数 / 出库订单总数 × 100%</div>
+            <p class="metric-desc">在承诺截单/发货时间前完成出库的订单占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存准确率</h3>
+            <div class="metric-formula">(1 − |账存−实盘|合计 / 盘点总量) × 100%</div>
+            <p class="metric-desc">账面库存与实物库存的一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拣货准确率</h3>
+            <div class="metric-formula">(1 − 拣货差错行项数 / 拣货总行项数) × 100%</div>
+            <p class="metric-desc">拣货作业中行项与数量与订单要求一致的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">签收异常率</h3>
+            <div class="metric-formula">拒收、地址不详、客户不在等异常单 / 配送单 × 100%</div>
+            <p class="metric-desc">未能一次成功签收的配送占比</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">库存周转天数</h3>
+            <div class="metric-formula">平均库存金额(或数量) / 日均出库金额(或数量)</div>
+            <p class="metric-desc">库存平均持有天数，衡量库存流转效率与资金占用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库容利用率</h3>
+            <div class="metric-formula">已用储位体积(或面积) / 可用储位总体积(或面积) × 100%</div>
+            <p class="metric-desc">仓储空间被有效利用的程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收货准确率</h3>
+            <div class="metric-formula">(1 − 收货差错批次或件数 / 收货总批次或件数) × 100%</div>
+            <p class="metric-desc">来货清点、质检与上架信息与ASN/采购单一致程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">呆滞库存比例</h3>
+            <div class="metric-formula">呆滞品库存金额 / 总库存金额 × 100%</div>
+            <p class="metric-desc">长期无动销或超库龄阈值的库存占总库存比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车辆装载率</h3>
+            <div class="metric-formula">实际装载量(体积或重量) / 核定运力 × 100%</div>
+            <p class="metric-desc">运输工具容积或载重被利用的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">吨公里成本</h3>
+            <div class="metric-formula">运输总成本 / 总吨公里数</div>
+            <p class="metric-desc">每单位运输工作量（吨×公里）所分摊的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送破损率</h3>
+            <div class="metric-formula">运输环节破损件数或金额 / 配送总件数或货值 × 100%</div>
+            <p class="metric-desc">配送过程中因装卸、震动等造成的货损比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">Σ(签收时间 − 出库时间) / 订单数</div>
+            <p class="metric-desc">从仓库出库到客户签收的时长均值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">返程空驶率</h3>
+            <div class="metric-formula">空驶里程 / 总行驶里程 × 100%</div>
+            <p class="metric-desc">车辆无货行驶里程占总里程比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单件物流成本</h3>
+            <div class="metric-formula">物流总成本 / 处理件数或订单数</div>
+            <p class="metric-desc">每件货品或每单分摊的物流费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">物流费用率</h3>
+            <div class="metric-formula">物流总成本 / 销售额 × 100%</div>
+            <p class="metric-desc">物流支出占营业收入的比重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均作业效率</h3>
+            <div class="metric-formula">出库行项或件数 / 仓储人时</div>
+            <p class="metric-desc">单位人力时间完成的作业量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单位能耗成本</h3>
+            <div class="metric-formula">能源费用 / 吞吐量（吨、件、托盘）</div>
+            <p class="metric-desc">每单位物流产出所消耗的能源成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自动化投资回收期</h3>
+            <div class="metric-formula">初始投资 / 年度节约成本（或增量毛利）</div>
+            <p class="metric-desc">自动化项目收回投资所需时间</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产周转效率（物流相关）</h3>
+            <div class="metric-formula">营业收入 / 平均物流固定资产净值（或托盘等周转资产）</div>
+            <p class="metric-desc">物流相关资产创造收入的能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">库存持有成本率</h3>
+            <div class="metric-formula">资金占用+仓储+保险+损耗等 / 平均库存金额 × 100%</div>
+            <p class="metric-desc">持有库存所发生的综合成本占库存金额比例</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Tab2 -->
-    <section id="panel-2" class="tab-panel" role="tabpanel" aria-labelledby="tab-2" hidden>
-      <h2 class="section-title">运输配送指标（7项）</h2>
-      <div class="grid-cards">
-        <article
-          class="glass-card kb-card"
-          data-name="准时送达率 OTD"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="约定窗口内送达订单数 / 配送订单总数 × 100%"
-          data-definition="在承诺时间窗内完成签收的订单占比。"
-          data-business-scene="客户体验与合同 KPI 的核心指标。"
-        >
-          <h3>准时送达率（OTD）</h3>
-          <div class="formula">窗内签收订单 / 总单量 × 100%</div>
-          <p>衡量末端配送对承诺的兑现程度。</p>
-          <div class="scene">需区分「按时揽收」与「按时签收」口径。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="车辆装载率"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="实际装载量(体积或重量) / 核定运力 × 100%"
-          data-definition="运输工具容积或载重被利用的比例。"
-          data-business-scene="过低单位运输成本高；过高可能影响时效与安全。"
-        >
-          <h3>车辆装载率</h3>
-          <div class="formula">实际装载 / 核定运力 × 100%</div>
-          <p>反映配载与线路优化效果。</p>
-          <div class="scene">与拼载、回程货、车型选择密切相关。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="吨公里成本"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="运输总成本 / 总吨公里数"
-          data-definition="每单位运输工作量（吨×公里）所分摊的成本。"
-          data-business-scene="便于跨线路、跨模式对比成本效率。"
-        >
-          <h3>吨公里成本</h3>
-          <div class="formula">运输总成本 / 总吨公里</div>
-          <p>归一化后的成本效率指标。</p>
-          <div class="scene">油价、路桥费、空驶率会显著影响结果。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="配送破损率"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="运输环节破损件数或金额 / 配送总件数或货值 × 100%"
-          data-definition="配送过程中因装卸、震动等造成的货损比例。"
-          data-business-scene="影响索赔、复购与包装方案迭代。"
-        >
-          <h3>配送破损率</h3>
-          <div class="formula">破损量 / 配送总量 × 100%</div>
-          <p>质量与包装、装卸规范的综合体现。</p>
-          <div class="scene">高值货品需单独分层监控。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="平均配送时效"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="Σ(签收时间 − 出库时间) / 订单数"
-          data-definition="从仓库出库到客户签收的时长均值。"
-          data-business-scene="与网络布局、路由与承运商 SLA 绑定。"
-        >
-          <h3>平均配送时效</h3>
-          <div class="formula">Σ(签收−出库) / 订单数</div>
-          <p>衡量端到端配送速度。</p>
-          <div class="scene">可按区域、线路、承运商下钻分析。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="返程空驶率"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="空驶里程 / 总行驶里程 × 100%"
-          data-definition="车辆无货行驶里程占总里程比例。"
-          data-business-scene="返程货与多式联运是主要优化抓手。"
-        >
-          <h3>返程空驶率</h3>
-          <div class="formula">空驶里程 / 总里程 × 100%</div>
-          <p>反映运力回程利用水平。</p>
-          <div class="scene">平台撮合与合同物流对赌可降低成本。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="签收异常率"
-          data-module="运输配送"
-          data-type="indicator"
-          data-formula="拒收、地址不详、客户不在等异常单 / 配送单 × 100%"
-          data-definition="未能一次成功签收的配送占比。"
-          data-business-scene="影响二次配送成本与客户满意度。"
-        >
-          <h3>签收异常率</h3>
-          <div class="formula">异常签收单 / 配送单 × 100%</div>
-          <p>末端预约、地址校验与网点密度的结果指标。</p>
-          <div class="scene">可与客服工单、逆向单量交叉验证。</div>
-        </article>
-      </div>
-
-      <h2 class="section-title">运输方式对比</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>方式</th>
-              <th>速度</th>
-              <th>成本</th>
-              <th>运量</th>
-              <th>适用场景</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>公路</td>
-              <td>较快</td>
-              <td>中</td>
-              <td>中小批量、门到门</td>
-              <td>区域配送、干支线衔接</td>
-            </tr>
-            <tr>
-              <td>铁路</td>
-              <td>中</td>
-              <td>较低（大宗）</td>
-              <td>大批量</td>
-              <td>长距离干线、集装箱班列</td>
-            </tr>
-            <tr>
-              <td>航空</td>
-              <td>快</td>
-              <td>高</td>
-              <td>小批量高时效</td>
-              <td>医药、电子、紧急补货</td>
-            </tr>
-            <tr>
-              <td>水路</td>
-              <td>慢</td>
-              <td>低</td>
-              <td>超大运量</td>
-              <td>国际贸易、散货与集装箱干线</td>
-            </tr>
-            <tr>
-              <td>多式联运</td>
-              <td>灵活</td>
-              <td>综合优化</td>
-              <td>组合</td>
-              <td>公铁水空衔接，降本增效</td>
-            </tr>
-          </tbody>
-        </table>
+<section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span>分析框架与专题模块</h2>
+      <p class="section-desc">由原页面模块与专题说明整理</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">📦</div>
+          <h3 class="framework-name">仓储管理</h3>
+          <ul class="framework-list">
+            <li><strong>库存周转天数</strong></li>
+            <li><strong>库容利用率</strong></li>
+            <li><strong>库存准确率</strong></li>
+            <li><strong>订单准时发货率</strong></li>
+            <li><strong>拣货准确率</strong></li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🚚</div>
+          <h3 class="framework-name">运输配送</h3>
+          <ul class="framework-list">
+            <li><strong>准时送达率 OTD</strong></li>
+            <li><strong>车辆装载率</strong></li>
+            <li><strong>吨公里成本</strong></li>
+            <li><strong>配送破损率</strong></li>
+            <li><strong>平均配送时效</strong></li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔗</div>
+          <h3 class="framework-name">供应链协同</h3>
+          <ul class="framework-list">
+            <li><strong>完美订单率</strong></li>
+            <li><strong>供应商准时交付率</strong></li>
+            <li><strong>需求预测准确率</strong></li>
+            <li><strong>订单履约周期</strong></li>
+            <li><strong>供应链可视化覆盖率</strong></li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">💰</div>
+          <h3 class="framework-name">成本与效率</h3>
+          <ul class="framework-list">
+            <li><strong>单件物流成本</strong></li>
+            <li><strong>物流费用率</strong></li>
+            <li><strong>人均作业效率</strong></li>
+            <li><strong>单位能耗成本</strong></li>
+            <li><strong>自动化投资回收期</strong></li>
+          </ul>
+        </div>
+<div class="framework-card">
+          <div class="framework-icon">🧩</div>
+          <h3 class="framework-name">行业特征说明</h3>
+          <ul class="framework-list">
+            <li><strong>核心痛点</strong> - 库存积压与缺货并存、库内作业效率波动、账实不符、库容与动线规划滞后于业务变化。</li>
+            <li><strong>分析重点</strong> - 周转与结构（ABC/库龄）、空间与设备利用率、入库至出库全链路时效与准确率、安全库存与补货策略。</li>
+            <li><strong>数字化方向</strong> - WMS/TMS 联动、条码与RFID、数字孪生与仿真、预测性补货、AGV/AMR 与波次拣选优化。</li>
+          </ul>
+        </div>
+<div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">运输方式对比</h3>
+          <ul class="framework-list">
+            <li><strong>公路</strong> - 较快 / 中</li>
+            <li><strong>铁路</strong> - 中 / 较低（大宗）</li>
+            <li><strong>航空</strong> - 快 / 高</li>
+            <li><strong>水路</strong> - 慢 / 低</li>
+            <li><strong>多式联运</strong> - 灵活 / 综合优化</li>
+          </ul>
+        </div>
+<div class="framework-card">
+          <div class="framework-icon">📈</div>
+          <h3 class="framework-name">牛鞭效应说明</h3>
+          <ul class="framework-list">
+            <li><strong>现象</strong> - 成因</li>
+            <li><strong>需求波动放大</strong> - 多级预测、批量订货、价格促销</li>
+            <li><strong>库存振荡</strong> - 安全库存叠加、交期不确定性</li>
+            <li><strong>产能与运输尖峰</strong> - 恐慌性加单、配额博弈</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <!-- Tab3 -->
-    <section id="panel-3" class="tab-panel" role="tabpanel" aria-labelledby="tab-3" hidden>
-      <h2 class="section-title">供应链协同指标（6项）</h2>
-      <div class="grid-cards">
-        <article
-          class="glass-card kb-card"
-          data-name="完美订单率"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="无差错、准时、完整的订单数 / 订单总数 × 100%"
-          data-definition="同时满足时间、数量、单证与货品质量要求的订单占比。"
-          data-business-scene="跨部门协同质量的综合体现。"
-        >
-          <h3>完美订单率</h3>
-          <div class="formula">无差错准时完整订单 / 总订单</div>
-          <p>端到端协同结果的「黄金指标」。</p>
-          <div class="scene">需统一口径跨仓储、运输、客服定义。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="供应商准时交付率"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="准时到货批次 / 总到货批次 × 100%"
-          data-definition="供应商在约定窗口内完成交付的批次占比。"
-          data-business-scene="影响生产排程与安全库存设定。"
-        >
-          <h3>供应商准时交付率</h3>
-          <div class="formula">准时批次 / 总到货批次 × 100%</div>
-          <p>上游协同可靠性的直接度量。</p>
-          <div class="scene">可与供应商分级与合同罚则挂钩。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="需求预测准确率"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="1 − |预测−实际| / 实际（或 WAPE 等）"
-          data-definition="预测需求与实际消费的接近程度。"
-          data-business-scene="预测偏差是库存与缺货的根源之一。"
-        >
-          <h3>需求预测准确率</h3>
-          <div class="formula">常用 WAPE、MAPE 或偏差率</div>
-          <p>衡量 S&amp;OP 与算法模型效果。</p>
-          <div class="scene">SKU 粒度与品类季节拆分更可信。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="订单履约周期"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="客户下单至签收的平均时长"
-          data-definition="从订单接收到客户签收的端到端周期。"
-          data-business-scene="反映整体响应速度，含信息与实物流。"
-        >
-          <h3>订单履约周期</h3>
-          <div class="formula">平均(签收时间 − 下单时间)</div>
-          <p>客户视角的供应链响应总时长。</p>
-          <div class="scene">可拆解为订单处理、生产/采购、在途、配送。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="供应链可视化覆盖率"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="关键节点可追踪订单或SKU占比 × 100%"
-          data-definition="在途、在库、在制关键事件可被系统捕获的比例。"
-          data-business-scene="协同与异常预警的前提。"
-        >
-          <h3>供应链可视化覆盖率</h3>
-          <div class="formula">可追踪单量或货值 / 总量 × 100%</div>
-          <p>数据贯通程度的过程指标。</p>
-          <div class="scene">EDI、API、IoT 与承运商回传质量决定上限。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="供应风险暴露指数"
-          data-module="供应链协同"
-          data-type="indicator"
-          data-formula="单源关键物料种类×权重 或 综合评分模型"
-          data-definition="对单一来源、地缘与合规等风险的量化汇总。"
-          data-business-scene="用于双源化、近岸/友岸布局与应急预案。"
-        >
-          <h3>供应风险暴露指数</h3>
-          <div class="formula">多因子加权评分（示例口径）</div>
-          <p>识别结构性脆弱点，支持韧性投资优先级。</p>
-          <div class="scene">需与业务连续性 BCP 定期复盘。</div>
-        </article>
-      </div>
-
-      <h2 class="section-title">牛鞭效应说明</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>现象</th>
-              <th>成因</th>
-              <th>数据表现</th>
-              <th>缓解策略</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>需求波动放大</td>
-              <td>多级预测、批量订货、价格促销</td>
-              <td>上游订单方差 &gt; 下游/终端销售方差</td>
-              <td>信息共享（CPFR）、缩短补货周期、减小批量</td>
-            </tr>
-            <tr>
-              <td>库存振荡</td>
-              <td>安全库存叠加、交期不确定性</td>
-              <td>各节点库存峰值错位、呆滞与缺货交替</td>
-              <td>VMI、协同补货、统一需求计划 S&amp;OP</td>
-            </tr>
-            <tr>
-              <td>产能与运输尖峰</td>
-              <td>恐慌性加单、配额博弈</td>
-              <td>短期运力与仓储爆仓</td>
-              <td>合同约束、透明库存、优先级规则</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👥</span>库存 ABC 分类管理</h2>
+      <p class="section-desc">原页面库存分层管控口径</p>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <h3 class="tier-name">A类</h3>
+          <p class="tier-ratio">约70–80% 价值，SKU 占比较少</p>
+          <ul class="tier-features">
+            <li>精细管理、重点预测与补货</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">B类</h3>
+          <p class="tier-ratio">中间层，价值与品种居中</p>
+          <ul class="tier-features">
+            <li>标准化流程、适度自动化</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">C类</h3>
+          <p class="tier-ratio">低价值或长尾 SKU 较多</p>
+          <ul class="tier-features">
+            <li>简化作业、合并订单/线路</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <!-- Tab4 -->
-    <section id="panel-4" class="tab-panel" role="tabpanel" aria-labelledby="tab-4" hidden>
-      <h2 class="section-title">成本与效率指标（7项）</h2>
-      <div class="grid-cards">
-        <article
-          class="glass-card kb-card"
-          data-name="单件物流成本"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="物流总成本 / 处理件数或订单数"
-          data-definition="每件货品或每单分摊的物流费用。"
-          data-business-scene="规模效应与自动化投资回报的核心对照。"
-        >
-          <h3>单件物流成本</h3>
-          <div class="formula">物流总成本 / 件数或单量</div>
-          <p>归一化后的成本竞争力指标。</p>
-          <div class="scene">需明确是否含包装、退货与客服成本。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="物流费用率"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="物流总成本 / 销售额 × 100%"
-          data-definition="物流支出占营业收入的比重。"
-          data-business-scene="行业对标与预算控制常用口径。"
-        >
-          <h3>物流费用率</h3>
-          <div class="formula">物流总成本 / 销售额 × 100%</div>
-          <p>从财务视角看物流占收入盘子的比例。</p>
-          <div class="scene">不同业态（B2B/B2C）不可简单横向对比。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="人均作业效率"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="出库行项或件数 / 仓储人时"
-          data-definition="单位人力时间完成的作业量。"
-          data-business-scene="衡量劳动生产率与排班合理性。"
-        >
-          <h3>人均作业效率</h3>
-          <div class="formula">作业量 / 人时</div>
-          <p>仓储拣选、复核等环节常用效率指标。</p>
-          <div class="scene">需剔除培训、盘点等非生产工时。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="单位能耗成本"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="能源费用 / 吞吐量（吨、件、托盘）"
-          data-definition="每单位物流产出所消耗的能源成本。"
-          data-business-scene="冷链、自动化立库与 ESG 报告关注度高。"
-        >
-          <h3>单位能耗成本</h3>
-          <div class="formula">能源费用 / 吞吐量</div>
-          <p>绿色物流与成本控制交叉指标。</p>
-          <div class="scene">可与峰谷电价、设备能效标签联动分析。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="自动化投资回收期"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="初始投资 / 年度节约成本（或增量毛利）"
-          data-definition="自动化项目收回投资所需时间。"
-          data-business-scene="设备选型与分阶段上线的决策依据。"
-        >
-          <h3>自动化投资回收期</h3>
-          <div class="formula">投资额 / 年节约额</div>
-          <p>评估 AGV、分拣机、WMS 等项目的财务回报。</p>
-          <div class="scene">需包含运维、残值与业务波动情景。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="库存持有成本率"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="资金占用+仓储+保险+损耗等 / 平均库存金额 × 100%"
-          data-definition="持有库存所发生的综合成本占库存金额比例。"
-          data-business-scene="过高提示周转慢或费率结构不佳。"
-        >
-          <h3>库存持有成本率</h3>
-          <div class="formula">年持有成本 / 平均库存金额 × 100%</div>
-          <p>将库存从「资产」转为「成本视角」管理。</p>
-          <div class="scene">资金利率与仓租上涨会显著推高该指标。</div>
-        </article>
-        <article
-          class="glass-card kb-card"
-          data-name="资产周转效率（物流相关）"
-          data-module="成本与效率"
-          data-type="indicator"
-          data-formula="营业收入 / 平均物流固定资产净值（或托盘等周转资产）"
-          data-definition="物流相关资产创造收入的能力。"
-          data-business-scene="衡量车队、仓库、设备等资产利用效率。"
-        >
-          <h3>资产周转效率（物流相关）</h3>
-          <div class="formula">收入 / 平均物流资产净值</div>
-          <p>从投资效率角度评估物流资产轻重模式。</p>
-          <div class="scene">轻资产外包与自建网络的对比工具。</div>
-        </article>
-      </div>
-
-      <h2 class="section-title">物流成本结构占比（示例口径）</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>成本项</th>
-              <th>典型占比区间</th>
-              <th>说明</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>运输费</td>
-              <td>约 40%–55%</td>
-              <td>干线、城配、燃油与路桥</td>
-            </tr>
-            <tr>
-              <td>仓储费</td>
-              <td>约 15%–25%</td>
-              <td>仓租、操作人工、设备折旧</td>
-            </tr>
-            <tr>
-              <td>库存持有成本</td>
-              <td>约 10%–20%</td>
-              <td>资金占用、保险、损耗</td>
-            </tr>
-            <tr>
-              <td>管理/信息系统</td>
-              <td>约 5%–10%</td>
-              <td>WMS/TMS、人员、办公</td>
-            </tr>
-            <tr>
-              <td>包装与装卸</td>
-              <td>约 5%–12%</td>
-              <td>包材、贴标、装卸外包</td>
-            </tr>
-            <tr>
-              <td>退货与逆向</td>
-              <td>约 3%–8%</td>
-              <td>视品类与渠道政策波动大</td>
-            </tr>
-          </tbody>
-        </table>
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span>典型分析场景</h2>
+      <p class="section-desc">来自原页面指标业务场景说明</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">库存周转天数</h3>
+          <p class="scenario-desc">通常越小越好；需结合服务水平与缺货率综合评估。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">库容利用率</h3>
+          <p class="scenario-desc">过高可能制约吞吐与拣选效率；过低则单位固定成本高。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">库存准确率</h3>
+          <p class="scenario-desc">直接影响订单满足与补货决策可信度。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">订单准时发货率</h3>
+          <p class="scenario-desc">体现仓储履约能力，影响客户体验与渠道评分。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">拣货准确率</h3>
+          <p class="scenario-desc">差错带来逆向物流与赔付，是质量类核心指标。</p>
+        </div>
       </div>
     </section>
-  </div>
+  </main>
 
-  <script>
-    (function () {
-      var tabBtns = document.querySelectorAll(".tab-btn");
-      var panels = document.querySelectorAll(".tab-panel");
-
-      function activateTab(id) {
-        tabBtns.forEach(function (btn) {
-          var sel = btn.id === id;
-          btn.setAttribute("aria-selected", sel ? "true" : "false");
-        });
-        panels.forEach(function (panel) {
-          var active = panel.id === "panel-" + id.replace("tab-", "");
-          panel.classList.toggle("is-active", active);
-          panel.hidden = !active;
-        });
-      }
-
-      tabBtns.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          activateTab(btn.id);
-        });
-      });
-
-      function pad(n) {
-        return n < 10 ? "0" + n : String(n);
-      }
-
-      function isoTimestamp() {
-        var d = new Date();
-        return (
-          d.getFullYear() +
-          "-" +
-          pad(d.getMonth() + 1) +
-          "-" +
-          pad(d.getDate()) +
-          "T" +
-          pad(d.getHours()) +
-          ":" +
-          pad(d.getMinutes()) +
-          ":" +
-          pad(d.getSeconds()) +
-          (function () {
-            var off = -d.getTimezoneOffset();
-            var sign = off >= 0 ? "+" : "-";
-            off = Math.abs(off);
-            return sign + pad(Math.floor(off / 60)) + ":" + pad(off % 60);
-          })()
-        );
-      }
-
-      function readDataset(el) {
-        return {
-          name: el.getAttribute("data-name") || "",
-          module: el.getAttribute("data-module") || "",
-          type: el.getAttribute("data-type") || "",
-          formula: el.getAttribute("data-formula") || "",
-          definition: el.getAttribute("data-definition") || "",
-          business_scene: el.getAttribute("data-business-scene") || ""
-        };
-      }
-
-      document.getElementById("exportKb").addEventListener("click", function () {
-        var cards = document.querySelectorAll(".kb-card[data-name]");
-        var indicators = [];
-        cards.forEach(function (el) {
-          indicators.push(readDataset(el));
-        });
-
-        var payload = {
-          industry: "物流与供应链管理",
-          version: "2.0",
-          export_time: isoTimestamp(),
-          knowledge_base: {
-            indicators: indicators
-          }
-        };
-
-        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = "物流行业_知识库.json";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-    })();
-  </script>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 物流供应链知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  <script src="common.js"></script>
 </body>
 </html>
-
-
-
-

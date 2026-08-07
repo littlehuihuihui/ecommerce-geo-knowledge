@@ -12,6 +12,11 @@
   <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
   <style>
     body { margin: 0; background: #0a0e1a; }
+    :root {
+      --theme-color: #06b6d4;
+      --theme-color-rgb: 6, 182, 212;
+      --theme-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+    }
   </style>
 </head>
 <body>
@@ -26,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link active">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -55,6 +44,39 @@
       </div>
     </div>
   </nav>
+
+<!-- 页面头部（对齐行业知识框架上半区） -->
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>知识图谱</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">知识导航图谱</h1>
+          <p class="page-subtitle">从业务问题、分析方法、指标字典任意入口出发，辐射式探索关联知识</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">80+</div>
+            <div class="stat-label">业务问题</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">58</div>
+            <div class="stat-label">分析方法</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">160+</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">280+</div>
+            <div class="stat-label">关联边</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <div id="kgAutoRoot"></div>
 

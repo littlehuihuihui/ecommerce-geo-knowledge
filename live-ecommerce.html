@@ -10,118 +10,116 @@
   <link rel="stylesheet" href="common.css" />
   <link rel="stylesheet" href="industry-template.css" />
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-  <style>
-    /* 行业主题色：红色 */
+    <style>
     :root {
       --theme-color: #ef4444;
       --theme-color-rgb: 239, 68, 68;
       --theme-gradient: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
     }
+.deep-review-section {
+  margin-top: 40px;
+}
+.deep-review-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+.review-chart-container {
+  height: 400px;
+  position: relative;
+}
+.review-center-score {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+.review-score-number {
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.review-score-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.review-dimensions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.review-dim-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.3s ease;
+}
+.review-dim-item:hover {
+  border-color: var(--theme-color);
+  box-shadow: 0 4px 20px rgba(var(--theme-color-rgb), 0.15);
+  transform: translateX(4px);
+}
+.review-dim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.review-dim-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.review-dim-icon {
+  font-size: 18px;
+}
+.review-dim-percent {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--theme-color);
+}
+.review-dim-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.review-progress-bar {
+  height: 6px;
+  background: var(--bg-secondary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.review-progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.5s ease;
+  width: 0;
+}
+.fill-data { background: linear-gradient(90deg, #ef4444, #f97316); }
+.fill-traffic { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+.fill-conversion { background: linear-gradient(90deg, #22c55e, #4ade80); }
+.fill-product { background: linear-gradient(90deg, #eab308, #facc15); }
+.fill-anchor { background: linear-gradient(90deg, #ec4899, #f472b6); }
+.fill-diagnosis { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+.fill-action { background: linear-gradient(90deg, #14b8a6, #2dd4bf); }
 
-    /* 深度复盘体系 */
-    .deep-review-section {
-      margin-top: 40px;
-    }
-    .deep-review-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      align-items: center;
-    }
-    .review-chart-container {
-      height: 400px;
-      position: relative;
-    }
-    .review-center-score {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      pointer-events: none;
-    }
-    .review-score-number {
-      font-size: 48px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ef4444, #f97316);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-    .review-score-label {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-top: 4px;
-    }
-    .review-dimensions {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .review-dim-item {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 16px 20px;
-      transition: all 0.3s ease;
-    }
-    .review-dim-item:hover {
-      border-color: var(--theme-color);
-      box-shadow: 0 4px 20px rgba(var(--theme-color-rgb), 0.15);
-      transform: translateX(4px);
-    }
-    .review-dim-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .review-dim-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .review-dim-icon {
-      font-size: 18px;
-    }
-    .review-dim-percent {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--theme-color);
-    }
-    .review-dim-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-    }
-    .review-progress-bar {
-      height: 6px;
-      background: var(--bg-secondary);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-    .review-progress-fill {
-      height: 100%;
-      border-radius: 3px;
-      transition: width 1.5s ease;
-      width: 0;
-    }
-    .fill-data { background: linear-gradient(90deg, #ef4444, #f97316); }
-    .fill-traffic { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
-    .fill-conversion { background: linear-gradient(90deg, #22c55e, #4ade80); }
-    .fill-product { background: linear-gradient(90deg, #eab308, #facc15); }
-    .fill-anchor { background: linear-gradient(90deg, #ec4899, #f472b6); }
-    .fill-diagnosis { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
-    .fill-action { background: linear-gradient(90deg, #14b8a6, #2dd4bf); }
   </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -132,25 +130,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item active">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -162,7 +144,7 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
+<!-- 页面头部 -->
   <header class="page-header">
     <div class="container">
       <div class="breadcrumb">
@@ -196,217 +178,344 @@
   </header>
 
   <main class="container">
-    <!-- 北极星指标 -->
+        <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">⭐ 北极星指标</h2>
-        <span class="section-badge">North Star Metric</span>
+        <span class="section-badge">按业务阶段切换</span>
       </div>
-      <div class="north-star-card">
-        <div class="north-star-left">
-          <div class="ns-name">UV 价值</div>
-          <div class="ns-formula">GMV ÷ 观看UV</div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="直播电商北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="traffic">
+            <span class="ns-tab-stage">流量</span>
+            <span class="ns-tab-name">观看UV</span>
+            <span class="ns-tab-scene">投流或预热期，先把人接进直播间。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="uv">
+            <span class="ns-tab-stage">转化</span>
+            <span class="ns-tab-name">UV价值</span>
+            <span class="ns-tab-scene">复盘场次效率，人货场是否匹配。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="gmv">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">GMV</span>
+            <span class="ns-tab-scene">大促或头部场次，盯成交总额。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="quality">
+            <span class="ns-tab-stage">质量</span>
+            <span class="ns-tab-name">退货率</span>
+            <span class="ns-tab-scene">退货投诉抬头时，质量优先。</span>
+          </button>
         </div>
-        <div class="north-star-right">
-          <p>直播电商的核心效率指标，衡量每个观众贡献的销售额，是"人货场"三者匹配度的综合体现。UV 价值越高，流量变现效率越好。</p>
+
+        <div class="ns-panel is-active" data-ns="traffic" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">观看UV</div>
+              <div class="ns-formula">独立观看人数</div>
+            </div>
+            <div class="north-star-right"><p>流量阶段的核心规模指标。没有观看，转化与 GMV 无从谈起。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>投流或预热期，先把人接进直播间。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">观看UV</span><span class="mc-desc">独立观看人数</span></div>
+            <div class="mc-item"><span class="mc-name">观看PV</span><span class="mc-desc">累计观看人次</span></div>
+            <div class="mc-item"><span class="mc-name">最高在线</span><span class="mc-desc">峰值在线人数</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均观看时长</span></div>
+            <div class="mc-item"><span class="mc-name">新增粉丝</span><span class="mc-desc">直播期间新增关注</span></div>
+            <div class="mc-item"><span class="mc-name">转粉率</span><span class="mc-desc">新增粉丝 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">开播时长</span><span class="mc-desc">直播总时长</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">互动率</span><span class="mc-desc">评论/点赞 ÷ 观看</span></div>
+            <div class="mc-item"><span class="mc-name">点击率</span><span class="mc-desc">商品点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">上架SKU数</span><span class="mc-desc">直播上架商品数</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量商品占比</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">UV价值</span><span class="mc-desc">GMV ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付 ÷ 下单</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">GMV</span><span class="mc-desc">成交总额</span></div>
+            <div class="mc-item"><span class="mc-name">爆款数量</span><span class="mc-desc">销量过万商品数</span></div>
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">讲解转化率</span><span class="mc-desc">商品讲解期间转化</span></div>
+            <div class="mc-item"><span class="mc-name">人均GMV</span><span class="mc-desc">每小时GMV</span></div>
+            <div class="mc-item"><span class="mc-name">发货时效</span><span class="mc-desc">平均发货时间</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应</span><span class="mc-desc">平均响应时长</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评占比</span></div>
+            <div class="mc-item"><span class="mc-name">投诉率</span><span class="mc-desc">投诉订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">DSR评分</span><span class="mc-desc">店铺动态评分</span></div>
+            </div>
+          </div>
+          </div>
         </div>
-      </div>
-      <div class="ns-why-card">
-        <div class="ns-why-title">为什么是 UV 价值？</div>
-        <p>只看观看人数不看转化是空有流量，只看GMV不看流量效率是烧钱换规模。UV价值综合反映了主播能力、选品质量和流量精准度，是直播复盘的核心指标。</p>
+        <div class="ns-panel" data-ns="uv" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">UV价值</div>
+              <div class="ns-formula">GMV ÷ 观看UV</div>
+            </div>
+            <div class="north-star-right"><p>直播电商的核心效率指标，衡量每个观众贡献的销售额。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>复盘场次效率，人货场是否匹配。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是 UV 价值？</div>
+            <p>只看观看不看转化是空有流量，只看GMV不看效率是烧钱换规模。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">UV价值</span><span class="mc-desc">GMV ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付 ÷ 下单</span></div>
+            <div class="mc-item"><span class="mc-name">点击率</span><span class="mc-desc">商品点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">讲解转化率</span><span class="mc-desc">商品讲解期间转化</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">互动率</span><span class="mc-desc">评论/点赞 ÷ 观看</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均观看时长</span></div>
+            <div class="mc-item"><span class="mc-name">转粉率</span><span class="mc-desc">新增粉丝 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量商品占比</span></div>
+            <div class="mc-item"><span class="mc-name">爆款数量</span><span class="mc-desc">销量过万商品数</span></div>
+            <div class="mc-item"><span class="mc-name">人均GMV</span><span class="mc-desc">每小时GMV</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评占比</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">观看UV</span><span class="mc-desc">独立观看人数</span></div>
+            <div class="mc-item"><span class="mc-name">观看PV</span><span class="mc-desc">累计观看人次</span></div>
+            <div class="mc-item"><span class="mc-name">最高在线</span><span class="mc-desc">峰值在线人数</span></div>
+            <div class="mc-item"><span class="mc-name">新增粉丝</span><span class="mc-desc">直播期间新增关注</span></div>
+            <div class="mc-item"><span class="mc-name">上架SKU数</span><span class="mc-desc">直播上架商品数</span></div>
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">GMV</span><span class="mc-desc">成交总额</span></div>
+            <div class="mc-item"><span class="mc-name">开播时长</span><span class="mc-desc">直播总时长</span></div>
+            <div class="mc-item"><span class="mc-name">发货时效</span><span class="mc-desc">平均发货时间</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应</span><span class="mc-desc">平均响应时长</span></div>
+            <div class="mc-item"><span class="mc-name">投诉率</span><span class="mc-desc">投诉订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">DSR评分</span><span class="mc-desc">店铺动态评分</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="gmv" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">GMV</div>
+              <div class="ns-formula">成交总额</div>
+            </div>
+            <div class="north-star-right"><p>规模阶段的核心交易指标。大场次冲成交总量。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>大促或头部场次，盯成交总额。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">GMV</span><span class="mc-desc">成交总额</span></div>
+            <div class="mc-item"><span class="mc-name">UV价值</span><span class="mc-desc">GMV ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">观看UV</span><span class="mc-desc">独立观看人数</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">爆款数量</span><span class="mc-desc">销量过万商品数</span></div>
+            <div class="mc-item"><span class="mc-name">人均GMV</span><span class="mc-desc">每小时GMV</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量商品占比</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付 ÷ 下单</span></div>
+            <div class="mc-item"><span class="mc-name">点击率</span><span class="mc-desc">商品点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">讲解转化率</span><span class="mc-desc">商品讲解期间转化</span></div>
+            <div class="mc-item"><span class="mc-name">上架SKU数</span><span class="mc-desc">直播上架商品数</span></div>
+            <div class="mc-item"><span class="mc-name">开播时长</span><span class="mc-desc">直播总时长</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均观看时长</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">投诉率</span><span class="mc-desc">投诉订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评占比</span></div>
+            <div class="mc-item"><span class="mc-name">DSR评分</span><span class="mc-desc">店铺动态评分</span></div>
+            <div class="mc-item"><span class="mc-name">发货时效</span><span class="mc-desc">平均发货时间</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应</span><span class="mc-desc">平均响应时长</span></div>
+            <div class="mc-item"><span class="mc-name">观看PV</span><span class="mc-desc">累计观看人次</span></div>
+            <div class="mc-item"><span class="mc-name">最高在线</span><span class="mc-desc">峰值在线人数</span></div>
+            <div class="mc-item"><span class="mc-name">新增粉丝</span><span class="mc-desc">直播期间新增关注</span></div>
+            <div class="mc-item"><span class="mc-name">互动率</span><span class="mc-desc">评论/点赞 ÷ 观看</span></div>
+            <div class="mc-item"><span class="mc-name">转粉率</span><span class="mc-desc">新增粉丝 ÷ 观看UV</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="quality" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">退货率</div>
+              <div class="ns-formula">退货订单占比</div>
+            </div>
+            <div class="north-star-right"><p>质量阶段盯售后与口碑，避免虚高 GMV。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>退货投诉抬头时，质量优先。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评占比</span></div>
+            <div class="mc-item"><span class="mc-name">投诉率</span><span class="mc-desc">投诉订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">DSR评分</span><span class="mc-desc">店铺动态评分</span></div>
+            <div class="mc-item"><span class="mc-name">发货时效</span><span class="mc-desc">平均发货时间</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应</span><span class="mc-desc">平均响应时长</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付 ÷ 下单</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量商品占比</span></div>
+            <div class="mc-item"><span class="mc-name">讲解转化率</span><span class="mc-desc">商品讲解期间转化</span></div>
+            <div class="mc-item"><span class="mc-name">互动率</span><span class="mc-desc">评论/点赞 ÷ 观看</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均观看时长</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">观看UV</span><span class="mc-desc">独立观看人数</span></div>
+            <div class="mc-item"><span class="mc-name">观看PV</span><span class="mc-desc">累计观看人次</span></div>
+            <div class="mc-item"><span class="mc-name">最高在线</span><span class="mc-desc">峰值在线人数</span></div>
+            <div class="mc-item"><span class="mc-name">新增粉丝</span><span class="mc-desc">直播期间新增关注</span></div>
+            <div class="mc-item"><span class="mc-name">点击率</span><span class="mc-desc">商品点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">UV价值</span><span class="mc-desc">GMV ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">上架SKU数</span><span class="mc-desc">直播上架商品数</span></div>
+            <div class="mc-item"><span class="mc-name">爆款数量</span><span class="mc-desc">销量过万商品数</span></div>
+            <div class="mc-item"><span class="mc-name">GMV</span><span class="mc-desc">成交总额</span></div>
+            <div class="mc-item"><span class="mc-name">开播时长</span><span class="mc-desc">直播总时长</span></div>
+            <div class="mc-item"><span class="mc-name">转粉率</span><span class="mc-desc">新增粉丝 ÷ 观看UV</span></div>
+            <div class="mc-item"><span class="mc-name">人均GMV</span><span class="mc-desc">每小时GMV</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 核心指标体系 -->
+<!-- 数据分析框架 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">📊 核心指标体系</h2>
-        <span class="section-badge">5大维度</span>
-      </div>
-      <div class="metrics-grid">
-        <!-- 流量指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🌐</div>
-          <h3 class="mc-title">流量指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">观看UV</span>
-              <span class="mc-desc">独立观看人数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">观看PV</span>
-              <span class="mc-desc">累计观看人次</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">平均停留时长</span>
-              <span class="mc-desc">用户平均观看时长</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">最高在线</span>
-              <span class="mc-desc">峰值在线人数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">新增粉丝</span>
-              <span class="mc-desc">直播期间新增关注</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 转化指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🎯</div>
-          <h3 class="mc-title">转化指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">点击率</span>
-              <span class="mc-desc">商品点击 ÷ 曝光</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">下单转化率</span>
-              <span class="mc-desc">下单 ÷ 观看UV</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">支付转化率</span>
-              <span class="mc-desc">支付 ÷ 下单</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">UV价值</span>
-              <span class="mc-desc">GMV ÷ 观看UV</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">客单价</span>
-              <span class="mc-desc">平均每单金额</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 商品指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">📦</div>
-          <h3 class="mc-title">商品指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">上架SKU数</span>
-              <span class="mc-desc">直播上架商品数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">动销率</span>
-              <span class="mc-desc">有销量商品占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">爆款数量</span>
-              <span class="mc-desc">销量过万商品数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">退货率</span>
-              <span class="mc-desc">退货订单占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">GMV</span>
-              <span class="mc-desc">成交总额</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 主播指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🎤</div>
-          <h3 class="mc-title">主播指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">开播时长</span>
-              <span class="mc-desc">直播总时长</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">互动率</span>
-              <span class="mc-desc">评论/点赞 ÷ 观看</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">转粉率</span>
-              <span class="mc-desc">新增粉丝 ÷ 观看UV</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">讲解转化率</span>
-              <span class="mc-desc">商品讲解期间转化</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">人均GMV</span>
-              <span class="mc-desc">每小时GMV</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 服务指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🛎️</div>
-          <h3 class="mc-title">服务指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">发货时效</span>
-              <span class="mc-desc">平均发货时间</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">客服响应</span>
-              <span class="mc-desc">平均响应时长</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">好评率</span>
-              <span class="mc-desc">好评占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">投诉率</span>
-              <span class="mc-desc">投诉订单占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">DSR评分</span>
-              <span class="mc-desc">店铺动态评分</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 数据分析框架 -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🧠 数据分析框架</h2>
-        <span class="section-badge">4大框架</span>
-      </div>
+      <h2 class="section-title"><span class="section-icon">🧩</span>数据分析框架</h2>
+      <p class="section-desc">行业经典分析框架与方法论</p>
       <div class="framework-grid">
-        <div class="framework-card">
-          <div class="fw-icon">👥📦🎬</div>
-          <h3 class="fw-title">人货场模型</h3>
-          <p class="fw-desc">从主播（人）、商品（货）、场景（场）三个维度分析直播表现，找到优化方向。</p>
-          <div class="fw-steps">
-            <div class="fw-step">人：主播能力 + 流量质量</div>
-            <div class="fw-step">货：选品 + 价格 + 供应链</div>
-            <div class="fw-step">场：直播间 + 场景 + 氛围</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">👥📦🎬</div>
+          <h3 class="framework-name">人货场模型</h3>
+          <ul class="framework-list">
+            <li>从主播（人）、商品（货）、场景（场）三个维度分析直播表现，找到优化方向。</li>
+            <li><strong>人</strong> - 主播能力 + 流量质量</li>
+            <li><strong>货</strong> - 选品 + 价格 + 供应链</li>
+            <li><strong>场</strong> - 直播间 + 场景 + 氛围</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">📋</div>
-          <h3 class="fw-title">直播复盘体系</h3>
-          <p class="fw-desc">系统化的直播后复盘流程，从数据到问题到优化，形成完整的PDCA闭环。</p>
-          <div class="fw-steps">
-            <div class="fw-step">数据复盘 → 流量复盘 → 转化复盘</div>
-            <div class="fw-step">商品复盘 → 主播复盘 → 问题诊断</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">📋</div>
+          <h3 class="framework-name">直播复盘体系</h3>
+          <ul class="framework-list">
+            <li>系统化的直播后复盘流程，从数据到问题到优化，形成完整的PDCA闭环。</li>
+            <li>数据复盘 → 流量复盘 → 转化复盘</li>
+            <li>商品复盘 → 主播复盘 → 问题诊断</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">🔻</div>
-          <h3 class="fw-title">流量漏斗分析</h3>
-          <p class="fw-desc">从曝光到支付的全链路漏斗，定位流失最大环节，针对性优化。</p>
-          <div class="fw-steps">
-            <div class="fw-step">曝光 → 进入 → 停留 → 点击 → 下单 → 支付</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🔻</div>
+          <h3 class="framework-name">流量漏斗分析</h3>
+          <ul class="framework-list">
+            <li>从曝光到支付的全链路漏斗，定位流失最大环节，针对性优化。</li>
+            <li>曝光 → 进入 → 停留 → 点击 → 下单 → 支付</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">💰</div>
-          <h3 class="fw-title">GMV 拆解模型</h3>
-          <p class="fw-desc">将GMV拆解为可运营的子指标，找到增长杠杆，制定针对性策略。</p>
-          <div class="fw-steps">
-            <div class="fw-step">GMV = 观看UV × 转化率 × 客单价</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">💰</div>
+          <h3 class="framework-name">GMV 拆解模型</h3>
+          <ul class="framework-list">
+            <li>将GMV拆解为可运营的子指标，找到增长杠杆，制定针对性策略。</li>
+            <li>GMV = 观看UV × 转化率 × 客单价</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -502,73 +611,35 @@
 
     <!-- 典型分析场景 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🎯 典型分析场景</h2>
-        <span class="section-badge">5大场景</span>
-      </div>
-      <div class="scenario-list">
-        <div class="scenario-item">
+      <h2 class="section-title"><span class="section-icon">💡</span>典型分析场景</h2>
+      <p class="section-desc">常见业务问题与分析切入点</p>
+            <div class="scenario-grid">
+        <div class="scenario-card">
           <div class="scenario-icon">📋</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">直播复盘</h3>
-            <p class="scenario-desc">一场直播结束后，如何系统复盘？哪些做得好？哪些需要改进？下一场怎么优化？</p>
-            <div class="scenario-tags">
-              <span class="tag">复盘体系</span>
-              <span class="tag">数据分析</span>
-              <span class="tag">优化策略</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">直播复盘</h3>
+          <p class="scenario-desc">一场直播结束后，如何系统复盘？哪些做得好？哪些需要改进？下一场怎么优化？（复盘体系 · 数据分析 · 优化策略）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🎤</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">主播能力评估</h3>
-            <p class="scenario-desc">不同主播的能力差异如何评估？哪些维度差距最大？如何针对性提升主播能力？</p>
-            <div class="scenario-tags">
-              <span class="tag">主播分析</span>
-              <span class="tag">能力模型</span>
-              <span class="tag">对标分析</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">主播能力评估</h3>
+          <p class="scenario-desc">不同主播的能力差异如何评估？哪些维度差距最大？如何针对性提升主播能力？（主播分析 · 能力模型 · 对标分析）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📦</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">选品策略优化</h3>
-            <p class="scenario-desc">什么样的品卖得好？为什么？选品逻辑是什么？如何优化选品结构提升GMV？</p>
-            <div class="scenario-tags">
-              <span class="tag">选品分析</span>
-              <span class="tag">爆款分析</span>
-              <span class="tag">品类策略</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">选品策略优化</h3>
+          <p class="scenario-desc">什么样的品卖得好？为什么？选品逻辑是什么？如何优化选品结构提升GMV？（选品分析 · 爆款分析 · 品类策略）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📢</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">流量投放优化</h3>
-            <p class="scenario-desc">投放ROI怎么样？哪个渠道效果最好？如何优化投放策略提升流量效率？</p>
-            <div class="scenario-tags">
-              <span class="tag">流量分析</span>
-              <span class="tag">ROI分析</span>
-              <span class="tag">投放优化</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">流量投放优化</h3>
+          <p class="scenario-desc">投放ROI怎么样？哪个渠道效果最好？如何优化投放策略提升流量效率？（流量分析 · ROI分析 · 投放优化）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📈</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">转化率提升</h3>
-            <p class="scenario-desc">转化率低的原因是什么？哪个环节流失最大？如何优化提升整体转化率？</p>
-            <div class="scenario-tags">
-              <span class="tag">漏斗分析</span>
-              <span class="tag">转化优化</span>
-              <span class="tag">A/B测试</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">转化率提升</h3>
+          <p class="scenario-desc">转化率低的原因是什么？哪个环节流失最大？如何优化提升整体转化率？（漏斗分析 · 转化优化 · A/B测试）</p>
         </div>
-      </div>
-    </section>
+      </div></section>
   </main>
 
   <!-- 页脚 -->

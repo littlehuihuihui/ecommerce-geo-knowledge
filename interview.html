@@ -9,57 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
   <style>
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(251, 191, 36, 0.12), transparent);
+    :root {
+      --theme-color: #fbbf24;
+      --theme-color-rgb: 251, 191, 36;
+      --theme-gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
     }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--warning), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .container {
+.container {
       max-width: 900px;
       margin: 0 auto;
       padding: 0 24px 60px;
@@ -299,18 +254,7 @@
     }
 
     @media (max-width: 768px) {
-      .page-title {
-        font-size: 28px;
-      }
-
-      .stats-bar {
-        gap: 24px;
-      }
-
-      .stat-num {
-        font-size: 22px;
-      }
-    }
+}
   </style>
 
   <link rel="stylesheet" href="knowledge-graph-embed.css" />
@@ -330,25 +274,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link active">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -360,33 +288,41 @@
     </div>
   </nav>
 
-  <div class="view-switch-wrap">
+<div class="view-switch-wrap">
     <div class="view-switch" role="tablist">
       <button type="button" class="view-btn active" data-view="list">列表浏览</button>
       <button type="button" class="view-btn" data-view="graph">知识图谱</button>
     </div>
   </div>
 
-
-  <!-- 页面头部 -->
-  <div class="page-header">
-    <h1 class="page-title">业务问题拆解</h1>
-    <p class="page-desc">各行业经典业务问题的结构化分析思路，展示数据驱动的问题解决能力</p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">70+</div>
-        <div class="stat-label">业务问题</div>
+  <!-- 页面头部（对齐行业知识框架上半区） -->
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>业务问题拆解</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">14</div>
-        <div class="stat-label">覆盖行业</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">3</div>
-        <div class="stat-label">难度分级</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">业务问题拆解</h1>
+          <p class="page-subtitle">各行业经典业务问题的结构化分析思路，展示数据驱动的问题解决能力</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">80+</div>
+            <div class="stat-label">业务问题</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">15</div>
+            <div class="stat-label">覆盖行业</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">3</div>
+            <div class="stat-label">难度分级</div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </header>
 
   <div class="container">
     <!-- 筛选栏 -->
@@ -558,8 +494,7 @@
                 </li>
               </ul>
             `
-          }
-
+          },
           {
             title: "如何选定业务的北极星指标？",
             difficulty: "medium",

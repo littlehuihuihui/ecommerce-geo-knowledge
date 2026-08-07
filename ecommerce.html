@@ -19,8 +19,8 @@
   </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -31,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item active">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -61,7 +45,7 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
+<!-- 页面头部 -->
   <header class="page-header">
     <div class="container">
       <div class="breadcrumb">
@@ -95,199 +79,328 @@
   </header>
 
   <main class="container">
-    <!-- 北极星指标 -->
+    <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">⭐ 北极星指标</h2>
-        <span class="section-badge">North Star Metric</span>
+        <span class="section-badge">按业务阶段切换</span>
       </div>
-      <div class="north-star-card">
-        <div class="north-star-left">
-          <div class="ns-name">GMV / 成交总额</div>
-          <div class="ns-formula">访客数 × 转化率 × 客单价</div>
-        </div>
-        <div class="north-star-right">
-          <p>电商行业的核心规模指标，衡量平台或店铺的交易总量。GMV 由流量、转化、客单价三大因子驱动，是电商运营的核心指挥棒，所有运营动作最终都指向 GMV 增长。</p>
-        </div>
-      </div>
-      <div class="ns-why-card">
-        <div class="ns-why-title">为什么是 GMV？</div>
-        <p>流量只看不买是空有流量，利润只看结果不看过程。GMV 同时涵盖了流量、转化、客单价三大核心维度，是电商业务的综合体现，也是最直观的业务健康度指标。</p>
-      </div>
-    </section>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
 
-    <!-- 核心指标体系 -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">📊 核心指标体系</h2>
-        <span class="section-badge">6大维度</span>
-      </div>
-      <div class="metrics-grid">
-        <!-- 流量指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🌐</div>
-          <h3 class="mc-title">流量指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">UV / 访客数</span>
-              <span class="mc-desc">独立访客数量</span>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="电商北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="acquire">
+            <span class="ns-tab-stage">获客期</span>
+            <span class="ns-tab-name">UV / 访客数</span>
+            <span class="ns-tab-scene">冷启动或投放扩张，先把人接进店。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="convert">
+            <span class="ns-tab-stage">转化期</span>
+            <span class="ns-tab-name">转化率</span>
+            <span class="ns-tab-scene">有流量不成交，盯漏斗哪里掉人。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="gmv">
+            <span class="ns-tab-stage">规模期</span>
+            <span class="ns-tab-name">GMV / 成交总额</span>
+            <span class="ns-tab-scene">大促或冲规模，看交易总量能否拉起来。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="retain">
+            <span class="ns-tab-stage">复购期</span>
+            <span class="ns-tab-name">复购率 / LTV</span>
+            <span class="ns-tab-scene">从拉新转向老客经营与长期价值。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="acquire" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">UV / 访客数</div>
+              <div class="ns-formula">独立访客数量</div>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">PV / 浏览量</span>
-              <span class="mc-desc">页面浏览次数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">访问深度</span>
-              <span class="mc-desc">PV ÷ UV</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">平均停留时长</span>
-              <span class="mc-desc">用户平均停留时间</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">跳失率</span>
-              <span class="mc-desc">只看一页就离开的比例</span>
+            <div class="north-star-right">
+              <p>获客阶段的核心规模指标。流量只看不买是空有流量，但没有访客，后续转化与 GMV 无从谈起。</p>
             </div>
           </div>
-        </div>
-
-        <!-- 转化指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🎯</div>
-          <h3 class="mc-title">转化指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">转化率</span>
-              <span class="mc-desc">成交用户 ÷ 访客数</span>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>冷启动或投放扩张，先把人接进店。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">加购率</span>
-              <span class="mc-desc">加购用户 ÷ 访客数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">收藏率</span>
-              <span class="mc-desc">收藏用户 ÷ 访客数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">下单转化率</span>
-              <span class="mc-desc">下单用户 ÷ 访客数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">支付转化率</span>
-              <span class="mc-desc">支付用户 ÷ 下单用户</span>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">UV / 访客数</span><span class="mc-desc">独立访客数量</span></div>
+            <div class="mc-item"><span class="mc-name">PV / 浏览量</span><span class="mc-desc">页面浏览次数</span></div>
+            <div class="mc-item"><span class="mc-name">点击率 CTR</span><span class="mc-desc">点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">CPC</span><span class="mc-desc">单次点击成本</span></div>
+            <div class="mc-item"><span class="mc-name">新客数</span><span class="mc-desc">首次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">ROI</span><span class="mc-desc">投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">CAC</span><span class="mc-desc">获客成本</span></div>
             </div>
           </div>
-        </div>
-
-        <!-- 用户指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">👥</div>
-          <h3 class="mc-title">用户指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">新客数</span>
-              <span class="mc-desc">首次购买用户数</span>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">老客数</span>
-              <span class="mc-desc">再次购买用户数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">复购率</span>
-              <span class="mc-desc">购买2次以上用户占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">客单价</span>
-              <span class="mc-desc">平均每单金额</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">LTV</span>
-              <span class="mc-desc">用户生命周期价值</span>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">访问深度</span><span class="mc-desc">PV ÷ UV</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均停留时间</span></div>
+            <div class="mc-item"><span class="mc-name">跳失率</span><span class="mc-desc">只看一页就离开的比例</span></div>
+            <div class="mc-item"><span class="mc-name">收藏率</span><span class="mc-desc">收藏用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">加购率</span><span class="mc-desc">加购用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应时长</span><span class="mc-desc">平均首次响应时间</span></div>
             </div>
           </div>
-        </div>
-
-        <!-- 商品指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">📦</div>
-          <h3 class="mc-title">商品指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">SKU 数</span>
-              <span class="mc-desc">在售商品数量</span>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">动销率</span>
-              <span class="mc-desc">有销量SKU占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">库存周转天数</span>
-              <span class="mc-desc">平均库存周转周期</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">售罄率</span>
-              <span class="mc-desc">已售数量 ÷ 进货数量</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">退货率</span>
-              <span class="mc-desc">退货订单占比</span>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">转化率</span><span class="mc-desc">成交用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付用户 ÷ 下单用户</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">退款率</span><span class="mc-desc">退款订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">购买2次以上用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">老客数</span><span class="mc-desc">再次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">LTV</span><span class="mc-desc">用户生命周期价值</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售商品数量</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">售罄率</span><span class="mc-desc">已售数量 ÷ 进货数量</span></div>
+            <div class="mc-item"><span class="mc-name">优惠券使用率</span><span class="mc-desc">使用优惠券 ÷ 发放优惠券</span></div>
+            <div class="mc-item"><span class="mc-name">DSR 评分</span><span class="mc-desc">描述/服务/物流三项评分</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评 ÷ 总评价</span></div>
+            <div class="mc-item"><span class="mc-name">物流时效</span><span class="mc-desc">平均发货/送达时间</span></div>
             </div>
           </div>
-        </div>
-
-        <!-- 营销指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">📢</div>
-          <h3 class="mc-title">营销指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">ROI</span>
-              <span class="mc-desc">投入产出比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">CAC</span>
-              <span class="mc-desc">获客成本</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">点击率 CTR</span>
-              <span class="mc-desc">点击 ÷ 曝光</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">CPC</span>
-              <span class="mc-desc">单次点击成本</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">优惠券使用率</span>
-              <span class="mc-desc">使用优惠券 ÷ 发放优惠券</span>
-            </div>
           </div>
         </div>
-
-        <!-- 服务指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🛎️</div>
-          <h3 class="mc-title">服务指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">DSR 评分</span>
-              <span class="mc-desc">描述/服务/物流三项评分</span>
+        <div class="ns-panel" data-ns="convert" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">转化率</div>
+              <div class="ns-formula">成交用户 ÷ 访客数</div>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">好评率</span>
-              <span class="mc-desc">好评 ÷ 总评价</span>
+            <div class="north-star-right">
+              <p>转化阶段的核心效率指标。流量已有，要把「看」变成「买」，用漏斗拆解定位流失最大的环节。</p>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">退款率</span>
-              <span class="mc-desc">退款订单占比</span>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>有流量不成交，盯漏斗哪里掉人。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">客服响应时长</span>
-              <span class="mc-desc">平均首次响应时间</span>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">转化率</span><span class="mc-desc">成交用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">加购率</span><span class="mc-desc">加购用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">收藏率</span><span class="mc-desc">收藏用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付用户 ÷ 下单用户</span></div>
+            <div class="mc-item"><span class="mc-name">优惠券使用率</span><span class="mc-desc">使用优惠券 ÷ 发放优惠券</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
             </div>
-            <div class="mc-item">
-              <span class="mc-name">物流时效</span>
-              <span class="mc-desc">平均发货/送达时间</span>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
             </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">UV / 访客数</span><span class="mc-desc">独立访客数量</span></div>
+            <div class="mc-item"><span class="mc-name">访问深度</span><span class="mc-desc">PV ÷ UV</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均停留时间</span></div>
+            <div class="mc-item"><span class="mc-name">跳失率</span><span class="mc-desc">只看一页就离开的比例</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应时长</span><span class="mc-desc">平均首次响应时间</span></div>
+            <div class="mc-item"><span class="mc-name">DSR 评分</span><span class="mc-desc">描述/服务/物流三项评分</span></div>
+            <div class="mc-item"><span class="mc-name">物流时效</span><span class="mc-desc">平均发货/送达时间</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">退款率</span><span class="mc-desc">退款订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评 ÷ 总评价</span></div>
+            <div class="mc-item"><span class="mc-name">CAC</span><span class="mc-desc">获客成本</span></div>
+            <div class="mc-item"><span class="mc-name">ROI</span><span class="mc-desc">投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">CPC</span><span class="mc-desc">单次点击成本</span></div>
+            <div class="mc-item"><span class="mc-name">点击率 CTR</span><span class="mc-desc">点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">PV / 浏览量</span><span class="mc-desc">页面浏览次数</span></div>
+            <div class="mc-item"><span class="mc-name">新客数</span><span class="mc-desc">首次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">老客数</span><span class="mc-desc">再次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">购买2次以上用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">LTV</span><span class="mc-desc">用户生命周期价值</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售商品数量</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">售罄率</span><span class="mc-desc">已售数量 ÷ 进货数量</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="gmv" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">GMV / 成交总额</div>
+              <div class="ns-formula">访客数 × 转化率 × 客单价</div>
+            </div>
+            <div class="north-star-right">
+              <p>规模阶段的核心指挥棒。GMV 同时涵盖流量、转化、客单价，是最直观的业务健康度与交易总量指标。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>大促或冲规模，看交易总量能否拉起来。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是 GMV？</div>
+            <p>流量只看不买是空有流量，利润只看结果不看过程。GMV 同时涵盖了流量、转化、客单价三大核心维度，是电商业务的综合体现。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">UV / 访客数</span><span class="mc-desc">独立访客数量</span></div>
+            <div class="mc-item"><span class="mc-name">转化率</span><span class="mc-desc">成交用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售商品数量</span></div>
+            <div class="mc-item"><span class="mc-name">ROI</span><span class="mc-desc">投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付用户 ÷ 下单用户</span></div>
+            <div class="mc-item"><span class="mc-name">加购率</span><span class="mc-desc">加购用户 ÷ 访客数</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">售罄率</span><span class="mc-desc">已售数量 ÷ 进货数量</span></div>
+            <div class="mc-item"><span class="mc-name">物流时效</span><span class="mc-desc">平均发货/送达时间</span></div>
+            <div class="mc-item"><span class="mc-name">DSR 评分</span><span class="mc-desc">描述/服务/物流三项评分</span></div>
+            <div class="mc-item"><span class="mc-name">访问深度</span><span class="mc-desc">PV ÷ UV</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均停留时间</span></div>
+            <div class="mc-item"><span class="mc-name">优惠券使用率</span><span class="mc-desc">使用优惠券 ÷ 发放优惠券</span></div>
+            <div class="mc-item"><span class="mc-name">新客数</span><span class="mc-desc">首次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">老客数</span><span class="mc-desc">再次购买用户数</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">退款率</span><span class="mc-desc">退款订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">CAC</span><span class="mc-desc">获客成本</span></div>
+            <div class="mc-item"><span class="mc-name">跳失率</span><span class="mc-desc">只看一页就离开的比例</span></div>
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评 ÷ 总评价</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应时长</span><span class="mc-desc">平均首次响应时间</span></div>
+            <div class="mc-item"><span class="mc-name">CPC</span><span class="mc-desc">单次点击成本</span></div>
+            <div class="mc-item"><span class="mc-name">点击率 CTR</span><span class="mc-desc">点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">PV / 浏览量</span><span class="mc-desc">页面浏览次数</span></div>
+            <div class="mc-item"><span class="mc-name">收藏率</span><span class="mc-desc">收藏用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">购买2次以上用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">LTV</span><span class="mc-desc">用户生命周期价值</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="retain" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">复购率 / LTV</div>
+              <div class="ns-formula">购买2次以上用户占比 · 用户生命周期价值</div>
+            </div>
+            <div class="north-star-right">
+              <p>复购阶段的核心价值指标。获客成本抬升后，要用老客贡献与 LTV 衡量生意是否可持续。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>从拉新转向老客经营与长期价值。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">购买2次以上用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">LTV</span><span class="mc-desc">用户生命周期价值</span></div>
+            <div class="mc-item"><span class="mc-name">老客数</span><span class="mc-desc">再次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">新客数</span><span class="mc-desc">首次购买用户数</span></div>
+            <div class="mc-item"><span class="mc-name">客单价</span><span class="mc-desc">平均每单金额</span></div>
+            <div class="mc-item"><span class="mc-name">转化率</span><span class="mc-desc">成交用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">优惠券使用率</span><span class="mc-desc">使用优惠券 ÷ 发放优惠券</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">好评率</span><span class="mc-desc">好评 ÷ 总评价</span></div>
+            <div class="mc-item"><span class="mc-name">DSR 评分</span><span class="mc-desc">描述/服务/物流三项评分</span></div>
+            <div class="mc-item"><span class="mc-name">客服响应时长</span><span class="mc-desc">平均首次响应时间</span></div>
+            <div class="mc-item"><span class="mc-name">物流时效</span><span class="mc-desc">平均发货/送达时间</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销量SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">售罄率</span><span class="mc-desc">已售数量 ÷ 进货数量</span></div>
+            <div class="mc-item"><span class="mc-name">访问深度</span><span class="mc-desc">PV ÷ UV</span></div>
+            <div class="mc-item"><span class="mc-name">平均停留时长</span><span class="mc-desc">用户平均停留时间</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">退款率</span><span class="mc-desc">退款订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">退货率</span><span class="mc-desc">退货订单占比</span></div>
+            <div class="mc-item"><span class="mc-name">CAC</span><span class="mc-desc">获客成本</span></div>
+            <div class="mc-item"><span class="mc-name">ROI</span><span class="mc-desc">投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">跳失率</span><span class="mc-desc">只看一页就离开的比例</span></div>
+            <div class="mc-item"><span class="mc-name">UV / 访客数</span><span class="mc-desc">独立访客数量</span></div>
+            <div class="mc-item"><span class="mc-name">PV / 浏览量</span><span class="mc-desc">页面浏览次数</span></div>
+            <div class="mc-item"><span class="mc-name">加购率</span><span class="mc-desc">加购用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">收藏率</span><span class="mc-desc">收藏用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">下单转化率</span><span class="mc-desc">下单用户 ÷ 访客数</span></div>
+            <div class="mc-item"><span class="mc-name">支付转化率</span><span class="mc-desc">支付用户 ÷ 下单用户</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售商品数量</span></div>
+            <div class="mc-item"><span class="mc-name">点击率 CTR</span><span class="mc-desc">点击 ÷ 曝光</span></div>
+            <div class="mc-item"><span class="mc-name">CPC</span><span class="mc-desc">单次点击成本</span></div>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -295,68 +408,52 @@
 
     <!-- 数据分析框架 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🧠 数据分析框架</h2>
-        <span class="section-badge">4大框架</span>
-      </div>
+      <h2 class="section-title"><span class="section-icon">🧩</span>数据分析框架</h2>
+      <p class="section-desc">行业经典分析框架与方法论</p>
       <div class="framework-grid">
-        <div class="framework-card">
-          <div class="fw-icon">🔻</div>
-          <h3 class="fw-title">转化漏斗分析</h3>
-          <p class="fw-desc">从曝光到支付的全链路转化拆解，定位流失最大环节，针对性优化提升整体转化率。</p>
-          <div class="fw-steps">
-            <div class="fw-step">曝光 → 点击 → 访问 → 加购 → 下单 → 支付</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🔻</div>
+          <h3 class="framework-name">转化漏斗分析</h3>
+          <ul class="framework-list">
+            <li>从曝光到支付的全链路转化拆解，定位流失最大环节，针对性优化提升整体转化率。</li>
+            <li>曝光 → 点击 → 访问 → 加购 → 下单 → 支付</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">🔄</div>
-          <h3 class="fw-title">用户生命周期</h3>
-          <p class="fw-desc">将用户 journey 分为引入期、成长期、成熟期、衰退期、流失期，各阶段针对性运营。</p>
-          <div class="fw-steps">
-            <div class="fw-step">引入 → 成长 → 成熟 → 衰退 → 流失</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">用户生命周期</h3>
+          <ul class="framework-list">
+            <li>将用户 journey 分为引入期、成长期、成熟期、衰退期、流失期，各阶段针对性运营。</li>
+            <li>引入 → 成长 → 成熟 → 衰退 → 流失</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">💰</div>
-          <h3 class="fw-title">GMV 拆解模型</h3>
-          <p class="fw-desc">将 GMV 层层拆解为可运营的子指标，找到增长杠杆，制定针对性增长策略。</p>
-          <div class="fw-steps">
-            <div class="fw-step">GMV = 流量 × 转化率 × 客单价 × 复购次数</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">💰</div>
+          <h3 class="framework-name">GMV 拆解模型</h3>
+          <ul class="framework-list">
+            <li>将 GMV 层层拆解为可运营的子指标，找到增长杠杆，制定针对性增长策略。</li>
+            <li>GMV = 流量 × 转化率 × 客单价 × 复购次数</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">📈</div>
-          <h3 class="fw-title">营销效果评估</h3>
-          <p class="fw-desc">从曝光到转化的全链路营销效果追踪，评估各渠道 ROI，优化营销预算分配。</p>
-          <div class="fw-steps">
-            <div class="fw-step">曝光 → 点击 → 转化 → ROI → LTV/CAC</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">📈</div>
+          <h3 class="framework-name">营销效果评估</h3>
+          <ul class="framework-list">
+            <li>从曝光到转化的全链路营销效果追踪，评估各渠道 ROI，优化营销预算分配。</li>
+            <li>曝光 → 点击 → 转化 → ROI → LTV/CAC</li>
+          </ul>
         </div>
       </div>
     </section>
 
     <!-- 用户价值分层 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">👥 用户价值分层（RFM）</h2>
-        <span class="section-badge">RFM 模型</span>
-      </div>
-      <div class="user-tier-grid">
-        <div class="tier-card tier-high">
-          <div class="tier-header">
-            <span class="tier-icon">💎</span>
-            <span class="tier-name">高价值用户</span>
-          </div>
-          <div class="tier-metrics">
-            <div class="tier-metric">
-              <span class="tm-label">占比</span>
-              <span class="tm-value">~20%</span>
-            </div>
-            <div class="tier-metric">
-              <span class="tm-label">贡献</span>
-              <span class="tm-value">~80% 收入</span>
-            </div>
-          </div>
+      <h2 class="section-title"><span class="section-icon">👥</span>用户价值分层（RFM）</h2>
+      <p class="section-desc">用户/业务分层模型</p>
+            <div class="tier-grid">
+        <div class="tier-card">
+          <h3 class="tier-name">💎 高价值用户</h3>
+          <p class="tier-ratio">占比 ~20% · 贡献 ~80% 收入</p>
           <ul class="tier-features">
             <li>最近购买时间近</li>
             <li>购买频率高</li>
@@ -364,21 +461,9 @@
             <li>重点维护，VIP服务</li>
           </ul>
         </div>
-        <div class="tier-card tier-mid">
-          <div class="tier-header">
-            <span class="tier-icon">⭐</span>
-            <span class="tier-name">潜力用户</span>
-          </div>
-          <div class="tier-metrics">
-            <div class="tier-metric">
-              <span class="tm-label">占比</span>
-              <span class="tm-value">~30%</span>
-            </div>
-            <div class="tier-metric">
-              <span class="tm-label">贡献</span>
-              <span class="tm-value">~15% 收入</span>
-            </div>
-          </div>
+        <div class="tier-card">
+          <h3 class="tier-name">⭐ 潜力用户</h3>
+          <p class="tier-ratio">占比 ~30% · 贡献 ~15% 收入</p>
           <ul class="tier-features">
             <li>有购买但频率不高</li>
             <li>有提升空间</li>
@@ -386,21 +471,9 @@
             <li>个性化推荐</li>
           </ul>
         </div>
-        <div class="tier-card tier-low">
-          <div class="tier-header">
-            <span class="tier-icon">⚠️</span>
-            <span class="tier-name">流失预警</span>
-          </div>
-          <div class="tier-metrics">
-            <div class="tier-metric">
-              <span class="tm-label">占比</span>
-              <span class="tm-value">~50%</span>
-            </div>
-            <div class="tier-metric">
-              <span class="tm-label">贡献</span>
-              <span class="tm-value">~5% 收入</span>
-            </div>
-          </div>
+        <div class="tier-card">
+          <h3 class="tier-name">⚠️ 流失预警</h3>
+          <p class="tier-ratio">占比 ~50% · 贡献 ~5% 收入</p>
           <ul class="tier-features">
             <li>很久没购买</li>
             <li>购买频率低</li>
@@ -413,73 +486,35 @@
 
     <!-- 典型分析场景 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🎯 典型分析场景</h2>
-        <span class="section-badge">5大场景</span>
-      </div>
-      <div class="scenario-list">
-        <div class="scenario-item">
+      <h2 class="section-title"><span class="section-icon">💡</span>典型分析场景</h2>
+      <p class="section-desc">常见业务问题与分析切入点</p>
+            <div class="scenario-grid">
+        <div class="scenario-card">
           <div class="scenario-icon">📉</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">GMV 下降归因</h3>
-            <p class="scenario-desc">GMV 突然下降，如何快速定位原因？是流量少了？转化低了？还是客单价降了？哪个渠道/品类/人群影响最大？</p>
-            <div class="scenario-tags">
-              <span class="tag">指标拆解</span>
-              <span class="tag">维度下钻</span>
-              <span class="tag">归因分析</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">GMV 下降归因</h3>
+          <p class="scenario-desc">GMV 突然下降，如何快速定位原因？是流量少了？转化低了？还是客单价降了？哪个渠道/品类/人群影响最大？（指标拆解 · 维度下钻 · 归因分析）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🔻</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">转化漏斗优化</h3>
-            <p class="scenario-desc">从曝光到支付，哪个环节流失最大？为什么流失？如何优化？通过 A/B 测试验证优化效果。</p>
-            <div class="scenario-tags">
-              <span class="tag">漏斗分析</span>
-              <span class="tag">A/B测试</span>
-              <span class="tag">用户行为</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">转化漏斗优化</h3>
+          <p class="scenario-desc">从曝光到支付，哪个环节流失最大？为什么流失？如何优化？通过 A/B 测试验证优化效果。（漏斗分析 · A/B测试 · 用户行为）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📢</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">营销 ROI 评估</h3>
-            <p class="scenario-desc">各个营销渠道的效果如何？哪个渠道 ROI 最高？预算应该怎么分配？如何优化投放策略？</p>
-            <div class="scenario-tags">
-              <span class="tag">渠道分析</span>
-              <span class="tag">ROI分析</span>
-              <span class="tag">预算优化</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">营销 ROI 评估</h3>
+          <p class="scenario-desc">各个营销渠道的效果如何？哪个渠道 ROI 最高？预算应该怎么分配？如何优化投放策略？（渠道分析 · ROI分析 · 预算优化）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🔄</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">复购率提升</h3>
-            <p class="scenario-desc">如何提升用户复购率？什么样的用户更容易复购？什么时候触达效果最好？用什么方式触达？</p>
-            <div class="scenario-tags">
-              <span class="tag">用户分层</span>
-              <span class="tag">留存分析</span>
-              <span class="tag">精准营销</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">复购率提升</h3>
+          <p class="scenario-desc">如何提升用户复购率？什么样的用户更容易复购？什么时候触达效果最好？用什么方式触达？（用户分层 · 留存分析 · 精准营销）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📦</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">选品策略优化</h3>
-            <p class="scenario-desc">什么样的商品卖得好？为什么？如何优化商品结构？新品应该怎么选？库存怎么管理？</p>
-            <div class="scenario-tags">
-              <span class="tag">商品分析</span>
-              <span class="tag">ABC分类</span>
-              <span class="tag">库存优化</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">选品策略优化</h3>
+          <p class="scenario-desc">什么样的商品卖得好？为什么？如何优化商品结构？新品应该怎么选？库存怎么管理？（商品分析 · ABC分类 · 库存优化）</p>
         </div>
-      </div>
-    </section>
+      </div></section>
   </main>
 
   <!-- 页脚 -->

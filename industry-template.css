@@ -211,6 +211,179 @@
   line-height: 1.7;
 }
 
+/* ---- 多北极星切换 ---- */
+.ns-switch {
+  margin-bottom: 8px;
+}
+.ns-tabs {
+  display: grid;
+  grid-template-columns: repeat(var(--ns-cols, 4), minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+.ns-tab {
+  appearance: none;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text-muted);
+  border-radius: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.ns-system-head {
+  margin: 8px 0 14px;
+}
+.ns-system-title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ns-system-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.ns-group .metrics-grid {
+  margin-top: 4px;
+}
+.ns-tab:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.45);
+  color: var(--text);
+}
+.ns-tab.is-active {
+  border-color: rgba(var(--theme-color-rgb), 0.65);
+  background: rgba(var(--theme-color-rgb), 0.14);
+  color: var(--text);
+  box-shadow: 0 0 0 1px rgba(var(--theme-color-rgb), 0.2);
+}
+.ns-tab-stage {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--theme-color);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  min-height: 1.3em;
+}
+.ns-tab-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.35;
+  min-height: calc(1.35em * 2); /* 预留两行，避免换行把阶段名挤乱 */
+}
+.ns-tab-scene {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin-top: auto;
+}
+.ns-tab.is-active .ns-tab-scene {
+  color: #cbd5e1;
+}
+.ns-panel {
+  display: none;
+}
+.ns-panel.is-active {
+  display: block;
+  animation: nsFade 0.25s ease;
+}
+@keyframes nsFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.ns-scene-banner {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 16px;
+  margin: -4px 0 18px;
+  border-radius: 10px;
+  background: rgba(var(--theme-color-rgb), 0.08);
+  border: 1px dashed rgba(var(--theme-color-rgb), 0.3);
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.ns-scene-banner strong {
+  color: var(--theme-color);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.ns-metric-groups {
+  display: grid;
+  gap: 16px;
+}
+.ns-group {
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.ns-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ns-group-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+.ns-group-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.ns-group-core .ns-group-tag {
+  color: #67e8f9;
+  background: rgba(6, 182, 212, 0.12);
+  border-color: rgba(6, 182, 212, 0.28);
+}
+.ns-group-guard .ns-group-tag {
+  color: #fcd34d;
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.28);
+}
+.ns-group-risk .ns-group-tag {
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.12);
+  border-color: rgba(248, 113, 113, 0.28);
+}
+.ns-group .mc-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px 14px;
+}
+.ns-group .mc-item {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.12);
+}
+.ns-group .mc-item:last-child {
+  border-bottom: none;
+}
+
 /* ---- 指标分类卡片 ---- */
 .metrics-grid {
   display: grid;
@@ -605,6 +778,15 @@
   background: var(--accent-soft);
 }
 
+@media (max-width: 1100px) and (min-width: 769px) {
+  .ns-tab-scene {
+    font-size: 11px;
+  }
+  .ns-tab {
+    padding: 10px 12px;
+  }
+}
+
 /* ---- 响应式 ---- */
 @media (max-width: 768px) {
   .page-title {
@@ -629,7 +811,240 @@
     min-width: 0;
   }
 
+  .ns-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .ns-scene-banner {
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .scenario-item {
     flex-direction: column;
+  }
+}
+
+/* ========================================
+   游戏风格下半区兼容样式（主题色变量）
+   ======================================== */
+
+.section-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.section-title .section-icon {
+  margin-right: 4px;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+.section-header + .section-desc {
+  margin-top: -8px;
+}
+
+/* 游戏式指标分类 */
+.metric-category {
+  margin-bottom: 32px;
+}
+
+.category-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 16px;
+  padding-left: 12px;
+  border-left: 3px solid var(--theme-color);
+}
+
+.metric-card {
+  padding: 20px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.metric-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.metric-formula {
+  font-size: 12px;
+  color: var(--theme-color);
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  margin: 0 0 8px;
+  padding: 4px 8px;
+  background: rgba(var(--theme-color-rgb), 0.1);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.metric-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 游戏式框架图标盒 */
+.framework-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--theme-color-rgb), 0.2),
+    rgba(var(--theme-color-rgb), 0.08)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.framework-card:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+  box-shadow: 0 12px 32px rgba(var(--theme-color-rgb), 0.15);
+}
+
+/* 游戏式分层网格 */
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.tier-grid .tier-card {
+  text-align: center;
+}
+
+.tier-ratio {
+  font-size: 13px;
+  color: var(--theme-color);
+  font-weight: 500;
+  margin: 0 0 12px;
+}
+
+.tier-grid .tier-features {
+  text-align: left;
+}
+
+.tier-grid .tier-card:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.45);
+  box-shadow: 0 8px 24px rgba(var(--theme-color-rgb), 0.12);
+}
+
+/* 游戏式场景卡片网格（增强已有定义） */
+.scenario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.scenario-card {
+  padding: 20px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.scenario-card:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.scenario-card .scenario-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.scenario-card .scenario-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.scenario-card .scenario-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 制造业方法卡兼容 */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.method-card {
+  padding: 20px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.method-card:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(var(--theme-color-rgb), 0.12);
+}
+
+.method-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--theme-color-rgb), 0.2),
+    rgba(var(--theme-color-rgb), 0.08)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.method-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.method-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .tier-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }

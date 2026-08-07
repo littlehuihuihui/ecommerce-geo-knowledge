@@ -16,56 +16,6 @@
       --theme-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
     }
 
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99, 102, 241, 0.12), transparent);
-    }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: var(--theme-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -158,6 +108,7 @@
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .method-card::before {
@@ -180,6 +131,67 @@
 
     .method-card:hover::before {
       height: 100%;
+    }
+
+    .method-card-hint {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #818cf8;
+      opacity: 0.9;
+    }
+
+    /* 跳转确认弹层 */
+    .kg-ask-mask {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(2, 6, 23, 0.62);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .kg-ask-dialog {
+      width: min(420px, 100%);
+      background: #0f172a;
+      border: 1px solid rgba(99, 102, 241, 0.4);
+      border-radius: 14px;
+      padding: 22px 22px 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+    .kg-ask-dialog h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: #f8fafc;
+    }
+    .kg-ask-dialog p {
+      margin: 0 0 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+    .kg-ask-dialog strong { color: #818cf8; }
+    .kg-ask-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .kg-ask-actions button {
+      appearance: none;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: transparent;
+      color: #cbd5e1;
+    }
+    .kg-ask-actions .kg-ask-go {
+      border-color: transparent;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-weight: 600;
     }
 
     .method-header {
@@ -351,10 +363,7 @@
 
     /* 响应式 */
     @media (max-width: 768px) {
-      .page-title { font-size: 28px; }
-      .stats-bar { gap: 24px; }
-      .stat-num { font-size: 22px; }
-      .methods-grid { grid-template-columns: 1fr; }
+.methods-grid { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -375,25 +384,9 @@
       <a href="methodology.html" class="nav-link active">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -405,7 +398,7 @@
     </div>
   </nav>
 
-  <div class="view-switch-wrap">
+<div class="view-switch-wrap">
     <div class="view-switch" role="tablist">
       <button type="button" class="view-btn active" data-view="list">列表浏览</button>
       <button type="button" class="view-btn" data-view="graph">知识图谱</button>
@@ -413,28 +406,35 @@
   </div>
 
 
-  <!-- 页面头部 -->
+  <!-- 页面头部（对齐行业知识框架上半区） -->
   <header class="page-header">
-    <h1 class="page-title">分析方法论工具箱</h1>
-    <p class="page-desc">
-      49个经典数据分析方法，覆盖8大领域，随查随用
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">49</div>
-        <div class="stat-label">分析方法</div>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>方法论</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">8</div>
-        <div class="stat-label">领域分类</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">12</div>
-        <div class="stat-label">行业应用</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">⭐</div>
-        <div class="stat-label">难度分级</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">分析方法论工具箱</h1>
+          <p class="page-subtitle">经典数据分析方法，覆盖 8 大领域，随查随用</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">58</div>
+            <div class="stat-label">分析方法</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">8</div>
+            <div class="stat-label">领域分类</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">行业应用</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">⭐</div>
+            <div class="stat-label">难度分级</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -1480,6 +1480,53 @@
     let currentCategory = 'all';
     let searchKeyword = '';
 
+    function findKgMethodId(name, category) {
+      var DATA = window.KNOWLEDGE_GRAPH_DATA;
+      if (!DATA || !DATA.nodes) return null;
+      var exact = DATA.nodes.find(function (n) {
+        return n.type === 'methodology' && !n.isRoot && !n.isCategory &&
+          n.name === name && n.category === category;
+      });
+      if (exact) return exact.id;
+      var byName = DATA.nodes.find(function (n) {
+        return n.type === 'methodology' && !n.isRoot && !n.isCategory && n.name === name;
+      });
+      return byName ? byName.id : null;
+    }
+
+    function askJumpToGraph(method) {
+      var existing = document.getElementById('kgAskMask');
+      if (existing) existing.remove();
+
+      var mask = document.createElement('div');
+      mask.id = 'kgAskMask';
+      mask.className = 'kg-ask-mask';
+      mask.innerHTML =
+        '<div class="kg-ask-dialog" role="dialog" aria-modal="true">' +
+        '  <h3>跳转到知识图谱？</h3>' +
+        '  <p>是否打开「<strong>' + String(method.name).replace(/</g, '&lt;') + '</strong>」的辐射关联图，查看相关业务问题与指标？</p>' +
+        '  <div class="kg-ask-actions">' +
+        '    <button type="button" class="kg-ask-cancel">取消</button>' +
+        '    <button type="button" class="kg-ask-go">跳转辐射图</button>' +
+        '  </div>' +
+        '</div>';
+      document.body.appendChild(mask);
+
+      function close() { mask.remove(); }
+      mask.querySelector('.kg-ask-cancel').addEventListener('click', close);
+      mask.addEventListener('click', function (e) { if (e.target === mask) close(); });
+      mask.querySelector('.kg-ask-go').addEventListener('click', function () {
+        var nodeId = findKgMethodId(method.name, method.category);
+        var url = 'knowledge-graph.html?module=methodology';
+        if (nodeId) {
+          url += '&node=' + encodeURIComponent(nodeId);
+        } else {
+          url += '&q=' + encodeURIComponent(method.name);
+        }
+        window.location.href = url;
+      });
+    }
+
     // 初始化（script在页面底部，DOM已经加载完成，直接执行）
     renderMethods();
     initTabs();
@@ -1535,6 +1582,17 @@
 
       emptyState.style.display = 'none';
       grid.innerHTML = filtered.map(m => createMethodCard(m)).join('');
+
+      grid.querySelectorAll('.method-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var name = card.getAttribute('data-name');
+          var cat = card.getAttribute('data-category');
+          var m = filtered.find(function (x) {
+            return x.name === name && x.category === cat;
+          });
+          if (m) askJumpToGraph(m);
+        });
+      });
     }
 
     // 创建方法卡片
@@ -1542,9 +1600,13 @@
       const stars = Array(5).fill(0).map((_, i) => 
         i < m.difficulty ? '<span class="star">★</span>' : '<span class="star empty">★</span>'
       ).join('');
+      const safeName = String(m.name)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;');
 
       return `
-        <div class="method-card">
+        <div class="method-card" data-name="${safeName}" data-category="${m.category}">
           <div class="method-header">
             <div class="method-icon">${m.icon}</div>
             <div class="method-info">
@@ -1566,6 +1628,7 @@
             <span class="tag-label">应用行业</span>
             ${m.industries.map(i => `<span class="industry-tag ${i.color}">${i.name}</span>`).join('')}
           </div>
+          <div class="method-card-hint">点击查看知识图谱辐射关联 →</div>
         </div>
       `;
     }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,397 +6,21 @@
   <title>游戏行业 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(251, 146, 60, 0.12), transparent);
+    :root {
+      --theme-color: #fb923c;
+      --theme-color-rgb: 251, 146, 60;
+      --theme-gradient: linear-gradient(135deg, #fb923c 0%, #f59e0b 100%);
     }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--warning), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-
-    .section {
-      margin-bottom: 48px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-icon {
-      font-size: 24px;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 0 24px;
-    }
-
-    /* 指标分类 */
-    .metric-category {
-      margin-bottom: 32px;
-    }
-
-    .category-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 16px;
-      padding-left: 12px;
-      border-left: 3px solid var(--warning);
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .metric-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .metric-card:hover {
-      border-color: var(--warning);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(251, 146, 60, 0.1);
-    }
-
-    .metric-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .metric-formula {
-      font-size: 12px;
-      color: var(--warning);
-      font-family: 'Courier New', monospace;
-      margin: 0 0 8px;
-      padding: 4px 8px;
-      background: rgba(251, 146, 60, 0.1);
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .metric-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* 分析框架 */
-    .framework-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-
-    .framework-card {
-      padding: 24px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .framework-card:hover {
-      border-color: var(--warning);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(251, 146, 60, 0.15);
-    }
-
-    .framework-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(251, 146, 60, 0.2), rgba(245, 158, 11, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    .framework-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 12px;
-    }
-
-    .framework-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .framework-list li {
-      font-size: 13px;
-      color: var(--text-muted);
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .framework-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: var(--warning);
-    }
-
-    /* 用户分层 */
-    .tier-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .tier-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .tier-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .tier-name {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .tier-ratio {
-      font-size: 13px;
-      color: var(--warning);
-      font-weight: 500;
-      margin: 0 0 12px;
-    }
-
-    .tier-features {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-    }
-
-    .tier-features li {
-      font-size: 12px;
-      color: var(--text-muted);
-      padding: 4px 0;
-    }
-
-    /* 典型场景 */
-    .scenario-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .scenario-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .scenario-card:hover {
-      border-color: var(--warning);
-      transform: translateY(-2px);
-    }
-
-    .scenario-icon {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .scenario-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .scenario-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-  
-    /* 北极星指标 */
-    .north-star-section {
-      margin-bottom: 48px;
-    }
-
-    .north-star-card {
-      background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(251, 146, 60, 0.08));
-      border: 1px solid rgba(251, 146, 60, 0.3);
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .north-star-icon {
-      font-size: 64px;
-      flex-shrink: 0;
-    }
-
-    .north-star-content {
-      flex: 1;
-    }
-
-    .north-star-label {
-      font-size: 12px;
-      color: #fb923c;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .north-star-name {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 10px;
-    }
-
-    .north-star-formula {
-      font-size: 13px;
-      color: #fb923c;
-      font-family: "JetBrains Mono", monospace;
-      margin-bottom: 12px;
-      padding: 6px 12px;
-      background: rgba(251, 146, 60, 0.1);
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .north-star-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .north-star-why {
-      flex-shrink: 0;
-      width: 280px;
-      padding-left: 32px;
-      border-left: 1px solid var(--glass-border);
-    }
-
-    .north-star-why-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .north-star-why-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .north-star-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .north-star-why {
-        border-left: none;
-        border-top: 1px solid var(--glass-border);
-        padding-left: 0;
-        padding-top: 20px;
-        width: 100%;
-      }
-    }
-</style>
+  </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -407,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item active">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -437,66 +45,468 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
-  <header class="page-header">
-    <h1 class="page-title">游戏行业</h1>
-    <p class="page-desc">
-      数据驱动程度最高的行业之一，从用户获取到付费变现的全生命周期精细化运营
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">30+</div>
-        <div class="stat-label">核心指标</div>
+<!-- 页面头部 -->
+    <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>游戏行业知识框架</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">分析维度</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">4</div>
-        <div class="stat-label">分析框架</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">5</div>
-        <div class="stat-label">典型场景</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">游戏行业</h1>
+          <p class="page-subtitle">数据驱动程度最高的行业之一，从用户获取到付费变现的全生命周期精细化运营</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">30+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="container">
+  <main class="container">
     
-    <!-- 北极星指标 -->
-    <section class="section north-star-section">
-      <div class="north-star-card">
-        <div class="north-star-icon">⭐</div>
-        <div class="north-star-content">
-          <div class="north-star-label">North Star Metric</div>
-          <h2 class="north-star-name">LTV / DAU</h2>
-          <div class="north-star-formula">用户终身价值 ÷ 日活跃用户数</div>
-          <p class="north-star-desc">
-            游戏行业的核心综合指标，同时衡量了用户粘性和变现能力。高 LTV 意味着用户生命周期价值高，高 DAU 意味着用户规模和活跃度。
-          </p>
-        </div>
-        <div class="north-star-why">
-          <div class="north-star-why-title">💡 为什么是它？</div>
-          <p class="north-star-why-text">
-            只看 DAU 不看变现是"用爱发电"，只看收入不看用户规模不可持续。LTV/DAU 同时反映了用户规模、粘性和变现效率，是游戏产品健康度的综合体现。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 核心指标体系 -->
+    <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">📊</span>
-        游戏核心指标体系
-      </h2>
-      <p class="section-desc">用户、留存、付费、行为、转化、活动六大维度的经典指标</p>
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
 
-      <div class="metric-category">
-        <h3 class="category-title">👥 用户规模指标</h3>
-        <div class="metrics-grid">
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="游戏北极星" style="--ns-cols: 5">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="acquire">
+            <span class="ns-tab-stage">获客</span>
+            <span class="ns-tab-name">新增用户</span>
+            <span class="ns-tab-scene">买量与渠道拉新，先把人接进游戏。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="activate">
+            <span class="ns-tab-stage">激活</span>
+            <span class="ns-tab-name">次日留存率</span>
+            <span class="ns-tab-scene">打磨新手体验，让人第二天还愿意回来。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="dau">
+            <span class="ns-tab-stage">活跃</span>
+            <span class="ns-tab-name">DAU</span>
+            <span class="ns-tab-scene">日常活跃与粘性，看盘子是否稳得住。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="pay">
+            <span class="ns-tab-stage">变现</span>
+            <span class="ns-tab-name">付费率</span>
+            <span class="ns-tab-scene">商业化放量，把活跃变成收入。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="event">
+            <span class="ns-tab-stage">活动</span>
+            <span class="ns-tab-name">活动 ROI</span>
+            <span class="ns-tab-scene">大版本或运营活动，验证投入产出。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="acquire" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">新增用户</div>
+              <div class="ns-formula">每日/每周首次注册登录的用户数</div>
+            </div>
+            <div class="north-star-right">
+              <p>获客阶段的核心规模指标，反映渠道质量与推广效果。没有新增，后续留存与付费无从谈起。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>买量与渠道拉新，先把人接进游戏。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">新增用户</h3>
+            <div class="metric-formula">每日/每周首次注册登录的用户数</div>
+            <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
+            <p class="metric-desc">从曝光到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃用户</h3>
+            <div class="metric-formula">每月登录游戏的独立用户数</div>
+            <p class="metric-desc">月活用户数，衡量游戏整体用户规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">PCU 最高同时在线</h3>
+            <div class="metric-formula">单日最高同时在线用户数</div>
+            <p class="metric-desc">峰值在线人数，反映游戏热度和服务器压力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动参与率</h3>
+            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
+            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动ROI</h3>
+            <div class="metric-formula">活动带来收入 ÷ 活动成本</div>
+            <p class="metric-desc">活动的投入产出比，衡量活动效果</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">新手完成率</h3>
+            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
+            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日留存率</h3>
+            <div class="metric-formula">次日登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第二天回来的比例，新手体验的核心指标，健康值 > 40%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ACU 平均同时在线</h3>
+            <div class="metric-formula">日均同时在线用户数</div>
+            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均在线时长</h3>
+            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">日均启动次数</h3>
+            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">7日留存率</h3>
+            <div class="metric-formula">第7天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第7天留存，反映中期留存，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功能使用率</h3>
+            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
+            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关卡通过率</h3>
+            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
+            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费金额</div>
+            <p class="metric-desc">用户从注册到流失的总价值，用于衡量获客ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU 日活跃用户</h3>
+            <div class="metric-formula">每日登录游戏的独立用户数</div>
+            <p class="metric-desc">日活用户数，衡量游戏日常活跃度的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU/MAU 比值</h3>
+            <div class="metric-formula">DAU ÷ MAU</div>
+            <p class="metric-desc">用户粘性指标，越高说明用户使用频率越高，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">30日留存率</h3>
+            <div class="metric-formula">第30天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第30天留存，反映长期留存和游戏粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存率曲线</h3>
+            <div class="metric-formula">D1/D3/D7/D14/D30 留存</div>
+            <p class="metric-desc">完整的留存衰减曲线，用于分析用户生命周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户数 ÷ 活跃用户数</div>
+            <p class="metric-desc">有付费行为的用户占比，反映付费转化能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU 每用户平均收入</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户数</div>
+            <p class="metric-desc">平均每个活跃用户贡献的收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPPU 每付费用户收入</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户贡献的收入，反映付费深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费频次</h3>
+            <div class="metric-formula">付费总次数 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的付费次数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首充转化率</h3>
+            <div class="metric-formula">首次付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">从免费到付费的转化，是付费运营的关键节点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费漏斗</h3>
+            <div class="metric-formula">活跃→浏览→点击→支付→成功</div>
+            <p class="metric-desc">从活跃到付费的完整转化路径，定位流失环节</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次付费用户 ÷ 付费用户</div>
+            <p class="metric-desc">付费用户的复购比例，反映付费粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增付费率</h3>
+            <div class="metric-formula">活动带来的新付费用户数</div>
+            <p class="metric-desc">活动转化的新付费用户，活动的核心价值之一</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存提升</h3>
+            <div class="metric-formula">活动组留存 - 对照组留存</div>
+            <p class="metric-desc">活动对用户留存的提升效果，AB测试验证</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="activate" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">次日留存率</div>
+              <div class="ns-formula">次日登录用户 ÷ 新增用户</div>
+            </div>
+            <div class="north-star-right">
+              <p>激活阶段的核心体验指标。新用户第二天回来的比例，直接反映新手体验，健康值通常 > 40%。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>打磨新手体验，让人第二天还愿意回来。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">次日留存率</h3>
+            <div class="metric-formula">次日登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第二天回来的比例，新手体验的核心指标，健康值 > 40%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新手完成率</h3>
+            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
+            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关卡通过率</h3>
+            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
+            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
+            <p class="metric-desc">从曝光到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增用户</h3>
+            <div class="metric-formula">每日/每周首次注册登录的用户数</div>
+            <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均在线时长</h3>
+            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">日均启动次数</h3>
+            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">7日留存率</h3>
+            <div class="metric-formula">第7天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第7天留存，反映中期留存，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">30日留存率</h3>
+            <div class="metric-formula">第30天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第30天留存，反映长期留存和游戏粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存率曲线</h3>
+            <div class="metric-formula">D1/D3/D7/D14/D30 留存</div>
+            <p class="metric-desc">完整的留存衰减曲线，用于分析用户生命周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功能使用率</h3>
+            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
+            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU 日活跃用户</h3>
+            <div class="metric-formula">每日登录游戏的独立用户数</div>
+            <p class="metric-desc">日活用户数，衡量游戏日常活跃度的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU/MAU 比值</h3>
+            <div class="metric-formula">DAU ÷ MAU</div>
+            <p class="metric-desc">用户粘性指标，越高说明用户使用频率越高，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ACU 平均同时在线</h3>
+            <div class="metric-formula">日均同时在线用户数</div>
+            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">PCU 最高同时在线</h3>
+            <div class="metric-formula">单日最高同时在线用户数</div>
+            <p class="metric-desc">峰值在线人数，反映游戏热度和服务器压力</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户数 ÷ 活跃用户数</div>
+            <p class="metric-desc">有付费行为的用户占比，反映付费转化能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首充转化率</h3>
+            <div class="metric-formula">首次付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">从免费到付费的转化，是付费运营的关键节点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费漏斗</h3>
+            <div class="metric-formula">活跃→浏览→点击→支付→成功</div>
+            <p class="metric-desc">从活跃到付费的完整转化路径，定位流失环节</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU 每用户平均收入</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户数</div>
+            <p class="metric-desc">平均每个活跃用户贡献的收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPPU 每付费用户收入</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户贡献的收入，反映付费深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费金额</div>
+            <p class="metric-desc">用户从注册到流失的总价值，用于衡量获客ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费频次</h3>
+            <div class="metric-formula">付费总次数 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的付费次数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次付费用户 ÷ 付费用户</div>
+            <p class="metric-desc">付费用户的复购比例，反映付费粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃用户</h3>
+            <div class="metric-formula">每月登录游戏的独立用户数</div>
+            <p class="metric-desc">月活用户数，衡量游戏整体用户规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动参与率</h3>
+            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
+            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动ROI</h3>
+            <div class="metric-formula">活动带来收入 ÷ 活动成本</div>
+            <p class="metric-desc">活动的投入产出比，衡量活动效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增付费率</h3>
+            <div class="metric-formula">活动带来的新付费用户数</div>
+            <p class="metric-desc">活动转化的新付费用户，活动的核心价值之一</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存提升</h3>
+            <div class="metric-formula">活动组留存 - 对照组留存</div>
+            <p class="metric-desc">活动对用户留存的提升效果，AB测试验证</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="dau" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">DAU 日活跃用户</div>
+              <div class="ns-formula">每日登录游戏的独立用户数</div>
+            </div>
+            <div class="north-star-right">
+              <p>活跃阶段的核心规模指标。只看收入不看用户规模不可持续；DAU 衡量日常活跃度与盘子大小。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>日常活跃与粘性，看盘子是否稳得住。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">与 LTV 的关系</div>
+            <p>成熟期常综合看 LTV/DAU：高 LTV 看变现，高 DAU 看规模与粘性，二者共同反映产品健康度。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">DAU 日活跃用户</h3>
             <div class="metric-formula">每日登录游戏的独立用户数</div>
@@ -518,21 +528,33 @@
             <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
           </div>
           <div class="metric-card">
+            <h3 class="metric-name">ACU 平均同时在线</h3>
+            <div class="metric-formula">日均同时在线用户数</div>
+            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+          </div>
+          <div class="metric-card">
             <h3 class="metric-name">PCU 最高同时在线</h3>
             <div class="metric-formula">单日最高同时在线用户数</div>
             <p class="metric-desc">峰值在线人数，反映游戏热度和服务器压力</p>
           </div>
           <div class="metric-card">
-            <h3 class="metric-name">ACU 平均同时在线</h3>
-            <div class="metric-formula">日均同时在线用户数</div>
-            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+            <h3 class="metric-name">平均在线时长</h3>
+            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">日均启动次数</h3>
+            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
+          </div>
           </div>
         </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">🔒 留存指标</h3>
-        <div class="metrics-grid">
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">次日留存率</h3>
             <div class="metric-formula">次日登录用户 ÷ 新增用户</div>
@@ -553,12 +575,39 @@
             <div class="metric-formula">D1/D3/D7/D14/D30 留存</div>
             <p class="metric-desc">完整的留存衰减曲线，用于分析用户生命周期</p>
           </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功能使用率</h3>
+            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
+            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关卡通过率</h3>
+            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
+            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新手完成率</h3>
+            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
+            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动参与率</h3>
+            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
+            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存提升</h3>
+            <div class="metric-formula">活动组留存 - 对照组留存</div>
+            <p class="metric-desc">活动对用户留存的提升效果，AB测试验证</p>
+          </div>
+          </div>
         </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💰 付费指标</h3>
-        <div class="metrics-grid">
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">付费率</h3>
             <div class="metric-formula">付费用户数 ÷ 活跃用户数</div>
@@ -589,48 +638,6 @@
             <div class="metric-formula">首次付费用户 ÷ 活跃用户</div>
             <p class="metric-desc">从免费到付费的转化，是付费运营的关键节点</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">🎮 行为指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">平均在线时长</h3>
-            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
-            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">日均启动次数</h3>
-            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
-            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">关卡通过率</h3>
-            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
-            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">功能使用率</h3>
-            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
-            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">📈 转化漏斗指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">注册转化率</h3>
-            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
-            <p class="metric-desc">从曝光到注册的转化效率</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">新手完成率</h3>
-            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
-            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
-          </div>
           <div class="metric-card">
             <h3 class="metric-name">付费漏斗</h3>
             <div class="metric-formula">活跃→浏览→点击→支付→成功</div>
@@ -641,16 +648,10 @@
             <div class="metric-formula">多次付费用户 ÷ 付费用户</div>
             <p class="metric-desc">付费用户的复购比例，反映付费粘性</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">🎉 活动运营指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
-            <h3 class="metric-name">活动参与率</h3>
-            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
-            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
+            <p class="metric-desc">从曝光到注册的转化效率</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">活动ROI</h3>
@@ -662,10 +663,372 @@
             <div class="metric-formula">活动带来的新付费用户数</div>
             <p class="metric-desc">活动转化的新付费用户，活动的核心价值之一</p>
           </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="pay" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">付费率</div>
+              <div class="ns-formula">付费用户数 ÷ 活跃用户数</div>
+            </div>
+            <div class="north-star-right">
+              <p>变现阶段的核心转化指标。有付费行为的用户占比，反映从活跃到付费的转化能力；常与 ARPU、LTV 一起看。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>商业化放量，把活跃变成收入。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户数 ÷ 活跃用户数</div>
+            <p class="metric-desc">有付费行为的用户占比，反映付费转化能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首充转化率</h3>
+            <div class="metric-formula">首次付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">从免费到付费的转化，是付费运营的关键节点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU 每用户平均收入</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户数</div>
+            <p class="metric-desc">平均每个活跃用户贡献的收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPPU 每付费用户收入</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户贡献的收入，反映付费深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费漏斗</h3>
+            <div class="metric-formula">活跃→浏览→点击→支付→成功</div>
+            <p class="metric-desc">从活跃到付费的完整转化路径，定位流失环节</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费频次</h3>
+            <div class="metric-formula">付费总次数 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的付费次数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次付费用户 ÷ 付费用户</div>
+            <p class="metric-desc">付费用户的复购比例，反映付费粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费金额</div>
+            <p class="metric-desc">用户从注册到流失的总价值，用于衡量获客ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增付费率</h3>
+            <div class="metric-formula">活动带来的新付费用户数</div>
+            <p class="metric-desc">活动转化的新付费用户，活动的核心价值之一</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">DAU 日活跃用户</h3>
+            <div class="metric-formula">每日登录游戏的独立用户数</div>
+            <p class="metric-desc">日活用户数，衡量游戏日常活跃度的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃用户</h3>
+            <div class="metric-formula">每月登录游戏的独立用户数</div>
+            <p class="metric-desc">月活用户数，衡量游戏整体用户规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU/MAU 比值</h3>
+            <div class="metric-formula">DAU ÷ MAU</div>
+            <p class="metric-desc">用户粘性指标，越高说明用户使用频率越高，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均在线时长</h3>
+            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">日均启动次数</h3>
+            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动参与率</h3>
+            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
+            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动ROI</h3>
+            <div class="metric-formula">活动带来收入 ÷ 活动成本</div>
+            <p class="metric-desc">活动的投入产出比，衡量活动效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日留存率</h3>
+            <div class="metric-formula">次日登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第二天回来的比例，新手体验的核心指标，健康值 > 40%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">7日留存率</h3>
+            <div class="metric-formula">第7天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第7天留存，反映中期留存，健康值 > 20%</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">30日留存率</h3>
+            <div class="metric-formula">第30天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第30天留存，反映长期留存和游戏粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存率曲线</h3>
+            <div class="metric-formula">D1/D3/D7/D14/D30 留存</div>
+            <p class="metric-desc">完整的留存衰减曲线，用于分析用户生命周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新手完成率</h3>
+            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
+            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关卡通过率</h3>
+            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
+            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功能使用率</h3>
+            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
+            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
+            <p class="metric-desc">从曝光到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增用户</h3>
+            <div class="metric-formula">每日/每周首次注册登录的用户数</div>
+            <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">PCU 最高同时在线</h3>
+            <div class="metric-formula">单日最高同时在线用户数</div>
+            <p class="metric-desc">峰值在线人数，反映游戏热度和服务器压力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ACU 平均同时在线</h3>
+            <div class="metric-formula">日均同时在线用户数</div>
+            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+          </div>
           <div class="metric-card">
             <h3 class="metric-name">留存提升</h3>
             <div class="metric-formula">活动组留存 - 对照组留存</div>
             <p class="metric-desc">活动对用户留存的提升效果，AB测试验证</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="event" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">活动 ROI</div>
+              <div class="ns-formula">活动带来收入 ÷ 活动成本</div>
+            </div>
+            <div class="north-star-right">
+              <p>活动运营阶段的核心效率指标。衡量大版本或运营活动的投入产出，避免「热闹但亏钱」。</p>
+            </div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>大版本或运营活动，验证投入产出。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原六大维度指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">活动ROI</h3>
+            <div class="metric-formula">活动带来收入 ÷ 活动成本</div>
+            <p class="metric-desc">活动的投入产出比，衡量活动效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活动参与率</h3>
+            <div class="metric-formula">参与活动用户 ÷ 活跃用户</div>
+            <p class="metric-desc">活动的用户覆盖度，反映活动吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增付费率</h3>
+            <div class="metric-formula">活动带来的新付费用户数</div>
+            <p class="metric-desc">活动转化的新付费用户，活动的核心价值之一</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存提升</h3>
+            <div class="metric-formula">活动组留存 - 对照组留存</div>
+            <p class="metric-desc">活动对用户留存的提升效果，AB测试验证</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户数 ÷ 活跃用户数</div>
+            <p class="metric-desc">有付费行为的用户占比，反映付费转化能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首充转化率</h3>
+            <div class="metric-formula">首次付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">从免费到付费的转化，是付费运营的关键节点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费漏斗</h3>
+            <div class="metric-formula">活跃→浏览→点击→支付→成功</div>
+            <p class="metric-desc">从活跃到付费的完整转化路径，定位流失环节</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU 每用户平均收入</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户数</div>
+            <p class="metric-desc">平均每个活跃用户贡献的收入</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">DAU 日活跃用户</h3>
+            <div class="metric-formula">每日登录游戏的独立用户数</div>
+            <p class="metric-desc">日活用户数，衡量游戏日常活跃度的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增用户</h3>
+            <div class="metric-formula">每日/每周首次注册登录的用户数</div>
+            <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次付费用户 ÷ 付费用户</div>
+            <p class="metric-desc">付费用户的复购比例，反映付费粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费频次</h3>
+            <div class="metric-formula">付费总次数 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的付费次数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPPU 每付费用户收入</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户贡献的收入，反映付费深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费金额</div>
+            <p class="metric-desc">用户从注册到流失的总价值，用于衡量获客ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均在线时长</h3>
+            <div class="metric-formula">总在线时长 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均每天玩多久，反映游戏吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">日均启动次数</h3>
+            <div class="metric-formula">总启动次数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户每天打开游戏的次数，反映使用习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃用户</h3>
+            <div class="metric-formula">每月登录游戏的独立用户数</div>
+            <p class="metric-desc">月活用户数，衡量游戏整体用户规模</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">次日留存率</h3>
+            <div class="metric-formula">次日登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第二天回来的比例，新手体验的核心指标，健康值 > 40%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">7日留存率</h3>
+            <div class="metric-formula">第7天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第7天留存，反映中期留存，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">30日留存率</h3>
+            <div class="metric-formula">第30天登录用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第30天留存，反映长期留存和游戏粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">留存率曲线</h3>
+            <div class="metric-formula">D1/D3/D7/D14/D30 留存</div>
+            <p class="metric-desc">完整的留存衰减曲线，用于分析用户生命周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新手完成率</h3>
+            <div class="metric-formula">完成新手引导用户 ÷ 新增用户</div>
+            <p class="metric-desc">新手引导的完成比例，直接影响次日留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关卡通过率</h3>
+            <div class="metric-formula">通过关卡用户 ÷ 进入关卡用户</div>
+            <p class="metric-desc">各关卡的通过比例，用于难度设计和流失点分析</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功能使用率</h3>
+            <div class="metric-formula">使用某功能用户 ÷ 活跃用户</div>
+            <p class="metric-desc">各游戏系统/功能的使用情况，指导版本迭代</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">完成注册用户 ÷ 点击进入用户</div>
+            <p class="metric-desc">从曝光到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU/MAU 比值</h3>
+            <div class="metric-formula">DAU ÷ MAU</div>
+            <p class="metric-desc">用户粘性指标，越高说明用户使用频率越高，健康值 > 20%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">PCU 最高同时在线</h3>
+            <div class="metric-formula">单日最高同时在线用户数</div>
+            <p class="metric-desc">峰值在线人数，反映游戏热度和服务器压力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ACU 平均同时在线</h3>
+            <div class="metric-formula">日均同时在线用户数</div>
+            <p class="metric-desc">平均在线人数，更稳定地反映游戏活跃度</p>
+          </div>
+          </div>
+        </div>
           </div>
         </div>
       </div>
@@ -816,8 +1179,15 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
+    <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 游戏行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  
   <script src="common.js"></script>
+
 </body>
 </html>
-

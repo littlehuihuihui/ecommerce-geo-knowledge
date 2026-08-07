@@ -8,7 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../common.css" />
+  <link rel="stylesheet" href="../industry-template.css" />
   <style>
+    :root {
+      --theme-color: #ec4899;
+      --theme-color-rgb: 236, 72, 153;
+    }
     .page-header {
       padding: 60px 24px 40px;
       text-align: center;
@@ -455,42 +460,62 @@
 
   <div class="container">
     
-    <!-- 北极星指标 -->
-    <section class="section north-star-section">
-      <div class="north-star-card">
-        <div class="north-star-icon">⭐</div>
-        <div class="north-star-content">
-          <div class="north-star-label">North Star Metric</div>
-          <h2 class="north-star-name">续费率</h2>
-          <div class="north-star-formula">续费用户数 ÷ 到期用户数 × 100%</div>
-          <p class="north-star-desc">
-            在线教育的核心质量指标，反映课程质量、教学效果和用户满意度。高续费率意味着用户认可课程价值，愿意持续学习。
-          </p>
-        </div>
-        <div class="north-star-why">
-          <div class="north-star-why-title">💡 为什么是它？</div>
-          <p class="north-star-why-text">
-            获客成本高是教育行业的痛点，只看新增不看留存就是"漏水的桶"。续费率直接反映了课程质量和用户满意度，是教育业务能否健康发展的关键。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 核心指标体系 -->
+        <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">📊</span>
-        在线教育核心指标体系
-      </h2>
-      <p class="section-desc">获客、转化、学习、留存、活跃、收入六大维度的经典指标</p>
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
 
-      <div class="metric-category">
-        <h3 class="category-title">🎯 获客指标</h3>
-        <div class="metrics-grid">
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="教育北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="acquire">
+            <span class="ns-tab-stage">获客</span>
+            <span class="ns-tab-name">CAC</span>
+            <span class="ns-tab-scene">投放拉新，先算清获客成本。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="convert">
+            <span class="ns-tab-stage">转化</span>
+            <span class="ns-tab-name">报名转化率</span>
+            <span class="ns-tab-scene">销售攻坚期，盯试听与报名。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="learn">
+            <span class="ns-tab-stage">学习</span>
+            <span class="ns-tab-name">完课率</span>
+            <span class="ns-tab-scene">教研与教学运营期，盯学习效果。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="retain">
+            <span class="ns-tab-stage">留存</span>
+            <span class="ns-tab-name">续费率</span>
+            <span class="ns-tab-scene">到期续费季，盯续费与 LTV。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="acquire" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">CAC</div>
+              <div class="ns-formula">总获客费用 ÷ 新增付费用户</div>
+            </div>
+            <div class="north-star-right"><p>获客阶段的核心效率指标，在线教育常见痛点。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>投放拉新，先算清获客成本。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">CAC 获客成本</h3>
             <div class="metric-formula">总获客费用 ÷ 新增付费用户</div>
-            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点，健康值 < 客单价的1/3</p>
+            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">线索量</h3>
@@ -507,17 +532,24 @@
             <div class="metric-formula">渠道带来收入 ÷ 渠道投入</div>
             <p class="metric-desc">各获客渠道的投入产出比，指导投放优化</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💳 转化指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">试听率</h3>
             <div class="metric-formula">试听用户 ÷ 线索/注册用户</div>
             <p class="metric-desc">用户参与试听课的比例，是转化的关键第一步</p>
           </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转介绍率</h3>
+            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
+            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">报名转化率</h3>
             <div class="metric-formula">付费用户 ÷ 试听用户</div>
@@ -533,12 +565,19 @@
             <div class="metric-formula">总收入 ÷ 付费用户数</div>
             <p class="metric-desc">平均每个付费用户的消费金额</p>
           </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费</div>
+            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
+          </div>
+          </div>
         </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">📚 学习指标</h3>
-        <div class="metrics-grid">
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">完课率</h3>
             <div class="metric-formula">完成课程用户 ÷ 购买课程用户</div>
@@ -559,12 +598,6 @@
             <div class="metric-formula">人均每日/每周学习时间</div>
             <p class="metric-desc">用户学习投入的时间长度，反映学习粘性</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">🔄 留存指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">续费率</h3>
             <div class="metric-formula">续费用户 ÷ 到期用户</div>
@@ -575,22 +608,6 @@
             <div class="metric-formula">购买多次用户 ÷ 付费用户</div>
             <p class="metric-desc">用户购买多门课程的比例</p>
           </div>
-          <div class="metric-card">
-            <h3 class="metric-name">转介绍率</h3>
-            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
-            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">LTV 用户终身价值</h3>
-            <div class="metric-formula">用户生命周期内的总付费</div>
-            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">👥 用户活跃指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">DAU / MAU</h3>
             <div class="metric-formula">日活 / 月活用户数</div>
@@ -611,12 +628,6 @@
             <div class="metric-formula">周/月学习次数</div>
             <p class="metric-desc">用户平均学习频率，反映学习习惯</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💰 收入指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">GMV</h3>
             <div class="metric-formula">总成交金额</div>
@@ -637,11 +648,498 @@
             <div class="metric-formula">退费金额 ÷ 总销售额</div>
             <p class="metric-desc">退费比例，反映课程质量和用户满意度</p>
           </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="convert" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">报名转化率</div>
+              <div class="ns-formula">付费用户 ÷ 试听用户</div>
+            </div>
+            <div class="north-star-right"><p>转化阶段盯试听到付费，是销售能力的核心。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>销售攻坚期，盯试听与报名。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">报名转化率</h3>
+            <div class="metric-formula">付费用户 ÷ 试听用户</div>
+            <p class="metric-desc">从试听到付费的转化率，是销售能力的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">试听率</h3>
+            <div class="metric-formula">试听用户 ÷ 线索/注册用户</div>
+            <p class="metric-desc">用户参与试听课的比例，是转化的关键第一步</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">整体用户的付费转化比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的消费金额</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">总销售额，反映业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">线索量</h3>
+            <div class="metric-formula">留下联系方式的用户数</div>
+            <p class="metric-desc">有效销售线索数量，是转化漏斗的起点</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">注册用户 ÷ 访问用户</div>
+            <p class="metric-desc">从访问到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道ROI</h3>
+            <div class="metric-formula">渠道带来收入 ÷ 渠道投入</div>
+            <p class="metric-desc">各获客渠道的投入产出比，指导投放优化</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户</div>
+            <p class="metric-desc">每活跃用户平均收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">毛利率</h3>
+            <div class="metric-formula">(收入 - 成本) ÷ 收入</div>
+            <p class="metric-desc">课程毛利率，反映盈利能力</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增付费用户</div>
+            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">完课率</h3>
+            <div class="metric-formula">完成课程用户 ÷ 购买课程用户</div>
+            <p class="metric-desc">课程完成比例，直接影响续费率和用户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出勤率</h3>
+            <div class="metric-formula">实际上课人数 ÷ 应上课人数</div>
+            <p class="metric-desc">直播课/小班课的出勤比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">作业提交率</h3>
+            <div class="metric-formula">提交作业用户 ÷ 上课用户</div>
+            <p class="metric-desc">作业完成情况，反映学习投入度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习时长</h3>
+            <div class="metric-formula">人均每日/每周学习时间</div>
+            <p class="metric-desc">用户学习投入的时间长度，反映学习粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续费率</h3>
+            <div class="metric-formula">续费用户 ÷ 到期用户</div>
+            <p class="metric-desc">课程到期后续费的比例，是在线教育的生命线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">购买多次用户 ÷ 付费用户</div>
+            <p class="metric-desc">用户购买多门课程的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转介绍率</h3>
+            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
+            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费</div>
+            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU / MAU</h3>
+            <div class="metric-formula">日活 / 月活用户数</div>
+            <p class="metric-desc">用户活跃度基础指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日/7日留存</h3>
+            <div class="metric-formula">第N天仍活跃用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户留存曲线，反映产品粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃率</h3>
+            <div class="metric-formula">活跃用户 ÷ 总用户</div>
+            <p class="metric-desc">付费用户的活跃比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习频次</h3>
+            <div class="metric-formula">周/月学习次数</div>
+            <p class="metric-desc">用户平均学习频率，反映学习习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退费率</h3>
+            <div class="metric-formula">退费金额 ÷ 总销售额</div>
+            <p class="metric-desc">退费比例，反映课程质量和用户满意度</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="learn" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">完课率</div>
+              <div class="ns-formula">完成课程用户 ÷ 购买课程用户</div>
+            </div>
+            <div class="north-star-right"><p>学习阶段盯完课与投入，直接影响续费。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>教研与教学运营期，盯学习效果。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">完课率</h3>
+            <div class="metric-formula">完成课程用户 ÷ 购买课程用户</div>
+            <p class="metric-desc">课程完成比例，直接影响续费率和用户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出勤率</h3>
+            <div class="metric-formula">实际上课人数 ÷ 应上课人数</div>
+            <p class="metric-desc">直播课/小班课的出勤比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">作业提交率</h3>
+            <div class="metric-formula">提交作业用户 ÷ 上课用户</div>
+            <p class="metric-desc">作业完成情况，反映学习投入度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习时长</h3>
+            <div class="metric-formula">人均每日/每周学习时间</div>
+            <p class="metric-desc">用户学习投入的时间长度，反映学习粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习频次</h3>
+            <div class="metric-formula">周/月学习次数</div>
+            <p class="metric-desc">用户平均学习频率，反映学习习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃率</h3>
+            <div class="metric-formula">活跃用户 ÷ 总用户</div>
+            <p class="metric-desc">付费用户的活跃比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日/7日留存</h3>
+            <div class="metric-formula">第N天仍活跃用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户留存曲线，反映产品粘性</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">DAU / MAU</h3>
+            <div class="metric-formula">日活 / 月活用户数</div>
+            <p class="metric-desc">用户活跃度基础指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续费率</h3>
+            <div class="metric-formula">续费用户 ÷ 到期用户</div>
+            <p class="metric-desc">课程到期后续费的比例，是在线教育的生命线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">购买多次用户 ÷ 付费用户</div>
+            <p class="metric-desc">用户购买多门课程的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退费率</h3>
+            <div class="metric-formula">退费金额 ÷ 总销售额</div>
+            <p class="metric-desc">退费比例，反映课程质量和用户满意度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增付费用户</div>
+            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">线索量</h3>
+            <div class="metric-formula">留下联系方式的用户数</div>
+            <p class="metric-desc">有效销售线索数量，是转化漏斗的起点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">注册用户 ÷ 访问用户</div>
+            <p class="metric-desc">从访问到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道ROI</h3>
+            <div class="metric-formula">渠道带来收入 ÷ 渠道投入</div>
+            <p class="metric-desc">各获客渠道的投入产出比，指导投放优化</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">试听率</h3>
+            <div class="metric-formula">试听用户 ÷ 线索/注册用户</div>
+            <p class="metric-desc">用户参与试听课的比例，是转化的关键第一步</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">报名转化率</h3>
+            <div class="metric-formula">付费用户 ÷ 试听用户</div>
+            <p class="metric-desc">从试听到付费的转化率，是销售能力的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">整体用户的付费转化比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的消费金额</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转介绍率</h3>
+            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
+            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费</div>
+            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">总销售额，反映业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户</div>
+            <p class="metric-desc">每活跃用户平均收入</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">毛利率</h3>
+            <div class="metric-formula">(收入 - 成本) ÷ 收入</div>
+            <p class="metric-desc">课程毛利率，反映盈利能力</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="retain" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">续费率</div>
+              <div class="ns-formula">续费用户 ÷ 到期用户</div>
+            </div>
+            <div class="north-star-right"><p>在线教育的生命线，反映课程质量与满意度。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>到期续费季，盯续费与 LTV。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是续费率？</div>
+            <p>获客成本高，只看新增不看留存就是漏水的桶。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">续费率</h3>
+            <div class="metric-formula">续费用户 ÷ 到期用户</div>
+            <p class="metric-desc">课程到期后续费的比例，是在线教育的生命线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">购买多次用户 ÷ 付费用户</div>
+            <p class="metric-desc">用户购买多门课程的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转介绍率</h3>
+            <div class="metric-formula">推荐带来新用户 ÷ 老用户</div>
+            <p class="metric-desc">老用户推荐新用户的比例，最低成本的获客方式</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">LTV 用户终身价值</h3>
+            <div class="metric-formula">用户生命周期内的总付费</div>
+            <p class="metric-desc">用户从首次付费到流失的总价值，与CAC对比判断ROI</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">完课率</h3>
+            <div class="metric-formula">完成课程用户 ÷ 购买课程用户</div>
+            <p class="metric-desc">课程完成比例，直接影响续费率和用户满意度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退费率</h3>
+            <div class="metric-formula">退费金额 ÷ 总销售额</div>
+            <p class="metric-desc">退费比例，反映课程质量和用户满意度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">出勤率</h3>
+            <div class="metric-formula">实际上课人数 ÷ 应上课人数</div>
+            <p class="metric-desc">直播课/小班课的出勤比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">作业提交率</h3>
+            <div class="metric-formula">提交作业用户 ÷ 上课用户</div>
+            <p class="metric-desc">作业完成情况，反映学习投入度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习时长</h3>
+            <div class="metric-formula">人均每日/每周学习时间</div>
+            <p class="metric-desc">用户学习投入的时间长度，反映学习粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃率</h3>
+            <div class="metric-formula">活跃用户 ÷ 总用户</div>
+            <p class="metric-desc">付费用户的活跃比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">毛利率</h3>
+            <div class="metric-formula">(收入 - 成本) ÷ 收入</div>
+            <p class="metric-desc">课程毛利率，反映盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">总收入 ÷ 付费用户数</div>
+            <p class="metric-desc">平均每个付费用户的消费金额</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增付费用户</div>
+            <p class="metric-desc">获取一个付费用户的成本，在线教育的核心痛点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">线索量</h3>
+            <div class="metric-formula">留下联系方式的用户数</div>
+            <p class="metric-desc">有效销售线索数量，是转化漏斗的起点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">注册转化率</h3>
+            <div class="metric-formula">注册用户 ÷ 访问用户</div>
+            <p class="metric-desc">从访问到注册的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道ROI</h3>
+            <div class="metric-formula">渠道带来收入 ÷ 渠道投入</div>
+            <p class="metric-desc">各获客渠道的投入产出比，指导投放优化</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">试听率</h3>
+            <div class="metric-formula">试听用户 ÷ 线索/注册用户</div>
+            <p class="metric-desc">用户参与试听课的比例，是转化的关键第一步</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">报名转化率</h3>
+            <div class="metric-formula">付费用户 ÷ 试听用户</div>
+            <p class="metric-desc">从试听到付费的转化率，是销售能力的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">付费率</h3>
+            <div class="metric-formula">付费用户 ÷ 活跃用户</div>
+            <p class="metric-desc">整体用户的付费转化比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU / MAU</h3>
+            <div class="metric-formula">日活 / 月活用户数</div>
+            <p class="metric-desc">用户活跃度基础指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">次日/7日留存</h3>
+            <div class="metric-formula">第N天仍活跃用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户留存曲线，反映产品粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">学习频次</h3>
+            <div class="metric-formula">周/月学习次数</div>
+            <p class="metric-desc">用户平均学习频率，反映学习习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">总销售额，反映业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户</div>
+            <p class="metric-desc">每活跃用户平均收入</p>
+          </div>
+          </div>
+        </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 分析框架 -->
+<!-- 分析框架 -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">🧩</span>

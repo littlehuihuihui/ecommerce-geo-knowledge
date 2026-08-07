@@ -1,41 +1,10 @@
 // 公共JS文件
 document.addEventListener('DOMContentLoaded', function() {
-  // 导航栏下拉菜单点击展开/收起
-  const dropdownToggles = document.querySelectorAll('.nav-dropdown-toggle');
-
-  dropdownToggles.forEach(function (toggle) {
-    toggle.addEventListener('click', function (e) {
-      e.preventDefault();
-      const dropdown = this.closest('.nav-dropdown');
-      const menu = dropdown.querySelector('.nav-dropdown-menu');
-
-      if (menu.style.opacity === '1') {
-        menu.style.opacity = '0';
-        menu.style.visibility = 'hidden';
-        menu.style.transform = 'translateY(-8px)';
-      } else {
-        document.querySelectorAll('.nav-dropdown-menu').forEach(function (m) {
-          m.style.opacity = '0';
-          m.style.visibility = 'hidden';
-          m.style.transform = 'translateY(-8px)';
-        });
-
-        menu.style.opacity = '1';
-        menu.style.visibility = 'visible';
-        menu.style.transform = 'translateY(0)';
-      }
-    });
-  });
-
-  // 点击页面其他地方关闭下拉菜单
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.nav-dropdown')) {
-      document.querySelectorAll('.nav-dropdown-menu').forEach(function (menu) {
-        menu.style.opacity = '0';
-        menu.style.visibility = 'hidden';
-        menu.style.transform = 'translateY(-8px)';
-      });
-    }
+  // 行业平铺条：根据当前路径高亮
+  var path = (location.pathname || '').split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-ind-link').forEach(function (a) {
+    var href = (a.getAttribute('href') || '').split('/').pop();
+    a.classList.toggle('active', href === path);
   });
 
   // 三站互链（若导航尚未写入）
@@ -55,13 +24,25 @@ document.addEventListener('DOMContentLoaded', function() {
     platform.rel = 'noopener';
     platform.textContent = '数据平台';
 
-    const dropdown = navLinks.querySelector('.nav-dropdown');
-    if (dropdown) {
-      navLinks.insertBefore(gallery, dropdown);
-      navLinks.insertBefore(platform, dropdown);
-    } else {
-      navLinks.appendChild(gallery);
-      navLinks.appendChild(platform);
-    }
+    navLinks.appendChild(gallery);
+    navLinks.appendChild(platform);
   }
+
+  // 多北极星切换
+  document.querySelectorAll(".ns-switch").forEach(function (root) {
+    var tabs = root.querySelectorAll(".ns-tab");
+    var panels = root.querySelectorAll(".ns-panel");
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var id = tab.getAttribute("data-ns");
+        tabs.forEach(function (t) {
+          t.classList.toggle("is-active", t === tab);
+          t.setAttribute("aria-selected", t === tab ? "true" : "false");
+        });
+        panels.forEach(function (p) {
+          p.classList.toggle("is-active", p.getAttribute("data-ns") === id);
+        });
+      });
+    });
+  });
 });

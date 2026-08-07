@@ -8,7 +8,7 @@
     metric: { key: "metric", label: "指标字典", color: "#3b82f6", dark: "#2563eb", glow: "rgba(59,130,246,0.55)", cls: "mt", icon: "📊" }
   };
 
-  /** 行业切换：通用 = 全量；单行业过滤问题/指标（方法始终通用） */
+  /** 行业切换：通用 = 通用分类；单行业严格过滤（方法始终通用） */
   var INDUSTRY_ALIAS = {
     general: ["general"],
     retail: ["retail"],
@@ -28,7 +28,7 @@
   };
 
   var INDUSTRY_OPTIONS = [
-    ["general", "通用数据分析"],
+    ["general", "通用"],
     ["ecommerce", "电商"],
     ["retail", "零售"],
     ["finance", "金融"],
@@ -119,8 +119,13 @@
     var overviewCat = null;
     var centerId = null;
     var selectedId = null; // 右侧详情当前节点；可与中心不同（点图画布只换详情）
+    var expandedId = null; // 第2层已展开的节点，用于挂载第3层；最多三层
+    var layerOf = {}; // nodeId -> 1|2|3
+    var sideCollapsed = false;
+    var panelCollapsed = false;
     var history = [];
-    var showMore = { business_problem: 5, methodology: 5, metric: 5 };
+    var showMore = { business_problem: 6, methodology: 6, metric: 6 };
+    var showMoreL3 = { business_problem: 5, methodology: 5, metric: 5 };
     var network = null;
     var nodesDS = null;
     var edgesDS = null;
@@ -133,14 +138,13 @@
     }
 
     function matchIndustry(node) {
-      // 通用数据分析：三板全量内容
-      if (industry === "general") return true;
       // 分析方法跨行业通用
       if (node.type === "methodology") return true;
-      // 带「通用」标签的指标/问题在各行业下仍可见
-      var tags = node.tags || (node.detail && node.detail.notes) || [];
-      if (tags.indexOf("通用") >= 0) return true;
-      if (node.category === "general") return true;
+      // 「通用」：仅展示通用分类（不再等同于全部）
+      if (industry === "general") {
+        return node.category === "general";
+      }
+      // 单行业：严格按 category 匹配（不再因标签含「通用」而串台）
       var keys = industryKeys();
       return keys.indexOf(node.category) >= 0;
     }
@@ -157,10 +161,10 @@
           return n.isCategory && n.type === "methodology";
         });
       }
-      // 通用：展示该模块下全部行业/分类节点
+      // 通用：仅展示通用分类；单行业：只展示该行业分类
       if (industry === "general") {
         return DATA.nodes.filter(function (n) {
-          return n.isCategory && n.type === type;
+          return n.isCategory && n.type === type && n.category === "general";
         });
       }
       var keys = industryKeys();
@@ -264,7 +268,8 @@
       });
     }
 
-    function relatedFor(center) {
+    function relatedFor(center, needPerType) {
+      needPerType = needPerType == null ? 5 : needPerType;
       var refs = (center.crossRefs || []).map(function (id) { return byId.get(id); }).filter(Boolean);
       var byType = { business_problem: [], methodology: [], metric: [] };
       refs.forEach(function (n) {
@@ -272,23 +277,35 @@
         if (n.type !== "methodology" && !matchIndustry(n)) return;
         byType[n.type].push(n);
       });
-      // 若关联不足，用同分类叶子 / 名称弱补（仅同行业）
+
+      function nameScore(n) {
+        var a = String(center.name || "");
+        var b = String(n.name || "");
+        if (!a || !b) return 0;
+        var score = 0;
+        // 短词命中加分（如 GMV、留存、转化）
+        var tokens = a.replace(/[（）()\/\s]+/g, " ").split(" ").filter(function (t) { return t.length >= 2; });
+        tokens.forEach(function (t) {
+          if (b.indexOf(t) >= 0) score += 3;
+        });
+        if (n.category && n.category === center.category) score += 2;
+        return score;
+      }
+
+      // 若关联不足，用同分类叶子 / 名称弱补
       function fill(type, need) {
         if (byType[type].length >= need) return;
         var pool = leavesOfType(type).filter(function (n) {
           return n.id !== center.id && byType[type].every(function (x) { return x.id !== n.id; });
         });
-        // 优先同 category
         pool.sort(function (a, b) {
-          var sa = a.category === center.category ? 0 : 1;
-          var sb = b.category === center.category ? 0 : 1;
-          return sa - sb;
+          return nameScore(b) - nameScore(a);
         });
         while (byType[type].length < need && pool.length) byType[type].push(pool.shift());
       }
-      fill("business_problem", 3);
-      fill("methodology", 3);
-      fill("metric", 3);
+      fill("business_problem", needPerType);
+      fill("methodology", needPerType);
+      fill("metric", needPerType);
       return byType;
     }
 
@@ -304,11 +321,27 @@
       var bpN = leavesOfType("business_problem").length;
       var mdN = leavesOfType("methodology").length;
       var mtN = leavesOfType("metric").length;
+      // 独立图谱页已有行业框架式顶栏，引导区不再重复大标题
+      var standalone = mount && mount.id === "kgAutoRoot";
+      var headHtml = standalone
+        ? ""
+        : (
+          '<div class="kg2-page-head">' +
+          '  <div class="kg2-page-head-main">' +
+          '    <h1 class="kg2-landing-title">数据分析知识导航图谱</h1>' +
+          '    <p class="kg2-landing-sub">从业务问题、分析方法、指标字典任意入口出发，辐射式探索关联知识</p>' +
+          "  </div>" +
+          '  <div class="kg2-page-stats">' +
+          '    <div class="kg2-ps"><div class="n">' + bpN + '</div><div class="l">业务问题</div></div>' +
+          '    <div class="kg2-ps"><div class="n">' + mdN + '</div><div class="l">分析方法</div></div>' +
+          '    <div class="kg2-ps"><div class="n">' + mtN + '</div><div class="l">指标字典</div></div>' +
+          "  </div>" +
+          "</div>"
+        );
 
       stageEl.innerHTML =
-        '<div class="kg2-landing">' +
-        '  <h1 class="kg2-landing-title">数据分析知识导航图谱</h1>' +
-        '  <p class="kg2-landing-sub">从业务问题、分析方法、指标字典任意入口出发，辐射式探索关联知识</p>' +
+        '<div class="kg2-landing' + (standalone ? " kg2-landing--under-header" : "") + '">' +
+        headHtml +
         '  <div class="kg2-search-hero">' +
         '    <input id="kg2HeroSearch" type="search" placeholder="搜索业务问题、分析方法、指标..." autocomplete="off" />' +
         '    <div class="kg2-search-drop" id="kg2HeroDrop"></div>' +
@@ -449,7 +482,10 @@
       if (pushHist && centerId && centerId !== id) history.push(centerId);
       centerId = id;
       selectedId = id;
-      showMore = { business_problem: 5, methodology: 5, metric: 5 };
+      expandedId = null;
+      layerOf = {};
+      showMore = { business_problem: 6, methodology: 6, metric: 6 };
+      showMoreL3 = { business_problem: 5, methodology: 5, metric: 5 };
       stage = "focus";
       renderFocus();
     }
@@ -469,9 +505,12 @@
       ids.forEach(function (id) {
         var n = byId.get(id);
         if (!n) return;
-        var isCenter = id === centerId;
+        var layer = layerOf[id] || (id === centerId ? 1 : 2);
+        var isCenter = layer === 1;
         var isSel = id === selectedId;
+        var isExp = id === expandedId;
         var meta = TYPE[n.type] || TYPE.metric;
+        var baseSize = isCenter ? 65 : layer === 3 ? 20 : 30;
         try {
           if (isCenter) {
             nodesDS.update({
@@ -483,14 +522,15 @@
           } else {
             nodesDS.update({
               id: id,
-              size: isSel ? 36 : 30,
-              borderWidth: isSel ? 3 : 2,
+              size: isSel ? baseSize + 6 : isExp ? baseSize + 4 : baseSize,
+              borderWidth: isSel || isExp ? 3 : layer === 3 ? 1.5 : 2,
               color: {
-                background: isSel ? meta.color : meta.dark,
-                border: isSel ? "#fff" : meta.color,
+                background: isSel || isExp ? meta.color : meta.dark,
+                border: isSel || isExp ? "#fff" : layer === 3 ? "rgba(255,255,255,0.45)" : meta.color,
                 highlight: { background: meta.color, border: "#fff" },
                 hover: { background: meta.color, border: "#fff" }
-              }
+              },
+              opacity: layer === 3 ? 0.92 : 1
             });
           }
         } catch (e) {}
@@ -511,8 +551,8 @@
       destroyNet();
 
       stageEl.innerHTML =
-        '<div class="kg2-focus">' +
-        '  <aside class="kg2-side">' +
+        '<div class="kg2-focus' + (sideCollapsed ? " is-side-collapsed" : "") + (panelCollapsed ? " is-panel-collapsed" : "") + '">' +
+        '  <aside class="kg2-side' + (sideCollapsed ? " is-collapsed" : "") + '" id="kg2Side">' +
         '    <button type="button" class="kg2-btn" id="kg2Back">← 返回</button>' +
         '    <div class="kg2-search-mini"><input id="kg2FocusSearch" type="search" placeholder="搜索…" /></div>' +
         '    <div class="kg2-search-drop" id="kg2FocusDrop" style="position:relative;top:0;display:none"></div>' +
@@ -521,20 +561,53 @@
         '      <div class="row"><span class="kg2-dot" style="background:#f97316;color:#f97316"></span>业务问题</div>' +
         '      <div class="row"><span class="kg2-dot" style="background:#10b981;color:#10b981"></span>分析方法</div>' +
         '      <div class="row"><span class="kg2-dot" style="background:#3b82f6;color:#3b82f6"></span>指标字典</div>' +
-        '      <div class="row"><span class="kg2-dot" style="background:#a855f7;color:#a855f7"></span>当前中心</div>' +
+        '      <div class="row"><span class="kg2-dot" style="background:#a855f7;color:#a855f7"></span>当前中心（第1层）</div>' +
+        '      <div class="row"><span class="kg2-dot" style="background:#94a3b8;color:#94a3b8"></span>周围关联（第2层）</div>' +
+        '      <div class="row"><span class="kg2-dot" style="background:#64748b;color:#64748b"></span>展开外环（第3层）</div>' +
         "    </div>" +
         '    <div class="kg2-more-btns" id="kg2More"></div>' +
         '    <div class="kg2-path-hist"><div style="margin-bottom:4px;font-weight:600">探索路径</div><div id="kg2Hist"></div></div>' +
         "  </aside>" +
         '  <div class="kg2-canvas-wrap">' +
+        '    <button type="button" class="kg2-rail-btn kg2-rail-left" id="kg2ToggleSide" title="' + (sideCollapsed ? "展开左侧栏" : "收起左侧栏") + '">' + (sideCollapsed ? "»" : "«") + "</button>" +
         '    <div class="kg2-network" id="kg2Net"></div>' +
-        '    <div class="kg2-canvas-hint">点击节点查看右侧详情 · 点右侧「相关推荐」切换探索中心</div>' +
+        '    <div class="kg2-canvas-hint">点击第2层节点展开第3层 · 左右「« »」可收起侧栏腾出画布</div>' +
         '    <div class="kg2-ctrl"><button type="button" id="kg2ZoomIn">＋</button><button type="button" id="kg2ZoomOut">－</button><button type="button" id="kg2Fit">◎</button></div>' +
+        '    <button type="button" class="kg2-rail-btn kg2-rail-right" id="kg2TogglePanel" title="' + (panelCollapsed ? "展开右侧详情" : "收起右侧详情") + '">' + (panelCollapsed ? "«" : "»") + "</button>" +
         "  </div>" +
-        '  <aside class="kg2-panel open ' + (TYPE[panelNode.type] ? TYPE[panelNode.type].cls : "") + '" id="kg2Panel"></aside>' +
+        '  <aside class="kg2-panel open ' + (panelCollapsed ? "is-collapsed " : "") + (TYPE[panelNode.type] ? TYPE[panelNode.type].cls : "") + '" id="kg2Panel"></aside>' +
         "</div>";
 
       bindIndustrySwitcher(stageEl);
+      function refitGraph() {
+        setTimeout(function () {
+          try {
+            if (network) network.fit({ animation: { duration: 280, easingFunction: "easeInOutCubic" } });
+          } catch (e) {}
+        }, 320);
+      }
+      stageEl.querySelector("#kg2ToggleSide").addEventListener("click", function () {
+        sideCollapsed = !sideCollapsed;
+        var focus = stageEl.querySelector(".kg2-focus");
+        var side = stageEl.querySelector("#kg2Side");
+        var btn = stageEl.querySelector("#kg2ToggleSide");
+        focus.classList.toggle("is-side-collapsed", sideCollapsed);
+        side.classList.toggle("is-collapsed", sideCollapsed);
+        btn.textContent = sideCollapsed ? "»" : "«";
+        btn.title = sideCollapsed ? "展开左侧栏" : "收起左侧栏";
+        refitGraph();
+      });
+      stageEl.querySelector("#kg2TogglePanel").addEventListener("click", function () {
+        panelCollapsed = !panelCollapsed;
+        var focus = stageEl.querySelector(".kg2-focus");
+        var panel = stageEl.querySelector("#kg2Panel");
+        var btn = stageEl.querySelector("#kg2TogglePanel");
+        focus.classList.toggle("is-panel-collapsed", panelCollapsed);
+        panel.classList.toggle("is-collapsed", panelCollapsed);
+        btn.textContent = panelCollapsed ? "«" : "»";
+        btn.title = panelCollapsed ? "展开右侧详情" : "收起右侧详情";
+        refitGraph();
+      });
       stageEl.querySelector("#kg2Back").addEventListener("click", function () {
         if (history.length) {
           centerId = history.pop();
@@ -584,7 +657,7 @@
     }
 
     function updateMoreButtons(center) {
-      var rel = relatedFor(center);
+      var rel = relatedFor(center, 12);
       var box = stageEl.querySelector("#kg2More");
       if (!box) return;
       box.innerHTML = "";
@@ -598,10 +671,301 @@
         btn.addEventListener("click", function () {
           showMore[t] = Math.min(total, showMore[t] + 5);
           drawGraph(center);
+          highlightSelection();
           updateMoreButtons(center);
         });
         box.appendChild(btn);
       });
+      if (expandedId && byId.get(expandedId)) {
+        var rel3 = relatedFor(byId.get(expandedId), 12);
+        ["business_problem", "methodology", "metric"].forEach(function (t) {
+          var total3 = (rel3[t] || []).filter(function (n) {
+            return n.id !== centerId && n.id !== expandedId;
+          }).length;
+          if (total3 <= showMoreL3[t]) return;
+          var btn3 = document.createElement("button");
+          btn3.type = "button";
+          btn3.textContent = "第3层更多" + TYPE[t].label + "（" + showMoreL3[t] + "/" + total3 + "）";
+          btn3.addEventListener("click", function () {
+            showMoreL3[t] = Math.min(total3, showMoreL3[t] + 4);
+            drawGraph(center);
+            highlightSelection();
+            updateMoreButtons(center);
+          });
+          box.appendChild(btn3);
+        });
+        var collapse = document.createElement("button");
+        collapse.type = "button";
+        collapse.textContent = "收起第3层（" + trunc(byId.get(expandedId).name, 12) + "）";
+        collapse.addEventListener("click", function () {
+          expandedId = null;
+          drawGraph(center);
+          highlightSelection();
+          updateMoreButtons(center);
+        });
+        box.appendChild(collapse);
+      }
+    }
+
+    function collectL3(parent, occupied) {
+      // 多取候选：第3层会与第2层大量重叠，需要更大补全池
+      var rel = relatedFor(parent, 10);
+      var out = [];
+      ["business_problem", "methodology", "metric"].forEach(function (t) {
+        (rel[t] || []).forEach(function (n) {
+          if (occupied[n.id]) return;
+          out.push(n);
+        });
+      });
+      // 仍不足时，再从同行业/同模块池里硬补（避开已占用）
+      function hardFill(type, need) {
+        var have = out.filter(function (n) { return n.type === type; }).length;
+        if (have >= need) return;
+        var pool = leavesOfType(type).filter(function (n) {
+          return !occupied[n.id] && out.every(function (x) { return x.id !== n.id; });
+        });
+        pool.sort(function (a, b) {
+          var sa = a.category === parent.category ? 0 : 1;
+          var sb = b.category === parent.category ? 0 : 1;
+          return sa - sb;
+        });
+        while (have < need && pool.length) {
+          out.push(pool.shift());
+          have += 1;
+        }
+      }
+      hardFill("business_problem", showMoreL3.business_problem);
+      hardFill("methodology", showMoreL3.methodology);
+      hardFill("metric", showMoreL3.metric);
+
+      var capped = [];
+      var used = { business_problem: 0, methodology: 0, metric: 0 };
+      out.forEach(function (n) {
+        if (used[n.type] >= showMoreL3[n.type]) return;
+        used[n.type] += 1;
+        capped.push(n);
+      });
+      return capped;
+    }
+
+    function sectorAngle(type) {
+      // 左上问题、右上方法、正下指标（屏幕坐标 y 向下）
+      if (type === "business_problem") return (135 * Math.PI) / 180;
+      if (type === "methodology") return (45 * Math.PI) / 180;
+      return (270 * Math.PI) / 180;
+    }
+
+    function drawGraph(center) {
+      // 第2层多取一些，保证 showMore 切片够用
+      var rel = relatedFor(center, 10);
+      var nodeObjs = [];
+      var edgeObjs = [];
+      var cx = 0, cy = 0;
+      layerOf = {};
+      layerOf[center.id] = 1;
+
+      var occupied = {};
+      occupied[center.id] = true;
+
+      // center XL — 第1层
+      nodeObjs.push({
+        id: center.id,
+        label: trunc(center.name, 8),
+        title: center.name + "（第1层·中心）",
+        x: cx, y: cy, fixed: true,
+        shape: "dot",
+        size: 65,
+        color: { background: "#a855f7", border: "#e9d5ff", highlight: { background: "#c084fc", border: "#fff" } },
+        borderWidth: 3,
+        font: { color: "#fff", size: 12, face: "Noto Sans SC, Microsoft YaHei, sans-serif", strokeWidth: 2, strokeColor: "rgba(10,14,26,0.8)" },
+        shadow: { enabled: true, color: "rgba(168,85,247,0.65)", size: 32, x: 0, y: 0 },
+        mass: 4
+      });
+
+      var l2Positions = {};
+
+      ["business_problem", "methodology", "metric"].forEach(function (t) {
+        var list = rel[t].slice(0, showMore[t]);
+        var base = sectorAngle(t);
+        var meta = TYPE[t];
+        var n = list.length;
+        var spread = Math.min(0.9, 0.18 * Math.max(n, 1));
+        list.forEach(function (node, i) {
+          if (occupied[node.id]) return;
+          occupied[node.id] = true;
+          layerOf[node.id] = 2;
+          var ang = n === 1 ? base : base - spread / 2 + (spread * i) / Math.max(n - 1, 1);
+          var r = 220 + (i % 3) * 28;
+          var x = Math.cos(ang) * r;
+          var y = -Math.sin(ang) * r;
+          l2Positions[node.id] = { x: x, y: y, ang: ang, r: r };
+          var isExp = expandedId === node.id;
+          nodeObjs.push({
+            id: node.id,
+            label: trunc(node.name, 6),
+            title: node.name + (isExp ? "（第2层·已展开）" : "（第2层·点击展开第3层）"),
+            x: x, y: y, fixed: false,
+            shape: "dot",
+            size: isExp ? 34 : 30,
+            color: {
+              background: isExp ? meta.color : meta.dark,
+              border: isExp ? "#fff" : meta.color,
+              highlight: { background: meta.color, border: "#fff" },
+              hover: { background: meta.color, border: "#fff" }
+            },
+            borderWidth: isExp ? 3 : 2,
+            font: { color: "#f8fafc", size: 11, face: "Noto Sans SC, Microsoft YaHei, sans-serif", strokeWidth: 2, strokeColor: "rgba(10,14,26,0.75)" },
+            shadow: { enabled: true, color: meta.glow, size: isExp ? 20 : 16, x: 0, y: 0 },
+            mass: 1.2
+          });
+          edgeObjs.push({
+            id: "e_" + center.id + "_" + node.id,
+            from: center.id,
+            to: node.id,
+            color: { color: meta.color, opacity: 0.55 },
+            width: 2.4,
+            smooth: { enabled: true, type: "curvedCW", roundness: 0.28 },
+            arrows: { to: { enabled: true, scaleFactor: 0.4 } }
+          });
+        });
+      });
+
+      // 若展开节点已不在第2层可见集合中，自动清除
+      if (expandedId && !l2Positions[expandedId]) {
+        expandedId = null;
+      }
+
+      // 第3层：挂在已展开的第2层节点外侧
+      if (expandedId && l2Positions[expandedId]) {
+        var parent = byId.get(expandedId);
+        var pos = l2Positions[expandedId];
+        var l3list = collectL3(parent, occupied);
+        var n3 = l3list.length;
+        var fan = Math.min(1.1, 0.22 * Math.max(n3, 1));
+        l3list.forEach(function (child, j) {
+          occupied[child.id] = true;
+          layerOf[child.id] = 3;
+          var meta3 = TYPE[child.type] || TYPE.metric;
+          var ang3 = n3 === 1 ? pos.ang : pos.ang - fan / 2 + (fan * j) / Math.max(n3 - 1, 1);
+          var r3 = pos.r + 115 + (j % 2) * 18;
+          var x3 = Math.cos(ang3) * r3;
+          var y3 = -Math.sin(ang3) * r3;
+          nodeObjs.push({
+            id: child.id,
+            label: trunc(child.name, 5),
+            title: child.name + "（第3层·终点，仅查看详情）",
+            x: x3, y: y3, fixed: false,
+            shape: "dot",
+            size: 20,
+            color: {
+              background: meta3.dark,
+              border: "rgba(255,255,255,0.4)",
+              highlight: { background: meta3.color, border: "#fff" },
+              hover: { background: meta3.color, border: "#fff" }
+            },
+            borderWidth: 1.5,
+            font: { color: "#e2e8f0", size: 10, face: "Noto Sans SC, Microsoft YaHei, sans-serif", strokeWidth: 2, strokeColor: "rgba(10,14,26,0.75)" },
+            shadow: { enabled: true, color: meta3.glow, size: 10, x: 0, y: 0 },
+            mass: 0.7,
+            opacity: 0.92
+          });
+          edgeObjs.push({
+            id: "e3_" + expandedId + "_" + child.id,
+            from: expandedId,
+            to: child.id,
+            color: { color: meta3.color, opacity: 0.35 },
+            width: 1.4,
+            dashes: true,
+            smooth: { enabled: true, type: "curvedCW", roundness: 0.35 },
+            arrows: { to: { enabled: true, scaleFactor: 0.3 } }
+          });
+        });
+      }
+
+      var netEl = stageEl.querySelector("#kg2Net");
+      if (!netEl) return;
+
+      // 容器已换新时强制重建 Network（避免挂在旧 DOM 上）
+      if (network && network.body && network.body.container && network.body.container !== netEl) {
+        destroyNet();
+      }
+
+      if (!nodesDS || !network) {
+        nodesDS = new vis.DataSet([]);
+        edgesDS = new vis.DataSet([]);
+        network = new vis.Network(netEl, { nodes: nodesDS, edges: edgesDS }, {
+          interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true, tooltipDelay: 80 },
+          physics: {
+            enabled: true,
+            barnesHut: { gravitationalConstant: -1800, centralGravity: 0.05, springLength: 120, springConstant: 0.04, damping: 0.5, avoidOverlap: 0.7 },
+            stabilization: { enabled: true, iterations: 60, fit: true },
+            maxVelocity: 30,
+            minVelocity: 0.4
+          },
+          layout: { improvedLayout: false }
+        });
+        network.on("click", function (p) {
+          if (!p.nodes.length) return;
+          var id = p.nodes[0];
+          var layer = layerOf[id] || 1;
+          var center = byId.get(centerId);
+          if (layer === 2) {
+            // 第2层：展开/切换第3层；再次点击同一节点则收起
+            if (expandedId === id) {
+              expandedId = null;
+            } else {
+              expandedId = id;
+              showMoreL3 = { business_problem: 5, methodology: 5, metric: 5 };
+            }
+            selectedId = id;
+            renderPanel(byId.get(id));
+            drawGraph(center);
+            highlightSelection();
+            updateMoreButtons(center);
+            return;
+          }
+          // 第1层 / 第3层：只更新右侧详情，不再向外扩展
+          selectNode(id);
+        });
+        network.on("hoverNode", function (p) {
+          hoverId = p.node;
+          var layer = layerOf[p.node] || 1;
+          var base = layer === 1 ? 65 : layer === 3 ? 20 : 30;
+          try {
+            nodesDS.update({ id: p.node, size: base * 1.2 });
+          } catch (e) {}
+        });
+        network.on("blurNode", function (p) {
+          hoverId = null;
+          var layer = layerOf[p.node] || 1;
+          var base = layer === 1 ? 65 : layer === 3 ? 20 : (p.node === expandedId ? 34 : 30);
+          try {
+            nodesDS.update({ id: p.node, size: base });
+          } catch (e) {}
+        });
+        network.on("stabilizationIterationsDone", function () {
+          if (!network) return;
+          network.setOptions({
+            physics: {
+              barnesHut: { gravitationalConstant: -800, centralGravity: 0.02, springLength: 140, springConstant: 0.02, damping: 0.72, avoidOverlap: 0.5 },
+              minVelocity: 0.15,
+              maxVelocity: 10,
+              stabilization: { enabled: false }
+            }
+          });
+        });
+      }
+
+      nodesDS.clear();
+      edgesDS.clear();
+      nodesDS.add(nodeObjs);
+      edgesDS.add(edgeObjs);
+      network.setOptions({ physics: { enabled: true, stabilization: { enabled: true, iterations: 50, fit: true } } });
+      network.startSimulation();
+      setTimeout(function () {
+        try { if (network) network.fit({ animation: { duration: 500, easingFunction: "easeInOutCubic" } }); } catch (e) {}
+      }, 80);
+      startPulse(center.id);
     }
 
     function renderPanel(node) {
@@ -609,9 +973,11 @@
       var meta = TYPE[node.type] || TYPE.metric;
       var d = node.detail || {};
       var rel = relatedFor(node);
+      var layer = layerOf[node.id] || (node.id === centerId ? 1 : 2);
       var html =
         "<h2>" + esc(node.name) + "</h2>" +
-        '<span class="kg2-tag ' + meta.cls + '">' + meta.label + "</span>";
+        '<span class="kg2-tag ' + meta.cls + '">' + meta.label + "</span>" +
+        '<span class="kg2-tag" style="margin-left:6px;opacity:.85">第' + layer + "层</span>";
       if (d.definition) html += '<div class="kg2-sec"><h3>定义 / 说明</h3><p>' + esc(d.definition) + "</p></div>";
       if (d.formula) html += '<div class="kg2-sec"><h3>公式 / 要点</h3><pre>' + esc(d.formula) + "</pre></div>";
       if (d.applicableScenarios && d.applicableScenarios.length) {
@@ -638,6 +1004,13 @@
       html += refBlock("相关分析方法", rel.methodology);
       html += refBlock("相关指标", rel.metric);
 
+      if (layer === 2) {
+        html +=
+          '<div class="kg2-sec">' +
+          '<button type="button" class="kg2-explore-center" id="kg2ToggleL3">' +
+          (expandedId === node.id ? "收起第3层关联" : "在图上展开第3层关联") +
+          "</button></div>";
+      }
       if (node.id !== centerId) {
         html +=
           '<div class="kg2-sec">' +
@@ -646,152 +1019,33 @@
       }
 
       panel.innerHTML = html;
-      panel.className = "kg2-panel open " + meta.cls;
+      panel.className = "kg2-panel open " + (panelCollapsed ? "is-collapsed " : "") + meta.cls;
       panel.querySelectorAll("[data-jump]").forEach(function (btn) {
         btn.addEventListener("click", function () {
-          // 右侧相关推荐：切换探索中心并刷新图谱
           enterFocus(btn.getAttribute("data-jump"), true);
         });
       });
+      var toggleL3 = panel.querySelector("#kg2ToggleL3");
+      if (toggleL3) {
+        toggleL3.addEventListener("click", function () {
+          var center = byId.get(centerId);
+          if (expandedId === node.id) expandedId = null;
+          else {
+            expandedId = node.id;
+            showMoreL3 = { business_problem: 5, methodology: 5, metric: 5 };
+          }
+          drawGraph(center);
+          highlightSelection();
+          updateMoreButtons(center);
+          renderPanel(node);
+        });
+      }
       var exploreBtn = panel.querySelector("#kg2ExploreCenter");
       if (exploreBtn) {
         exploreBtn.addEventListener("click", function () {
           enterFocus(node.id, true);
         });
       }
-    }
-
-    function sectorAngle(type) {
-      // 左上问题、右上方法、正下指标（屏幕坐标 y 向下）
-      if (type === "business_problem") return (135 * Math.PI) / 180;
-      if (type === "methodology") return (45 * Math.PI) / 180;
-      return (270 * Math.PI) / 180;
-    }
-
-    function drawGraph(center) {
-      var rel = relatedFor(center);
-      var nodeObjs = [];
-      var edgeObjs = [];
-      var cx = 0, cy = 0;
-
-      // center XL
-      nodeObjs.push({
-        id: center.id,
-        label: trunc(center.name, 8),
-        title: center.name,
-        x: cx, y: cy, fixed: true,
-        shape: "dot",
-        size: 65,
-        color: { background: "#a855f7", border: "#e9d5ff", highlight: { background: "#c084fc", border: "#fff" } },
-        borderWidth: 3,
-        font: { color: "#fff", size: 12, face: "Noto Sans SC, Microsoft YaHei, sans-serif", strokeWidth: 2, strokeColor: "rgba(10,14,26,0.8)" },
-        shadow: { enabled: true, color: "rgba(168,85,247,0.65)", size: 32, x: 0, y: 0 },
-        mass: 4
-      });
-
-      ["business_problem", "methodology", "metric"].forEach(function (t) {
-        var list = rel[t].slice(0, showMore[t]);
-        var base = sectorAngle(t);
-        var meta = TYPE[t];
-        var n = list.length;
-        var spread = Math.min(0.9, 0.18 * Math.max(n, 1));
-        list.forEach(function (node, i) {
-          var ang = n === 1 ? base : base - spread / 2 + (spread * i) / Math.max(n - 1, 1);
-          var r = 220 + (i % 3) * 28;
-          var x = Math.cos(ang) * r;
-          var y = -Math.sin(ang) * r;
-          nodeObjs.push({
-            id: node.id,
-            label: trunc(node.name, 6),
-            title: node.name,
-            x: x, y: y, fixed: false,
-            shape: "dot",
-            size: 30,
-            color: {
-              background: meta.dark,
-              border: meta.color,
-              highlight: { background: meta.color, border: "#fff" },
-              hover: { background: meta.color, border: "#fff" }
-            },
-            borderWidth: 2,
-            font: { color: "#f8fafc", size: 11, face: "Noto Sans SC, Microsoft YaHei, sans-serif", strokeWidth: 2, strokeColor: "rgba(10,14,26,0.75)" },
-            shadow: { enabled: true, color: meta.glow, size: 16, x: 0, y: 0 },
-            mass: 1
-          });
-          edgeObjs.push({
-            id: "e_" + center.id + "_" + node.id,
-            from: center.id,
-            to: node.id,
-            color: { color: meta.color, opacity: 0.55 },
-            width: 2.4,
-            smooth: { enabled: true, type: "curvedCW", roundness: 0.28 },
-            arrows: { to: { enabled: true, scaleFactor: 0.4 } }
-          });
-        });
-      });
-
-      var netEl = stageEl.querySelector("#kg2Net");
-      if (!netEl) return;
-
-      // 容器已换新时强制重建 Network（避免挂在旧 DOM 上）
-      if (network && network.body && network.body.container && network.body.container !== netEl) {
-        destroyNet();
-      }
-
-      if (!nodesDS || !network) {
-        nodesDS = new vis.DataSet([]);
-        edgesDS = new vis.DataSet([]);
-        network = new vis.Network(netEl, { nodes: nodesDS, edges: edgesDS }, {
-          interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true, tooltipDelay: 80 },
-          physics: {
-            enabled: true,
-            barnesHut: { gravitationalConstant: -1800, centralGravity: 0.05, springLength: 120, springConstant: 0.04, damping: 0.5, avoidOverlap: 0.7 },
-            stabilization: { enabled: true, iterations: 60, fit: true },
-            maxVelocity: 30,
-            minVelocity: 0.4
-          },
-          layout: { improvedLayout: false }
-        });
-        network.on("click", function (p) {
-          if (!p.nodes.length) return;
-          // 画布点击：只更新右侧详情，不刷新图谱
-          selectNode(p.nodes[0]);
-        });
-        network.on("hoverNode", function (p) {
-          hoverId = p.node;
-          try {
-            nodesDS.update({ id: p.node, size: (p.node === centerId ? 65 : 30) * 1.2 });
-          } catch (e) {}
-        });
-        network.on("blurNode", function (p) {
-          hoverId = null;
-          try {
-            nodesDS.update({ id: p.node, size: p.node === centerId ? 65 : 30 });
-          } catch (e) {}
-        });
-        network.on("stabilizationIterationsDone", function () {
-          if (!network) return;
-          network.setOptions({
-            physics: {
-              barnesHut: { gravitationalConstant: -800, centralGravity: 0.02, springLength: 140, springConstant: 0.02, damping: 0.72, avoidOverlap: 0.5 },
-              minVelocity: 0.15,
-              maxVelocity: 10,
-              stabilization: { enabled: false }
-            }
-          });
-        });
-      }
-
-      nodesDS.clear();
-      edgesDS.clear();
-      nodesDS.add(nodeObjs);
-      edgesDS.add(edgeObjs);
-      network.setOptions({ physics: { enabled: true, stabilization: { enabled: true, iterations: 50, fit: true } } });
-      network.startSimulation();
-      setTimeout(function () {
-        try { if (network) network.fit({ animation: { duration: 500, easingFunction: "easeInOutCubic" } }); } catch (e) {}
-      }, 80);
-      startPulse(center.id);
     }
 
     function startPulse(id) {
@@ -822,17 +1076,90 @@
       edgesDS = null;
     }
 
+    function nodeSearchText(n) {
+      if (n._kgSearchBlob) return n._kgSearchBlob;
+      var d = n.detail || {};
+      var parts = [
+        n.name,
+        n.description,
+        n.categoryName,
+        n.subtitle,
+        (n.tags || []).join(" "),
+        d.definition,
+        d.formula,
+        (d.notes || []).join(" "),
+        (d.applicableScenarios || []).join(" "),
+        (d.steps || []).join(" "),
+        n._search_text
+      ];
+      n._kgSearchBlob = parts
+        .filter(Boolean)
+        .join("\n")
+        .toLowerCase();
+      return n._kgSearchBlob;
+    }
+
+    /** 常见同义词 / 近义扩展，提升短词召回（如「利润」→净利率/毛利率） */
+    var SEARCH_ALIASES = {
+      利润: ["净利率", "毛利率", "盈利", "利润率", "ROE", "ROA", "净利润", "毛利", "盈亏"],
+      收入: ["营收", "销售额", "GMV", "MRR", "ARR", "流水", "成交额"],
+      成本: ["费用", "CAC", "获客成本", "物流成本", "制造成本"],
+      留存: ["留存率", "次日留存", "7日留存", "30日留存", "NDR", "GRR", "复购"],
+      转化: ["转化率", "漏斗", "下单", "支付成功率", "激活率"],
+      用户: ["UV", "DAU", "MAU", "访客", "客户", "会员"],
+      活跃: ["DAU", "MAU", "活跃率", "在线时长"],
+      流失: ["流失率", "Churn", "召回", "流失预警"],
+      风控: ["不良率", "通过率", "信用评分", "反欺诈", "逾期"],
+      库存: ["周转", "缺货", "动销", "售罄", "呆滞"],
+      roi: ["ROI", "ROAS", "投入产出", "营销效果"],
+      gmv: ["GMV", "成交总额", "销售额"]
+    };
+
+    function searchTermsFor(q) {
+      var raw = String(q || "").trim();
+      var terms = [raw];
+      var key = raw.toLowerCase();
+      var aliases = SEARCH_ALIASES[raw] || SEARCH_ALIASES[key];
+      if (aliases) terms = terms.concat(aliases);
+      // 短词也试拆：如「净利率」已在名中；「利润率」等
+      return terms.filter(Boolean);
+    }
+
+    function scoreNode(n, q, terms) {
+      var name = String(n.name || "").toLowerCase();
+      var ql = q.toLowerCase();
+      var score = 0;
+      if (name.indexOf(ql) >= 0) score += 100;
+      if (name === ql) score += 50;
+      var blob = nodeSearchText(n);
+      for (var i = 0; i < terms.length; i++) {
+        var t = String(terms[i]).toLowerCase();
+        if (!t) continue;
+        if (name.indexOf(t) >= 0) score += 40;
+        else if (blob.indexOf(t) >= 0) score += 10;
+      }
+      return score;
+    }
+
     function wireSearch(input, drop) {
       if (!input || !drop) return;
       function run() {
         var q = (input.value || "").trim();
         if (!q) { drop.classList.remove("open"); drop.style.display = "none"; drop.innerHTML = ""; return; }
+        var terms = searchTermsFor(q);
         var groups = { business_problem: [], methodology: [], metric: [] };
+        var scored = { business_problem: [], methodology: [], metric: [] };
         DATA.nodes.forEach(function (n) {
           if (n.isRoot || n.isCategory) return;
-          if (!n.name || n.name.toLowerCase().indexOf(q.toLowerCase()) < 0) return;
+          if (!TYPE[n.type]) return;
           if (n.type !== "methodology" && !matchIndustry(n)) return;
-          if (groups[n.type] && groups[n.type].length < 8) groups[n.type].push(n);
+          var sc = scoreNode(n, q, terms);
+          if (sc <= 0) return;
+          scored[n.type].push({ n: n, sc: sc });
+        });
+        ["business_problem", "methodology", "metric"].forEach(function (t) {
+          scored[t].sort(function (a, b) { return b.sc - a.sc; });
+          groups[t] = scored[t].slice(0, 10).map(function (x) { return x.n; });
         });
         var html = "";
         ["business_problem", "methodology", "metric"].forEach(function (t) {
@@ -865,8 +1192,38 @@
     }
 
     // boot
-    if (opts.startNode && byId.has(opts.startNode)) {
-      enterFocus(opts.startNode, false);
+    function resolveStartNode(raw) {
+      if (!raw) return null;
+      if (byId.has(raw)) return raw;
+      // 允许用名称定位（指标字典跳转兜底）
+      var hit = DATA.nodes.find(function (n) {
+        return !n.isRoot && !n.isCategory && n.name === raw;
+      });
+      return hit ? hit.id : null;
+    }
+
+    var bootNode = resolveStartNode(opts.startNode);
+    if (opts.startIndustry && INDUSTRY_ALIAS[opts.startIndustry]) {
+      industry = opts.startIndustry;
+    } else if (opts.startIndustry) {
+      // liveecommerce → live-ecommerce 等
+      var aliasHit = Object.keys(INDUSTRY_ALIAS).find(function (k) {
+        return (INDUSTRY_ALIAS[k] || []).indexOf(opts.startIndustry) >= 0;
+      });
+      if (aliasHit) industry = aliasHit;
+      else industry = opts.startIndustry;
+    } else if (bootNode) {
+      var boot = byId.get(bootNode);
+      if (boot && boot.category && boot.category !== "general" && boot.type !== "methodology") {
+        var indHit = Object.keys(INDUSTRY_ALIAS).find(function (k) {
+          return (INDUSTRY_ALIAS[k] || []).indexOf(boot.category) >= 0;
+        });
+        if (indHit) industry = indHit;
+      }
+    }
+
+    if (bootNode) {
+      enterFocus(bootNode, false);
     } else if (opts.startModule && TYPE[opts.startModule]) {
       enterOverview(opts.startModule);
     } else {
@@ -889,7 +1246,8 @@
       window.__kgInstance = initKnowledgeGraph({
         root: auto,
         startModule: params.get("module") || auto.dataset.module || null,
-        startNode: params.get("node") || null
+        startNode: params.get("node") || params.get("q") || null,
+        startIndustry: params.get("industry") || params.get("category") || null
       });
     }
   });

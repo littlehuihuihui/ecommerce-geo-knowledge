@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>知识框架 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    :root {
+      --theme-color: #8b5cf6;
+      --theme-color-rgb: 139, 92, 246;
+      --theme-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    }
+    .fw-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8px 24px 60px;
+    }
+    .fw-card {
+      display: block;
+      padding: 22px 20px;
+      border-radius: 16px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .fw-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+    }
+    .fw-icon { font-size: 28px; margin-bottom: 10px; }
+    .fw-name { margin: 0 0 8px; font-size: 18px; font-weight: 700; color: var(--text); }
+    .fw-desc { margin: 0 0 14px; font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .fw-go { font-size: 12px; font-weight: 600; color: var(--theme-color); }
+  </style>
+</head>
+<body>
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link active">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>知识框架</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">知识框架</h1>
+          <p class="page-subtitle">按行业进入完整数据分析知识框架：北极星、指标体系、分析框架与典型场景</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item"><div class="stat-number">12</div><div class="stat-label">行业</div></div>
+          <div class="stat-item"><div class="stat-number">1</div><div class="stat-label">页一行业</div></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="fw-grid">
+      <a href="ecommerce.html" class="fw-card">
+        <div class="fw-icon">🛒</div>
+        <h3 class="fw-name">电商</h3>
+        <p class="fw-desc">流量、转化、复购、全链路</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="finance.html" class="fw-card">
+        <div class="fw-icon">💰</div>
+        <h3 class="fw-name">金融</h3>
+        <p class="fw-desc">AUM、风控、信用评分、反欺诈</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="game.html" class="fw-card">
+        <div class="fw-icon">🎮</div>
+        <h3 class="fw-name">游戏</h3>
+        <p class="fw-desc">DAU、留存、付费、LTV</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="content.html" class="fw-card">
+        <div class="fw-icon">🎬</div>
+        <h3 class="fw-name">内容/短视频</h3>
+        <p class="fw-desc">时长、完播、推荐、创作者</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="saas.html" class="fw-card">
+        <div class="fw-icon">💻</div>
+        <h3 class="fw-name">SaaS</h3>
+        <p class="fw-desc">MRR、NDR、留存、LTV/CAC</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="live-ecommerce.html" class="fw-card">
+        <div class="fw-icon">📹</div>
+        <h3 class="fw-name">直播电商</h3>
+        <p class="fw-desc">UV价值、人货场、直播复盘</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="local-life.html" class="fw-card">
+        <div class="fw-icon">📍</div>
+        <h3 class="fw-name">本地生活</h3>
+        <p class="fw-desc">商家、配送、补贴、商圈</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="fmcg.html" class="fw-card">
+        <div class="fw-icon">🧴</div>
+        <h3 class="fw-name">快消</h3>
+        <p class="fw-desc">铺货、动销、渠道、促销ROI</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="manufacturing.html" class="fw-card">
+        <div class="fw-icon">🏭</div>
+        <h3 class="fw-name">制造</h3>
+        <p class="fw-desc">OEE、良率、成本、排产</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="healthcare.html" class="fw-card">
+        <div class="fw-icon">🏥</div>
+        <h3 class="fw-name">医疗健康</h3>
+        <p class="fw-desc">质量、效率、患者体验、成本</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="new-energy.html" class="fw-card">
+        <div class="fw-icon">⚡</div>
+        <h3 class="fw-name">新能源</h3>
+        <p class="fw-desc">销量、市占、产能、补能</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+      <a href="logistics.html" class="fw-card">
+        <div class="fw-icon">🚚</div>
+        <h3 class="fw-name">物流</h3>
+        <p class="fw-desc">履约、库存、运力、成本</p>
+        <span class="fw-go">进入框架 →</span>
+      </a>
+  </div>
+
+  <script src="common.js"></script>
+</body>
+</html>

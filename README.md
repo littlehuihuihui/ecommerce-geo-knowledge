@@ -2,7 +2,7 @@
 
 在线地址（GitHub Pages）：https://littlehuihuihui.github.io/industry-data-encyclopedia/
 
-行业知识框架、指标字典、方法论、学习路径与 RAG 搜索入口。
+行业知识框架、指标字典、方法论与 RAG 搜索入口。
 
 ## 简历三件套互链
 

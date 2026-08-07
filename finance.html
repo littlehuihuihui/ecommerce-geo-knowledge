@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,397 +6,21 @@
   <title>金融行业 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59, 130, 246, 0.12), transparent);
+    :root {
+      --theme-color: #10b981;
+      --theme-color-rgb: 16, 185, 129;
+      --theme-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
     }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #3b82f6, #06b6d4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-
-    .section {
-      margin-bottom: 48px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-icon {
-      font-size: 24px;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 0 24px;
-    }
-
-    /* 指标分类 */
-    .metric-category {
-      margin-bottom: 32px;
-    }
-
-    .category-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 16px;
-      padding-left: 12px;
-      border-left: 3px solid #3b82f6;
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .metric-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .metric-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.1);
-    }
-
-    .metric-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .metric-formula {
-      font-size: 12px;
-      color: #3b82f6;
-      font-family: 'Courier New', monospace;
-      margin: 0 0 8px;
-      padding: 4px 8px;
-      background: rgba(59, 130, 246, 0.1);
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .metric-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* 分析框架 */
-    .framework-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-
-    .framework-card {
-      padding: 24px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .framework-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
-    }
-
-    .framework-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(6, 182, 212, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    .framework-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 12px;
-    }
-
-    .framework-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .framework-list li {
-      font-size: 13px;
-      color: var(--text-muted);
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .framework-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #3b82f6;
-    }
-
-    /* 客户分层 */
-    .tier-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    .tier-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .tier-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .tier-name {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .tier-aum {
-      font-size: 13px;
-      color: #3b82f6;
-      font-weight: 500;
-      margin: 0 0 12px;
-    }
-
-    .tier-features {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-    }
-
-    .tier-features li {
-      font-size: 12px;
-      color: var(--text-muted);
-      padding: 4px 0;
-    }
-
-    /* 典型场景 */
-    .scenario-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .scenario-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .scenario-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-2px);
-    }
-
-    .scenario-icon {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .scenario-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .scenario-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-  
-    /* 北极星指标 */
-    .north-star-section {
-      margin-bottom: 48px;
-    }
-
-    .north-star-card {
-      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.08));
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .north-star-icon {
-      font-size: 64px;
-      flex-shrink: 0;
-    }
-
-    .north-star-content {
-      flex: 1;
-    }
-
-    .north-star-label {
-      font-size: 12px;
-      color: #3b82f6;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .north-star-name {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 10px;
-    }
-
-    .north-star-formula {
-      font-size: 13px;
-      color: #3b82f6;
-      font-family: "JetBrains Mono", monospace;
-      margin-bottom: 12px;
-      padding: 6px 12px;
-      background: rgba(59, 130, 246, 0.1);
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .north-star-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .north-star-why {
-      flex-shrink: 0;
-      width: 280px;
-      padding-left: 32px;
-      border-left: 1px solid var(--glass-border);
-    }
-
-    .north-star-why-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .north-star-why-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .north-star-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .north-star-why {
-        border-left: none;
-        border-top: 1px solid var(--glass-border);
-        padding-left: 0;
-        padding-top: 20px;
-        width: 100%;
-      }
-    }
-</style>
+  </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -407,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item active">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -437,66 +45,343 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
-  <header class="page-header">
-    <h1 class="page-title">金融行业</h1>
-    <p class="page-desc">
-      银行、证券、保险等金融领域的数据分析体系，风控、营销、运营三大核心方向
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">28+</div>
-        <div class="stat-label">核心指标</div>
+<!-- 页面头部 -->
+    <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>金融行业知识框架</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">分析维度</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">4</div>
-        <div class="stat-label">分析框架</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">5</div>
-        <div class="stat-label">典型场景</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">金融行业</h1>
+          <p class="page-subtitle">银行、证券、保险等金融领域的数据分析体系，风控、营销、运营三大核心方向</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">28+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="container">
+  <main class="container">
     
-    <!-- 北极星指标 -->
-    <section class="section north-star-section">
-      <div class="north-star-card">
-        <div class="north-star-icon">⭐</div>
-        <div class="north-star-content">
-          <div class="north-star-label">North Star Metric</div>
-          <h2 class="north-star-name">AUM 管理资产规模</h2>
-          <div class="north-star-formula">所有客户管理资产之和</div>
-          <p class="north-star-desc">
-            金融行业（尤其是财富管理）的核心规模指标，反映平台的资产管理能力和客户信任度。AUM 规模直接决定了管理费收入。
-          </p>
-        </div>
-        <div class="north-star-why">
-          <div class="north-star-why-title">💡 为什么是它？</div>
-          <p class="north-star-why-text">
-            开户数只看数量不看质量，收入只看短期不看长期。AUM 同时反映了客户数量、客户质量和客户信任度，是财富管理业务的核心护城河。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 核心指标体系 -->
+        <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">📊</span>
-        金融核心指标体系
-      </h2>
-      <p class="section-desc">风控、客户、营销、产品、收入、合规六大维度的经典指标</p>
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
 
-      <div class="metric-category">
-        <h3 class="category-title">🛡️ 风控指标</h3>
-        <div class="metrics-grid">
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="金融北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="acquire">
+            <span class="ns-tab-stage">获客</span>
+            <span class="ns-tab-name">开户数</span>
+            <span class="ns-tab-scene">投放与渠道拉新，先做开户规模。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="aum">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">AUM</span>
+            <span class="ns-tab-scene">做大资产管理盘子，看规模与户均质量。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="profit">
+            <span class="ns-tab-stage">盈利</span>
+            <span class="ns-tab-name">ROE</span>
+            <span class="ns-tab-scene">利润导向期，盯股东回报与息差。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="risk">
+            <span class="ns-tab-stage">风控</span>
+            <span class="ns-tab-name">不良率</span>
+            <span class="ns-tab-scene">信贷扩张或资产质量承压时，风控优先。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="acquire" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">开户数</div>
+              <div class="ns-formula">累计/新增开户客户数</div>
+            </div>
+            <div class="north-star-right"><p>获客阶段的核心规模指标。先把客户接进来，再谈资产沉淀与交叉销售。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>投放与渠道拉新，先做开户规模。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">累计/新增开户客户数</div>
+            <p class="metric-desc">客户数量规模，反映获客能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增客户数</div>
+            <p class="metric-desc">获取一个新客户的成本，衡量获客效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
+            <p class="metric-desc">营销活动的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">激活率</h3>
+            <div class="metric-formula">激活客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">有交易/登录行为的用户数</div>
+            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">通过率</h3>
+            <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
+            <p class="metric-desc">信贷审批的通过比例，平衡风险与业务规模</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">AUM ÷ 客户数</div>
+            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
+            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品销量</h3>
+            <div class="metric-formula">产品销售金额/份额</div>
+            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收益率</h3>
+            <div class="metric-formula">产品收益 ÷ 产品本金</div>
+            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">总持有天数 ÷ 客户数</div>
+            <p class="metric-desc">客户平均持有产品的时间长度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">贷款逾期的比例，是信用风险的核心指标，按逾期天数分M1/M2/M3+</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">不良贷款占比，银行监管核心指标，通常指逾期90天以上的贷款</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">坏账率 / 核销率</h3>
+            <div class="metric-formula">核销贷款 ÷ 总贷款余额</div>
+            <p class="metric-desc">最终无法收回的贷款比例，反映真实的损失情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">风险敞口</h3>
+            <div class="metric-formula">各类风险暴露的总金额</div>
+            <p class="metric-desc">面临风险的资产总额，包括信用风险、市场风险、操作风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数</div>
+            <p class="metric-desc">欺诈交易的比例，反欺诈效果的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">识别出的可疑交易数量</div>
+            <p class="metric-desc">反洗钱监测中发现的可疑交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规检查通过率</h3>
+            <div class="metric-formula">通过检查项 ÷ 总检查项</div>
+            <p class="metric-desc">合规检查的通过比例，反映合规水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案件损失率</h3>
+            <div class="metric-formula">案件损失金额 ÷ 总交易额</div>
+            <p class="metric-desc">操作风险案件造成的损失比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">客户托管的总资产金额</div>
+            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
+            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
+            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入</h3>
+            <div class="metric-formula">手续费及佣金收入</div>
+            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA 资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 总资产</div>
+            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROE 净资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 净资产</div>
+            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="aum" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">AUM</div>
+              <div class="ns-formula">客户托管的总资产金额</div>
+            </div>
+            <div class="north-star-right"><p>财富管理的核心规模指标，反映资产管理能力与客户信任度，直接决定管理费收入。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>做大资产管理盘子，看规模与户均质量。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是 AUM？</div>
+            <p>开户数只看数量不看质量，收入只看短期不看长期。AUM 同时反映客户数量、质量与信任度。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">客户托管的总资产金额</div>
+            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">AUM ÷ 客户数</div>
+            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">有交易/登录行为的用户数</div>
+            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
+            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品销量</h3>
+            <div class="metric-formula">产品销售金额/份额</div>
+            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">累计/新增开户客户数</div>
+            <p class="metric-desc">客户数量规模，反映获客能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">总持有天数 ÷ 客户数</div>
+            <p class="metric-desc">客户平均持有产品的时间长度</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">收益率</h3>
+            <div class="metric-formula">产品收益 ÷ 产品本金</div>
+            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">激活率</h3>
+            <div class="metric-formula">激活客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
+            <p class="metric-desc">营销活动的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
+            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入</h3>
+            <div class="metric-formula">手续费及佣金收入</div>
+            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">逾期率</h3>
             <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
@@ -527,116 +412,11 @@
             <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
             <p class="metric-desc">信贷审批的通过比例，平衡风险与业务规模</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">👥 客户规模指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">AUM 管理资产规模</h3>
-            <div class="metric-formula">客户托管的总资产金额</div>
-            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">开户数</h3>
-            <div class="metric-formula">累计/新增开户客户数</div>
-            <p class="metric-desc">客户数量规模，反映获客能力</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">活跃用户数</h3>
-            <div class="metric-formula">有交易/登录行为的用户数</div>
-            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">户均资产</h3>
-            <div class="metric-formula">AUM ÷ 客户数</div>
-            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">📈 营销转化指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">CAC 获客成本</h3>
             <div class="metric-formula">总获客费用 ÷ 新增客户数</div>
             <p class="metric-desc">获取一个新客户的成本，衡量获客效率</p>
           </div>
-          <div class="metric-card">
-            <h3 class="metric-name">转化率</h3>
-            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
-            <p class="metric-desc">营销活动的转化效率</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">激活率</h3>
-            <div class="metric-formula">激活客户 ÷ 开户客户</div>
-            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">交叉销售率</h3>
-            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
-            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💹 产品运营指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">收益率</h3>
-            <div class="metric-formula">产品收益 ÷ 产品本金</div>
-            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">产品销量</h3>
-            <div class="metric-formula">产品销售金额/份额</div>
-            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">赎回率</h3>
-            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
-            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">平均持有期</h3>
-            <div class="metric-formula">总持有天数 ÷ 客户数</div>
-            <p class="metric-desc">客户平均持有产品的时间长度</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💰 收入利润指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">净息差 NIM</h3>
-            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
-            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">中间业务收入</h3>
-            <div class="metric-formula">手续费及佣金收入</div>
-            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">ROA 资产收益率</h3>
-            <div class="metric-formula">净利润 ÷ 总资产</div>
-            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">ROE 净资产收益率</h3>
-            <div class="metric-formula">净利润 ÷ 净资产</div>
-            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">⚖️ 合规反欺诈</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">欺诈率</h3>
             <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数</div>
@@ -657,11 +437,369 @@
             <div class="metric-formula">案件损失金额 ÷ 总交易额</div>
             <p class="metric-desc">操作风险案件造成的损失比例</p>
           </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
+            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA 资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 总资产</div>
+            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROE 净资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 净资产</div>
+            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="profit" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">ROE</div>
+              <div class="ns-formula">净利润 ÷ 净资产</div>
+            </div>
+            <div class="north-star-right"><p>盈利阶段的核心回报指标。规模起来后，用 ROE、NIM 等看资本回报与盈利质量。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>利润导向期，盯股东回报与息差。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">ROE 净资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 净资产</div>
+            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA 资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 总资产</div>
+            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
+            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入</h3>
+            <div class="metric-formula">手续费及佣金收入</div>
+            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品销量</h3>
+            <div class="metric-formula">产品销售金额/份额</div>
+            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收益率</h3>
+            <div class="metric-formula">产品收益 ÷ 产品本金</div>
+            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">AUM ÷ 客户数</div>
+            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">客户托管的总资产金额</div>
+            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">有交易/登录行为的用户数</div>
+            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
+            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">总持有天数 ÷ 客户数</div>
+            <p class="metric-desc">客户平均持有产品的时间长度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">激活率</h3>
+            <div class="metric-formula">激活客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
+            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">贷款逾期的比例，是信用风险的核心指标，按逾期天数分M1/M2/M3+</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">不良贷款占比，银行监管核心指标，通常指逾期90天以上的贷款</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">坏账率 / 核销率</h3>
+            <div class="metric-formula">核销贷款 ÷ 总贷款余额</div>
+            <p class="metric-desc">最终无法收回的贷款比例，反映真实的损失情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">风险敞口</h3>
+            <div class="metric-formula">各类风险暴露的总金额</div>
+            <p class="metric-desc">面临风险的资产总额，包括信用风险、市场风险、操作风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">通过率</h3>
+            <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
+            <p class="metric-desc">信贷审批的通过比例，平衡风险与业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">累计/新增开户客户数</div>
+            <p class="metric-desc">客户数量规模，反映获客能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增客户数</div>
+            <p class="metric-desc">获取一个新客户的成本，衡量获客效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
+            <p class="metric-desc">营销活动的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数</div>
+            <p class="metric-desc">欺诈交易的比例，反欺诈效果的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">识别出的可疑交易数量</div>
+            <p class="metric-desc">反洗钱监测中发现的可疑交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规检查通过率</h3>
+            <div class="metric-formula">通过检查项 ÷ 总检查项</div>
+            <p class="metric-desc">合规检查的通过比例，反映合规水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案件损失率</h3>
+            <div class="metric-formula">案件损失金额 ÷ 总交易额</div>
+            <p class="metric-desc">操作风险案件造成的损失比例</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="risk" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">不良率</div>
+              <div class="ns-formula">不良贷款余额 ÷ 总贷款余额</div>
+            </div>
+            <div class="north-star-right"><p>风控阶段的核心质量指标。规模与利润都不能以牺牲资产质量为代价。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>信贷扩张或资产质量承压时，风控优先。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">不良贷款占比，银行监管核心指标，通常指逾期90天以上的贷款</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">贷款逾期的比例，是信用风险的核心指标，按逾期天数分M1/M2/M3+</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">坏账率 / 核销率</h3>
+            <div class="metric-formula">核销贷款 ÷ 总贷款余额</div>
+            <p class="metric-desc">最终无法收回的贷款比例，反映真实的损失情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">风险敞口</h3>
+            <div class="metric-formula">各类风险暴露的总金额</div>
+            <p class="metric-desc">面临风险的资产总额，包括信用风险、市场风险、操作风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">通过率</h3>
+            <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
+            <p class="metric-desc">信贷审批的通过比例，平衡风险与业务规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数</div>
+            <p class="metric-desc">欺诈交易的比例，反欺诈效果的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规检查通过率</h3>
+            <div class="metric-formula">通过检查项 ÷ 总检查项</div>
+            <p class="metric-desc">合规检查的通过比例，反映合规水平</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">识别出的可疑交易数量</div>
+            <p class="metric-desc">反洗钱监测中发现的可疑交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案件损失率</h3>
+            <div class="metric-formula">案件损失金额 ÷ 总交易额</div>
+            <p class="metric-desc">操作风险案件造成的损失比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">赎回金额 ÷ 产品总规模</div>
+            <p class="metric-desc">产品被赎回的比例，反映产品稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">总持有天数 ÷ 客户数</div>
+            <p class="metric-desc">客户平均持有产品的时间长度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">激活率</h3>
+            <div class="metric-formula">激活客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户后产生首次交易/行为的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">AUM ÷ 客户数</div>
+            <p class="metric-desc">平均每个客户的资产规模，反映客户质量</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">客户托管的总资产金额</div>
+            <p class="metric-desc">资产管理规模，是财富管理业务的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">累计/新增开户客户数</div>
+            <p class="metric-desc">客户数量规模，反映获客能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">有交易/登录行为的用户数</div>
+            <p class="metric-desc">活跃客户数量，反映客户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">总获客费用 ÷ 新增客户数</div>
+            <p class="metric-desc">获取一个新客户的成本，衡量获客效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">转化客户数 ÷ 触达客户数</div>
+            <p class="metric-desc">营销活动的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户</div>
+            <p class="metric-desc">客户持有产品的数量，反映客户深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收益率</h3>
+            <div class="metric-formula">产品收益 ÷ 产品本金</div>
+            <p class="metric-desc">理财产品的收益率，吸引客户的核心因素</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品销量</h3>
+            <div class="metric-formula">产品销售金额/份额</div>
+            <p class="metric-desc">产品的销售规模，反映市场接受度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">利息净收入 ÷ 生息资产</div>
+            <p class="metric-desc">银行净利息收益率，是银行盈利的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入</h3>
+            <div class="metric-formula">手续费及佣金收入</div>
+            <p class="metric-desc">非利息收入，反映银行的多元化盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA 资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 总资产</div>
+            <p class="metric-desc">资产盈利能力指标，反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROE 净资产收益率</h3>
+            <div class="metric-formula">净利润 ÷ 净资产</div>
+            <p class="metric-desc">股东资本回报率，衡量股东投资回报</p>
+          </div>
+          </div>
+        </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 分析框架 -->
+<!-- 分析框架 -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">🧩</span>
@@ -726,7 +864,7 @@
       <div class="tier-grid">
         <div class="tier-card">
           <h3 class="tier-name">私人银行</h3>
-          <p class="tier-aum">AUM > 600万</p>
+          <p class="tier-ratio">AUM > 600万</p>
           <ul class="tier-features">
             <li>👑 1对1 专属理财师</li>
             <li>💎 定制化资产配置</li>
@@ -737,7 +875,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">高净值</h3>
-          <p class="tier-aum">AUM 100-600万</p>
+          <p class="tier-ratio">AUM 100-600万</p>
           <ul class="tier-features">
             <li>🎯 专属理财顾问</li>
             <li>📈 标准化资产配置</li>
@@ -748,7 +886,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">富裕客户</h3>
-          <p class="tier-aum">AUM 20-100万</p>
+          <p class="tier-ratio">AUM 20-100万</p>
           <ul class="tier-features">
             <li>📱 线上+线下服务</li>
             <li>💹 标准化理财推荐</li>
@@ -759,7 +897,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">大众客户</h3>
-          <p class="tier-aum">AUM < 20万</p>
+          <p class="tier-ratio">AUM < 20万</p>
           <ul class="tier-features">
             <li>📱 纯线上自助服务</li>
             <li>💳 标准化产品</li>
@@ -806,8 +944,15 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
+    <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 金融行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  
   <script src="common.js"></script>
+
 </body>
 </html>
-

@@ -3,280 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>新能源汽车行业数据分析 · 知识框架</title>
+  <title>新能源汽车 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-elevated: rgba(15, 23, 42, 0.72);
-      --glass: rgba(30, 41, 59, 0.55);
-      --glass-border: rgba(148, 163, 184, 0.12);
-      --text: #f1f5f9;
-      --text-muted: #cbd5e1;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --radius: 14px;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-      --font: "Noto Sans SC", system-ui, sans-serif;
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
-    }
-
-    .app-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.18), transparent),
-        radial-gradient(ellipse 60% 40% at 100% 50%, rgba(99, 102, 241, 0.12), transparent),
-        radial-gradient(ellipse 50% 30% at 0% 80%, rgba(14, 165, 233, 0.1), transparent);
-      pointer-events: none;
-    }
-
-    .app {
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(12px, 3vw, 24px);
-      padding-bottom: 48px;
-    }
-
-    .glass {
-      background: var(--glass);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--glass-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 16px;
-      padding: clamp(16px, 3vw, 22px) clamp(18px, 3vw, 24px);
-      margin-bottom: 20px;
-    }
-
-    .header h1 {
-      margin: 0 0 6px;
-      font-size: clamp(1.15rem, 3vw, 1.5rem);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .header p {
-      margin: 0;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-
-    #exportBtn {
-      font-family: inherit;
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--text);
-      background: var(--accent-soft);
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 10px;
-      padding: 10px 16px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, transform 0.15s;
-      white-space: nowrap;
-    }
-
-    #exportBtn:hover {
-      background: rgba(56, 189, 248, 0.25);
-      border-color: rgba(56, 189, 248, 0.55);
-    }
-
-    #exportBtn:active {
-      transform: scale(0.98);
-    }
-
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 8px;
-      margin-bottom: 20px;
-    }
-
-    .tab-btn {
-      font-family: inherit;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: transparent;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
-      cursor: pointer;
-      transition: color 0.2s, background 0.2s;
-      text-align: left;
-      flex: 1 1 auto;
-      min-width: min(100%, 140px);
-    }
-
-    @media (min-width: 640px) {
-      .tab-btn {
-        flex: 0 1 auto;
-        text-align: center;
-      }
-    }
-
-    .tab-btn:hover {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .tab-btn.active {
-      color: var(--bg);
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      box-shadow: 0 4px 14px rgba(14, 165, 233, 0.35);
-    }
-
-    .tab-panel {
-      display: none;
-      animation: fadeIn 0.35s ease;
-    }
-
-    .tab-panel.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .section-title {
-      font-size: 0.9375rem;
-      font-weight: 600;
-      margin: 0 0 14px;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .cards-grid.cols-4 {
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
-    }
-
-    .knowledge-card {
-      padding: 14px 16px;
-      min-height: 96px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .knowledge-card .label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .knowledge-card .value {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .knowledge-card .hint {
-      font-size: 0.6875rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      opacity: 0.85;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--radius);
-      margin-bottom: 8px;
-    }
-
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8125rem;
-    }
-
-    .data-table th,
-    .data-table td {
-      padding: 12px 14px;
-      text-align: left;
-      border-bottom: 1px solid var(--glass-border);
-    }
-
-    .data-table th {
-      color: var(--text-muted);
-      font-weight: 600;
-      white-space: nowrap;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .data-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .data-table tbody tr:hover {
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .table-card {
-      padding: 4px 0 8px;
-      margin-bottom: 24px;
-    }
-
-    .table-card .inner {
-      padding: 16px 18px 8px;
-    }
-
-    .table-card h3 {
-      margin: 0 0 12px;
-      font-size: 1rem;
-      font-weight: 600;
+      --theme-color: #22c55e;
+      --theme-color-rgb: 34, 197, 94;
+      --theme-gradient: linear-gradient(135deg, #22c55e 0%, #14b8a6 100%);
     }
   </style>
-<link rel="stylesheet" href="common.css" /></head>
+</head>
 <body>
-<!-- 行业百科统一导航 -->
-      <nav class="encyclopedia-nav">
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -287,25 +30,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item active">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -316,726 +43,719 @@
       </div>
     </div>
   </nav>
-  <div class="app-bg" aria-hidden="true"></div>
-  <div class="app">
-    <header class="header glass">
-      <div>
-        <h1>新能源汽车行业数据分析 · 知识框架</h1>
-        <p>产销 / 电池 / 充电 / 供应链与政策 — 结构化指标与业务语义</p>
+
+<header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>新能源汽车行业知识框架</span>
       </div>
-      <button type="button" id="exportBtn" title="导出页面内带 data-* 的知识节点为 JSON">📦 导出AI知识库(JSON)</button>
-    </header>
-
-    <nav class="tabs glass" role="tablist" aria-label="知识模块">
-      <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-sales">整车制造与销售指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="tab-battery">电池技术与性能指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="tab-charge">充电基础设施指标</button>
-      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="tab-supply">供应链与政策环境</button>
-    </nav>
-
-    <main>
-      <!-- Tab1 -->
-      <section id="tab-sales" class="tab-panel active" role="tabpanel">
-        <h2 class="section-title">核心指标卡片</h2>
-        <div class="cards-grid cols-4">
-          <article
-            class="knowledge-card glass"
-            data-name="月产量"
-            data-module="整车制造与销售"
-            data-type="数量指标"
-            data-formula="月产量 = Σ(各工厂/产线月度下线合格整车数量)"
-            data-definition="统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量。"
-            data-business-scene="产能规划、排产达成、行业景气跟踪与同比环比分析。"
-          >
-            <span class="label">月产量</span>
-            <span class="value">128.6 万辆</span>
-            <span class="hint">演示值 · 行业合计口径</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="月销量"
-            data-module="整车制造与销售"
-            data-type="数量指标"
-            data-formula="月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)"
-            data-definition="统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露。"
-            data-business-scene="终端需求判断、渠道库存健康度、与产量对比看供需。"
-          >
-            <span class="label">月销量</span>
-            <span class="value">122.4 万辆</span>
-            <span class="hint">演示值</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="产能利用率"
-            data-module="整车制造与销售"
-            data-type="效率指标"
-            data-formula="产能利用率 = 实际产量 / 设计产能 × 100%"
-            data-definition="在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度。"
-            data-business-scene="扩产决策、固定成本摊销、价格战压力与稼动管理。"
-          >
-            <span class="label">产能利用率</span>
-            <span class="value">78%</span>
-            <span class="hint">行业加权演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="市占率"
-            data-module="整车制造与销售"
-            data-type="结构指标"
-            data-formula="市占率 = 品牌(或细分)销量 / 市场总销量 × 100%"
-            data-definition="在可比市场边界内，某主体销量占总体销量的比例。"
-            data-business-scene="竞争格局、资源投放优先级、投资人沟通与品牌战略。"
-          >
-            <span class="label">市占率</span>
-            <span class="value">TOP3 62%</span>
-            <span class="hint">集中度演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="订单转化率"
-            data-module="整车制造与销售"
-            data-type="转化指标"
-            data-formula="订单转化率 = 已锁单且完成交付数 / 有效大定或小订池 × 100%"
-            data-definition="从订单意向到实际成交的转化效率，口径需统一退订与改配规则。"
-            data-business-scene="新品爬坡、营销漏斗优化、交付周期管理。"
-          >
-            <span class="label">订单转化率</span>
-            <span class="value">68%</span>
-            <span class="hint">大定→交付演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="单车毛利率"
-            data-module="整车制造与销售"
-            data-type="财务指标"
-            data-formula="单车毛利率 = (整车销售收入 − 整车销售成本) / 整车销售收入 × 100%"
-            data-definition="分摊到单台车的毛利水平，可区分布局车型与区域。"
-            data-business-scene="定价策略、促销力度、规模效应与电池成本传导评估。"
-          >
-            <span class="label">单车毛利率</span>
-            <span class="value">14.2%</span>
-            <span class="hint">综合演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="增换购占比"
-            data-module="整车制造与销售"
-            data-type="用户结构指标"
-            data-formula="增换购占比 = 增购或换购用户销量 / 总销量 × 100%"
-            data-definition="再次购车或置换购车用户在总销量中的结构占比。"
-            data-business-scene="产品定位、保值率传播、金融与置换业务设计。"
-          >
-            <span class="label">增换购占比</span>
-            <span class="value">41%</span>
-            <span class="hint">调研口径演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="出口占比"
-            data-module="整车制造与销售"
-            data-type="结构指标"
-            data-formula="出口占比 = 海关口径出口销量(或金额) / 企业总销量 × 100%"
-            data-definition="外销车辆在总产销中的占比，可结合目的地市场拆分。"
-            data-business-scene="全球化布局、汇率与贸易政策风险、海外服务网络投入。"
-          >
-            <span class="label">出口占比</span>
-            <span class="value">18%</span>
-            <span class="hint">头部企业演示</span>
-          </article>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">新能源汽车</h1>
+          <p class="page-subtitle">产销 / 电池 / 充电 / 供应链与政策 — 结构化指标与业务语义</p>
         </div>
-
-        <div class="table-card glass">
-          <div class="inner">
-            <h3>品牌竞争格局（新势力 / 传统 / 跨界）</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>阵营</th>
-                    <th>代表品牌</th>
-                    <th>典型特征</th>
-                    <th>关注点</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-name="新势力品牌竞争格局"
-                    data-module="整车制造与销售"
-                    data-type="竞争分析维度"
-                    data-formula="—"
-                    data-definition="以智能电动产品为主、渠道与组织相对轻量的主机厂群体，常含直营与软件订阅模式。"
-                    data-business-scene="产品迭代速度、用户运营、融资与毛利改善路径对标。"
-                  >
-                    <td>新势力</td>
-                    <td>蔚来 / 小鹏 / 理想 等</td>
-                    <td>智能化标签、直营或混合渠道</td>
-                    <td>交付节奏、毛利、现金周期</td>
-                  </tr>
-                  <tr
-                    data-name="传统车企电动子品牌竞争格局"
-                    data-module="整车制造与销售"
-                    data-type="竞争分析维度"
-                    data-formula="—"
-                    data-definition="由传统整车集团孵化或升级的电动序列，共享供应链与制造基盘。"
-                    data-business-scene="油电协同、渠道改造、品牌溢价与转型资本开支。"
-                  >
-                    <td>传统</td>
-                    <td>比亚迪 / 长安深蓝 / 吉利银河 等</td>
-                    <td>规模制造、多品牌矩阵</td>
-                    <td>垂直整合、出口与区域市占</td>
-                  </tr>
-                  <tr
-                    data-name="跨界品牌竞争格局"
-                    data-module="整车制造与销售"
-                    data-type="竞争分析维度"
-                    data-formula="—"
-                    data-definition="来自消费电子、互联网或其他行业的参与者，以生态与流量切入整车。"
-                    data-business-scene="生态协同、渠道创新、品质与供应链爬坡风险。"
-                  >
-                    <td>跨界</td>
-                    <td>小米汽车 等</td>
-                    <td>生态联动、线上线下融合</td>
-                    <td>首款车型口碑、服务网络密度</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">20+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析模块</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </header>
 
-      <!-- Tab2 -->
-      <section id="tab-battery" class="tab-panel" role="tabpanel" hidden>
-        <h2 class="section-title">核心指标卡片</h2>
-        <div class="cards-grid">
-          <article
-            class="knowledge-card glass"
-            data-name="能量密度"
-            data-module="电池技术与性能"
-            data-type="物理性能指标"
-            data-formula="质量能量密度 Wh/kg = 额定容量(Ah)×标称电压(V) / 电池包质量(kg)"
-            data-definition="单位质量电池所储存的电能，分为电芯级与系统级（含结构件与热管理）。"
-            data-business-scene="续航与重量平衡、材料体系选型、补贴与技术路线申报。"
-          >
-            <span class="label">能量密度（系统）</span>
-            <span class="value">165 Wh/kg</span>
-            <span class="hint">量产包级演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="续航里程"
-            data-module="电池技术与性能"
-            data-type="用户体验指标"
-            data-formula="CLTC/WLTP 等标准工况下台架与路试认证里程"
-            data-definition="在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测。"
-            data-business-scene="产品定位、竞品对标、用户焦虑与充电策略设计。"
-          >
-            <span class="label">续航里程</span>
-            <span class="value">620 km</span>
-            <span class="hint">CLTC 演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="充电倍率"
-            data-module="电池技术与性能"
-            data-type="功率性能指标"
-            data-formula="C-rate = 充电电流(A) / 额定容量(Ah)"
-            data-definition="相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述。"
-            data-business-scene="快充桩匹配、热管理设计、电网峰值功率与站级调度。"
-          >
-            <span class="label">充电倍率</span>
-            <span class="value">3C 峰值</span>
-            <span class="hint">快充演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="循环寿命"
-            data-module="电池技术与性能"
-            data-type="寿命指标"
-            data-formula="达到容量保持率阈值(如80%)时的等效满充放循环次数"
-            data-definition="在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力。"
-            data-business-scene="质保年限、二手车残值、租赁与电池银行商业模式。"
-          >
-            <span class="label">循环寿命</span>
-            <span class="value">≥2000 次</span>
-            <span class="hint">80% SOH 演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="电池成本"
-            data-module="电池技术与性能"
-            data-type="成本指标"
-            data-formula="电池包$/kWh 或 元/Wh = 材料+制造+良率摊销+物流等全成本"
-            data-definition="单位储能容量的综合成本，可拆电芯与 PACK 级。"
-            data-business-scene="整车 BOM、降价空间、锂镍钴等材料价格波动传导。"
-          >
-            <span class="label">电池成本</span>
-            <span class="value">0.52 元/Wh</span>
-            <span class="hint">包级演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="自燃率"
-            data-module="电池技术与性能"
-            data-type="安全指标"
-            data-formula="自燃率 = 行业或品牌确认热失控起火事件数 / 保有量 × 10^n 车·年"
-            data-definition="在一定保有量与时间窗口内热失控导致起火的统计频率，口径需严格定义。"
-            data-business-scene="安全公关、召回决策、保险定价与热管理/BMS 策略迭代。"
-          >
-            <span class="label">自燃率</span>
-            <span class="value">&lt;0.03‰</span>
-            <span class="hint">行业级演示口径</span>
-          </article>
+  <main class="container">
+        <!-- 多北极星：按业务阶段切换 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="新能源北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="sales">
+            <span class="ns-tab-stage">产销</span>
+            <span class="ns-tab-name">月销量</span>
+            <span class="ns-tab-scene">月度经营会，盯销量与市占。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="mfg">
+            <span class="ns-tab-stage">制造</span>
+            <span class="ns-tab-name">产能利用率</span>
+            <span class="ns-tab-scene">排产与产能规划期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="battery">
+            <span class="ns-tab-stage">电池</span>
+            <span class="ns-tab-name">能量密度</span>
+            <span class="ns-tab-scene">车型定义或电池技术迭代期。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="charge">
+            <span class="ns-tab-stage">基建</span>
+            <span class="ns-tab-name">车桩比</span>
+            <span class="ns-tab-scene">补能网络建设与场站运营期。</span>
+          </button>
         </div>
 
-        <div class="table-card glass">
-          <div class="inner">
-            <h3>电池技术路线对比（磷酸铁锂 / 三元锂 / 固态 / 钠离子）</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>路线</th>
-                    <th>能量密度</th>
-                    <th>成本</th>
-                    <th>安全与寿命</th>
-                    <th>典型应用</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-name="磷酸铁锂电池路线"
-                    data-module="电池技术与性能"
-                    data-type="技术路线知识"
-                    data-formula="—"
-                    data-definition="橄榄石结构正极，热稳定性较好，成本相对可控，低温与能量密度上限相对三元略逊。"
-                    data-business-scene="大众市场车型、储能、对成本敏感且续航中等的场景。"
-                  >
-                    <td>磷酸铁锂</td>
-                    <td>中</td>
-                    <td>较低</td>
-                    <td>热稳定性较好</td>
-                    <td>主流乘用车与储能</td>
-                  </tr>
-                  <tr
-                    data-name="三元锂电池路线"
-                    data-module="电池技术与性能"
-                    data-type="技术路线知识"
-                    data-formula="—"
-                    data-definition="镍钴锰/铝等多元正极，能量密度与低温性能较好，对热管理与材料配比敏感。"
-                    data-business-scene="长续航高端车型、对重量敏感的应用。"
-                  >
-                    <td>三元锂</td>
-                    <td>高</td>
-                    <td>中高</td>
-                    <td>需强化热失控防护</td>
-                    <td>高端乘用车</td>
-                  </tr>
-                  <tr
-                    data-name="固态电池路线"
-                    data-module="电池技术与性能"
-                    data-type="技术路线知识"
-                    data-formula="—"
-                    data-definition="以固态或半固态电解质替代传统液态电解质为目标路径，潜在提升安全与能量密度。"
-                    data-business-scene="下一代旗舰车型、军工与特种场景，关注量产工艺与界面阻抗。"
-                  >
-                    <td>固态/半固态</td>
-                    <td>潜力高</td>
-                    <td>当前偏高</td>
-                    <td>安全潜力大</td>
-                    <td>示范与小批量</td>
-                  </tr>
-                  <tr
-                    data-name="钠离子电池路线"
-                    data-module="电池技术与性能"
-                    data-type="技术路线知识"
-                    data-formula="—"
-                    data-definition="以钠为主要载流子，资源丰富，能量密度通常低于锂电，适合特定细分场景。"
-                    data-business-scene="A00 级、两轮车、储能调峰、锂价高位时的补充方案。"
-                  >
-                    <td>钠离子</td>
-                    <td>中低</td>
-                    <td>理论低</td>
-                    <td>本征成本与资源友好</td>
-                    <td>入门车型与储能</td>
-                  </tr>
-                </tbody>
-              </table>
+        <div class="ns-panel is-active" data-ns="sales" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">月销量</div>
+              <div class="ns-formula">月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)</div>
             </div>
+            <div class="north-star-right"><p>产销阶段的核心规模指标，判断终端需求与渠道健康。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>月度经营会，盯销量与市占。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">业务场景</div>
+            <p>终端需求判断、渠道库存健康度、与产量对比看供需。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">月销量</h3>
+            <div class="metric-formula">月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)</div>
+            <p class="metric-desc">统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">月产量</h3>
+            <div class="metric-formula">月产量 = Σ(各工厂/产线月度下线合格整车数量)</div>
+            <p class="metric-desc">统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">市占率</h3>
+            <div class="metric-formula">市占率 = 品牌(或细分)销量 / 市场总销量 × 100%</div>
+            <p class="metric-desc">在可比市场边界内，某主体销量占总体销量的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单转化率</h3>
+            <div class="metric-formula">订单转化率 = 已锁单且完成交付数 / 有效大定或小订池 × 100%</div>
+            <p class="metric-desc">从订单意向到实际成交的转化效率，口径需统一退订与改配规则</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">增换购占比</h3>
+            <div class="metric-formula">增换购占比 = 增购或换购用户销量 / 总销量 × 100%</div>
+            <p class="metric-desc">再次购车或置换购车用户在总销量中的结构占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出口占比</h3>
+            <div class="metric-formula">出口占比 = 海关口径出口销量(或金额) / 企业总销量 × 100%</div>
+            <p class="metric-desc">外销车辆在总产销中的占比，可结合目的地市场拆分</p>
+          </div>
           </div>
         </div>
-      </section>
-
-      <!-- Tab3 -->
-      <section id="tab-charge" class="tab-panel" role="tabpanel" hidden>
-        <h2 class="section-title">核心指标卡片</h2>
-        <div class="cards-grid">
-          <article
-            class="knowledge-card glass"
-            data-name="车桩比"
-            data-module="充电基础设施"
-            data-type="覆盖度指标"
-            data-formula="车桩比 = 新能源汽车保有量 / 公共+私人充电桩数量"
-            data-definition="衡量充电设施相对车辆规模的覆盖水平，需区分公桩/私桩口径。"
-            data-business-scene="政策目标制定、运营商选址、用户家充推广策略。"
-          >
-            <span class="label">车桩比</span>
-            <span class="value">2.4 : 1</span>
-            <span class="hint">含私桩演示口径</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="时间利用率"
-            data-module="充电基础设施"
-            data-type="运营效率指标"
-            data-formula="时间利用率 = 桩实际充电小时数 / 统计窗口可用小时数 × 100%"
-            data-definition="单桩或场站在时间维度上的忙碌程度。"
-            data-business-scene="定价策略、占位费、扩建与功率升级决策。"
-          >
-            <span class="label">时间利用率</span>
-            <span class="value">11.2%</span>
-            <span class="hint">公桩场站演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="功率利用率"
-            data-module="充电基础设施"
-            data-type="运营效率指标"
-            data-formula="功率利用率 = ∫实际输出功率 dt / (额定功率×统计时长) "
-            data-definition="设备额定功率在时间上的利用程度，反映“快充能力是否被吃满”。"
-            data-business-scene="超充布局、电网容量、并桩与功率动态分配。"
-          >
-            <span class="label">功率利用率</span>
-            <span class="value">26%</span>
-            <span class="hint">快充演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="快充桩占比"
-            data-module="充电基础设施"
-            data-type="结构指标"
-            data-formula="快充桩占比 = 功率≥阈值的桩数量 / 总桩数量 × 100%"
-            data-definition="高功率直流桩在总量中的结构，阈值可按政策或企业定义(如≥60kW、≥120kW)。"
-            data-business-scene="用户体验、站均投资、对配电网冲击评估。"
-          >
-            <span class="label">快充桩占比</span>
-            <span class="value">38%</span>
-            <span class="hint">公共桩演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="设备在线率"
-            data-module="充电基础设施"
-            data-type="可靠性指标"
-            data-formula="设备在线率 = 可运营状态时长 / 统计总时长 × 100%"
-            data-definition="桩端或平台侧上报的可用、可计费状态占比，剔除计划检修。"
-            data-business-scene="运维 SLA、用户投诉、平台结算与资产估值。"
-          >
-            <span class="label">设备在线率</span>
-            <span class="value">97.1%</span>
-            <span class="hint">头部运营商演示</span>
-          </article>
-          <article
-            class="knowledge-card glass"
-            data-name="单桩日均服务车次"
-            data-module="充电基础设施"
-            data-type="服务强度指标"
-            data-formula="单桩日均服务车次 = 日充电会话数 / 运营桩数"
-            data-definition="平均每根桩每天服务的车辆次数，可区分公桩/专用站。"
-            data-business-scene="单桩收入模型、场地租金谈判、与周边车流匹配。"
-          >
-            <span class="label">单桩日均服务车次</span>
-            <span class="value">8.6</span>
-            <span class="hint">城市公桩演示</span>
-          </article>
-        </div>
-
-        <div class="table-card glass">
-          <div class="inner">
-            <h3>充电基础设施政策目标（示例维度）</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>政策维度</th>
-                    <th>常见目标表述</th>
-                    <th>监测指标</th>
-                    <th>业务含义</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-name="充电设施保有量目标"
-                    data-module="充电基础设施"
-                    data-type="政策目标知识"
-                    data-formula="—"
-                    data-definition="国家或地方规划中对充电桩/站数量、车桩比、高速公路覆盖等的中长期目标。"
-                    data-business-scene="运营商五年规划、设备招标节奏、地方补贴申报。"
-                  >
-                    <td>规模与覆盖</td>
-                    <td>公共桩数量、高速服务区覆盖</td>
-                    <td>桩数、车桩比、区县覆盖率</td>
-                    <td>补能焦虑缓解、投资节奏</td>
-                  </tr>
-                  <tr
-                    data-name="大功率充电推广目标"
-                    data-module="充电基础设施"
-                    data-type="政策目标知识"
-                    data-formula="—"
-                    data-definition="鼓励超充、光储充一体化、V2G 等新技术示范与标准体系建设。"
-                    data-business-scene="超充产品路线、站级储能配套、需量电费管理。"
-                  >
-                    <td>功率与技术</td>
-                    <td>超充示范、统一接口标准</td>
-                    <td>快充占比、单枪功率分布</td>
-                    <td>用户体验与电网协同</td>
-                  </tr>
-                  <tr
-                    data-name="居民区充电便利目标"
-                    data-module="充电基础设施"
-                    data-type="政策目标知识"
-                    data-formula="—"
-                    data-definition="推动小区固定车位家充、统建统营与物业协同机制。"
-                    data-business-scene="家充桩销售、社区运营、物业分润模式。"
-                  >
-                    <td>居民与社区</td>
-                    <td>固定车位应装尽装</td>
-                    <td>家充渗透率、报装时长</td>
-                    <td>降低公桩依赖、提升粘性</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">产能利用率 = 实际产量 / 设计产能 × 100%</div>
+            <p class="metric-desc">在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单车毛利率</h3>
+            <div class="metric-formula">单车毛利率 = (整车销售收入 − 整车销售成本) / 整车销售收入 × 100%</div>
+            <p class="metric-desc">分摊到单台车的毛利水平，可区分布局车型与区域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续航里程</h3>
+            <div class="metric-formula">CLTC/WLTP 等标准工况下台架与路试认证里程</div>
+            <p class="metric-desc">在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">能量密度</h3>
+            <div class="metric-formula">质量能量密度 Wh/kg = 额定容量(Ah)×标称电压(V) / 电池包质量(kg)</div>
+            <p class="metric-desc">单位质量电池所储存的电能，分为电芯级与系统级</p>
+          </div>
           </div>
         </div>
-      </section>
-
-      <!-- Tab4 -->
-      <section id="tab-supply" class="tab-panel" role="tabpanel" hidden>
-        <div class="table-card glass">
-          <div class="inner">
-            <h3>供应链核心物料</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>环节</th>
-                    <th>关键物料</th>
-                    <th>主要风险</th>
-                    <th>分析要点</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-name="正极材料供应链"
-                    data-module="供应链与政策环境"
-                    data-type="供应链知识"
-                    data-formula="—"
-                    data-definition="决定能量密度与成本结构的关键上游，涉及锂镍钴锰磷等金属冶炼与前驱体。"
-                    data-business-scene="材料价格波动对冲、长协、回收闭环与区域多元化。"
-                  >
-                    <td>正极</td>
-                    <td>碳酸锂/氢氧化锂、三元前驱体、磷酸铁锂材料</td>
-                    <td>价格剧烈波动、地缘集中度</td>
-                    <td>金属价格传导滞后、库存策略</td>
-                  </tr>
-                  <tr
-                    data-name="负极材料供应链"
-                    data-module="供应链与政策环境"
-                    data-type="供应链知识"
-                    data-formula="—"
-                    data-definition="人造石墨、硅基负极等，影响快充与循环性能。"
-                    data-business-scene="石墨化产能布局、耗电成本与绿电比例。"
-                  >
-                    <td>负极</td>
-                    <td>石墨、硅氧/硅碳</td>
-                    <td>石墨化限电、扩产周期长</td>
-                    <td>高端硅负极良率与膨胀管理</td>
-                  </tr>
-                  <tr
-                    data-name="电解液供应链"
-                    data-module="供应链与政策环境"
-                    data-type="供应链知识"
-                    data-formula="—"
-                    data-definition="溶质(LiPF6等)、溶剂与添加剂配方决定低温与安全边界。"
-                    data-business-scene="六氟磷酸锂周期、新型锂盐导入节奏。"
-                  >
-                    <td>电解液</td>
-                    <td>六氟磷酸锂、溶剂、添加剂</td>
-                    <td>溶质价格周期</td>
-                    <td>配方专利与快充适配</td>
-                  </tr>
-                  <tr
-                    data-name="隔膜供应链"
-                    data-module="供应链与政策环境"
-                    data-type="供应链知识"
-                    data-formula="—"
-                    data-definition="湿法/干法隔膜影响内阻与安全性，设备壁垒高。"
-                    data-business-scene="涂覆隔膜溢价、设备交期、良率爬坡。"
-                  >
-                    <td>隔膜</td>
-                    <td>基膜、陶瓷/PVDF 涂覆</td>
-                    <td>设备进口依赖</td>
-                    <td>薄型化与热关闭性能</td>
-                  </tr>
-                  <tr
-                    data-name="汽车芯片供应链"
-                    data-module="供应链与政策环境"
-                    data-type="供应链知识"
-                    data-formula="—"
-                    data-definition="MCU、功率半导体、传感器、智驾SoC 等车规级器件。"
-                    data-business-scene="缺芯风险管理、二级物料认证、国产化替代进度。"
-                  >
-                    <td>芯片</td>
-                    <td>MCU、IGBT/SiC、SoC、传感器</td>
-                    <td>车规认证长、先进制程受限</td>
-                    <td>多源供应与架构可替代性</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">充电倍率</h3>
+            <div class="metric-formula">C-rate = 充电电流(A) / 额定容量(Ah)</div>
+            <p class="metric-desc">相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">循环寿命</h3>
+            <div class="metric-formula">达到容量保持率阈值(如80%)时的等效满充放循环次数</div>
+            <p class="metric-desc">在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">电池成本</h3>
+            <div class="metric-formula">电池包$/kWh 或 元/Wh = 材料+制造+良率摊销+物流等全成本</div>
+            <p class="metric-desc">单位储能容量的综合成本，可拆电芯与 PACK 级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自燃率</h3>
+            <div class="metric-formula">自燃率 = 行业或品牌确认热失控起火事件数 / 保有量 × 10^n 车·年</div>
+            <p class="metric-desc">在一定保有量与时间窗口内热失控导致起火的统计频率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车桩比</h3>
+            <div class="metric-formula">车桩比 = 新能源汽车保有量 / 公共+私人充电桩数量</div>
+            <p class="metric-desc">衡量充电设施相对车辆规模的覆盖水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">时间利用率</h3>
+            <div class="metric-formula">时间利用率 = 桩实际充电小时数 / 统计窗口可用小时数 × 100%</div>
+            <p class="metric-desc">单桩或场站在时间维度上的忙碌程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功率利用率</h3>
+            <div class="metric-formula">功率利用率 = ∫实际输出功率 dt / (额定功率×统计时长)</div>
+            <p class="metric-desc">设备额定功率在时间上的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">快充桩占比</h3>
+            <div class="metric-formula">快充桩占比 = 功率≥阈值的桩数量 / 总桩数量 × 100%</div>
+            <p class="metric-desc">高功率直流桩在总量中的结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备在线率</h3>
+            <div class="metric-formula">设备在线率 = 可运营状态时长 / 统计总时长 × 100%</div>
+            <p class="metric-desc">桩端或平台侧上报的可用、可计费状态占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单桩日均服务车次</h3>
+            <div class="metric-formula">单桩日均服务车次 = 日充电会话数 / 运营桩数</div>
+            <p class="metric-desc">平均每根桩每天服务的车辆次数</p>
+          </div>
           </div>
         </div>
-
-        <div class="table-card glass">
-          <div class="inner">
-            <h3>核心政策环境（双碳 / 补贴 / 充电基建 / 电池回收）</h3>
-            <div class="table-wrap">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>领域</th>
-                    <th>政策工具</th>
-                    <th>对行业的影响</th>
-                    <th>数据观察点</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    data-name="双碳政策环境"
-                    data-module="供应链与政策环境"
-                    data-type="政策知识"
-                    data-formula="—"
-                    data-definition="碳达峰碳中和目标下，对生产、使用、回收全链条的碳排约束与披露要求。"
-                    data-business-scene="工厂绿电比例、产品碳足迹、出口合规与ESG披露。"
-                  >
-                    <td>双碳</td>
-                    <td>碳排双控、绿电交易、产品碳足迹试点</td>
-                    <td>推高低碳技术与绿电需求</td>
-                    <td>单位产量碳排、绿电占比</td>
-                  </tr>
-                  <tr
-                    data-name="购置补贴与税收优惠"
-                    data-module="供应链与政策环境"
-                    data-type="政策知识"
-                    data-formula="—"
-                    data-definition="购置税减免、地方消费券、路权优惠等需求侧工具，随渗透率逐步退坡。"
-                    data-business-scene="销量预测、价格带竞争、区域结构波动。"
-                  >
-                    <td>补贴</td>
-                    <td>购置税减免、地方补贴</td>
-                    <td>影响价格敏感区间需求</td>
-                    <td>政策窗口、上险增速</td>
-                  </tr>
-                  <tr
-                    data-name="充电基础设施政策"
-                    data-module="供应链与政策环境"
-                    data-type="政策知识"
-                    data-formula="—"
-                    data-definition="建设运营补贴、土地与电价优惠、标准与互联互通要求。"
-                    data-business-scene="运营商 IRR、设备招标技术规格、平台互联互通。"
-                  >
-                    <td>充电基建</td>
-                    <td>建设补贴、电价机制、标准统一</td>
-                    <td>加速网络覆盖与功率升级</td>
-                    <td>桩数增速、快充占比</td>
-                  </tr>
-                  <tr
-                    data-name="电池回收与梯次政策"
-                    data-module="供应链与政策环境"
-                    data-type="政策知识"
-                    data-formula="—"
-                    data-definition="生产者责任延伸、回收网点、再生材料比例要求等。"
-                    data-business-scene="回收经济性、材料闭环、碳足迹降低与合规成本。"
-                  >
-                    <td>电池回收</td>
-                    <td>生产者责任延伸、再生材料比例</td>
-                    <td>倒逼回收体系与材料闭环</td>
-                    <td>回收量、镍钴锂再生占比</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
-      </section>
-    </main>
-  </div>
+        <div class="ns-panel" data-ns="mfg" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">产能利用率</div>
+              <div class="ns-formula">实际产量 / 设计产能 × 100%</div>
+            </div>
+            <div class="north-star-right"><p>制造阶段盯产能利用与产量，看工厂是否吃满。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>排产与产能规划期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">产能利用率 = 实际产量 / 设计产能 × 100%</div>
+            <p class="metric-desc">在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">月产量</h3>
+            <div class="metric-formula">月产量 = Σ(各工厂/产线月度下线合格整车数量)</div>
+            <p class="metric-desc">统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">月销量</h3>
+            <div class="metric-formula">月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)</div>
+            <p class="metric-desc">统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单车毛利率</h3>
+            <div class="metric-formula">单车毛利率 = (整车销售收入 − 整车销售成本) / 整车销售收入 × 100%</div>
+            <p class="metric-desc">分摊到单台车的毛利水平，可区分布局车型与区域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单转化率</h3>
+            <div class="metric-formula">订单转化率 = 已锁单且完成交付数 / 有效大定或小订池 × 100%</div>
+            <p class="metric-desc">从订单意向到实际成交的转化效率，口径需统一退订与改配规则</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">市占率</h3>
+            <div class="metric-formula">市占率 = 品牌(或细分)销量 / 市场总销量 × 100%</div>
+            <p class="metric-desc">在可比市场边界内，某主体销量占总体销量的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出口占比</h3>
+            <div class="metric-formula">出口占比 = 海关口径出口销量(或金额) / 企业总销量 × 100%</div>
+            <p class="metric-desc">外销车辆在总产销中的占比，可结合目的地市场拆分</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">电池成本</h3>
+            <div class="metric-formula">电池包$/kWh 或 元/Wh = 材料+制造+良率摊销+物流等全成本</div>
+            <p class="metric-desc">单位储能容量的综合成本，可拆电芯与 PACK 级</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">增换购占比</h3>
+            <div class="metric-formula">增换购占比 = 增购或换购用户销量 / 总销量 × 100%</div>
+            <p class="metric-desc">再次购车或置换购车用户在总销量中的结构占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">能量密度</h3>
+            <div class="metric-formula">质量能量密度 Wh/kg = 额定容量(Ah)×标称电压(V) / 电池包质量(kg)</div>
+            <p class="metric-desc">单位质量电池所储存的电能，分为电芯级与系统级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续航里程</h3>
+            <div class="metric-formula">CLTC/WLTP 等标准工况下台架与路试认证里程</div>
+            <p class="metric-desc">在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">充电倍率</h3>
+            <div class="metric-formula">C-rate = 充电电流(A) / 额定容量(Ah)</div>
+            <p class="metric-desc">相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">循环寿命</h3>
+            <div class="metric-formula">达到容量保持率阈值(如80%)时的等效满充放循环次数</div>
+            <p class="metric-desc">在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自燃率</h3>
+            <div class="metric-formula">自燃率 = 行业或品牌确认热失控起火事件数 / 保有量 × 10^n 车·年</div>
+            <p class="metric-desc">在一定保有量与时间窗口内热失控导致起火的统计频率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车桩比</h3>
+            <div class="metric-formula">车桩比 = 新能源汽车保有量 / 公共+私人充电桩数量</div>
+            <p class="metric-desc">衡量充电设施相对车辆规模的覆盖水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">时间利用率</h3>
+            <div class="metric-formula">时间利用率 = 桩实际充电小时数 / 统计窗口可用小时数 × 100%</div>
+            <p class="metric-desc">单桩或场站在时间维度上的忙碌程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功率利用率</h3>
+            <div class="metric-formula">功率利用率 = ∫实际输出功率 dt / (额定功率×统计时长)</div>
+            <p class="metric-desc">设备额定功率在时间上的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">快充桩占比</h3>
+            <div class="metric-formula">快充桩占比 = 功率≥阈值的桩数量 / 总桩数量 × 100%</div>
+            <p class="metric-desc">高功率直流桩在总量中的结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备在线率</h3>
+            <div class="metric-formula">设备在线率 = 可运营状态时长 / 统计总时长 × 100%</div>
+            <p class="metric-desc">桩端或平台侧上报的可用、可计费状态占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单桩日均服务车次</h3>
+            <div class="metric-formula">单桩日均服务车次 = 日充电会话数 / 运营桩数</div>
+            <p class="metric-desc">平均每根桩每天服务的车辆次数</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="battery" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">能量密度</div>
+              <div class="ns-formula">Wh/kg</div>
+            </div>
+            <div class="north-star-right"><p>产品与电池技术阶段的核心性能指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>车型定义或电池技术迭代期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">能量密度</h3>
+            <div class="metric-formula">质量能量密度 Wh/kg = 额定容量(Ah)×标称电压(V) / 电池包质量(kg)</div>
+            <p class="metric-desc">单位质量电池所储存的电能，分为电芯级与系统级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续航里程</h3>
+            <div class="metric-formula">CLTC/WLTP 等标准工况下台架与路试认证里程</div>
+            <p class="metric-desc">在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">充电倍率</h3>
+            <div class="metric-formula">C-rate = 充电电流(A) / 额定容量(Ah)</div>
+            <p class="metric-desc">相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">循环寿命</h3>
+            <div class="metric-formula">达到容量保持率阈值(如80%)时的等效满充放循环次数</div>
+            <p class="metric-desc">在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">电池成本</h3>
+            <div class="metric-formula">电池包$/kWh 或 元/Wh = 材料+制造+良率摊销+物流等全成本</div>
+            <p class="metric-desc">单位储能容量的综合成本，可拆电芯与 PACK 级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自燃率</h3>
+            <div class="metric-formula">自燃率 = 行业或品牌确认热失控起火事件数 / 保有量 × 10^n 车·年</div>
+            <p class="metric-desc">在一定保有量与时间窗口内热失控导致起火的统计频率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">单车毛利率</h3>
+            <div class="metric-formula">单车毛利率 = (整车销售收入 − 整车销售成本) / 整车销售收入 × 100%</div>
+            <p class="metric-desc">分摊到单台车的毛利水平，可区分布局车型与区域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">月销量</h3>
+            <div class="metric-formula">月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)</div>
+            <p class="metric-desc">统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">市占率</h3>
+            <div class="metric-formula">市占率 = 品牌(或细分)销量 / 市场总销量 × 100%</div>
+            <p class="metric-desc">在可比市场边界内，某主体销量占总体销量的比例</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">月产量</h3>
+            <div class="metric-formula">月产量 = Σ(各工厂/产线月度下线合格整车数量)</div>
+            <p class="metric-desc">统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">产能利用率 = 实际产量 / 设计产能 × 100%</div>
+            <p class="metric-desc">在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单转化率</h3>
+            <div class="metric-formula">订单转化率 = 已锁单且完成交付数 / 有效大定或小订池 × 100%</div>
+            <p class="metric-desc">从订单意向到实际成交的转化效率，口径需统一退订与改配规则</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">增换购占比</h3>
+            <div class="metric-formula">增换购占比 = 增购或换购用户销量 / 总销量 × 100%</div>
+            <p class="metric-desc">再次购车或置换购车用户在总销量中的结构占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出口占比</h3>
+            <div class="metric-formula">出口占比 = 海关口径出口销量(或金额) / 企业总销量 × 100%</div>
+            <p class="metric-desc">外销车辆在总产销中的占比，可结合目的地市场拆分</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">车桩比</h3>
+            <div class="metric-formula">车桩比 = 新能源汽车保有量 / 公共+私人充电桩数量</div>
+            <p class="metric-desc">衡量充电设施相对车辆规模的覆盖水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">时间利用率</h3>
+            <div class="metric-formula">时间利用率 = 桩实际充电小时数 / 统计窗口可用小时数 × 100%</div>
+            <p class="metric-desc">单桩或场站在时间维度上的忙碌程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功率利用率</h3>
+            <div class="metric-formula">功率利用率 = ∫实际输出功率 dt / (额定功率×统计时长)</div>
+            <p class="metric-desc">设备额定功率在时间上的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">快充桩占比</h3>
+            <div class="metric-formula">快充桩占比 = 功率≥阈值的桩数量 / 总桩数量 × 100%</div>
+            <p class="metric-desc">高功率直流桩在总量中的结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备在线率</h3>
+            <div class="metric-formula">设备在线率 = 可运营状态时长 / 统计总时长 × 100%</div>
+            <p class="metric-desc">桩端或平台侧上报的可用、可计费状态占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单桩日均服务车次</h3>
+            <div class="metric-formula">单桩日均服务车次 = 日充电会话数 / 运营桩数</div>
+            <p class="metric-desc">平均每根桩每天服务的车辆次数</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="charge" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">车桩比</div>
+              <div class="ns-formula">保有量 / 充电桩数量</div>
+            </div>
+            <div class="north-star-right"><p>充电基础设施阶段，看覆盖与运营效率。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>补能网络建设与场站运营期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">车桩比</h3>
+            <div class="metric-formula">车桩比 = 新能源汽车保有量 / 公共+私人充电桩数量</div>
+            <p class="metric-desc">衡量充电设施相对车辆规模的覆盖水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">设备在线率</h3>
+            <div class="metric-formula">设备在线率 = 可运营状态时长 / 统计总时长 × 100%</div>
+            <p class="metric-desc">桩端或平台侧上报的可用、可计费状态占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">时间利用率</h3>
+            <div class="metric-formula">时间利用率 = 桩实际充电小时数 / 统计窗口可用小时数 × 100%</div>
+            <p class="metric-desc">单桩或场站在时间维度上的忙碌程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">功率利用率</h3>
+            <div class="metric-formula">功率利用率 = ∫实际输出功率 dt / (额定功率×统计时长)</div>
+            <p class="metric-desc">设备额定功率在时间上的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">快充桩占比</h3>
+            <div class="metric-formula">快充桩占比 = 功率≥阈值的桩数量 / 总桩数量 × 100%</div>
+            <p class="metric-desc">高功率直流桩在总量中的结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单桩日均服务车次</h3>
+            <div class="metric-formula">单桩日均服务车次 = 日充电会话数 / 运营桩数</div>
+            <p class="metric-desc">平均每根桩每天服务的车辆次数</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">充电倍率</h3>
+            <div class="metric-formula">C-rate = 充电电流(A) / 额定容量(Ah)</div>
+            <p class="metric-desc">相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续航里程</h3>
+            <div class="metric-formula">CLTC/WLTP 等标准工况下台架与路试认证里程</div>
+            <p class="metric-desc">在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">月销量</h3>
+            <div class="metric-formula">月销量 = Σ(零售上险 + 批售交付 − 合理冲回规则)</div>
+            <p class="metric-desc">统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">月产量</h3>
+            <div class="metric-formula">月产量 = Σ(各工厂/产线月度下线合格整车数量)</div>
+            <p class="metric-desc">统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产能利用率</h3>
+            <div class="metric-formula">产能利用率 = 实际产量 / 设计产能 × 100%</div>
+            <p class="metric-desc">在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">市占率</h3>
+            <div class="metric-formula">市占率 = 品牌(或细分)销量 / 市场总销量 × 100%</div>
+            <p class="metric-desc">在可比市场边界内，某主体销量占总体销量的比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单转化率</h3>
+            <div class="metric-formula">订单转化率 = 已锁单且完成交付数 / 有效大定或小订池 × 100%</div>
+            <p class="metric-desc">从订单意向到实际成交的转化效率，口径需统一退订与改配规则</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单车毛利率</h3>
+            <div class="metric-formula">单车毛利率 = (整车销售收入 − 整车销售成本) / 整车销售收入 × 100%</div>
+            <p class="metric-desc">分摊到单台车的毛利水平，可区分布局车型与区域</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">增换购占比</h3>
+            <div class="metric-formula">增换购占比 = 增购或换购用户销量 / 总销量 × 100%</div>
+            <p class="metric-desc">再次购车或置换购车用户在总销量中的结构占比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">出口占比</h3>
+            <div class="metric-formula">出口占比 = 海关口径出口销量(或金额) / 企业总销量 × 100%</div>
+            <p class="metric-desc">外销车辆在总产销中的占比，可结合目的地市场拆分</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">能量密度</h3>
+            <div class="metric-formula">质量能量密度 Wh/kg = 额定容量(Ah)×标称电压(V) / 电池包质量(kg)</div>
+            <p class="metric-desc">单位质量电池所储存的电能，分为电芯级与系统级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">循环寿命</h3>
+            <div class="metric-formula">达到容量保持率阈值(如80%)时的等效满充放循环次数</div>
+            <p class="metric-desc">在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">电池成本</h3>
+            <div class="metric-formula">电池包$/kWh 或 元/Wh = 材料+制造+良率摊销+物流等全成本</div>
+            <p class="metric-desc">单位储能容量的综合成本，可拆电芯与 PACK 级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自燃率</h3>
+            <div class="metric-formula">自燃率 = 行业或品牌确认热失控起火事件数 / 保有量 × 10^n 车·年</div>
+            <p class="metric-desc">在一定保有量与时间窗口内热失控导致起火的统计频率</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <script>
-    (function () {
-      var tabButtons = document.querySelectorAll(".tab-btn");
-      var panels = document.querySelectorAll(".tab-panel");
+<section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span>分析框架与专题模块</h2>
+      <p class="section-desc">由原页面模块与专题说明整理</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🧩</div>
+          <h3 class="framework-name">整车制造与销售</h3>
+          <ul class="framework-list">
+            <li><strong>月产量</strong> - 统计周期内主机厂完成生产并计为产量的车辆台数或折算标准车当量。</li>
+            <li><strong>月销量</strong> - 统计月内完成销售并计入销量的车辆数量，可按零售/批售口径分别披露。</li>
+            <li><strong>产能利用率</strong> - 在既定统计周期内，实际产出相对产线或工厂设计产能的利用程度。</li>
+            <li><strong>市占率</strong> - 在可比市场边界内，某主体销量占总体销量的比例。</li>
+            <li><strong>订单转化率</strong> - 从订单意向到实际成交的转化效率，口径需统一退订与改配规则。</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📊</div>
+          <h3 class="framework-name">电池技术与性能</h3>
+          <ul class="framework-list">
+            <li><strong>能量密度</strong> - 单位质量电池所储存的电能，分为电芯级与系统级（含结构件与热管理）。</li>
+            <li><strong>续航里程</strong> - 在法规或企业宣称工况下，满电可行驶里程，需区分标称与实测。</li>
+            <li><strong>充电倍率</strong> - 相对额定容量的充电快慢能力，常见 1C、2C、4C 等表述。</li>
+            <li><strong>循环寿命</strong> - 在指定温度与充放电深度策略下，电池容量衰减至约定水平前的循环能力。</li>
+            <li><strong>电池成本</strong> - 单位储能容量的综合成本，可拆电芯与 PACK 级。</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">充电基础设施</h3>
+          <ul class="framework-list">
+            <li><strong>车桩比</strong> - 衡量充电设施相对车辆规模的覆盖水平，需区分公桩/私桩口径。</li>
+            <li><strong>时间利用率</strong> - 单桩或场站在时间维度上的忙碌程度。</li>
+            <li><strong>功率利用率</strong> - 设备额定功率在时间上的利用程度，反映“快充能力是否被吃满”。</li>
+            <li><strong>快充桩占比</strong> - 高功率直流桩在总量中的结构，阈值可按政策或企业定义(如≥60kW、≥120kW)。</li>
+            <li><strong>设备在线率</strong> - 桩端或平台侧上报的可用、可计费状态占比，剔除计划检修。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-      function activateTab(id) {
-        tabButtons.forEach(function (btn) {
-          var on = btn.getAttribute("data-tab") === id;
-          btn.classList.toggle("active", on);
-          btn.setAttribute("aria-selected", on ? "true" : "false");
-        });
-        panels.forEach(function (panel) {
-          var on = panel.id === id;
-          panel.classList.toggle("active", on);
-          panel.toggleAttribute("hidden", !on);
-        });
-      }
 
-      tabButtons.forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          activateTab(btn.getAttribute("data-tab"));
-        });
-      });
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span>典型分析场景</h2>
+      <p class="section-desc">来自原页面指标业务场景说明</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">月产量</h3>
+          <p class="scenario-desc">产能规划、排产达成、行业景气跟踪与同比环比分析。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">月销量</h3>
+          <p class="scenario-desc">终端需求判断、渠道库存健康度、与产量对比看供需。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">产能利用率</h3>
+          <p class="scenario-desc">扩产决策、固定成本摊销、价格战压力与稼动管理。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">市占率</h3>
+          <p class="scenario-desc">竞争格局、资源投放优先级、投资人沟通与品牌战略。</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💡</div>
+          <h3 class="scenario-name">订单转化率</h3>
+          <p class="scenario-desc">新品爬坡、营销漏斗优化、交付周期管理。</p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-      document.getElementById("exportBtn").addEventListener("click", function () {
-        var nodes = document.querySelectorAll("[data-name]");
-        var list = [];
-        nodes.forEach(function (el) {
-          list.push({
-            name: el.getAttribute("data-name") || "",
-            module: el.getAttribute("data-module") || "",
-            type: el.getAttribute("data-type") || "",
-            formula: el.getAttribute("data-formula") || "",
-            definition: el.getAttribute("data-definition") || "",
-            businessScene: el.getAttribute("data-business-scene") || "",
-            tagName: el.tagName.toLowerCase(),
-            textPreview: (el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 200)
-          });
-        });
-
-        var payload = {
-          meta: {
-            title: "新能源汽车行业数据分析 · 知识框架",
-            exportedAt: new Date().toISOString(),
-            entryCount: list.length
-          },
-          knowledgeBase: list
-        };
-
-        var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url;
-        a.download = "新能源汽车_知识库.json";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-    })();
-  </script>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 新能源汽车行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  <script src="common.js"></script>
 </body>
 </html>
-
-
-
-

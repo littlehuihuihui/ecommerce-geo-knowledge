@@ -19,8 +19,8 @@
   </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -31,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item active">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -61,7 +45,7 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
+<!-- 页面头部 -->
   <header class="page-header">
     <div class="container">
       <div class="breadcrumb">
@@ -95,287 +79,376 @@
   </header>
 
   <main class="container">
-    <!-- 北极星指标 -->
+        <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
       <div class="section-header">
         <h2 class="section-title">⭐ 北极星指标</h2>
-        <span class="section-badge">North Star Metric</span>
+        <span class="section-badge">按业务阶段切换</span>
       </div>
-      <div class="north-star-card">
-        <div class="north-star-left">
-          <div class="ns-name">库存周转率</div>
-          <div class="ns-formula">销售成本 ÷ 平均库存金额</div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
+
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="快消北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="sales">
+            <span class="ns-tab-stage">销售</span>
+            <span class="ns-tab-name">销售额</span>
+            <span class="ns-tab-scene">冲业绩期，盯销售规模与增速。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="channel">
+            <span class="ns-tab-stage">渠道</span>
+            <span class="ns-tab-name">铺货率</span>
+            <span class="ns-tab-scene">铺市与渠道建设，看覆盖与单产。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="stock">
+            <span class="ns-tab-stage">效率</span>
+            <span class="ns-tab-name">库存周转率</span>
+            <span class="ns-tab-scene">供应链承压或资金紧张时，盯周转。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="brand">
+            <span class="ns-tab-stage">品牌</span>
+            <span class="ns-tab-name">市场份额</span>
+            <span class="ns-tab-scene">品牌建设与份额争夺期。</span>
+          </button>
         </div>
-        <div class="north-star-right">
-          <p>快消品行业的核心效率指标，衡量库存周转速度。周转率越高，资金占用越少，供应链效率越高，是快消企业运营能力的综合体现。</p>
+
+        <div class="ns-panel is-active" data-ns="sales" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">销售额</div>
+              <div class="ns-formula">销售收入金额</div>
+            </div>
+            <div class="north-star-right"><p>销售阶段的核心规模指标。先看卖了多少，再拆渠道与效率。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>冲业绩期，盯销售规模与增速。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">销售额</span><span class="mc-desc">销售收入金额</span></div>
+            <div class="mc-item"><span class="mc-name">销量</span><span class="mc-desc">销售数量</span></div>
+            <div class="mc-item"><span class="mc-name">均价</span><span class="mc-desc">销售额 ÷ 销量</span></div>
+            <div class="mc-item"><span class="mc-name">同比增长率</span><span class="mc-desc">较去年同期增长</span></div>
+            <div class="mc-item"><span class="mc-name">环比增长率</span><span class="mc-desc">较上期增长</span></div>
+            <div class="mc-item"><span class="mc-name">单店产出</span><span class="mc-desc">平均每店销售额</span></div>
+            <div class="mc-item"><span class="mc-name">市场份额</span><span class="mc-desc">品牌销售 ÷ 行业总销售</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">铺货率</span><span class="mc-desc">有货网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销售网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">促销渗透率</span><span class="mc-desc">促销期销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">促销ROI</span><span class="mc-desc">促销投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">重复购买用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">毛利率</span><span class="mc-desc">毛利 ÷ 销售额</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">库存周转率</span><span class="mc-desc">年周转次数</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">库存金额</span><span class="mc-desc">库存总价值</span></div>
+            <div class="mc-item"><span class="mc-name">缺货率</span><span class="mc-desc">缺货SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">滞销品占比</span><span class="mc-desc">滞销SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">网点数</span><span class="mc-desc">销售网点数量</span></div>
+            <div class="mc-item"><span class="mc-name">渠道占比</span><span class="mc-desc">各渠道销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">品牌渗透率</span><span class="mc-desc">购买过品牌的消费者占比</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售SKU数量</span></div>
+            <div class="mc-item"><span class="mc-name">新品占比</span><span class="mc-desc">新品销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品成功率</span><span class="mc-desc">成功上市新品占比</span></div>
+            <div class="mc-item"><span class="mc-name">品类占比</span><span class="mc-desc">各品类销售占比</span></div>
+            </div>
+          </div>
+          </div>
         </div>
-      </div>
-      <div class="ns-why-card">
-        <div class="ns-why-title">为什么是库存周转率？</div>
-        <p>销售额只看规模不看效率，利润只看结果不看过程。库存周转率同时反映了产品动销、渠道健康、供应链效率和资金利用效率，是快消企业的生命线。</p>
+        <div class="ns-panel" data-ns="channel" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">铺货率</div>
+              <div class="ns-formula">有货网点占比</div>
+            </div>
+            <div class="north-star-right"><p>渠道阶段的核心覆盖指标。铺得开、动得销，才有持续销售。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>铺市与渠道建设，看覆盖与单产。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">铺货率</span><span class="mc-desc">有货网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销售网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">网点数</span><span class="mc-desc">销售网点数量</span></div>
+            <div class="mc-item"><span class="mc-name">单店产出</span><span class="mc-desc">平均每店销售额</span></div>
+            <div class="mc-item"><span class="mc-name">渠道占比</span><span class="mc-desc">各渠道销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">销售额</span><span class="mc-desc">销售收入金额</span></div>
+            <div class="mc-item"><span class="mc-name">销量</span><span class="mc-desc">销售数量</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">品牌渗透率</span><span class="mc-desc">购买过品牌的消费者占比</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">重复购买用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">促销渗透率</span><span class="mc-desc">促销期销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">品类占比</span><span class="mc-desc">各品类销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售SKU数量</span></div>
+            <div class="mc-item"><span class="mc-name">均价</span><span class="mc-desc">销售额 ÷ 销量</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">库存周转率</span><span class="mc-desc">年周转次数</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">缺货率</span><span class="mc-desc">缺货SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">滞销品占比</span><span class="mc-desc">滞销SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">库存金额</span><span class="mc-desc">库存总价值</span></div>
+            <div class="mc-item"><span class="mc-name">同比增长率</span><span class="mc-desc">较去年同期增长</span></div>
+            <div class="mc-item"><span class="mc-name">环比增长率</span><span class="mc-desc">较上期增长</span></div>
+            <div class="mc-item"><span class="mc-name">促销ROI</span><span class="mc-desc">促销投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">市场份额</span><span class="mc-desc">品牌销售 ÷ 行业总销售</span></div>
+            <div class="mc-item"><span class="mc-name">新品占比</span><span class="mc-desc">新品销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品成功率</span><span class="mc-desc">成功上市新品占比</span></div>
+            <div class="mc-item"><span class="mc-name">毛利率</span><span class="mc-desc">毛利 ÷ 销售额</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="stock" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">库存周转率</div>
+              <div class="ns-formula">销售成本 ÷ 平均库存金额</div>
+            </div>
+            <div class="north-star-right"><p>快消品行业的核心效率指标，衡量库存周转与资金占用。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>供应链承压或资金紧张时，盯周转。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是库存周转率？</div>
+            <p>销售额只看规模不看效率。库存周转同时反映动销、渠道健康与资金效率。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">库存周转率</span><span class="mc-desc">年周转次数</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">库存金额</span><span class="mc-desc">库存总价值</span></div>
+            <div class="mc-item"><span class="mc-name">缺货率</span><span class="mc-desc">缺货SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">滞销品占比</span><span class="mc-desc">滞销SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销售网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">销量</span><span class="mc-desc">销售数量</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">铺货率</span><span class="mc-desc">有货网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">销售额</span><span class="mc-desc">销售收入金额</span></div>
+            <div class="mc-item"><span class="mc-name">单店产出</span><span class="mc-desc">平均每店销售额</span></div>
+            <div class="mc-item"><span class="mc-name">毛利率</span><span class="mc-desc">毛利 ÷ 销售额</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售SKU数量</span></div>
+            <div class="mc-item"><span class="mc-name">品类占比</span><span class="mc-desc">各品类销售占比</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">同比增长率</span><span class="mc-desc">较去年同期增长</span></div>
+            <div class="mc-item"><span class="mc-name">环比增长率</span><span class="mc-desc">较上期增长</span></div>
+            <div class="mc-item"><span class="mc-name">均价</span><span class="mc-desc">销售额 ÷ 销量</span></div>
+            <div class="mc-item"><span class="mc-name">网点数</span><span class="mc-desc">销售网点数量</span></div>
+            <div class="mc-item"><span class="mc-name">渠道占比</span><span class="mc-desc">各渠道销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">促销渗透率</span><span class="mc-desc">促销期销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">促销ROI</span><span class="mc-desc">促销投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">品牌渗透率</span><span class="mc-desc">购买过品牌的消费者占比</span></div>
+            <div class="mc-item"><span class="mc-name">市场份额</span><span class="mc-desc">品牌销售 ÷ 行业总销售</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">重复购买用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品占比</span><span class="mc-desc">新品销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品成功率</span><span class="mc-desc">成功上市新品占比</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="brand" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">市场份额</div>
+              <div class="ns-formula">品牌销售 ÷ 行业总销售</div>
+            </div>
+            <div class="north-star-right"><p>品牌阶段的核心竞争指标。长期看渗透、复购与份额。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>品牌建设与份额争夺期。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+          <div class="ns-group ns-group-core">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">核心驱动指标</h3>
+              <span class="ns-group-tag">推动北极星</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">市场份额</span><span class="mc-desc">品牌销售 ÷ 行业总销售</span></div>
+            <div class="mc-item"><span class="mc-name">品牌渗透率</span><span class="mc-desc">购买过品牌的消费者占比</span></div>
+            <div class="mc-item"><span class="mc-name">复购率</span><span class="mc-desc">重复购买用户占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品占比</span><span class="mc-desc">新品销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">新品成功率</span><span class="mc-desc">成功上市新品占比</span></div>
+            <div class="mc-item"><span class="mc-name">销售额</span><span class="mc-desc">销售收入金额</span></div>
+            <div class="mc-item"><span class="mc-name">同比增长率</span><span class="mc-desc">较去年同期增长</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-guard">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">护栏指标</h3>
+              <span class="ns-group-tag">质量与体验</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">促销ROI</span><span class="mc-desc">促销投入产出比</span></div>
+            <div class="mc-item"><span class="mc-name">促销渗透率</span><span class="mc-desc">促销期销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">毛利率</span><span class="mc-desc">毛利 ÷ 销售额</span></div>
+            <div class="mc-item"><span class="mc-name">均价</span><span class="mc-desc">销售额 ÷ 销量</span></div>
+            <div class="mc-item"><span class="mc-name">品类占比</span><span class="mc-desc">各品类销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">动销率</span><span class="mc-desc">有销售网点占比</span></div>
+            </div>
+          </div>
+          <div class="ns-group ns-group-risk">
+            <div class="ns-group-head">
+              <h3 class="ns-group-title">风控 / 质量指标</h3>
+              <span class="ns-group-tag">边界与健康</span>
+            </div>
+            <div class="mc-list">
+            <div class="mc-item"><span class="mc-name">库存周转率</span><span class="mc-desc">年周转次数</span></div>
+            <div class="mc-item"><span class="mc-name">库存周转天数</span><span class="mc-desc">平均库存周转周期</span></div>
+            <div class="mc-item"><span class="mc-name">库存金额</span><span class="mc-desc">库存总价值</span></div>
+            <div class="mc-item"><span class="mc-name">缺货率</span><span class="mc-desc">缺货SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">滞销品占比</span><span class="mc-desc">滞销SKU占比</span></div>
+            <div class="mc-item"><span class="mc-name">销量</span><span class="mc-desc">销售数量</span></div>
+            <div class="mc-item"><span class="mc-name">环比增长率</span><span class="mc-desc">较上期增长</span></div>
+            <div class="mc-item"><span class="mc-name">网点数</span><span class="mc-desc">销售网点数量</span></div>
+            <div class="mc-item"><span class="mc-name">铺货率</span><span class="mc-desc">有货网点占比</span></div>
+            <div class="mc-item"><span class="mc-name">单店产出</span><span class="mc-desc">平均每店销售额</span></div>
+            <div class="mc-item"><span class="mc-name">渠道占比</span><span class="mc-desc">各渠道销售占比</span></div>
+            <div class="mc-item"><span class="mc-name">SKU 数</span><span class="mc-desc">在售SKU数量</span></div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 核心指标体系 -->
+<!-- 数据分析框架 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">📊 核心指标体系</h2>
-        <span class="section-badge">5大维度</span>
-      </div>
-      <div class="metrics-grid">
-        <!-- 销售指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">💰</div>
-          <h3 class="mc-title">销售指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">销售额</span>
-              <span class="mc-desc">销售收入金额</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">销量</span>
-              <span class="mc-desc">销售数量</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">均价</span>
-              <span class="mc-desc">销售额 ÷ 销量</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">同比增长率</span>
-              <span class="mc-desc">较去年同期增长</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">环比增长率</span>
-              <span class="mc-desc">较上期增长</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 渠道指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🏪</div>
-          <h3 class="mc-title">渠道指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">网点数</span>
-              <span class="mc-desc">销售网点数量</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">铺货率</span>
-              <span class="mc-desc">有货网点占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">动销率</span>
-              <span class="mc-desc">有销售网点占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">单店产出</span>
-              <span class="mc-desc">平均每店销售额</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">渠道占比</span>
-              <span class="mc-desc">各渠道销售占比</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 库存指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">📦</div>
-          <h3 class="mc-title">库存指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">库存金额</span>
-              <span class="mc-desc">库存总价值</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">库存周转天数</span>
-              <span class="mc-desc">平均库存周转周期</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">库存周转率</span>
-              <span class="mc-desc">年周转次数</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">缺货率</span>
-              <span class="mc-desc">缺货SKU占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">滞销品占比</span>
-              <span class="mc-desc">滞销SKU占比</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 营销指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">📢</div>
-          <h3 class="mc-title">营销指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">促销渗透率</span>
-              <span class="mc-desc">促销期销售占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">促销ROI</span>
-              <span class="mc-desc">促销投入产出比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">品牌渗透率</span>
-              <span class="mc-desc">购买过品牌的消费者占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">市场份额</span>
-              <span class="mc-desc">品牌销售 ÷ 行业总销售</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">复购率</span>
-              <span class="mc-desc">重复购买用户占比</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- 产品指标 -->
-        <div class="metric-category-card">
-          <div class="mc-icon">🧴</div>
-          <h3 class="mc-title">产品指标</h3>
-          <div class="mc-list">
-            <div class="mc-item">
-              <span class="mc-name">SKU 数</span>
-              <span class="mc-desc">在售SKU数量</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">新品占比</span>
-              <span class="mc-desc">新品销售占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">新品成功率</span>
-              <span class="mc-desc">成功上市新品占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">品类占比</span>
-              <span class="mc-desc">各品类销售占比</span>
-            </div>
-            <div class="mc-item">
-              <span class="mc-name">毛利率</span>
-              <span class="mc-desc">毛利 ÷ 销售额</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 数据分析框架 -->
-    <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🧠 数据分析框架</h2>
-        <span class="section-badge">4大框架</span>
-      </div>
+      <h2 class="section-title"><span class="section-icon">🧩</span>数据分析框架</h2>
+      <p class="section-desc">行业经典分析框架与方法论</p>
       <div class="framework-grid">
-        <div class="framework-card">
-          <div class="fw-icon">🏪</div>
-          <h3 class="fw-title">渠道分销模型</h3>
-          <p class="fw-desc">从厂家到经销商到终端到消费者的全链路分销分析，评估渠道健康度和效率，找到渠道优化机会。</p>
-          <div class="fw-steps">
-            <div class="fw-step">厂家 → 经销商 → 终端 → 消费者</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🏪</div>
+          <h3 class="framework-name">渠道分销模型</h3>
+          <ul class="framework-list">
+            <li>从厂家到经销商到终端到消费者的全链路分销分析，评估渠道健康度和效率，找到渠道优化机会。</li>
+            <li>厂家 → 经销商 → 终端 → 消费者</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">🛒</div>
-          <h3 class="fw-title">品类管理</h3>
-          <p class="fw-desc">将商品按品类管理，优化品类结构，提升品类整体表现，实现品类增长和利润最大化。</p>
-          <div class="fw-steps">
-            <div class="fw-step">品类定义 → 品类角色 → 品类评估 → 品类策略</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🛒</div>
+          <h3 class="framework-name">品类管理</h3>
+          <ul class="framework-list">
+            <li>将商品按品类管理，优化品类结构，提升品类整体表现，实现品类增长和利润最大化。</li>
+            <li>品类定义 → 品类角色 → 品类评估 → 品类策略</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">🎉</div>
-          <h3 class="fw-title">促销效果评估</h3>
-          <p class="fw-desc">评估促销活动的真实增量效果，计算促销ROI，优化促销机制和资源分配。</p>
-          <div class="fw-steps">
-            <div class="fw-step">基线销量 → 促销增量 → 促销成本 → ROI</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🎉</div>
+          <h3 class="framework-name">促销效果评估</h3>
+          <ul class="framework-list">
+            <li>评估促销活动的真实增量效果，计算促销ROI，优化促销机制和资源分配。</li>
+            <li>基线销量 → 促销增量 → 促销成本 → ROI</li>
+          </ul>
         </div>
-        <div class="framework-card">
-          <div class="fw-icon">🔄</div>
-          <h3 class="fw-title">供应链优化</h3>
-          <p class="fw-desc">从需求预测到库存管理到物流配送的全链路优化，平衡服务水平和库存成本。</p>
-          <div class="fw-steps">
-            <div class="fw-step">需求预测 → 库存计划 → 采购生产 → 物流配送</div>
-          </div>
+                <div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">供应链优化</h3>
+          <ul class="framework-list">
+            <li>从需求预测到库存管理到物流配送的全链路优化，平衡服务水平和库存成本。</li>
+            <li>需求预测 → 库存计划 → 采购生产 → 物流配送</li>
+          </ul>
         </div>
       </div>
     </section>
 
     <!-- 典型分析场景 -->
     <section class="section">
-      <div class="section-header">
-        <h2 class="section-title">🎯 典型分析场景</h2>
-        <span class="section-badge">5大场景</span>
-      </div>
-      <div class="scenario-list">
-        <div class="scenario-item">
+      <h2 class="section-title"><span class="section-icon">💡</span>典型分析场景</h2>
+      <p class="section-desc">常见业务问题与分析切入点</p>
+            <div class="scenario-grid">
+        <div class="scenario-card">
           <div class="scenario-icon">🆕</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">新品上市评估</h3>
-            <p class="scenario-desc">新品上市后表现如何？是否达到预期？哪些渠道/区域卖得好？成功因素是什么？后续怎么优化？</p>
-            <div class="scenario-tags">
-              <span class="tag">新品分析</span>
-              <span class="tag">对标分析</span>
-              <span class="tag">趋势分析</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">新品上市评估</h3>
+          <p class="scenario-desc">新品上市后表现如何？是否达到预期？哪些渠道/区域卖得好？成功因素是什么？后续怎么优化？（新品分析 · 对标分析 · 趋势分析）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🏪</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">渠道健康度分析</h3>
-            <p class="scenario-desc">各渠道表现如何？哪些渠道在增长，哪些在下滑？渠道效率如何？渠道结构是否健康？</p>
-            <div class="scenario-tags">
-              <span class="tag">渠道分析</span>
-              <span class="tag">效率分析</span>
-              <span class="tag">结构分析</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">渠道健康度分析</h3>
+          <p class="scenario-desc">各渠道表现如何？哪些渠道在增长，哪些在下滑？渠道效率如何？渠道结构是否健康？（渠道分析 · 效率分析 · 结构分析）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🎉</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">促销 ROI 评估</h3>
-            <p class="scenario-desc">促销活动效果怎么样？带来了多少增量？ROI是多少？哪种促销机制效果最好？</p>
-            <div class="scenario-tags">
-              <span class="tag">促销分析</span>
-              <span class="tag">ROI分析</span>
-              <span class="tag">效果评估</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">促销 ROI 评估</h3>
+          <p class="scenario-desc">促销活动效果怎么样？带来了多少增量？ROI是多少？哪种促销机制效果最好？（促销分析 · ROI分析 · 效果评估）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">📦</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">库存周转优化</h3>
-            <p class="scenario-desc">库存周转率如何？哪些SKU周转慢？缺货情况怎么样？如何平衡库存成本和服务水平？</p>
-            <div class="scenario-tags">
-              <span class="tag">库存分析</span>
-              <span class="tag">ABC分类</span>
-              <span class="tag">供应链优化</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">库存周转优化</h3>
+          <p class="scenario-desc">库存周转率如何？哪些SKU周转慢？缺货情况怎么样？如何平衡库存成本和服务水平？（库存分析 · ABC分类 · 供应链优化）</p>
         </div>
-        <div class="scenario-item">
+        <div class="scenario-card">
           <div class="scenario-icon">🛒</div>
-          <div class="scenario-content">
-            <h3 class="scenario-title">品类策略制定</h3>
-            <p class="scenario-desc">各品类表现如何？品类角色怎么定？资源怎么分配？怎么优化品类结构提升整体表现？</p>
-            <div class="scenario-tags">
-              <span class="tag">品类管理</span>
-              <span class="tag">BCG矩阵</span>
-              <span class="tag">策略制定</span>
-            </div>
-          </div>
+          <h3 class="scenario-name">品类策略制定</h3>
+          <p class="scenario-desc">各品类表现如何？品类角色怎么定？资源怎么分配？怎么优化品类结构提升整体表现？（品类管理 · BCG矩阵 · 策略制定）</p>
         </div>
-      </div>
-    </section>
+      </div></section>
   </main>
 
   <!-- 页脚 -->

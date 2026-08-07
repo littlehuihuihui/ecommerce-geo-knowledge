@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -6,434 +6,21 @@
   <title>本地生活 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
   <style>
-    .page-header {
-      padding: 60px 24px 40px;
-      text-align: center;
-      background:
-        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(20, 184, 166, 0.12), transparent);
+    :root {
+      --theme-color: #f59e0b;
+      --theme-color-rgb: 245, 158, 11;
+      --theme-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
     }
-
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      margin: 0 0 12px;
-      background: linear-gradient(135deg, var(--text), var(--text-muted));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .page-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .stats-bar {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 32px;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-size: 28px;
-      font-weight: 700;
-      background: linear-gradient(135deg, #14b8a6, #06b6d4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px 60px;
-    }
-
-    .section {
-      margin-bottom: 48px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0 0 8px;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .section-icon {
-      font-size: 24px;
-    }
-
-    .section-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 0 24px;
-    }
-
-    /* 指标分类 */
-    .metric-category {
-      margin-bottom: 32px;
-    }
-
-    .category-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 16px;
-      padding-left: 12px;
-      border-left: 3px solid #14b8a6;
-    }
-
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .metric-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .metric-card:hover {
-      border-color: #14b8a6;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(20, 184, 166, 0.1);
-    }
-
-    .metric-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .metric-formula {
-      font-size: 12px;
-      color: #14b8a6;
-      font-family: 'Courier New', monospace;
-      margin: 0 0 8px;
-      padding: 4px 8px;
-      background: rgba(20, 184, 166, 0.1);
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .metric-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    /* 双边市场模型 */
-    .two-sided-container {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 24px;
-      align-items: center;
-    }
-
-    .side-card {
-      padding: 24px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .side-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(20, 184, 166, 0.1);
-    }
-
-    .side-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(6, 182, 212, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin-bottom: 16px;
-    }
-
-    .side-name {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 12px;
-    }
-
-    .side-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .side-list li {
-      font-size: 13px;
-      color: var(--text-muted);
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .side-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #14b8a6;
-    }
-
-    .platform-center {
-      text-align: center;
-    }
-
-    .platform-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, rgba(20, 184, 166, 0.3), rgba(6, 182, 212, 0.2));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 12px;
-    }
-
-    .platform-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0;
-    }
-
-    /* 分析框架 */
-    .framework-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-
-    .framework-card {
-      padding: 24px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .framework-card:hover {
-      border-color: #14b8a6;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(20, 184, 166, 0.15);
-    }
-
-    .framework-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(20, 184, 166, 0.2), rgba(6, 182, 212, 0.1));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    .framework-name {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 12px;
-    }
-
-    .framework-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .framework-list li {
-      font-size: 13px;
-      color: var(--text-muted);
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .framework-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      color: #14b8a6;
-    }
-
-    /* 典型场景 */
-    .scenario-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .scenario-card {
-      padding: 20px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .scenario-card:hover {
-      border-color: #14b8a6;
-      transform: translateY(-2px);
-    }
-
-    .scenario-icon {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .scenario-name {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 8px;
-    }
-
-    .scenario-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-  
-    /* 北极星指标 */
-    .north-star-section {
-      margin-bottom: 48px;
-    }
-
-    .north-star-card {
-      background: linear-gradient(135deg, rgba(20, 184, 166, 0.15), rgba(20, 184, 166, 0.08));
-      border: 1px solid rgba(20, 184, 166, 0.3);
-      border-radius: 16px;
-      padding: 32px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-
-    .north-star-icon {
-      font-size: 64px;
-      flex-shrink: 0;
-    }
-
-    .north-star-content {
-      flex: 1;
-    }
-
-    .north-star-label {
-      font-size: 12px;
-      color: #14b8a6;
-      font-weight: 600;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .north-star-name {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 0 10px;
-    }
-
-    .north-star-formula {
-      font-size: 13px;
-      color: #14b8a6;
-      font-family: "JetBrains Mono", monospace;
-      margin-bottom: 12px;
-      padding: 6px 12px;
-      background: rgba(20, 184, 166, 0.1);
-      border-radius: 6px;
-      display: inline-block;
-    }
-
-    .north-star-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    .north-star-why {
-      flex-shrink: 0;
-      width: 280px;
-      padding-left: 32px;
-      border-left: 1px solid var(--glass-border);
-    }
-
-    .north-star-why-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .north-star-why-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-    }
-
-    @media (max-width: 768px) {
-      .north-star-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-      }
-      
-      .north-star-why {
-        border-left: none;
-        border-top: 1px solid var(--glass-border);
-        padding-left: 0;
-        padding-top: 20px;
-        width: 100%;
-      }
-    }
-</style>
+  </style>
 </head>
 <body>
-  <!-- 统一导航栏 -->
-    <nav class="encyclopedia-nav">
+
+    <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-icon">百</span>
       <span>行业数据百科</span>
@@ -444,25 +31,9 @@
       <a href="methodology.html" class="nav-link">方法论</a>
       <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <div class="nav-dropdown">
-        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
-        <div class="nav-dropdown-menu">
-          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
-          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
-          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
-          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
-          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
-          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
-          <a href="local-life.html" class="nav-dropdown-item active">本地生活 <span class="badge">1份</span></a>
-          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
-          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
-          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
-          <a href="new-energy.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
-          <a href="logistics.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
-        </div>
-      </div>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+<a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
       <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
     </div>
@@ -474,80 +45,102 @@
     </div>
   </nav>
 
-  <!-- 页面头部 -->
-  <header class="page-header">
-    <h1 class="page-title">本地生活 / O2O</h1>
-    <p class="page-desc">
-      商家、用户、骑手三方的双边市场模型，从供需匹配到配送效率的全链路数据运营
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">26+</div>
-        <div class="stat-label">核心指标</div>
+<!-- 页面头部 -->
+    <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <span>本地生活行业知识框架</span>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">6</div>
-        <div class="stat-label">分析维度</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">4</div>
-        <div class="stat-label">分析框架</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">5</div>
-        <div class="stat-label">典型场景</div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">本地生活 / O2O</h1>
+          <p class="page-subtitle">商家、用户、骑手三方的双边市场模型，从供需匹配到配送效率的全链路数据运营</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">26+</div>
+            <div class="stat-label">核心指标</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析维度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 
-  <div class="container">
+  <main class="container">
     
-    <!-- 北极星指标 -->
-    <section class="section north-star-section">
-      <div class="north-star-card">
-        <div class="north-star-icon">⭐</div>
-        <div class="north-star-content">
-          <div class="north-star-label">North Star Metric</div>
-          <h2 class="north-star-name">GMV / Take Rate</h2>
-          <div class="north-star-formula">交易总额 × 平台抽佣率</div>
-          <p class="north-star-desc">
-            本地生活双边市场的核心指标，同时反映了平台规模和变现能力。GMV 衡量交易规模，Take Rate 衡量平台价值和议价能力。
-          </p>
-        </div>
-        <div class="north-star-why">
-          <div class="north-star-why-title">💡 为什么是它？</div>
-          <p class="north-star-why-text">
-            只看GMV不看变现是烧钱补贴，只看Take Rate不看规模是小生意。GMV × Take Rate = 平台收入，同时反映了双边市场的规模和健康度。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 核心指标体系 -->
+        <!-- 多北极星：按业务阶段切换 -->
     <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">📊</span>
-        本地生活核心指标体系
-      </h2>
-      <p class="section-desc">商家、用户、交易、配送、运营、品类六大维度的经典指标</p>
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>（原有指标全保留，按核心驱动 / 护栏 / 风控重组）。</p>
 
-      <div class="metric-category">
-        <h3 class="category-title">🏪 商家侧指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">商家总数</h3>
-            <div class="metric-formula">平台入驻商家累计数</div>
-            <p class="metric-desc">平台上的商家总数量，反映供给端规模</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="本地生活北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="supply">
+            <span class="ns-tab-stage">供给</span>
+            <span class="ns-tab-name">活跃商家</span>
+            <span class="ns-tab-scene">扩城或品类扩张，先补齐供给。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="gmv">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">GMV</span>
+            <span class="ns-tab-scene">冲交易规模，看 GMV 与订单。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="take">
+            <span class="ns-tab-stage">变现</span>
+            <span class="ns-tab-name">Take Rate</span>
+            <span class="ns-tab-scene">从烧补到赚钱，盯抽佣与补贴效率。</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="exp">
+            <span class="ns-tab-stage">体验</span>
+            <span class="ns-tab-name">准时率</span>
+            <span class="ns-tab-scene">体验承压或差评上升时，履约优先。</span>
+          </button>
+        </div>
+
+        <div class="ns-panel is-active" data-ns="supply" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">活跃商家</div>
+              <div class="ns-formula">有订单/有营业的商家数</div>
+            </div>
+            <div class="north-star-right"><p>供给阶段的核心指标。双边市场先把商家盘子做健康。</p></div>
           </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>扩城或品类扩张，先补齐供给。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">活跃商家数</h3>
             <div class="metric-formula">有订单/有营业的商家数</div>
             <p class="metric-desc">活跃运营的商家数量，反映供给端健康度</p>
           </div>
           <div class="metric-card">
-            <h3 class="metric-name">商家GMV</h3>
-            <div class="metric-formula">商家总交易额</div>
-            <p class="metric-desc">商家贡献的总交易额，衡量商家价值</p>
+            <h3 class="metric-name">商家总数</h3>
+            <div class="metric-formula">平台入驻商家累计数</div>
+            <p class="metric-desc">平台上的商家总数量，反映供给端规模</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">商家入驻率</h3>
@@ -560,16 +153,71 @@
             <p class="metric-desc">商家的留存比例，反映平台对商家的吸引力</p>
           </div>
           <div class="metric-card">
+            <h3 class="metric-name">商家GMV</h3>
+            <div class="metric-formula">商家总交易额</div>
+            <p class="metric-desc">商家贡献的总交易额，衡量商家价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈密度</h3>
+            <div class="metric-formula">商家数 ÷ 商圈面积</div>
+            <p class="metric-desc">商圈内的商家密集程度，反映供给丰富度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类GMV占比</h3>
+            <div class="metric-formula">各品类GMV ÷ 总GMV</div>
+            <p class="metric-desc">各品类的销售额占比，分析品类结构</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
             <h3 class="metric-name">商家评分</h3>
             <div class="metric-formula">用户评分平均值</div>
             <p class="metric-desc">商家的服务质量评分，影响用户选择</p>
           </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈渗透率</h3>
+            <div class="metric-formula">平台用户 ÷ 商圈人口</div>
+            <p class="metric-desc">商圈内的用户渗透比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类增长率</h3>
+            <div class="metric-formula">(本期 - 上期) ÷ 上期</div>
+            <p class="metric-desc">各品类的同比/环比增长率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">核销率</h3>
+            <div class="metric-formula">已核销 ÷ 已购买</div>
+            <p class="metric-desc">团购/优惠券的核销比例，反映真实消费</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单完成率</h3>
+            <div class="metric-formula">完成订单 ÷ 总订单</div>
+            <p class="metric-desc">订单成功完成的比例，反映交易质量</p>
+          </div>
+          </div>
         </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">👥 用户侧指标</h3>
-        <div class="metrics-grid">
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">平台总交易额，是本地生活最核心的规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">Take Rate</h3>
+            <div class="metric-formula">平台收入 ÷ GMV</div>
+            <p class="metric-desc">平台抽佣比例，反映变现能力</p>
+          </div>
           <div class="metric-card">
             <h3 class="metric-name">用户总数</h3>
             <div class="metric-formula">平台注册用户累计数</div>
@@ -600,48 +248,16 @@
             <div class="metric-formula">新下单用户 ÷ 总下单用户</div>
             <p class="metric-desc">新用户的比例，反映用户增长情况</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">💰 交易侧指标</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <h3 class="metric-name">GMV</h3>
-            <div class="metric-formula">总成交金额</div>
-            <p class="metric-desc">平台总交易额，是本地生活最核心的规模指标</p>
-          </div>
           <div class="metric-card">
             <h3 class="metric-name">订单量</h3>
             <div class="metric-formula">总订单数</div>
             <p class="metric-desc">平台总订单数量，反映交易频次</p>
           </div>
           <div class="metric-card">
-            <h3 class="metric-name">订单完成率</h3>
-            <div class="metric-formula">完成订单 ÷ 总订单</div>
-            <p class="metric-desc">订单成功完成的比例，反映交易质量</p>
-          </div>
-          <div class="metric-card">
-            <h3 class="metric-name">核销率</h3>
-            <div class="metric-formula">已核销 ÷ 已购买</div>
-            <p class="metric-desc">团购/优惠券的核销比例，反映真实消费</p>
-          </div>
-          <div class="metric-card">
             <h3 class="metric-name">取消率</h3>
             <div class="metric-formula">取消订单 ÷ 总订单</div>
             <p class="metric-desc">用户取消订单的比例，反映体验问题</p>
           </div>
-          <div class="metric-card">
-            <h3 class="metric-name">Take Rate</h3>
-            <div class="metric-formula">平台收入 ÷ GMV</div>
-            <p class="metric-desc">平台抽佣比例，反映变现能力</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">🛵 配送侧指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">平均配送时效</h3>
             <div class="metric-formula">总配送时长 ÷ 订单数</div>
@@ -672,12 +288,6 @@
             <div class="metric-formula">差评订单 ÷ 总订单</div>
             <p class="metric-desc">配送差评的比例，反映配送服务质量</p>
           </div>
-        </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">📢 运营侧指标</h3>
-        <div class="metrics-grid">
           <div class="metric-card">
             <h3 class="metric-name">补贴率</h3>
             <div class="metric-formula">补贴金额 ÷ GMV</div>
@@ -698,12 +308,590 @@
             <div class="metric-formula">下单用户 ÷ 浏览用户</div>
             <p class="metric-desc">从浏览到下单的转化效率</p>
           </div>
+          </div>
         </div>
-      </div>
-
-      <div class="metric-category">
-        <h3 class="category-title">📍 品类/商圈指标</h3>
-        <div class="metrics-grid">
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="gmv" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">GMV</div>
+              <div class="ns-formula">总成交金额</div>
+            </div>
+            <div class="north-star-right"><p>交易规模的核心指挥棒。本地生活最直观的盘子指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>冲交易规模，看 GMV 与订单。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">平台总交易额，是本地生活最核心的规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单量</h3>
+            <div class="metric-formula">总订单数</div>
+            <p class="metric-desc">平台总订单数量，反映交易频次</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">GMV ÷ 订单数</div>
+            <p class="metric-desc">平均每笔订单的金额，反映消费水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">DAU / MAU</div>
+            <p class="metric-desc">有下单/浏览行为的活跃用户数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">下单频次</h3>
+            <div class="metric-formula">订单数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均下单次数，反映用户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">下单用户 ÷ 浏览用户</div>
+            <p class="metric-desc">从浏览到下单的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家GMV</h3>
+            <div class="metric-formula">商家总交易额</div>
+            <p class="metric-desc">商家贡献的总交易额，衡量商家价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类增长率</h3>
+            <div class="metric-formula">(本期 - 上期) ÷ 上期</div>
+            <p class="metric-desc">各品类的同比/环比增长率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次下单用户 ÷ 下单用户</div>
+            <p class="metric-desc">用户重复购买的比例，反映用户忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新用户占比</h3>
+            <div class="metric-formula">新下单用户 ÷ 总下单用户</div>
+            <p class="metric-desc">新用户的比例，反映用户增长情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">核销率</h3>
+            <div class="metric-formula">已核销 ÷ 已购买</div>
+            <p class="metric-desc">团购/优惠券的核销比例，反映真实消费</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单完成率</h3>
+            <div class="metric-formula">完成订单 ÷ 总订单</div>
+            <p class="metric-desc">订单成功完成的比例，反映交易质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃商家数</h3>
+            <div class="metric-formula">有订单/有营业的商家数</div>
+            <p class="metric-desc">活跃运营的商家数量，反映供给端健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈渗透率</h3>
+            <div class="metric-formula">平台用户 ÷ 商圈人口</div>
+            <p class="metric-desc">商圈内的用户渗透比例</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">Take Rate</h3>
+            <div class="metric-formula">平台收入 ÷ GMV</div>
+            <p class="metric-desc">平台抽佣比例，反映变现能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">取消率</h3>
+            <div class="metric-formula">取消订单 ÷ 总订单</div>
+            <p class="metric-desc">用户取消订单的比例，反映体验问题</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴率</h3>
+            <div class="metric-formula">补贴金额 ÷ GMV</div>
+            <p class="metric-desc">补贴占GMV的比例，反映烧钱程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴ROI</h3>
+            <div class="metric-formula">带来GMV ÷ 补贴金额</div>
+            <p class="metric-desc">补贴的投入产出比，衡量补贴效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">获客成本 CAC</h3>
+            <div class="metric-formula">总获客费用 ÷ 新用户数</div>
+            <p class="metric-desc">获取一个新用户的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">总配送时长 ÷ 订单数</div>
+            <p class="metric-desc">从下单到送达的平均时间，核心体验指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">准时率</h3>
+            <div class="metric-formula">准时送达订单 ÷ 总订单</div>
+            <p class="metric-desc">按时送达的订单比例，衡量配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">差评率</h3>
+            <div class="metric-formula">差评订单 ÷ 总订单</div>
+            <p class="metric-desc">配送差评的比例，反映配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送成本</h3>
+            <div class="metric-formula">单均配送成本</div>
+            <p class="metric-desc">每单的配送成本，影响盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家总数</h3>
+            <div class="metric-formula">平台入驻商家累计数</div>
+            <p class="metric-desc">平台上的商家总数量，反映供给端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家入驻率</h3>
+            <div class="metric-formula">入驻商家 ÷ 目标商家</div>
+            <p class="metric-desc">目标商圈/品类的商家覆盖比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家留存率</h3>
+            <div class="metric-formula">持续营业商家 ÷ 期初商家</div>
+            <p class="metric-desc">商家的留存比例，反映平台对商家的吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家评分</h3>
+            <div class="metric-formula">用户评分平均值</div>
+            <p class="metric-desc">商家的服务质量评分，影响用户选择</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">用户总数</h3>
+            <div class="metric-formula">平台注册用户累计数</div>
+            <p class="metric-desc">平台用户总规模，反映需求端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">骑手数量</h3>
+            <div class="metric-formula">活跃骑手数</div>
+            <p class="metric-desc">活跃骑手数量，反映运力规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">骑手日完单量</h3>
+            <div class="metric-formula">日订单数 ÷ 骑手数</div>
+            <p class="metric-desc">每个骑手日均完成的订单数，衡量人效</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类GMV占比</h3>
+            <div class="metric-formula">各品类GMV ÷ 总GMV</div>
+            <p class="metric-desc">各品类的销售额占比，分析品类结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈密度</h3>
+            <div class="metric-formula">商家数 ÷ 商圈面积</div>
+            <p class="metric-desc">商圈内的商家密集程度，反映供给丰富度</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="take" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">Take Rate</div>
+              <div class="ns-formula">平台收入 ÷ GMV</div>
+            </div>
+            <div class="north-star-right"><p>变现阶段看抽佣与平台收入。GMV × Take Rate = 平台收入。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>从烧补到赚钱，盯抽佣与补贴效率。</span></div>
+          <div class="ns-why-card">
+            <div class="ns-why-title">为什么是 GMV / Take Rate？</div>
+            <p>只看GMV不看变现是烧钱，只看Take Rate不看规模是小生意。</p>
+          </div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">Take Rate</h3>
+            <div class="metric-formula">平台收入 ÷ GMV</div>
+            <p class="metric-desc">平台抽佣比例，反映变现能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">平台总交易额，是本地生活最核心的规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴率</h3>
+            <div class="metric-formula">补贴金额 ÷ GMV</div>
+            <p class="metric-desc">补贴占GMV的比例，反映烧钱程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴ROI</h3>
+            <div class="metric-formula">带来GMV ÷ 补贴金额</div>
+            <p class="metric-desc">补贴的投入产出比，衡量补贴效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">GMV ÷ 订单数</div>
+            <p class="metric-desc">平均每笔订单的金额，反映消费水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单量</h3>
+            <div class="metric-formula">总订单数</div>
+            <p class="metric-desc">平台总订单数量，反映交易频次</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类GMV占比</h3>
+            <div class="metric-formula">各品类GMV ÷ 总GMV</div>
+            <p class="metric-desc">各品类的销售额占比，分析品类结构</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次下单用户 ÷ 下单用户</div>
+            <p class="metric-desc">用户重复购买的比例，反映用户忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">核销率</h3>
+            <div class="metric-formula">已核销 ÷ 已购买</div>
+            <p class="metric-desc">团购/优惠券的核销比例，反映真实消费</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃商家数</h3>
+            <div class="metric-formula">有订单/有营业的商家数</div>
+            <p class="metric-desc">活跃运营的商家数量，反映供给端健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家留存率</h3>
+            <div class="metric-formula">持续营业商家 ÷ 期初商家</div>
+            <p class="metric-desc">商家的留存比例，反映平台对商家的吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">下单用户 ÷ 浏览用户</div>
+            <p class="metric-desc">从浏览到下单的转化效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">下单频次</h3>
+            <div class="metric-formula">订单数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均下单次数，反映用户粘性</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">取消率</h3>
+            <div class="metric-formula">取消订单 ÷ 总订单</div>
+            <p class="metric-desc">用户取消订单的比例，反映体验问题</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">差评率</h3>
+            <div class="metric-formula">差评订单 ÷ 总订单</div>
+            <p class="metric-desc">配送差评的比例，反映配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">准时率</h3>
+            <div class="metric-formula">准时送达订单 ÷ 总订单</div>
+            <p class="metric-desc">按时送达的订单比例，衡量配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">总配送时长 ÷ 订单数</div>
+            <p class="metric-desc">从下单到送达的平均时间，核心体验指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送成本</h3>
+            <div class="metric-formula">单均配送成本</div>
+            <p class="metric-desc">每单的配送成本，影响盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">获客成本 CAC</h3>
+            <div class="metric-formula">总获客费用 ÷ 新用户数</div>
+            <p class="metric-desc">获取一个新用户的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家总数</h3>
+            <div class="metric-formula">平台入驻商家累计数</div>
+            <p class="metric-desc">平台上的商家总数量，反映供给端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家入驻率</h3>
+            <div class="metric-formula">入驻商家 ÷ 目标商家</div>
+            <p class="metric-desc">目标商圈/品类的商家覆盖比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家评分</h3>
+            <div class="metric-formula">用户评分平均值</div>
+            <p class="metric-desc">商家的服务质量评分，影响用户选择</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家GMV</h3>
+            <div class="metric-formula">商家总交易额</div>
+            <p class="metric-desc">商家贡献的总交易额，衡量商家价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">用户总数</h3>
+            <div class="metric-formula">平台注册用户累计数</div>
+            <p class="metric-desc">平台用户总规模，反映需求端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">DAU / MAU</div>
+            <p class="metric-desc">有下单/浏览行为的活跃用户数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新用户占比</h3>
+            <div class="metric-formula">新下单用户 ÷ 总下单用户</div>
+            <p class="metric-desc">新用户的比例，反映用户增长情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单完成率</h3>
+            <div class="metric-formula">完成订单 ÷ 总订单</div>
+            <p class="metric-desc">订单成功完成的比例，反映交易质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">骑手数量</h3>
+            <div class="metric-formula">活跃骑手数</div>
+            <p class="metric-desc">活跃骑手数量，反映运力规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">骑手日完单量</h3>
+            <div class="metric-formula">日订单数 ÷ 骑手数</div>
+            <p class="metric-desc">每个骑手日均完成的订单数，衡量人效</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈密度</h3>
+            <div class="metric-formula">商家数 ÷ 商圈面积</div>
+            <p class="metric-desc">商圈内的商家密集程度，反映供给丰富度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">品类增长率</h3>
+            <div class="metric-formula">(本期 - 上期) ÷ 上期</div>
+            <p class="metric-desc">各品类的同比/环比增长率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商圈渗透率</h3>
+            <div class="metric-formula">平台用户 ÷ 商圈人口</div>
+            <p class="metric-desc">商圈内的用户渗透比例</p>
+          </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="exp" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">准时率</div>
+              <div class="ns-formula">准时送达订单 ÷ 总订单</div>
+            </div>
+            <div class="north-star-right"><p>体验阶段的核心履约指标。配送与服务质量决定复购。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>体验承压或差评上升时，履约优先。</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">原有指标全部保留，按「核心驱动 / 护栏 / 风控」围绕当前北极星重组。</p>
+          </div>
+          <div class="ns-metric-groups">
+        <div class="ns-group ns-group-core">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">核心驱动指标</h3>
+            <span class="ns-group-tag">推动北极星</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">准时率</h3>
+            <div class="metric-formula">准时送达订单 ÷ 总订单</div>
+            <p class="metric-desc">按时送达的订单比例，衡量配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均配送时效</h3>
+            <div class="metric-formula">总配送时长 ÷ 订单数</div>
+            <p class="metric-desc">从下单到送达的平均时间，核心体验指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单完成率</h3>
+            <div class="metric-formula">完成订单 ÷ 总订单</div>
+            <p class="metric-desc">订单成功完成的比例，反映交易质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">取消率</h3>
+            <div class="metric-formula">取消订单 ÷ 总订单</div>
+            <p class="metric-desc">用户取消订单的比例，反映体验问题</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">差评率</h3>
+            <div class="metric-formula">差评订单 ÷ 总订单</div>
+            <p class="metric-desc">配送差评的比例，反映配送服务质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家评分</h3>
+            <div class="metric-formula">用户评分平均值</div>
+            <p class="metric-desc">商家的服务质量评分，影响用户选择</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">核销率</h3>
+            <div class="metric-formula">已核销 ÷ 已购买</div>
+            <p class="metric-desc">团购/优惠券的核销比例，反映真实消费</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-guard">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">护栏指标</h3>
+            <span class="ns-group-tag">质量与体验</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">骑手数量</h3>
+            <div class="metric-formula">活跃骑手数</div>
+            <p class="metric-desc">活跃骑手数量，反映运力规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">骑手日完单量</h3>
+            <div class="metric-formula">日订单数 ÷ 骑手数</div>
+            <p class="metric-desc">每个骑手日均完成的订单数，衡量人效</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">配送成本</h3>
+            <div class="metric-formula">单均配送成本</div>
+            <p class="metric-desc">每单的配送成本，影响盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">复购率</h3>
+            <div class="metric-formula">多次下单用户 ÷ 下单用户</div>
+            <p class="metric-desc">用户重复购买的比例，反映用户忠诚度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">下单频次</h3>
+            <div class="metric-formula">订单数 ÷ 活跃用户数</div>
+            <p class="metric-desc">用户平均下单次数，反映用户粘性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">转化率</h3>
+            <div class="metric-formula">下单用户 ÷ 浏览用户</div>
+            <p class="metric-desc">从浏览到下单的转化效率</p>
+          </div>
+          </div>
+        </div>
+        <div class="ns-group ns-group-risk">
+          <div class="ns-group-head">
+            <h3 class="ns-group-title">风控 / 质量指标</h3>
+            <span class="ns-group-tag">边界与健康</span>
+          </div>
+          <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">GMV</h3>
+            <div class="metric-formula">总成交金额</div>
+            <p class="metric-desc">平台总交易额，是本地生活最核心的规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">Take Rate</h3>
+            <div class="metric-formula">平台收入 ÷ GMV</div>
+            <p class="metric-desc">平台抽佣比例，反映变现能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴率</h3>
+            <div class="metric-formula">补贴金额 ÷ GMV</div>
+            <p class="metric-desc">补贴占GMV的比例，反映烧钱程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">补贴ROI</h3>
+            <div class="metric-formula">带来GMV ÷ 补贴金额</div>
+            <p class="metric-desc">补贴的投入产出比，衡量补贴效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">获客成本 CAC</h3>
+            <div class="metric-formula">总获客费用 ÷ 新用户数</div>
+            <p class="metric-desc">获取一个新用户的成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家总数</h3>
+            <div class="metric-formula">平台入驻商家累计数</div>
+            <p class="metric-desc">平台上的商家总数量，反映供给端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃商家数</h3>
+            <div class="metric-formula">有订单/有营业的商家数</div>
+            <p class="metric-desc">活跃运营的商家数量，反映供给端健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家GMV</h3>
+            <div class="metric-formula">商家总交易额</div>
+            <p class="metric-desc">商家贡献的总交易额，衡量商家价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家入驻率</h3>
+            <div class="metric-formula">入驻商家 ÷ 目标商家</div>
+            <p class="metric-desc">目标商圈/品类的商家覆盖比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商家留存率</h3>
+            <div class="metric-formula">持续营业商家 ÷ 期初商家</div>
+            <p class="metric-desc">商家的留存比例，反映平台对商家的吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">用户总数</h3>
+            <div class="metric-formula">平台注册用户累计数</div>
+            <p class="metric-desc">平台用户总规模，反映需求端规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃用户数</h3>
+            <div class="metric-formula">DAU / MAU</div>
+            <p class="metric-desc">有下单/浏览行为的活跃用户数</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客单价</h3>
+            <div class="metric-formula">GMV ÷ 订单数</div>
+            <p class="metric-desc">平均每笔订单的金额，反映消费水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新用户占比</h3>
+            <div class="metric-formula">新下单用户 ÷ 总下单用户</div>
+            <p class="metric-desc">新用户的比例，反映用户增长情况</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订单量</h3>
+            <div class="metric-formula">总订单数</div>
+            <p class="metric-desc">平台总订单数量，反映交易频次</p>
+          </div>
           <div class="metric-card">
             <h3 class="metric-name">品类GMV占比</h3>
             <div class="metric-formula">各品类GMV ÷ 总GMV</div>
@@ -724,55 +912,14 @@
             <div class="metric-formula">平台用户 ÷ 商圈人口</div>
             <p class="metric-desc">商圈内的用户渗透比例</p>
           </div>
+          </div>
+        </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 双边市场模型 -->
-    <section class="section">
-      <h2 class="section-title">
-        <span class="section-icon">⚖️</span>
-        双边市场模型
-      </h2>
-      <p class="section-desc">本地生活的核心是供需两端的平衡与网络效应</p>
-      <div class="two-sided-container">
-        <div class="side-card">
-          <div class="side-icon">🏪</div>
-          <h3 class="side-name">供给端 - 商家</h3>
-          <ul class="side-list">
-            <li>商家数量与质量</li>
-            <li>商家活跃度与留存</li>
-            <li>商品/服务丰富度</li>
-            <li>商家评分与口碑</li>
-            <li>商家盈利能力</li>
-            <li>商家入驻与运营成本</li>
-            <li>供给端网络效应</li>
-          </ul>
-        </div>
-        <div class="platform-center">
-          <div class="platform-icon">🏢</div>
-          <p class="platform-name">平台</p>
-        </div>
-        <div class="side-card">
-          <div class="side-icon">👥</div>
-          <h3 class="side-name">需求端 - 用户</h3>
-          <ul class="side-list">
-            <li>用户规模与增长</li>
-            <li>用户活跃度与留存</li>
-            <li>下单频次与客单价</li>
-            <li>用户满意度与NPS</li>
-            <li>用户获取成本</li>
-            <li>用户生命周期价值</li>
-            <li>需求端网络效应</li>
-          </ul>
-        </div>
-      </div>
-      <p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 24px;">
-        双边市场的核心：供给越丰富 → 用户体验越好 → 用户越多 → 商家越愿意入驻 → 供给更丰富（正向循环）
-      </p>
-    </section>
-
-    <!-- 分析框架 -->
+<!-- 分析框架 -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">🧩</span>
@@ -866,8 +1013,15 @@
         </div>
       </div>
     </section>
-  </div>
+  </main>
+    <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 本地生活行业知识框架</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+    </div>
+  </footer>
+  
   <script src="common.js"></script>
+
 </body>
 </html>
-
