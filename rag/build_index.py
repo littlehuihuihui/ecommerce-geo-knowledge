@@ -11,6 +11,11 @@ PACKAGE_DIR = os.path.join(os.path.dirname(__file__), 'packages')
 if os.path.exists(PACKAGE_DIR):
     sys.path.insert(0, PACKAGE_DIR)
 
+# 添加D盘的包路径（Windows路径长度限制 workaround）
+RAG_PKGS = r'D:\rag_pkgs'
+if os.path.exists(RAG_PKGS):
+    sys.path.insert(0, RAG_PKGS)
+
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
 import chromadb
@@ -34,7 +39,8 @@ def get_html_files():
         'graph.html', 'interview.html', 'learning-path.html',
         'manufacturing.html', 'saas.html', 'game.html',
         'finance.html', 'education.html', 'live-ecommerce.html',
-        'local-life.html'
+        'local-life.html', 'content.html', 'fmcg.html',
+        'healthcare.html', 'ecommerce.html'
     ]
     
     for f in root_files:
@@ -47,7 +53,7 @@ def get_html_files():
             })
     
     # 子目录页面
-    sub_dirs = ['新能源', '旅游业', '物流', '电商', '零售', '陶瓷', '磁材']
+    sub_dirs = ['新能源', '旅游业', '物流']
     for sub_dir in sub_dirs:
         dir_path = os.path.join(BASE_DIR, sub_dir)
         if os.path.isdir(dir_path):

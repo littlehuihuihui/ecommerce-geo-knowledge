@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -357,6 +357,10 @@
       .methods-grid { grid-template-columns: 1fr; }
     }
   </style>
+
+  <link rel="stylesheet" href="knowledge-graph-embed.css" />
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+
 </head>
 <body>
   <!-- 统一导航栏 -->
@@ -369,10 +373,9 @@
       <a href="index.html" class="nav-link">首页</a>
       <a href="metrics.html" class="nav-link">指标字典</a>
       <a href="methodology.html" class="nav-link active">方法论</a>
-      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link">行业图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <div class="nav-dropdown">
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
@@ -383,13 +386,16 @@
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
           <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
           <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
-          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
           <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
           <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
           <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
           <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
         </div>
       </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      
     </div>
     <div class="nav-right">
       <div class="nav-search">
@@ -398,6 +404,14 @@
       </div>
     </div>
   </nav>
+
+  <div class="view-switch-wrap">
+    <div class="view-switch" role="tablist">
+      <button type="button" class="view-btn active" data-view="list">列表浏览</button>
+      <button type="button" class="view-btn" data-view="graph">知识图谱</button>
+    </div>
+  </div>
+
 
   <!-- 页面头部 -->
   <header class="page-header">
@@ -1290,6 +1304,159 @@
         ],
         reference: "finance.html"
       },
+{
+        icon: "🧭",
+        name: "用户路径分析",
+        subtitle: "Path Analysis",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 3,
+        desc: "还原用户在产品中的行为序列，发现高频路径、流失节点与异常绕路，用于体验优化。",
+        formula: "事件序列 → 路径聚合 → 流失/转化节点识别\n可结合桑基图、会话回放、漏斗对比",
+        scenarios: ["转化优化", "体验诊断", "功能埋点", "流失分析"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "SaaS", color: "green" },
+          { name: "内容", color: "purple" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "🧪",
+        name: "因果推断",
+        subtitle: "Causal Inference",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 5,
+        desc: "区分相关与因果，评估干预真实效果。常用随机实验、差分法、匹配、工具变量等方法。",
+        formula: "理想：随机对照实验（RCT/A/B）\n观察数据：DID / PSM / 断点回归 / 工具变量\n关键：识别假设与混杂控制",
+        scenarios: ["策略评估", "活动效果", "定价实验", "政策分析"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "金融", color: "blue" },
+          { name: "互联网", color: "pink" }
+        ],
+        reference: "methodology.html"
+      },
+      {
+        icon: "🚨",
+        name: "异常检测",
+        subtitle: "Anomaly Detection",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 4,
+        desc: "自动识别指标或行为中的异常波动，支持监控告警与根因排查前置。",
+        formula: "统计阈值 / 同比环比 / 季节性分解 / Isolation Forest / 时序模型残差\n结合业务规则降低误报",
+        scenarios: ["指标监控", "风控欺诈", "故障排查", "质量预警"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "电商", color: "pink" },
+          { name: "制造", color: "" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "⏳",
+        name: "生存分析",
+        subtitle: "Survival Analysis",
+        category: "statistics",
+        categoryName: "统计分析",
+        difficulty: 4,
+        desc: "分析事件发生时间（如流失、首次付费），处理删失数据，估计生存曲线与风险因素。",
+        formula: "Kaplan-Meier 生存曲线\nCox 比例风险模型\n中位生存时间 / 风险比(HR)",
+        scenarios: ["流失预测", "会员生命周期", "设备故障", "信贷违约"],
+        industries: [
+          { name: "SaaS", color: "green" },
+          { name: "金融", color: "blue" },
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "saas.html"
+      },
+      {
+        icon: "🧩",
+        name: "贡献度拆解分析",
+        subtitle: "Contribution / Bridge Analysis",
+        category: "operation",
+        categoryName: "运营效率",
+        difficulty: 3,
+        desc: "把指标变化拆到维度或因子上，量化「谁贡献了增长/下降」，常用于经营复盘。",
+        formula: "加法拆解 / 乘法拆解 / 结构+价格+数量桥\n例：销售额变化 = Σ 各品类贡献",
+        scenarios: ["经营复盘", "业绩归因", "预算检视", "异常定位"],
+        industries: [
+          { name: "零售", color: "" },
+          { name: "电商", color: "pink" },
+          { name: "全行业", color: "" }
+        ],
+        reference: "retail.html"
+      },
+      {
+        icon: "⭐",
+        name: "北极星指标法",
+        subtitle: "North Star Metric",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 3,
+        desc: "选定能同时反映用户价值与业务增长的核心指标，并围绕它拆解输入指标与团队目标。",
+        formula: "北极星 = 用户价值 × 业务规模的交点指标\n配套：输入指标、护栏指标、反指标",
+        scenarios: ["目标对齐", "增长策略", "产品优先级", "组织协同"],
+        industries: [
+          { name: "SaaS", color: "green" },
+          { name: "互联网", color: "pink" },
+          { name: "全行业", color: "" }
+        ],
+        reference: "saas.html"
+      },
+      {
+        icon: "📐",
+        name: "指标体系搭建",
+        subtitle: "Metrics System Design",
+        category: "strategy",
+        categoryName: "战略决策",
+        difficulty: 3,
+        desc: "从业务目标出发设计分层指标体系：北极星 → 过程指标 → 诊断指标，统一口径与取数。",
+        formula: "目标拆解 → 指标分层 → 口径定义 → 数据源 → 看板与复盘机制",
+        scenarios: ["数据中台", "经营看板", "OKR对齐", "分析规范"],
+        industries: [
+          { name: "全行业", color: "" },
+          { name: "电商", color: "pink" },
+          { name: "制造", color: "" }
+        ],
+        reference: "methodology.html"
+      },
+      {
+        icon: "🗺️",
+        name: "热力图分析",
+        subtitle: "Heatmap Analysis",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "用颜色强度呈现点击、滚动或空间分布，快速发现注意力热点与盲区。",
+        formula: "点击热力图 / 移动热力图 / 注意力热力图\n结合页面分区与转化目标解读",
+        scenarios: ["页面优化", "门店陈列", "广告素材", "活动页改版"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "零售", color: "" },
+          { name: "内容", color: "purple" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "📝",
+        name: "文本挖掘",
+        subtitle: "Text Mining / NLP",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 4,
+        desc: "从评价、客服对话、社媒文本中提取主题、情感与关键词，辅助体验与口碑分析。",
+        formula: "分词 → 主题模型/聚类 → 情感分析 → 关键词/实体\n可结合业务标签做质检与预警",
+        scenarios: ["口碑分析", "客服质检", "需求挖掘", "舆情监控"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "内容", color: "purple" },
+          { name: "金融", color: "blue" }
+        ],
+        reference: "content.html"
+      },
       {
         icon: "🌲",
         name: "随机森林",
@@ -1403,6 +1570,44 @@
       `;
     }
   </script>
-  <script src="common.js"></script>
+  
+  
+  <div id="kgPageMount" class="kg-embed" style="display:none;" data-module="methodology"></div>
+  <script src="knowledge-graph-data.js"></script>
+  <script src="knowledge-graph-app.js"></script>
+  <script>
+  (function () {
+    var mod = "methodology";
+    var kg = null;
+    var mount = document.getElementById("kgPageMount");
+    function setView(mode) {
+      document.querySelectorAll(".view-btn").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-view") === mode);
+      });
+      if (mode === "graph") {
+        document.body.classList.add("kg-graph-mode");
+        mount.style.display = "block";
+        mount.classList.add("is-on");
+        if (!kg) {
+          kg = window.initKnowledgeGraph({ root: mount, startModule: mod });
+        }
+      } else {
+        document.body.classList.remove("kg-graph-mode");
+        mount.style.display = "none";
+        mount.classList.remove("is-on");
+      }
+    }
+    document.querySelectorAll(".view-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setView(btn.getAttribute("data-view"));
+      });
+    });
+    if (location.hash === "#graph" || /[?&]view=graph/.test(location.search)) {
+      setView("graph");
+    }
+  })();
+  </script>
+
+<script src="common.js"></script>
 </body>
 </html>

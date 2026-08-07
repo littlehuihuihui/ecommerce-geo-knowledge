@@ -1,0 +1,867 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内容/短视频 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="common.css" />
+  <style>
+    .page-header {
+      padding: 60px 24px 40px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139, 92, 246, 0.12), transparent);
+    }
+
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--text), var(--text-muted));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+    }
+
+    .section {
+      margin-bottom: 48px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 8px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-icon {
+      font-size: 24px;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 0 0 24px;
+    }
+
+    /* 指标分类 */
+    .metric-category {
+      margin-bottom: 32px;
+    }
+
+    .category-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 16px;
+      padding-left: 12px;
+      border-left: 3px solid #8b5cf6;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .metric-card:hover {
+      border-color: #8b5cf6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.1);
+    }
+
+    .metric-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .metric-formula {
+      font-size: 12px;
+      color: #8b5cf6;
+      font-family: 'Courier New', monospace;
+      margin: 0 0 8px;
+      padding: 4px 8px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .metric-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* 分析框架 */
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .framework-card {
+      padding: 24px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .framework-card:hover {
+      border-color: #8b5cf6;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.15);
+    }
+
+    .framework-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .framework-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px;
+    }
+
+    .framework-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .framework-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .framework-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      color: #8b5cf6;
+    }
+
+    /* 创作者分层 */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .tier-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .tier-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .tier-ratio {
+      font-size: 13px;
+      color: #8b5cf6;
+      font-weight: 500;
+      margin: 0 0 12px;
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: left;
+    }
+
+    .tier-features li {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+
+    /* 典型场景 */
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .scenario-card {
+      padding: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .scenario-card:hover {
+      border-color: #8b5cf6;
+      transform: translateY(-2px);
+    }
+
+    .scenario-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .scenario-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 8px;
+    }
+
+    .scenario-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+  
+    /* 北极星指标 */
+    .north-star-section {
+      margin-bottom: 48px;
+    }
+
+    .north-star-card {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.08));
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .north-star-icon {
+      font-size: 64px;
+      flex-shrink: 0;
+    }
+
+    .north-star-content {
+      flex: 1;
+    }
+
+    .north-star-label {
+      font-size: 12px;
+      color: #8b5cf6;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .north-star-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 10px;
+    }
+
+    .north-star-formula {
+      font-size: 13px;
+      color: #8b5cf6;
+      font-family: "JetBrains Mono", monospace;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: rgba(139, 92, 246, 0.1);
+      border-radius: 6px;
+      display: inline-block;
+    }
+
+    .north-star-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .north-star-why {
+      flex-shrink: 0;
+      width: 280px;
+      padding-left: 32px;
+      border-left: 1px solid var(--glass-border);
+    }
+
+    .north-star-why-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .north-star-why-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .north-star-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      
+      .north-star-why {
+        border-left: none;
+        border-top: 1px solid var(--glass-border);
+        padding-left: 0;
+        padding-top: 20px;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 统一导航栏 -->
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link">行业图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <div class="nav-dropdown">
+        <span class="nav-link nav-dropdown-toggle active">知识框架</span>
+        <div class="nav-dropdown-menu">
+          <a href="ecommerce.html" class="nav-dropdown-item">电商 <span class="badge">1份</span></a>
+          <a href="finance.html" class="nav-dropdown-item">金融 <span class="badge">1份</span></a>
+          <a href="game.html" class="nav-dropdown-item">游戏 <span class="badge">1份</span></a>
+          <a href="content.html" class="nav-dropdown-item active">内容/短视频 <span class="badge">1份</span></a>
+          <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
+          <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
+          <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
+          <a href="fmcg.html" class="nav-dropdown-item">快消品 / FMCG <span class="badge">1份</span></a>
+          <a href="manufacturing.html" class="nav-dropdown-item">制造业 <span class="badge">1份</span></a>
+          <a href="healthcare.html" class="nav-dropdown-item">医疗健康 <span class="badge">1份</span></a>
+          <a href="新能源/index.html" class="nav-dropdown-item">新能源汽车 <span class="badge">1份</span></a>
+          <a href="物流/index.html" class="nav-dropdown-item">物流供应链 <span class="badge">1份</span></a>
+        </div>
+      </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <!-- 页面头部 -->
+  <header class="page-header">
+    <h1 class="page-title">内容 / 短视频</h1>
+    <p class="page-desc">
+      算法驱动的内容生态，从推荐优化到创作者运营的全链路数据化
+    </p>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-num">30+</div>
+        <div class="stat-label">核心指标</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">分析维度</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">分析框架</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">典型场景</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- 北极星指标 -->
+    <section class="section north-star-section">
+      <div class="north-star-card">
+        <div class="north-star-icon">⭐</div>
+        <div class="north-star-content">
+          <div class="north-star-label">North Star Metric</div>
+          <h2 class="north-star-name">人均使用时长</h2>
+          <div class="north-star-formula">总使用时长 ÷ 活跃用户数</div>
+          <p class="north-star-desc">
+            内容平台的核心价值指标，直接反映产品吸引力和用户粘性。时长越长，广告库存越多，商业化空间越大，用户粘性越强。
+          </p>
+        </div>
+        <div class="north-star-why">
+          <div class="north-star-why-title">💡 为什么是它？</div>
+          <p class="north-star-why-text">
+            DAU只看规模不看深度，留存只看不流失不看粘性。人均时长同时衡量了用户规模、使用深度和产品吸引力，是内容平台价值的最综合体现，直接决定了广告变现的天花板。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心指标体系 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">📊</span>
+        内容平台核心指标体系
+      </h2>
+      <p class="section-desc">用户、内容、互动、创作者、留存、商业化六大维度</p>
+
+      <div class="metric-category">
+        <h3 class="category-title">👥 用户规模与活跃指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">DAU 日活跃用户</h3>
+            <div class="metric-formula">每日打开APP的独立用户数</div>
+            <p class="metric-desc">日活用户数，衡量平台日常活跃度的核心规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃用户</h3>
+            <div class="metric-formula">每月打开APP的独立用户数</div>
+            <p class="metric-desc">月活用户数，衡量平台整体用户规模和市场覆盖</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均使用时长</h3>
+            <div class="metric-formula">总使用时长 ÷ DAU</div>
+            <p class="metric-desc">用户平均每天使用多久，反映产品粘性和内容吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均播放量</h3>
+            <div class="metric-formula">总播放次数 ÷ DAU</div>
+            <p class="metric-desc">人均消费内容数量，反映内容消费深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">DAU/MAU 比值</h3>
+            <div class="metric-formula">DAU ÷ MAU × 100%</div>
+            <p class="metric-desc">用户粘性指标，越高说明用户使用频率越高</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增用户</h3>
+            <div class="metric-formula">每日/每周首次安装注册的用户数</div>
+            <p class="metric-desc">新增长用户，反映获客能力和推广效果</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">🎬 内容消费指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">完播率</h3>
+            <div class="metric-formula">完整播放次数 ÷ 总播放次数</div>
+            <p class="metric-desc">视频被看完的比例，核心内容质量指标，直接影响推荐权重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均播放时长</h3>
+            <div class="metric-formula">总播放时长 ÷ 总播放次数</div>
+            <p class="metric-desc">单个视频平均观看时长，反映内容吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">播放完成度</h3>
+            <div class="metric-formula">观看时长 ÷ 视频时长</div>
+            <p class="metric-desc">用户观看了视频的百分之多少，比完播率更精细</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">跳出率</h3>
+            <div class="metric-formula">3秒内划走次数 ÷ 总播放次数</div>
+            <p class="metric-desc">短时间内划走的比例，反映开头吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">重播率</h3>
+            <div class="metric-formula">重复播放次数 ÷ 总播放次数</div>
+            <p class="metric-desc">用户重复观看的比例，反映内容精彩程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">内容消费多样性</h3>
+            <div class="metric-formula">消费的内容品类数</div>
+            <p class="metric-desc">用户消费内容的品类丰富度，反映推荐广度</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💬 互动指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">点赞率</h3>
+            <div class="metric-formula">点赞数 ÷ 播放数 × 100%</div>
+            <p class="metric-desc">用户点赞的比例，反映内容认可度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">评论率</h3>
+            <div class="metric-formula">评论数 ÷ 播放数 × 100%</div>
+            <p class="metric-desc">用户评论的比例，反映内容话题性和参与度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">分享率</h3>
+            <div class="metric-formula">分享数 ÷ 播放数 × 100%</div>
+            <p class="metric-desc">用户分享的比例，反映内容传播力和价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">关注率</h3>
+            <div class="metric-formula">关注数 ÷ 播放数 × 100%</div>
+            <p class="metric-desc">看完后关注作者的比例，反映创作者吸粉能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">收藏率</h3>
+            <div class="metric-formula">收藏数 ÷ 播放数 × 100%</div>
+            <p class="metric-desc">用户收藏的比例，反映内容实用价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">互动率</h3>
+            <div class="metric-formula">(点赞+评论+分享+收藏) ÷ 播放</div>
+            <p class="metric-desc">综合互动比例，反映内容整体质量和吸引力</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">✍️ 创作者生态指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">活跃创作者数</h3>
+            <div class="metric-formula">周期内发布内容的创作者数</div>
+            <p class="metric-desc">有产出的创作者数量，反映供给侧规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均发布量</h3>
+            <div class="metric-formula">总发布数 ÷ 活跃创作者数</div>
+            <p class="metric-desc">创作者平均发布频率，反映创作活跃度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">创作者留存率</h3>
+            <div class="metric-formula">持续创作的创作者 ÷ 期初创作者</div>
+            <p class="metric-desc">创作者的留存比例，反映平台对创作者的吸引力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">内容供给量</h3>
+            <div class="metric-formula">每日/每周新增内容数量</div>
+            <p class="metric-desc">新增内容的总数量，反映内容供给规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">头部创作者占比</h3>
+            <div class="metric-formula">Top1%创作者播放量 ÷ 总播放量</div>
+            <p class="metric-desc">头部集中度，反映内容生态的健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中腰部创作者比例</h3>
+            <div class="metric-formula">中腰部创作者数 ÷ 总创作者数</div>
+            <p class="metric-desc">中腰部占比越高，生态越健康稳定</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">🔒 留存与召回指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">次日留存率</h3>
+            <div class="metric-formula">次日回访用户 ÷ 新增用户</div>
+            <p class="metric-desc">新用户第二天回来的比例，新手体验核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">7日留存率</h3>
+            <div class="metric-formula">第7天回访用户 ÷ 新增用户</div>
+            <p class="metric-desc">中期留存，反映内容推荐匹配度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">30日留存率</h3>
+            <div class="metric-formula">第30天回访用户 ÷ 新增用户</div>
+            <p class="metric-desc">长期留存，反映产品粘性和生态健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">召回率</h3>
+            <div class="metric-formula">召回成功用户 ÷ 推送触达用户</div>
+            <p class="metric-desc">流失用户召回成功比例，Push/短信/私信效果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">使用频次</h3>
+            <div class="metric-formula">日均打开次数</div>
+            <p class="metric-desc">用户每天打开APP的次数，反映使用习惯</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">连续使用天数</h3>
+            <div class="metric-formula">用户连续使用的天数</div>
+            <p class="metric-desc">用户连续使用的天数，反映习惯养成程度</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="metric-category">
+        <h3 class="category-title">💰 商业化指标</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">eCPM</h3>
+            <div class="metric-formula">广告收入 ÷ 展示次数 × 1000</div>
+            <p class="metric-desc">千次展示广告收入，广告变现效率核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">广告填充率</h3>
+            <div class="metric-formula">有广告展示次数 ÷ 总请求次数</div>
+            <p class="metric-desc">广告库存填充比例，反映广告供需匹配度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">广告点击率 CTR</h3>
+            <div class="metric-formula">点击次数 ÷ 展示次数 × 100%</div>
+            <p class="metric-desc">广告点击比例，反映广告精准度和创意质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ARPU</h3>
+            <div class="metric-formula">总收入 ÷ 活跃用户数</div>
+            <p class="metric-desc">每用户平均收入，整体变现效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">直播打赏收入</h3>
+            <div class="metric-formula">直播打赏总金额</div>
+            <p class="metric-desc">直播打赏收入规模，直播业务健康度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">电商GMV</h3>
+            <div class="metric-formula">内容电商成交总额</div>
+            <p class="metric-desc">短视频/直播电商交易额，电商业务规模</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分析框架 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">🧩</span>
+        内容平台分析框架
+      </h2>
+      <p class="section-desc">内容行业经典的数据分析与运营方法论</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">推荐算法评估</h3>
+          <ul class="framework-list">
+            <li><strong>精准度</strong> - 内容与用户兴趣的匹配程度</li>
+            <li><strong>多样性</strong> - 推荐内容的品类丰富度</li>
+            <li><strong>新颖性</strong> - 新内容/新创作者的曝光比例</li>
+            <li><strong>覆盖率</strong> - 内容池的被消费比例</li>
+            <li><strong>时效性</strong> - 新内容的冷启动速度</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">👑</div>
+          <h3 class="framework-name">创作者分层运营</h3>
+          <ul class="framework-list">
+            <li><strong>头部创作者</strong> - 标杆打造，独家合作</li>
+            <li><strong>腰部创作者</strong> - 重点培养，流量扶持</li>
+            <li><strong>尾部创作者</strong> - 基础服务，工具赋能</li>
+            <li><strong>新手创作者</strong> - 冷启动，新人流量</li>
+            <li>不同层级采用差异化的激励和服务策略</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔄</div>
+          <h3 class="framework-name">内容生命周期</h3>
+          <ul class="framework-list">
+            <li><strong>冷启动期</strong> - 初始流量池，快速验证</li>
+            <li><strong>成长期</strong> - 数据达标，逐级放大</li>
+            <li><strong>爆发期</strong> - 进入大流量池，全网推荐</li>
+            <li><strong>衰退期</strong> - 热度衰减，长尾流量</li>
+            <li><strong>消亡期</strong> - 停止推荐，沉淀历史</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔻</div>
+          <h3 class="framework-name">用户消费漏斗</h3>
+          <ul class="framework-list">
+            <li><strong>曝光漏斗</strong> - 推荐→展示→点击→播放</li>
+            <li><strong>消费漏斗</strong> - 开始播放→有效播放→完播</li>
+            <li><strong>互动漏斗</strong> - 点赞→评论→分享→关注</li>
+            <li><strong>转化漏斗</strong> - 观看→点击广告→转化</li>
+            <li>定位各环节流失，针对性优化</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 创作者分层 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">✍️</span>
+        创作者分层模型
+      </h2>
+      <p class="section-desc">内容平台经典的创作者金字塔分层</p>
+      <div class="tier-grid">
+        <div class="tier-card">
+          <h3 class="tier-name">头部 / KOL</h3>
+          <p class="tier-ratio">占创作者 1%</p>
+          <ul class="tier-features">
+            <li>📊 贡献 30-40% 播放量</li>
+            <li>🎯 粉丝百万级以上</li>
+            <li>👑 平台标杆，品牌代言</li>
+            <li>🤝 独家合作，深度绑定</li>
+            <li>⚠️ 重点流失预警</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">腰部 / 垂类达人</h3>
+          <p class="tier-ratio">占创作者 10%</p>
+          <ul class="tier-features">
+            <li>📊 贡献 30-40% 播放量</li>
+            <li>🎯 粉丝几万到几十万</li>
+            <li>📈 成长潜力大</li>
+            <li>🎁 流量扶持，运营对接</li>
+            <li>🔄 重点培养对象</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">尾部 / 小创作者</h3>
+          <p class="tier-ratio">占创作者 30%</p>
+          <ul class="tier-features">
+            <li>📊 贡献 15-20% 播放量</li>
+            <li>🎯 粉丝几千到几万</li>
+            <li>📱 工具化运营</li>
+            <li>🎁 基础权益，创作激励</li>
+            <li>🔄 提升创作频率</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">新手 / 普通用户</h3>
+          <p class="tier-ratio">占创作者 60%+</p>
+          <ul class="tier-features">
+            <li>📊 贡献 5-10% 播放量</li>
+            <li>🎯 偶尔发布，粉丝少</li>
+            <li>🎓 新手引导，模板工具</li>
+            <li>🎁 新人流量扶持</li>
+            <li>🌊 UGC生态基础</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 典型分析场景 -->
+    <section class="section">
+      <h2 class="section-title">
+        <span class="section-icon">💡</span>
+        典型分析场景
+      </h2>
+      <p class="section-desc">内容/短视频行业最常见的数据分析场景</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">🎯</div>
+          <h3 class="scenario-name">推荐算法优化</h3>
+          <p class="scenario-desc">通过AB测试评估不同推荐策略对时长、留存、互动的影响，持续优化推荐效果</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">✍️</div>
+          <h3 class="scenario-name">创作者运营</h3>
+          <p class="scenario-desc">创作者分层运营，冷启动流量扶持，成长路径设计，流失预警与召回</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📈</div>
+          <h3 class="scenario-name">用户增长</h3>
+          <p class="scenario-desc">渠道质量评估，拉新成本优化，新用户首刷体验设计，留存提升策略</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💰</div>
+          <h3 class="scenario-name">商业化变现</h3>
+          <p class="scenario-desc">广告eCPM提升，广告精准度优化，用户体验与商业化平衡，直播/电商变现</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏘️</div>
+          <h3 class="scenario-name">社区生态治理</h3>
+          <p class="scenario-desc">内容质量评估，社区氛围分析，不良内容识别，举报处理效率优化</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🛡️</div>
+          <h3 class="scenario-name">内容审核与安全</h3>
+          <p class="scenario-desc">审核效率与准确率平衡，机审与人审协同，违规内容发现与处置时效</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="common.js"></script>
+</body>
+</html>

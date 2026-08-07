@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -364,10 +364,9 @@
       <a href="index.html" class="nav-link">首页</a>
       <a href="metrics.html" class="nav-link">指标字典</a>
       <a href="methodology.html" class="nav-link">方法论</a>
-      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link">行业图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <div class="nav-dropdown">
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
@@ -378,11 +377,14 @@
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
           <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
           <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
-          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
           <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
           <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
         </div>
       </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      
     </div>
     <div class="nav-right">
       <div class="nav-search">
@@ -411,7 +413,7 @@
       <!-- 由 JS 动态生成 -->
     </div>
 
-    <!-- 行业入门指南 -->
+        <!-- 行业入门指南 -->
     <div class="industry-section">
       <h2 class="section-title">各行业入门指南</h2>
       <p class="section-subtitle">快速了解一个行业，4步建立认知框架</p>
@@ -442,6 +444,305 @@
             </li>
           </ol>
         </div>
+
+        <!-- 金融 -->
+        <div class="card industry-card" onclick="window.location.href='finance.html'">
+          <div class="industry-header">
+            <span class="industry-icon">💰</span>
+            <h3 class="industry-name">金融行业</h3>
+          </div>
+          <p class="industry-desc">风控为核心，数据驱动程度高，方法论严谨</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解业务逻辑</strong>：获客→风控→授信→定价→贷后管理</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：AUM、不良率、通过率、ROE、客户数、人均AUM</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：信用评分、风险定价、反欺诈、杜邦分析</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：信用评估模型、反欺诈分析、精准营销策略</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 游戏 -->
+        <div class="card industry-card" onclick="window.location.href='game.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🎮</span>
+            <h3 class="industry-name">游戏行业</h3>
+          </div>
+          <p class="industry-desc">数据驱动程度最高，用户分层精细，玩法丰富</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解生命周期</strong>：导入→成长→成熟→衰退→流失</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：DAU、留存率、付费率、ARPU、LTV、在线时长</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：用户分层、漏斗分析、A/B测试、Cohort分析</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：流失预警模型、付费转化优化、活动效果评估</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 内容/短视频 -->
+        <div class="card industry-card" onclick="window.location.href='content.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🎬</span>
+            <h3 class="industry-name">内容/短视频</h3>
+          </div>
+          <p class="industry-desc">算法驱动，创作者生态，数据维度最丰富</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解推荐系统</strong>：内容池→召回→粗排→精排→展示</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：DAU、人均时长、完播率、互动率、关注率、eCPM</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：内容画像、用户分层、推荐效果分析、A/B测试</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：推荐优化分析、创作者运营、用户增长策略</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- SaaS -->
+        <div class="card industry-card" onclick="window.location.href='saas.html'">
+          <div class="industry-header">
+            <span class="industry-icon">💻</span>
+            <h3 class="industry-name">SaaS / 企业服务</h3>
+          </div>
+          <p class="industry-desc">订阅制商业模式，重视留存和客户成功，方法论成熟</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解订阅制</strong>：获客→激活→留存→变现→推荐</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：MRR、NDR、CAC、LTV、churn率、ARPU</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：AARRR模型、客户分层、健康度评分、单位经济</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：流失预警分析、客户成功策略、定价优化</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 直播电商 -->
+        <div class="card industry-card" onclick="window.location.href='live-ecommerce.html'">
+          <div class="industry-header">
+            <span class="industry-icon">📹</span>
+            <h3 class="industry-name">直播电商</h3>
+          </div>
+          <p class="industry-desc">人货场三维分析，实时性强，数据维度丰富</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解人货场</strong>：主播（人）、商品（货）、直播间（场）</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：UV价值、GPM、转化率、停留时长、互动率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：直播复盘、漏斗分析、主播评估、选品策略</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：单场直播复盘、主播能力评估、流量投放优化</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 本地生活 -->
+        <div class="card industry-card" onclick="window.location.href='local-life.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🍜</span>
+            <h3 class="industry-name">本地生活</h3>
+          </div>
+          <p class="industry-desc">双边市场，供需匹配，城市拓展逻辑清晰</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解双边市场</strong>：供给侧（商家）+ 需求侧（用户）+ 平台匹配</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：GMV、Take Rate、商家数、用户数、复购率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：单位经济、供需匹配、补贴效率、商家分层</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：城市拓展分析、补贴策略优化、商家运营</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 快消品 -->
+        <div class="card industry-card" onclick="window.location.href='fmcg.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🧴</span>
+            <h3 class="industry-name">快消品 / FMCG</h3>
+          </div>
+          <p class="industry-desc">渠道为王，促销驱动，供应链效率关键</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解渠道体系</strong>：经销商→分销商→终端门店→消费者</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：库存周转率、动销率、渠道分销、促销ROI</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：品类管理、促销评估、价格弹性、ABC分类法</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：新品上市分析、促销ROI评估、渠道健康度诊断</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 制造业 -->
+        <div class="card industry-card" onclick="window.location.href='manufacturing.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🏭</span>
+            <h3 class="industry-name">制造业</h3>
+          </div>
+          <p class="industry-desc">生产效率为核心，质量管控，精益生产方法论成熟</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解生产流程</strong>：采购→生产→质检→仓储→配送</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：OEE、良率、产能利用率、库存周转率、交付准时率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：SPC、六西格玛、鱼骨图/5Why、FMEA、PDCA</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：质量改进分析、设备效率提升、库存优化</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 医疗健康 -->
+        <div class="card industry-card" onclick="window.location.href='healthcare.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🏥</span>
+            <h3 class="industry-name">医疗健康</h3>
+          </div>
+          <p class="industry-desc">DRG/DIP驱动，运营效率，质量与成本平衡</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解医疗体系</strong>：门诊→住院→诊疗→康复→医保结算</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：床位使用率、平均住院日、药占比、门诊量</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：DRG/DIP、临床路径、运营效率模型、满意度分析</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：床位优化分析、科室运营评估、成本控制策略</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 新能源汽车 -->
+        <div class="card industry-card" onclick="window.location.href='新能源/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">🚗</span>
+            <h3 class="industry-name">新能源汽车</h3>
+          </div>
+          <p class="industry-desc">热门赛道，规模效应显著，产业链长</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解产业链</strong>：上游材料→中游电池→下游整车→充电服务</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：市占率、销量、毛利率、单车成本、产能利用率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：规模效应、竞品对标、供应链分析、BCG矩阵</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：竞品对标分析、用户画像研究、产品规划建议</span>
+            </li>
+          </ol>
+        </div>
+
+        <!-- 物流供应链 -->
+        <div class="card industry-card" onclick="window.location.href='物流/index.html'">
+          <div class="industry-header">
+            <span class="industry-icon">📦</span>
+            <h3 class="industry-name">物流供应链</h3>
+          </div>
+          <p class="industry-desc">效率为王，成本控制，网络优化</p>
+          <ol class="industry-steps">
+            <li class="industry-step">
+              <span class="step-num">1</span>
+              <span class="step-text"><strong>理解物流网络</strong>：仓储→分拣→运输→配送→签收</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">2</span>
+              <span class="step-text"><strong>掌握核心指标</strong>：准时送达率、破损率、单均成本、库存周转率</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">3</span>
+              <span class="step-text"><strong>学习经典方法</strong>：网络优化、路径优化、牛鞭效应、EOQ模型</span>
+            </li>
+            <li class="industry-step">
+              <span class="step-num">4</span>
+              <span class="step-text"><strong>实战项目</strong>：仓储优化分析、配送路径优化、成本控制策略</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
 
         <!-- 直播电商 -->
         <div class="card industry-card" onclick="window.location.href='live-ecommerce.html'">
@@ -633,7 +934,7 @@
         </div>
 
         <!-- 在线教育 -->
-        <div class="card industry-card" onclick="window.location.href='education.html'">
+        <div class="card industry-card" onclick="window.location.href='archive/education.html'">
           <div class="industry-header">
             <span class="industry-icon">📚</span>
             <h3 class="industry-name">在线教育</h3>

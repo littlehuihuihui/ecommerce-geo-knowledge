@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -312,6 +312,10 @@
       }
     }
   </style>
+
+  <link rel="stylesheet" href="knowledge-graph-embed.css" />
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+
 </head>
 <body>
   <!-- 顶部导航栏 -->
@@ -324,10 +328,9 @@
       <a href="index.html" class="nav-link">首页</a>
       <a href="metrics.html" class="nav-link">指标字典</a>
       <a href="methodology.html" class="nav-link">方法论</a>
-      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link">行业图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <div class="nav-dropdown">
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
@@ -338,11 +341,14 @@
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
           <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
           <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
-          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
           <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
           <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
         </div>
       </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      
     </div>
     <div class="nav-right">
       <div class="nav-search">
@@ -351,6 +357,14 @@
       </div>
     </div>
   </nav>
+
+  <div class="view-switch-wrap">
+    <div class="view-switch" role="tablist">
+      <button type="button" class="view-btn active" data-view="list">列表浏览</button>
+      <button type="button" class="view-btn" data-view="graph">知识图谱</button>
+    </div>
+  </div>
+
 
   <!-- 页面头部 -->
   <div class="page-header">
@@ -543,6 +557,44 @@
               </ul>
             `
           }
+
+          {
+            title: "如何选定业务的北极星指标？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>原则</strong> — 同时体现用户价值与商业结果，可周度追踪，团队能影响</li>
+                <li><strong>候选池</strong> — 从活跃、留存、收入、交易频次等中筛选，避免纯虚荣指标</li>
+                <li><strong>验证</strong> — 与长期留存/收入相关性强；拆得出输入指标；有护栏指标</li>
+                <li><strong>落地</strong> — 统一口径、看板、复盘节奏，并拆到各团队 OKR</li>
+              </ul>
+            `
+          },
+          {
+            title: "渠道投放效果怎么做归因？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>明确目标事件</strong> — 注册、首单、付费、ROI/ROAS</li>
+                <li><strong>选择模型</strong> — 末次/首次/线性/时间衰减/数据驱动，说明适用场景</li>
+                <li><strong>注意窗口与去重</strong> — 归因窗口、跨端、自然量挤出、品牌搜索干扰</li>
+                <li><strong>实验校准</strong> — 用地理实验/持出实验验证增量，不迷信单一归因报表</li>
+                <li><strong>输出</strong> — 预算建议 + 渠道质量分层 + 素材/落地页优化方向</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何把分析结果讲给业务方听？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>先结论后证据</strong> — 一句话结论 → 关键证据 → 建议动作</li>
+                <li><strong>对齐目标</strong> — 用业务语言（GMV、留存、成本），少堆砌术语</li>
+                <li><strong>可视化</strong> — 趋势、对比、拆解图，突出变化点</li>
+                <li><strong>可执行</strong> — 建议要有负责人、时间、预期影响与验证方式</li>
+              </ul>
+            `
+          },
         ]
       },
 
@@ -1627,185 +1679,188 @@
         ]
       },
 
-      // ===== 在线教育 =====
+            // ===== 内容/短视频 =====
       {
-        category: "education",
-        categoryName: "在线教育",
-        icon: "📚",
-        list: [
-          {
-            title: "在线教育的核心指标体系是什么？",
-            difficulty: "easy",
-            answer: `
-              <ul>
-                <li><strong>获客指标</strong>
-                  <ul>
-                    <li>UV/PV、注册量、获客成本CAC</li>
-                    <li>渠道ROI、各渠道转化对比</li>
-                  </ul>
-                </li>
-                <li><strong>转化指标</strong>
-                  <ul>
-                    <li>试听率、报名率、转化率</li>
-                    <li>客单价、首单金额</li>
-                  </ul>
-                </li>
-                <li><strong>学习指标</strong>
-                  <ul>
-                    <li>完课率、出勤率、作业提交率</li>
-                    <li>学习时长、学习频次</li>
-                  </ul>
-                </li>
-                <li><strong>留存指标</strong>
-                  <ul>
-                    <li>续费率、续报率（北极星指标）</li>
-                    <li>课程完成率、用户生命周期</li>
-                  </ul>
-                </li>
-                <li><strong>收入指标</strong> — LTV、收入、毛利率</li>
-              </ul>
-            `
-          },
-          {
-            title: "续费率下降怎么分析和提升？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>1. 分层定位</strong>
-                  <ul>
-                    <li>哪个年级/学科/班型续费下降最多？</li>
-                    <li>新用户还是老用户？高价值还是低价值？</li>
-                    <li>哪个老师/班主任的续费差？</li>
-                  </ul>
-                </li>
-                <li><strong>2. 原因分析</strong>
-                  <ul>
-                    <li>产品原因：课程质量、教学效果、内容更新</li>
-                    <li>服务原因：班主任服务、答疑响应、家长沟通</li>
-                    <li>价格原因：涨价、竞品更便宜</li>
-                    <li>效果原因：成绩没提升、学习效果不明显</li>
-                  </ul>
-                </li>
-                <li><strong>3. 提升策略</strong>
-                  <ul>
-                    <li>提升教学质量和学习效果</li>
-                    <li>加强班主任服务和家长沟通</li>
-                    <li>续费优惠、早鸟价、老带新</li>
-                    <li>学习效果可视化，让家长看到进步</li>
-                  </ul>
-                </li>
-                <li><strong>4. 数据监控</strong> — 续费漏斗：意向→报名→缴费，每步转化率</li>
-              </ul>
-            `
-          },
-          {
-            title: "如何评估老师的教学效果？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>学习效果</strong>
-                  <ul>
-                    <li>学生成绩提升幅度</li>
-                    <li>知识掌握程度（测试正确率）</li>
-                    <li>学习能力提升</li>
-                  </ul>
-                </li>
-                <li><strong>课堂表现</strong>
-                  <ul>
-                    <li>出勤率、完课率</li>
-                    <li>课堂互动率、答题参与度</li>
-                    <li>学生评价、家长评价</li>
-                  </ul>
-                </li>
-                <li><strong>业务指标</strong>
-                  <ul>
-                    <li>续费率、续报率</li>
-                    <li>转介绍率</li>
-                    <li>投诉率</li>
-                  </ul>
-                </li>
-                <li><strong>注意点</strong>
-                  <ul>
-                    <li>要控制学生基础差异</li>
-                    <li>不能只看成绩，要看进步幅度</li>
-                    <li>长期效果比短期效果更重要</li>
-                  </ul>
-                </li>
-              </ul>
-            `
-          },
-          {
-            title: "完课率低怎么优化？",
-            difficulty: "medium",
-            answer: `
-              <ul>
-                <li><strong>1. 拆解完课漏斗</strong>
-                  <ul>
-                    <li>报名→开课→上课→完成作业→结课</li>
-                    <li>哪个环节流失最多？</li>
-                  </ul>
-                </li>
-                <li><strong>2. 原因分析</strong>
-                  <ul>
-                    <li>课程太难了？跟不上？</li>
-                    <li>课程太简单了？没收获？</li>
-                    <li>课程太长了？没时间？</li>
-                    <li>互动性差？没动力？</li>
-                  </ul>
-                </li>
-                <li><strong>3. 优化策略</strong>
-                  <ul>
-                    <li>课程设计：难度梯度、时长合理、互动设计</li>
-                    <li>学习激励：打卡、积分、排行榜、证书</li>
-                    <li>督学机制：班主任提醒、学习报告、同伴监督</li>
-                    <li>产品体验：播放流畅、笔记功能、倍速播放</li>
-                  </ul>
-                </li>
-                <li><strong>4. 数据驱动</strong> — A/B测试不同优化方案的效果</li>
-              </ul>
-            `
-          },
-          {
-            title: "在线教育获客成本高，怎么优化？",
-            difficulty: "hard",
-            answer: `
-              <ul>
-                <li><strong>渠道优化</strong>
-                  <ul>
-                    <li>各渠道CAC对比，砍掉低效渠道</li>
-                    <li>高ROI渠道加大投入</li>
-                    <li>新渠道测试和探索</li>
-                  </ul>
-                </li>
-                <li><strong>转化优化</strong>
-                  <ul>
-                    <li>落地页转化率优化</li>
-                    <li>试听→报名转化率提升</li>
-                    <li>销售话术和跟进流程优化</li>
-                  </ul>
-                </li>
-                <li><strong>转介绍</strong>
-                  <ul>
-                    <li>老带新机制设计</li>
-                    <li>转介绍激励政策</li>
-                    <li>口碑传播和裂变</li>
-                  </ul>
-                </li>
-                <li><strong>内容获客</strong>
-                  <ul>
-                    <li>免费内容引流（公开课、资料包）</li>
-                    <li>短视频/直播获客</li>
-                    <li>SEO/内容营销</li>
-                  </ul>
-                </li>
-                <li><strong>LTV提升</strong> — 提升用户生命周期价值，CAC相对就降了</li>
-              </ul>
-            `
-          }
-        ]
+        id: 40,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "简单",
+        question: {
+            title: "内容平台的核心指标体系是什么？",
+            desc: "请简述内容/短视频平台的核心指标体系，分为哪几个维度？",
+            answer: [
+                "用户规模与活跃：DAU、MAU、DAU/MAU比值、人均使用时长、人均播放量",
+                "内容消费：完播率、平均播放时长、播放完成度、跳出率、重播率",
+                "互动指标：点赞率、评论率、分享率、关注率、收藏率、互动率",
+                "创作者生态：活跃创作者数、人均发布量、创作者留存率、内容供给量",
+                "留存与召回：次日留存、7日留存、30日留存、召回率、使用频次",
+                "商业化：eCPM、广告填充率、CTR、ARPU、直播打赏收入、电商GMV"
+            ]
+        }
       },
-
-      // ===== 医疗健康 =====
+      {
+        id: 41,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "怎么评估推荐算法的效果？",
+            desc: "推荐算法效果评估的核心维度和指标有哪些？",
+            answer: [
+                "精准度：完播率、互动率、关注率、停留时长 - 反映内容与用户兴趣的匹配程度",
+                "多样性：人均消费品类数、内容品类分布 - 避免信息茧房，提升用户长期留存",
+                "新颖性：新内容曝光占比、新创作者曝光占比 - 保障内容生态健康",
+                "覆盖率：内容池被消费比例、长尾内容曝光占比 - 避免马太效应",
+                "时效性：新内容冷启动速度、热点内容响应速度 - 反映算法实时性",
+                "长期价值：用户留存、LTV、使用时长趋势 - 最终业务价值指标"
+            ]
+        }
+      },
+      {
+        id: 42,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "完播率下降了，怎么分析原因？",
+            desc: "某短视频平台的整体完播率突然下降5%，请分析可能的原因和分析思路。",
+            answer: [
+                "拆解维度：按内容品类、创作者层级、用户分层、新老内容、流量来源拆解",
+                "供给侧：新内容质量下降？头部创作者停更？内容同质化严重？",
+                "算法侧：推荐策略调整？召回/排序逻辑变化？冷启动流量分配变化？",
+                "用户侧：新用户增多？用户兴趣迁移？竞品分流？",
+                "产品侧：UI/交互变化？视频加载速度变慢？广告增多影响体验？",
+                "验证方法：AB测试验证、分维度下钻、时序对比、相关性分析"
+            ]
+        }
+      },
+      {
+        id: 43,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "创作者留存率低，怎么提升？",
+            desc: "平台创作者30日留存率只有20%，怎么分析和提升？",
+            answer: [
+                "分层分析：按粉丝量、发布频率、内容品类分层，看哪层流失最严重",
+                "流失原因：流量不足？变现困难？创作成本高？负面反馈多？",
+                "冷启动优化：新人流量扶持、创作引导、模板工具、新手任务",
+                "成长激励：成长体系、流量阶梯、荣誉认证、创作训练营",
+                "变现赋能：广告分成、直播打赏、电商带货、品牌合作",
+                "社区氛围：减少负面评论、创作者保护、粉丝运营工具"
+            ]
+        }
+      },
+      {
+        id: 44,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "困难",
+        question: {
+            title: "人均使用时长怎么提升？",
+            desc: "作为数据分析师，你会从哪些角度入手提升用户人均使用时长？",
+            answer: [
+                "推荐优化：提升推荐精准度、增加多样性、优化冷启动、实时响应兴趣变化",
+                "内容供给：扶持优质创作者、丰富内容品类、热点内容运营、UGC激励",
+                "产品设计：无限下滑、沉浸式体验、互动功能、社交功能、直播功能",
+                "用户运营：个性化Push、召回策略、活动运营、任务体系、会员体系",
+                "留存提升：新用户首刷体验、兴趣标签引导、关注关系建立、习惯养成",
+                "注意平衡：时长提升 vs 用户健康、内容质量 vs 数量、短期 vs 长期"
+            ]
+        }
+      },
+      {
+        id: 45,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "广告eCPM怎么优化？",
+            desc: "短视频平台广告eCPM下降，怎么分析和优化？",
+            answer: [
+                "拆解维度：按广告位、广告类型、用户分层、时段、地域拆解",
+                "需求侧：广告主数量减少？出价降低？广告预算收缩？行业季节性？",
+                "供给侧：流量质量下降？用户精准度降低？广告位库存增加？",
+                "匹配效率：广告填充率下降？CTR下降？转化率下降？算法问题？",
+                "优化方向：精准定向提升CTR、动态出价优化、广告场景创新、原生广告",
+                "平衡体验：广告频次控制、广告质量提升、用户体验与商业化平衡"
+            ]
+        }
+      },
+      {
+        id: 46,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "简单",
+        question: {
+            title: "怎么评估一个创作者的价值？",
+            desc: "创作者价值评估的维度和指标有哪些？",
+            answer: [
+                "流量价值：播放量、完播率、互动率、粉丝增长、引流能力",
+                "商业价值：广告收入、直播打赏、电商GMV、品牌合作价值",
+                "生态价值：内容质量、原创性、垂类贡献、社区氛围、正能量",
+                "成长价值：成长速度、创作潜力、学习能力、稳定性",
+                "风险价值：违规风险、舆论风险、流失风险、独家性",
+                "综合评估：加权评分模型、分层运营、差异化激励策略"
+            ]
+        }
+      },
+      {
+        id: 47,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "困难",
+        question: {
+            title: "新用户留存低，怎么分析？",
+            desc: "新用户次日留存率只有30%，怎么分析和提升？",
+            answer: [
+                "漏斗分析：下载→安装→注册→首刷→关注→次日回访，定位流失环节",
+                "首刷体验：首刷内容质量？兴趣匹配度？内容多样性？加载速度？",
+                "新用户引导：兴趣标签？关注推荐？新手任务？功能引导？",
+                "召回机制：Push策略？召回时机？召回内容？召回渠道？",
+                "渠道质量：不同渠道留存差异？渠道用户画像匹配度？",
+                "产品优化：AB测试验证、个性化首刷、社交关系导入、习惯养成"
+            ]
+        }
+      },
+      {
+        id: 48,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "内容审核效率怎么提升？",
+            desc: "内容审核团队人效低，违规内容漏审多，怎么优化？",
+            answer: [
+                "机审优化：模型准确率提升、多模态识别、规则引擎、风险分级",
+                "人审提效：审核工具优化、快捷键、批量处理、智能标注、质检机制",
+                "流程优化：机审→人审→复核的分级流程、优先级排序、超时预警",
+                "人员管理：培训体系、绩效考核、排班优化、情绪关怀",
+                "数据驱动：漏审率、误审率、人均审核量、平均审核时长、质检通过率",
+                "成本平衡：机审准确率 vs 人审成本、安全底线 vs 审核效率"
+            ]
+        }
+      },
+      {
+        id: 49,
+        category: "content",
+        categoryName: "内容/短视频",
+        difficulty: "中等",
+        question: {
+            title: "社区氛围怎么评估和优化？",
+            desc: "怎么量化评估社区氛围？怎么优化社区氛围？",
+            answer: [
+                "评估维度：互动质量、评论友善度、举报量、用户满意度、留存影响",
+                "量化指标：负面评论占比、举报率、删除率、互动率、关注率、留存率",
+                "用户分层：核心用户、活跃用户、普通用户、潜水用户，不同层级不同策略",
+                "内容治理：优质内容扶持、低质内容打压、违规内容治理、热点引导",
+                "用户治理：账号分级、信用体系、惩罚机制、正向激励、社区规范",
+                "产品机制：评论筛选、举报机制、拉黑功能、社区公约、官方引导"
+            ]
+        }
+      },
+// ===== 医疗健康 =====
       {
         category: "healthcare",
         categoryName: "医疗健康",
@@ -2787,6 +2842,82 @@
         ]
       },
 
+
+      // ===== 文旅行业 =====
+      {
+        category: "tourism",
+        categoryName: "文旅行业",
+        icon: "🏖️",
+        list: [
+          {
+            title: "景区客流突然下降，怎么分析原因？",
+            difficulty: "easy",
+            answer: `
+              <ul>
+                <li><strong>确认口径</strong> — 入园人次/售票张数/核销率是否同向变化，排除统计或闸机故障</li>
+                <li><strong>时间对比</strong> — 同比、环比、节假日日历效应、天气与大型活动</li>
+                <li><strong>渠道拆解</strong> — OTA、直订、旅行社、团体票哪个渠道掉量</li>
+                <li><strong>票价与产品</strong> — ASP变化、套票结构、免票政策、竞品促销</li>
+                <li><strong>体验与口碑</strong> — 排队时长、投诉、NPS/满意度是否同步恶化</li>
+                <li><strong>输出动作</strong> — 针对主因做渠道投放、票价策略或现场运营优化</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何提升景区/酒店的直订占比？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>看清现状</strong> — 直订占比、各渠道佣金成本、转化漏斗差异</li>
+                <li><strong>产品与权益</strong> — 直订专享价、积分、取消政策、会员等级权益</li>
+                <li><strong>触达与转化</strong> — 官网/小程序体验、支付便利、库存可见性</li>
+                <li><strong>投放与归因</strong> — 品牌搜索、私域、短信/App推送，避免过度依赖OTA</li>
+                <li><strong>复盘指标</strong> — 直订占比、佣金率、RevPAR/入园人次、复购率</li>
+              </ul>
+            `
+          },
+          {
+            title: "酒店 RevPAR 下降怎么拆解？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>公式拆解</strong> — RevPAR = ADR × OCC，先判断是房价还是入住率问题</li>
+                <li><strong>结构拆解</strong> — 房型、渠道、客群（商务/休闲）、工作日/周末</li>
+                <li><strong>收益管理</strong> — 动态定价、超售、取消政策、竞品房价</li>
+                <li><strong>需求侧</strong> — 商旅需求、旅游旺淡季、会展与周边竞品</li>
+                <li><strong>供给侧</strong> — 可售房、装修关房、服务质量导致的差评</li>
+              </ul>
+            `
+          },
+          {
+            title: "文旅大促活动怎么做数据复盘？",
+            difficulty: "medium",
+            answer: `
+              <ul>
+                <li><strong>目标回顾</strong> — 售票、核销、入园、二消、ROI是否达成</li>
+                <li><strong>漏斗分析</strong> — 曝光→点击→下单→支付→核销→入园</li>
+                <li><strong>渠道与人群</strong> — 新客/老客、本地/外地、渠道贡献与质量</li>
+                <li><strong>体验问题</strong> — 排队、核销失败、客诉、退改签</li>
+                <li><strong>沉淀动作</strong> — 可复用的选品、定价带、触达节奏与风险清单</li>
+              </ul>
+            `
+          },
+          {
+            title: "如何用数据提升二次消费（二消）？",
+            difficulty: "hard",
+            answer: `
+              <ul>
+                <li><strong>定义二消</strong> — 餐饮、零售、项目加购、停车、衍生品等收入结构</li>
+                <li><strong>客群分层</strong> — 家庭/情侣/团队，停留时长与消费偏好</li>
+                <li><strong>场景触达</strong> — 入园动线、排队场景、小程序推荐、套票打包</li>
+                <li><strong>实验验证</strong> — 陈列、套餐、限时优惠做 A/B 或区域对照</li>
+                <li><strong>核心指标</strong> — 二消占比、人均二消、转化率、毛利与库存周转</li>
+              </ul>
+            `
+          }
+        ]
+      },
+
       // ===== 制造业 =====
       {
         category: "manufacturing",
@@ -3119,7 +3250,45 @@
       `;
     }
   </script>
-  <script src="common.js"></script>
+  
+  
+  <div id="kgPageMount" class="kg-embed" style="display:none;" data-module="business_problem"></div>
+  <script src="knowledge-graph-data.js"></script>
+  <script src="knowledge-graph-app.js"></script>
+  <script>
+  (function () {
+    var mod = "business_problem";
+    var kg = null;
+    var mount = document.getElementById("kgPageMount");
+    function setView(mode) {
+      document.querySelectorAll(".view-btn").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-view") === mode);
+      });
+      if (mode === "graph") {
+        document.body.classList.add("kg-graph-mode");
+        mount.style.display = "block";
+        mount.classList.add("is-on");
+        if (!kg) {
+          kg = window.initKnowledgeGraph({ root: mount, startModule: mod });
+        }
+      } else {
+        document.body.classList.remove("kg-graph-mode");
+        mount.style.display = "none";
+        mount.classList.remove("is-on");
+      }
+    }
+    document.querySelectorAll(".view-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setView(btn.getAttribute("data-view"));
+      });
+    });
+    if (location.hash === "#graph" || /[?&]view=graph/.test(location.search)) {
+      setView("graph");
+    }
+  })();
+  </script>
+
+<script src="common.js"></script>
 </body>
 </html>
 

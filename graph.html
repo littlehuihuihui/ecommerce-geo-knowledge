@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -421,10 +421,9 @@
         <a href="index.html" class="nav-link">首页</a>
         <a href="metrics.html" class="nav-link">指标字典</a>
         <a href="methodology.html" class="nav-link">方法论</a>
-        <a href="graph.html" class="nav-link active">知识图谱</a>
+        <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link active">行业图谱</a>
         <a href="interview.html" class="nav-link">业务问题拆解</a>
-        <a href="learning-path.html" class="nav-link">学习路径</a>
-        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
         <div class="nav-dropdown">
           <div class="nav-dropdown-toggle">
             知识框架 ▾
@@ -436,7 +435,7 @@
             <a href="finance.html" class="dropdown-item">金融行业</a>
             <a href="manufacturing.html" class="dropdown-item">制造业</a>
             <a href="live-ecommerce.html" class="dropdown-item">直播电商</a>
-            <a href="education.html" class="dropdown-item">在线教育</a>
+            <a href="archive/education.html" class="dropdown-item">在线教育</a>
             <a href="local-life.html" class="dropdown-item">本地生活</a>
             <a href="healthcare.html" class="dropdown-item">医疗健康</a>
             <a href="fmcg.html" class="dropdown-item">快消品 / FMCG</a>
@@ -444,6 +443,9 @@
             <a href="物流/index.html" class="dropdown-item">物流供应链</a>
           </div>
         </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+        
       </div>
       <div class="nav-search">
         <input type="text" id="navSearch" placeholder="搜索..." />
@@ -793,44 +795,44 @@
           }
         ]
       },
-      education: {
-        name: '在线教育',
-        centerColor: '#ec4899',
+      content: {
+        name: '内容/短视频',
+        centerColor: '#8b5cf6',
         categories: [
           {
             name: '核心指标',
             color: '#3b82f6',
             nodes: [
-              { name: '续费率', desc: '到期用户续费的比例，教育行业核心质量指标', formula: '续费率 = 续费用户数 ÷ 到期用户数 × 100%', scenarios: ['课程质量', '用户满意度', '收入增长'], related: ['完课率', 'LTV', '获客成本'] },
-              { name: '完课率', desc: '完成课程的用户比例，衡量学习效果', formula: '完课率 = 完成课程用户数 ÷ 报名用户数 × 100%', scenarios: ['课程质量', '学习效果', '运营效果'], related: ['续费率', '出勤率', '学习效果'] },
-              { name: '转化率', desc: '体验课/试听课用户转付费的比例', formula: '转化率 = 付费用户数 ÷ 体验用户数 × 100%', scenarios: ['获客效率', '销售能力', '课程质量'], related: ['获客成本', 'ROI', '续费率'] },
-              { name: '获客成本', desc: '获取一个付费客户的平均成本', formula: '获客成本 = 总获客投入 ÷ 新增付费客户数', scenarios: ['获客效率', '渠道评估', '预算规划'], related: ['LTV', 'ROI', '转化率'] },
-              { name: 'LTV', desc: '用户生命周期价值，用户整个生命周期的贡献', formula: 'LTV = 客单价 × 续费率 × 平均生命周期', scenarios: ['用户价值', '定价策略', '获客策略'], related: ['续费率', '客单价', '获客成本'] },
-              { name: '出勤率', desc: '用户上课出勤的比例，衡量学习积极性', formula: '出勤率 = 实际上课人次 ÷ 应上课人次 × 100%', scenarios: ['学习效果', '运营效果', '课程质量'], related: ['完课率', '续费率', '学习效果'] }
+              { name: 'DAU', desc: '日活跃用户数，衡量平台用户规模', formula: 'DAU = 每日打开APP的独立用户数', scenarios: ['用户规模', '活跃度', '增长衡量'], related: ['MAU', '人均时长', '留存率'] },
+              { name: '人均时长', desc: '人均使用时长，内容平台核心价值指标', formula: '人均时长 = 总使用时长 ÷ 活跃用户数', scenarios: ['用户粘性', '产品吸引力', '商业化基础'], related: ['DAU', '完播率', '互动率'] },
+              { name: '完播率', desc: '视频被完整播放的比例，核心内容质量指标', formula: '完播率 = 完整播放次数 ÷ 总播放次数 × 100%', scenarios: ['内容质量', '推荐权重', '创作者评估'], related: ['人均时长', '互动率', '关注率'] },
+              { name: '互动率', desc: '用户综合互动比例，反映内容吸引力', formula: '互动率 = (点赞+评论+分享+收藏) ÷ 播放数', scenarios: ['内容质量', '用户参与', '社区氛围'], related: ['完播率', '关注率', '人均时长'] },
+              { name: '关注率', desc: '看完后关注作者的比例，创作者吸粉能力', formula: '关注率 = 关注数 ÷ 播放数 × 100%', scenarios: ['创作者价值', '粉丝增长', '内容粘性'], related: ['互动率', '完播率', '创作者留存'] },
+              { name: 'eCPM', desc: '千次展示广告收入，广告变现效率核心指标', formula: 'eCPM = 广告收入 ÷ 展示次数 × 1000', scenarios: ['广告变现', '商业化效率', '流量价值'], related: ['人均时长', 'DAU', '广告填充率'] }
             ]
           },
           {
             name: '分析方法',
             color: '#10b981',
             nodes: [
-              { name: '学习漏斗', desc: '拆解用户从接触到续费的完整转化路径', formula: '曝光→点击→注册→体验→付费→上课→完课→续费', scenarios: ['转化优化', '流失诊断', '环节改进'], related: ['转化率', '完课率', '续费率'] },
-              { name: '用户生命周期', desc: '分析用户全生命周期各阶段特征和需求', formula: '获客→激活→留存→变现→推荐', scenarios: ['用户运营', '生命周期管理', '价值提升'], related: ['LTV', '续费率', '完课率'] },
-              { name: '效果评估', desc: '评估课程和教学的实际效果', formula: '学习成绩提升 + 满意度 + 续费率 + 完课率', scenarios: ['课程优化', '教学质量', '产品迭代'], related: ['完课率', '续费率', '出勤率'] },
-              { name: '用户分层', desc: '基于学习阶段、付费能力、活跃度等分层', formula: '学习阶段 + 付费能力 + 活跃度 + 学习效果', scenarios: ['精准运营', '差异化服务', '资源分配'], related: ['用户画像', 'LTV', '续费率'] },
-              { name: 'Cohort分析', desc: '同期群分析，追踪不同批次用户的留存和续费', formula: '按注册时间分组 → 追踪各群组指标变化', scenarios: ['留存分析', '课程效果', '渠道质量'], related: ['续费率', '完课率', 'LTV'] },
-              { name: 'A/B测试', desc: '通过对照实验验证课程、运营策略的效果', formula: '对照组 vs 实验组 + 统计显著性检验', scenarios: ['课程优化', '运营策略', 'UI/UX测试'], related: ['转化率', '续费率', '完课率'] }
+              { name: '内容画像', desc: '对内容进行多维度标签化和特征分析', formula: '内容标签 + 分类体系 + 特征提取', scenarios: ['推荐系统', '内容运营', '创作者分析'], related: ['推荐效果分析', '用户分层', '完播率'] },
+              { name: '用户分层', desc: '基于行为、兴趣、价值对用户分层运营', formula: '活跃度分层 + 兴趣分层 + 价值分层', scenarios: ['精准运营', '差异化服务', '资源分配'], related: ['人均时长', '留存率', '互动率'] },
+              { name: '推荐效果分析', desc: '评估推荐算法的精准度、多样性、新颖性', formula: '精准度 + 多样性 + 新颖性 + 覆盖率', scenarios: ['算法优化', 'AB测试', '效果评估'], related: ['完播率', '人均时长', 'A/B测试'] },
+              { name: 'A/B测试', desc: '通过对照实验验证算法、产品、运营策略', formula: '对照组 vs 实验组 + 统计显著性检验', scenarios: ['算法优化', '产品迭代', '运营策略'], related: ['推荐效果分析', '人均时长', '留存率'] },
+              { name: 'Cohort分析', desc: '同期群分析，追踪不同批次用户的留存和行为', formula: '按注册时间分组 → 追踪各群组指标变化', scenarios: ['留存分析', '内容效果', '渠道质量'], related: ['留存率', '人均时长', '用户分层'] },
+              { name: '漏斗分析', desc: '拆解用户从曝光到互动的完整转化路径', formula: '曝光→点击→播放→完播→互动→关注', scenarios: ['转化优化', '流失诊断', '环节改进'], related: ['完播率', '互动率', '关注率'] }
             ]
           },
           {
             name: '业务场景',
             color: '#f59e0b',
             nodes: [
-              { name: '获客优化', desc: '优化获客渠道和转化，降低获客成本', scenarios: ['渠道投放', '落地页优化', '销售转化'], related: ['获客成本', '转化率', 'ROI'] },
-              { name: '转化优化', desc: '优化体验课转付费的转化效率', scenarios: ['销售培训', '课程设计', '运营活动'], related: ['转化率', '获客成本', '续费率'] },
-              { name: '学习效果', desc: '提升学习效果和用户满意度', scenarios: ['课程优化', '教学方法', '学习服务'], related: ['完课率', '续费率', '出勤率'] },
-              { name: '续费提升', desc: '提升用户续费率，增加LTV', scenarios: ['续费运营', '课程质量', '用户服务'], related: ['续费率', 'LTV', '完课率'] },
-              { name: '老师评估', desc: '评估老师教学质量和效果', scenarios: ['绩效考核', '培训提升', '排班优化'], related: ['完课率', '续费率', '出勤率'] },
-              { name: '课程设计', desc: '设计和优化课程体系和内容', scenarios: ['新课开发', '课程迭代', '体系优化'], related: ['完课率', '续费率', '学习效果'] }
+              { name: '推荐优化', desc: '优化推荐算法，提升用户时长和留存', scenarios: ['算法迭代', 'AB测试', '效果评估'], related: ['推荐效果分析', '人均时长', 'A/B测试'] },
+              { name: '创作者运营', desc: '创作者分层运营、冷启动扶持、成长激励', scenarios: ['创作者分层', '流量扶持', '流失预警'], related: ['关注率', '创作者留存', '内容供给'] },
+              { name: '用户增长', desc: '获客、激活、留存全链路优化', scenarios: ['渠道投放', '新用户体验', '留存提升'], related: ['DAU', '留存率', 'Cohort分析'] },
+              { name: '商业化', desc: '广告、直播、电商等变现方式优化', scenarios: ['广告优化', '直播打赏', '电商带货'], related: ['eCPM', '人均时长', '互动率'] },
+              { name: '社区运营', desc: '社区氛围营造、UGC激励、内容生态建设', scenarios: ['话题运营', '活动运营', '社区治理'], related: ['互动率', 'UGC数量', '用户留存'] },
+              { name: '内容审核', desc: '内容安全、质量管控、审核效率优化', scenarios: ['机审策略', '人审协同', '违规处置'], related: ['内容质量', '社区氛围', '用户体验'] }
             ]
           }
         ]
@@ -1050,15 +1052,15 @@
     // 行业标签配置
     const industries = [
       { key: 'ecommerce', name: '电商' },
-      { key: 'saas', name: 'SaaS' },
-      { key: 'game', name: '游戏' },
       { key: 'finance', name: '金融' },
-      { key: 'manufacturing', name: '制造业' },
+      { key: 'game', name: '游戏' },
+      { key: 'content', name: '内容/短视频' },
+      { key: 'saas', name: 'SaaS' },
       { key: 'live-ecommerce', name: '直播电商' },
-      { key: 'education', name: '在线教育' },
       { key: 'local-life', name: '本地生活' },
-      { key: 'healthcare', name: '医疗健康' },
       { key: 'fmcg', name: '快消品' },
+      { key: 'manufacturing', name: '制造业' },
+      { key: 'healthcare', name: '医疗健康' },
       { key: 'new-energy', name: '新能源' },
       { key: 'logistics', name: '物流' }
     ];

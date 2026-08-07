@@ -10,6 +10,11 @@ PACKAGE_DIR = os.path.join(os.path.dirname(__file__), 'packages')
 if os.path.exists(PACKAGE_DIR):
     sys.path.insert(0, PACKAGE_DIR)
 
+# 添加D盘的包路径（Windows路径长度限制 workaround）
+RAG_PKGS = r'D:\rag_pkgs'
+if os.path.exists(RAG_PKGS):
+    sys.path.insert(0, RAG_PKGS)
+
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import chromadb

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -296,6 +296,10 @@
       }
     }
   </style>
+
+  <link rel="stylesheet" href="knowledge-graph-embed.css" />
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+
 </head>
 <body>
   <!-- 顶部导航栏 -->
@@ -308,10 +312,9 @@
       <a href="index.html" class="nav-link">首页</a>
       <a href="metrics.html" class="nav-link">指标字典</a>
       <a href="methodology.html" class="nav-link">方法论</a>
-      <a href="graph.html" class="nav-link">知识图谱</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+        <a href="graph.html" class="nav-link">行业图谱</a>
       <a href="interview.html" class="nav-link">业务问题拆解</a>
-      <a href="learning-path.html" class="nav-link">学习路径</a>
-        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
       <div class="nav-dropdown">
         <span class="nav-link nav-dropdown-toggle">知识框架</span>
         <div class="nav-dropdown-menu">
@@ -322,11 +325,14 @@
           <a href="saas.html" class="nav-dropdown-item">SaaS / 企业服务 <span class="badge">1份</span></a>
           <a href="game.html" class="nav-dropdown-item">游戏行业 <span class="badge">1份</span></a>
           <a href="finance.html" class="nav-dropdown-item">金融行业 <span class="badge">1份</span></a>
-          <a href="education.html" class="nav-dropdown-item">在线教育 <span class="badge">1份</span></a>
+          <a href="content.html" class="nav-dropdown-item">内容/短视频 <span class="badge">1份</span></a>
           <a href="live-ecommerce.html" class="nav-dropdown-item">直播电商 <span class="badge">1份</span></a>
           <a href="local-life.html" class="nav-dropdown-item">本地生活 <span class="badge">1份</span></a>
         </div>
       </div>
+      <a href="learning-path.html" class="nav-link">学习路径</a>
+        <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      
     </div>
     <div class="nav-right">
       <div class="nav-search">
@@ -335,6 +341,14 @@
       </div>
     </div>
   </nav>
+
+  <div class="view-switch-wrap">
+    <div class="view-switch" role="tablist">
+      <button type="button" class="view-btn active" data-view="list">列表浏览</button>
+      <button type="button" class="view-btn" data-view="graph">知识图谱</button>
+    </div>
+  </div>
+
 
   <!-- 页面头部 -->
   <div class="page-header">
@@ -365,6 +379,7 @@
       </div>
       <div class="filter-tags" id="filterTags">
         <span class="filter-tag active" data-category="all">全部</span>
+        <span class="filter-tag" data-category="general">通用</span>
         <span class="filter-tag" data-category="retail">零售</span>
         <span class="filter-tag" data-category="logistics">物流</span>
         <span class="filter-tag" data-category="tourism">文旅</span>
@@ -374,7 +389,7 @@
         <span class="filter-tag" data-category="saas">SaaS</span>
         <span class="filter-tag" data-category="game">游戏</span>
         <span class="filter-tag" data-category="finance">金融</span>
-        <span class="filter-tag" data-category="education">在线教育</span>
+        <span class="filter-tag" data-category="content">内容/短视频</span>
         <span class="filter-tag" data-category="liveecommerce">直播电商</span>
         <span class="filter-tag" data-category="locallife">本地生活</span>
       </div>
@@ -518,21 +533,20 @@
       { name: "欺诈率", category: "finance", categoryName: "金融", icon: "💰", desc: "欺诈交易占总交易的比例，反欺诈效果指标。", formula: "欺诈率 = 欺诈交易数 ÷ 总交易数 × 100%", tags: ["风控指标"] },
       { name: "交叉销售率", category: "finance", categoryName: "金融", icon: "💰", desc: "客户购买多个产品的比例，衡量客户深度运营效果。", formula: "交叉销售率 = 购买多产品客户数 ÷ 总客户数 × 100%", tags: ["运营指标"] },
 
-      // ===== 在线教育 =====
-      { name: "CAC（获客成本）", category: "education", categoryName: "在线教育", icon: "📚", desc: "获取一个新付费用户的平均成本，教育行业获客成本高。", formula: "CAC = 营销总费用 ÷ 新增付费用户数", tags: ["核心指标", "获客"] },
-      { name: "注册转化率", category: "education", categoryName: "在线教育", icon: "📚", desc: "从访客到注册用户的转化比例。", formula: "注册转化率 = 注册用户数 ÷ 访客数 × 100%", tags: ["转化指标"] },
-      { name: "试听率", category: "education", categoryName: "在线教育", icon: "📚", desc: "注册用户中参加试听课程的比例。", formula: "试听率 = 试听用户数 ÷ 注册用户数 × 100%", tags: ["转化指标"] },
-      { name: "报名转化率", category: "education", categoryName: "在线教育", icon: "📚", desc: "试听用户中最终报名付费的比例，核心转化指标。", formula: "报名转化率 = 付费用户数 ÷ 试听用户数 × 100%", tags: ["核心指标", "转化"] },
-      { name: "完课率", category: "education", categoryName: "在线教育", icon: "📚", desc: "报名用户中完成课程学习的比例，衡量学习效果和体验。", formula: "完课率 = 完课用户数 ÷ 报名用户数 × 100%", tags: ["核心指标", "学习"] },
-      { name: "续费率", category: "education", categoryName: "在线教育", icon: "📚", desc: "课程到期后续费的用户比例，核心留存指标。", formula: "续费率 = 续费用户数 ÷ 到期用户数 × 100%", tags: ["核心指标", "留存"] },
-      { name: "复购率", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户购买多门课程的比例，衡量用户价值。", formula: "复购率 = 复购用户数 ÷ 总付费用户数 × 100%", tags: ["留存指标"] },
-      { name: "转介绍率", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户推荐带来的新用户比例，口碑传播效果。", formula: "转介绍率 = 推荐新用户数 ÷ 总新用户数 × 100%", tags: ["增长指标"] },
-      { name: "LTV（用户终身价值）", category: "education", categoryName: "在线教育", icon: "📚", desc: "用户整个生命周期贡献的总收入。", formula: "LTV = 客单价 × 平均购买次数", tags: ["核心指标", "通用"] },
-      { name: "DAU / MAU", category: "education", categoryName: "在线教育", icon: "📚", desc: "日活跃/月活跃用户，比值反映学习粘性。", formula: "DAU/MAU = 日活 ÷ 月活 × 100%", tags: ["活跃指标", "通用"] },
-      { name: "GMV", category: "education", categoryName: "在线教育", icon: "📚", desc: "总成交额，包含所有课程销售收入。", formula: "GMV = 课程单价 × 销售数量", tags: ["规模指标", "通用"] },
-      { name: "退费率", category: "education", categoryName: "在线教育", icon: "📚", desc: "退费用户占总付费用户的比例，反映课程质量和满意度。", formula: "退费率 = 退费用户数 ÷ 付费用户数 × 100%", tags: ["质量指标"] },
-
-      // ===== 直播电商 =====
+            // ===== 内容/短视频 =====
+      { name: "DAU 日活跃用户", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "每日打开APP的独立用户数，衡量平台用户规模。", formula: "DAU = 每日打开APP的独立用户数", tags: ["核心指标", "用户规模"] },
+      { name: "人均使用时长", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "用户平均每天使用时长，内容平台核心价值指标。", formula: "人均时长 = 总使用时长 ÷ 活跃用户数", tags: ["核心指标", "用户粘性"] },
+      { name: "完播率", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "视频被完整播放的比例，核心内容质量指标，直接影响推荐权重。", formula: "完播率 = 完整播放次数 ÷ 总播放次数 × 100%", tags: ["核心指标", "内容质量"] },
+      { name: "互动率", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "用户综合互动比例，反映内容吸引力和用户参与度。", formula: "互动率 = (点赞+评论+分享+收藏) ÷ 播放数", tags: ["核心指标", "互动"] },
+      { name: "关注率", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "看完后关注作者的比例，衡量创作者吸粉能力。", formula: "关注率 = 关注数 ÷ 播放数 × 100%", tags: ["创作者指标", "粉丝增长"] },
+      { name: "eCPM", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "千次展示广告收入，广告变现效率核心指标。", formula: "eCPM = 广告收入 ÷ 展示次数 × 1000", tags: ["核心指标", "商业化"] },
+      { name: "人均播放量", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "人均消费内容数量，反映内容消费深度。", formula: "人均播放量 = 总播放次数 ÷ DAU", tags: ["内容消费"] },
+      { name: "创作者留存率", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "创作者持续创作的比例，反映平台对创作者的吸引力。", formula: "创作者留存率 = 持续创作创作者 ÷ 期初创作者", tags: ["创作者指标", "供给侧"] },
+      { name: "广告填充率", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "广告库存填充比例，反映广告供需匹配度。", formula: "广告填充率 = 有广告展示次数 ÷ 总请求次数", tags: ["商业化指标"] },
+      { name: "内容供给量", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "每日/每周新增内容数量，反映内容供给规模。", formula: "内容供给量 = 周期内新增内容数", tags: ["供给侧指标"] },
+      { name: "头部创作者占比", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "Top1%创作者播放量占总播放量的比例，反映内容生态健康度。", formula: "头部占比 = Top1%创作者播放量 ÷ 总播放量", tags: ["生态指标"] },
+      { name: "直播打赏收入", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "直播打赏总金额，直播业务健康度指标。", formula: "直播打赏收入 = 打赏总金额", tags: ["商业化指标"] },
+// ===== 直播电商 =====
       { name: "GMV", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播总成交额，直播电商最核心的结果指标。", formula: "GMV = 客单价 × 订单数", tags: ["核心指标", "通用"] },
       { name: "累计观看人数", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播期间累计观看的独立用户数，反映直播覆盖规模。", formula: "累计观看UV = 整场直播独立访客数", tags: ["流量指标"] },
       { name: "平均停留时长", category: "liveecommerce", categoryName: "直播电商", icon: "🎥", desc: "用户平均在直播间停留的时间，直播间吸引力的核心指标。", formula: "平均停留时长 = 总观看时长 ÷ 观看人数", tags: ["核心指标", "粘性"] },
@@ -559,6 +573,29 @@
       { name: "准时率", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "按时送达的订单比例，衡量配送服务质量。", formula: "准时率 = 准时送达订单 ÷ 总订单 × 100%", tags: ["配送指标"] },
       { name: "补贴率", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "补贴金额占GMV的比例，反映烧钱程度。", formula: "补贴率 = 补贴金额 ÷ GMV × 100%", tags: ["运营指标"] },
       { name: "Take Rate（抽佣率）", category: "locallife", categoryName: "本地生活", icon: "📍", desc: "平台抽佣比例，反映变现能力。", formula: "Take Rate = 平台收入 ÷ GMV × 100%", tags: ["盈利指标", "核心指标"] },
+
+      // ===== 通用数据分析（跨行业基础指标）=====
+      { name: "PV（页面浏览量）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "Page View，一定周期内页面被访问的总次数，衡量内容/产品被浏览的规模。", formula: "PV = 统计周期内所有页面访问次数之和", tags: ["流量指标", "通用"] },
+      { name: "UV（独立访客）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "Unique Visitor，一定周期内访问的去重用户数，衡量触达规模。", formula: "UV = 统计周期内去重用户数（按设备/账号）", tags: ["流量指标", "通用"] },
+      { name: "跳出率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "仅浏览一个页面就离开的会话占比，反映落地页与流量匹配度。", formula: "跳出率 = 单页会话数 ÷ 总会话数 × 100%", tags: ["体验指标", "通用"] },
+      { name: "CTR（点击率）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "Click Through Rate，曝光后发生点击的比例，衡量素材/入口吸引力。", formula: "CTR = 点击次数 ÷ 曝光次数 × 100%", tags: ["营销指标", "通用"] },
+      { name: "曝光量", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "内容/广告/商品被展示的次数，是漏斗最上端的流量指标。", formula: "曝光量 = 统计周期内有效展示次数", tags: ["流量指标", "通用"] },
+      { name: "ROAS（广告支出回报）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "Return On Ad Spend，广告带来的收入与广告花费之比。", formula: "ROAS = 广告带来收入 ÷ 广告花费", tags: ["营销指标", "通用"] },
+      { name: "ROI（投资回报率）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "投入产出比，衡量一项投入创造的净回报。", formula: "ROI = (收益 - 成本) ÷ 成本 × 100%", tags: ["效率指标", "通用"] },
+      { name: "净利率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "净利润占销售收入的比例，反映最终盈利能力。", formula: "净利率 = 净利润 ÷ 销售收入 × 100%", tags: ["财务指标", "通用"] },
+      { name: "渗透率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "目标人群中实际使用/购买某产品或功能的比例。", formula: "渗透率 = 使用/购买人数 ÷ 目标人群人数 × 100%", tags: ["增长指标", "通用"] },
+      { name: "打开率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "推送/邮件/短信被打开的比例，衡量触达内容吸引力。", formula: "打开率 = 打开次数 ÷ 成功触达次数 × 100%", tags: ["运营指标", "通用"] },
+      { name: "分享率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "用户将内容/商品分享给他人的比例，衡量传播力。", formula: "分享率 = 分享用户数 ÷ 曝光或活跃用户数 × 100%", tags: ["增长指标", "通用"] },
+      { name: "收藏率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "浏览用户中发生收藏行为的比例，反映兴趣强度。", formula: "收藏率 = 收藏次数 ÷ 浏览次数 × 100%", tags: ["转化指标", "通用"] },
+      { name: "差评率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "评价中差评占比，衡量产品/服务质量问题。", formula: "差评率 = 差评数 ÷ 总评价数 × 100%", tags: ["质量指标", "通用"] },
+      { name: "CSAT（客户满意度）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "Customer Satisfaction Score，客户对服务或产品的满意度评分。", formula: "CSAT = 满意客户数 ÷ 参与调研客户数 × 100%", tags: ["体验指标", "通用"] },
+      { name: "首次响应时长", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "用户发起咨询后，客服首次回复的平均等待时间。", formula: "首次响应时长 = 首次回复时间 - 用户发起时间（取均值）", tags: ["服务指标", "通用"] },
+      { name: "线索转化率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "营销线索转化为商机或成交的比例，衡量获客质量。", formula: "线索转化率 = 转化线索数 ÷ 总线索数 × 100%", tags: ["销售指标", "通用"] },
+      { name: "商机赢单率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "进入商机阶段的项目最终成交的比例。", formula: "赢单率 = 赢单商机数 ÷ 总商机数 × 100%", tags: ["销售指标", "通用"] },
+      { name: "留存率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "新用户在后续某日仍活跃的比例，衡量产品粘性与体验。", formula: "第N日留存率 = 第N日仍活跃的新增用户 ÷ 当日新增用户 × 100%", tags: ["留存指标", "核心指标", "通用"] },
+      { name: "转化率（通用）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "完成目标行为的用户占进入漏斗用户的比例，可定义任意转化节点。", formula: "转化率 = 完成目标行为人数 ÷ 进入漏斗人数 × 100%", tags: ["转化指标", "核心指标", "通用"] },
+      { name: "活跃率", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "活跃用户占总用户的比例，衡量用户参与度。", formula: "活跃率 = 活跃用户数 ÷ 总用户数 × 100%", tags: ["活跃指标", "通用"] },
+
     ];
 
     // 当前筛选状态
@@ -686,7 +723,45 @@
       `;
     }
   </script>
-  <script src="common.js"></script>
+  
+  
+  <div id="kgPageMount" class="kg-embed" style="display:none;" data-module="metric"></div>
+  <script src="knowledge-graph-data.js"></script>
+  <script src="knowledge-graph-app.js"></script>
+  <script>
+  (function () {
+    var mod = "metric";
+    var kg = null;
+    var mount = document.getElementById("kgPageMount");
+    function setView(mode) {
+      document.querySelectorAll(".view-btn").forEach(function (b) {
+        b.classList.toggle("active", b.getAttribute("data-view") === mode);
+      });
+      if (mode === "graph") {
+        document.body.classList.add("kg-graph-mode");
+        mount.style.display = "block";
+        mount.classList.add("is-on");
+        if (!kg) {
+          kg = window.initKnowledgeGraph({ root: mount, startModule: mod });
+        }
+      } else {
+        document.body.classList.remove("kg-graph-mode");
+        mount.style.display = "none";
+        mount.classList.remove("is-on");
+      }
+    }
+    document.querySelectorAll(".view-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        setView(btn.getAttribute("data-view"));
+      });
+    });
+    if (location.hash === "#graph" || /[?&]view=graph/.test(location.search)) {
+      setView("graph");
+    }
+  })();
+  </script>
+
+<script src="common.js"></script>
 </body>
 </html>
 
