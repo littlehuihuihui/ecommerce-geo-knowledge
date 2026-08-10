@@ -11,7 +11,7 @@
   /** 行业切换：通用 = 通用分类；单行业严格过滤（方法始终通用） */
   var INDUSTRY_ALIAS = {
     general: ["general"],
-    retail: ["retail"],
+    retail: ["ecommerce"], // legacy → 电商
     ecommerce: ["ecommerce"],
     finance: ["finance"],
     game: ["game"],
@@ -22,7 +22,7 @@
     content: ["content"],
     logistics: ["logistics"],
     newenergy: ["newenergy"],
-    tourism: ["tourism"],
+    tourism: ["general"], // legacy → 通用
     healthcare: ["healthcare"],
     fmcg: ["fmcg"]
   };
@@ -30,19 +30,17 @@
   var INDUSTRY_OPTIONS = [
     ["general", "通用"],
     ["ecommerce", "电商"],
-    ["retail", "零售"],
     ["finance", "金融"],
     ["game", "游戏"],
+    ["content", "内容/短视频"],
     ["saas", "SaaS"],
-    ["manufacturing", "制造"],
     ["live-ecommerce", "直播电商"],
     ["local-life", "本地生活"],
-    ["content", "内容/短视频"],
-    ["logistics", "物流"],
-    ["newenergy", "新能源"],
-    ["tourism", "文旅"],
+    ["fmcg", "快消"],
+    ["manufacturing", "制造"],
     ["healthcare", "医疗健康"],
-    ["fmcg", "快消"]
+    ["newenergy", "新能源"],
+    ["logistics", "物流"]
   ];
 
   var METHOD_CATS = ["user", "marketing", "operation", "finance", "strategy", "quality", "statistics", "datascience"];
@@ -268,6 +266,54 @@
       });
     }
 
+    /** 仅真实交叉引用（正向 + 反向），不补弱关联 */
+    function linkedExact(node) {
+      var byType = { business_problem: [], methodology: [], metric: [] };
+      var seen = {};
+      function add(n) {
+        if (!n || n.id === node.id || seen[n.id] || !TYPE[n.type]) return;
+        if (n.isRoot || n.isCategory) return;
+        seen[n.id] = true;
+        byType[n.type].push(n);
+      }
+      (node.crossRefs || []).forEach(function (id) { add(byId.get(id)); });
+      DATA.nodes.forEach(function (n) {
+        if (n.isRoot || n.isCategory) return;
+        var refs = n.crossRefs || [];
+        if (refs.indexOf(node.id) < 0) return;
+        add(n);
+      });
+      return byType;
+    }
+
+    /** 指标详情：可用于解决 / 相关方法 / 口径提示（与指标字典翻面一致） */
+    function metricUsageDetail(node) {
+      var linked = linkedExact(node);
+      var d = node.detail || {};
+      var problems = linked.business_problem.map(function (n) { return n.name; });
+      var methods = linked.methodology.map(function (n) { return n.name; });
+      if (!problems.length) {
+        problems = [
+          "监控「" + node.name + "」异常波动，定位业务表现变化",
+          "结合公式拆解驱动因子，找到可干预环节",
+          "用于阶段复盘与目标拆解，对齐团队关注点"
+        ];
+      }
+      if (!methods.length && d.applicableScenarios && d.applicableScenarios.length) {
+        methods = d.applicableScenarios.slice(0, 4);
+      }
+      var tips = [];
+      if (d.formula) tips.push(d.formula);
+      if (d.definition) tips.push(d.definition);
+      if (!tips.length && node.description) tips.push(node.description);
+      return {
+        problems: problems.slice(0, 5),
+        methods: methods.slice(0, 6),
+        tips: tips.slice(0, 3),
+        linked: linked
+      };
+    }
+
     function relatedFor(center, needPerType) {
       needPerType = needPerType == null ? 5 : needPerType;
       var refs = (center.crossRefs || []).map(function (id) { return byId.get(id); }).filter(Boolean);
@@ -416,14 +462,56 @@
         var leaves = (childrenOf.get(overviewCat) || []).map(function (id) { return byId.get(id); }).filter(Boolean);
         leaves = leaves.filter(function (n) { return matchIndustry(n); });
         var catName = (byId.get(overviewCat) || {}).name || "";
-        listHtml =
-          '<div class="kg2-ov-list"><h4>' + esc(catName) + " · 共 " + leaves.length + " 项（点击进入图谱）</h4>" +
-          (leaves.length
-            ? '<div class="kg2-leaf-grid">' +
-              leaves.map(function (n) {
-                return '<button type="button" class="kg2-leaf" data-id="' + n.id + '">' + esc(n.name) + "</button>";
-              }).join("") +
+        var leafItems;
+        if (mod === "metric") {
+          leafItems = leaves.map(function (n) {
+            var usage = metricUsageDetail(n);
+            var d = n.detail || {};
+            var def = d.definition || n.description || "";
+            var formula = d.formula || "";
+            return (
+              '<div class="kg2-mflip" data-id="' + n.id + '">' +
+              '  <div class="kg2-mflip-inner">' +
+              '    <div class="kg2-mflip-face kg2-mflip-front" data-open="' + n.id + '">' +
+              '      <div class="kg2-mflip-name">' + esc(n.name) + "</div>" +
+              (def ? '<p class="kg2-mflip-desc">' + esc(trunc(def, 72)) + "</p>" : "") +
+              (formula ? '<div class="kg2-mflip-formula">' + esc(trunc(formula, 56)) + "</div>" : "") +
+              '      <div class="kg2-mflip-hint">正面点击 → 图谱 · 右下角翻面看用途</div>' +
+              '      <button type="button" class="kg2-mflip-btn" title="翻面查看详情" aria-label="翻面查看详情">↻</button>' +
+              "    </div>" +
+              '    <div class="kg2-mflip-face kg2-mflip-back">' +
+              '      <div class="kg2-mflip-name">' + esc(n.name) + "</div>" +
+              '      <p class="kg2-mflip-sub">详细用途：这个指标常用来解决什么问题</p>' +
+              '      <div class="kg2-mflip-sec"><h5>可用于解决</h5><ul>' +
+              usage.problems.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") +
+              "</ul></div>" +
+              (usage.methods.length
+                ? '<div class="kg2-mflip-sec"><h5>相关方法 / 场景</h5><div class="kg2-chips">' +
+                  usage.methods.map(function (m) { return "<span>" + esc(trunc(m, 18)) + "</span>"; }).join("") +
+                  "</div></div>"
+                : "") +
+              (usage.tips.length
+                ? '<div class="kg2-mflip-sec"><h5>口径提示</h5><ul>' +
+                  usage.tips.map(function (t) { return "<li>" + esc(trunc(t, 80)) + "</li>"; }).join("") +
+                  "</ul></div>"
+                : "") +
+              '      <button type="button" class="kg2-mflip-open" data-open="' + n.id + '">打开知识图谱辐射图</button>' +
+              '      <button type="button" class="kg2-mflip-btn" title="翻回正面" aria-label="翻回正面">↻</button>' +
+              "    </div>" +
+              "  </div>" +
               "</div>"
+            );
+          }).join("");
+        } else {
+          leafItems = leaves.map(function (n) {
+            return '<button type="button" class="kg2-leaf" data-id="' + n.id + '">' + esc(n.name) + "</button>";
+          }).join("");
+        }
+        listHtml =
+          '<div class="kg2-ov-list"><h4>' + esc(catName) + " · 共 " + leaves.length +
+          (mod === "metric" ? " 项（正面进图谱，右下角翻面看用途）" : " 项（点击进入图谱）") + "</h4>" +
+          (leaves.length
+            ? '<div class="kg2-leaf-grid' + (mod === "metric" ? " kg2-leaf-grid-flip" : "") + '">' + leafItems + "</div>"
             : '<p class="kg2-empty">该分类下暂无条目</p>') +
           "</div>";
       } else if (mod !== "methodology" && industry !== "general" && !cats.length) {
@@ -472,6 +560,20 @@
       stageEl.querySelectorAll(".kg2-leaf").forEach(function (el) {
         el.addEventListener("click", function () {
           enterFocus(el.getAttribute("data-id"), true);
+        });
+      });
+      stageEl.querySelectorAll(".kg2-mflip").forEach(function (card) {
+        card.querySelectorAll(".kg2-mflip-btn").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            card.classList.toggle("is-flipped");
+          });
+        });
+        card.querySelectorAll("[data-open]").forEach(function (el) {
+          el.addEventListener("click", function (e) {
+            if (e.target.closest(".kg2-mflip-btn")) return;
+            enterFocus(el.getAttribute("data-open"), true);
+          });
         });
       });
     }
@@ -990,6 +1092,29 @@
         html += '<div class="kg2-sec"><h3>拆解思路</h3><ul>' +
           d.steps.slice(0, 12).map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") +
           "</ul></div>";
+      }
+
+      // 指标：与指标字典翻面一致的用途说明
+      if (node.type === "metric") {
+        var usage = metricUsageDetail(node);
+        html +=
+          '<div class="kg2-sec kg2-usage">' +
+          "<h3>可用于解决</h3>" +
+          '<p class="kg2-usage-sub">这个指标常用来解决什么问题</p>' +
+          "<ul>" + usage.problems.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" +
+          "</div>";
+        if (usage.methods.length) {
+          html +=
+            '<div class="kg2-sec"><h3>相关方法 / 场景</h3><div class="kg2-chips">' +
+            usage.methods.map(function (m) { return "<span>" + esc(m) + "</span>"; }).join("") +
+            "</div></div>";
+        }
+        if (usage.tips.length) {
+          html +=
+            '<div class="kg2-sec"><h3>口径提示</h3><ul>' +
+            usage.tips.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") +
+            "</ul></div>";
+        }
       }
 
       function refBlock(title, list) {

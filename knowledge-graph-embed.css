@@ -402,6 +402,10 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 8px;
 }
+.kg2-leaf-grid-flip {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
 .kg2-leaf {
   border: 1px solid var(--kg2-border);
   background: rgba(15,23,42,0.5);
@@ -414,6 +418,105 @@
   font-family: inherit;
 }
 .kg2-leaf:hover { border-color: #06b6d4; background: rgba(6,182,212,0.08); }
+
+/* 指标概览翻面卡（与指标字典一致） */
+.kg2-mflip {
+  perspective: 1200px;
+  min-height: 210px;
+}
+.kg2-mflip-inner {
+  position: relative;
+  width: 100%;
+  min-height: 210px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.kg2-mflip.is-flipped .kg2-mflip-inner { transform: rotateY(180deg); }
+.kg2-mflip-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--kg2-border);
+  background: rgba(15, 23, 42, 0.72);
+  border-radius: 12px;
+  padding: 14px 14px 36px;
+  overflow: auto;
+}
+.kg2-mflip-front { cursor: pointer; }
+.kg2-mflip-front:hover { border-color: rgba(59, 130, 246, 0.55); box-shadow: 0 8px 22px rgba(59, 130, 246, 0.12); }
+.kg2-mflip-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(160deg, rgba(59, 130, 246, 0.12), rgba(15, 23, 42, 0.85));
+}
+.kg2-mflip-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
+.kg2-mflip-desc, .kg2-mflip-sub {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--kg2-muted);
+  line-height: 1.55;
+}
+.kg2-mflip-formula {
+  font-size: 11px;
+  font-family: ui-monospace, Consolas, monospace;
+  color: #93c5fd;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid var(--kg2-border);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.kg2-mflip-hint {
+  font-size: 11px;
+  color: var(--kg2-muted);
+  opacity: 0.85;
+}
+.kg2-mflip-sec { margin-bottom: 8px; }
+.kg2-mflip-sec h5 {
+  margin: 0 0 4px;
+  font-size: 11px;
+  color: #93c5fd;
+  letter-spacing: 0.04em;
+}
+.kg2-mflip-sec ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.kg2-mflip-btn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.45);
+  background: rgba(59, 130, 246, 0.18);
+  color: #93c5fd;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+  z-index: 2;
+}
+.kg2-mflip-btn:hover { background: rgba(59, 130, 246, 0.32); border-color: #60a5fa; }
+.kg2-mflip-open {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  background: rgba(59, 130, 246, 0.16);
+  color: #bfdbfe;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.kg2-mflip-open:hover { background: rgba(59, 130, 246, 0.28); }
 
 .kg2-focus {
   display: flex;
@@ -659,6 +762,19 @@
   font-size: 12px;
 }
 .kg2-sec ul { margin: 0; padding-left: 16px; font-size: 13px; }
+.kg2-usage {
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  background: linear-gradient(160deg, rgba(59, 130, 246, 0.1), rgba(15, 23, 42, 0.35));
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.kg2-usage h3 { color: #93c5fd !important; }
+.kg2-usage-sub {
+  margin: 0 0 6px !important;
+  font-size: 11px !important;
+  color: var(--kg2-muted);
+}
+.kg2-usage ul { color: #e2e8f0; }
 .kg2-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .kg2-chips span {
   font-size: 11px;

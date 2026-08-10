@@ -367,6 +367,42 @@ def extract_questions() -> list[dict]:
                 continue
             answer_html = get_field(qobj, "answer") or ""
             answer_text = html_to_text(answer_html)
+            # 三层框架题目：从 lead + framework 拼检索与步骤文本
+            if not answer_text.strip():
+                lead = get_field(qobj, "lead") or ""
+                parts = [lead] if lead else []
+                # 粗提取 framework 内中文句子/条目（JSON 风格）
+                fw_m = re.search(r"framework\s*:\s*\{", qobj)
+                if fw_m:
+                    fw_start = fw_m.end() - 1
+                    depth = 0
+                    fw_end = fw_start
+                    in_str = None
+                    escape = False
+                    for i in range(fw_start, len(qobj)):
+                        ch = qobj[i]
+                        if in_str:
+                            if escape:
+                                escape = False
+                            elif ch == "\\":
+                                escape = True
+                            elif ch == in_str:
+                                in_str = None
+                            continue
+                        if ch in ('"', "'", "`"):
+                            in_str = ch
+                        elif ch == "{":
+                            depth += 1
+                        elif ch == "}":
+                            depth -= 1
+                            if depth == 0:
+                                fw_end = i
+                                break
+                    fw_block = qobj[fw_start : fw_end + 1]
+                    for s in re.findall(r'"([^"\\]{4,200})"', fw_block):
+                        if re.search(r"[\u4e00-\u9fff]", s):
+                            parts.append(s)
+                answer_text = "\n".join(p for p in parts if p)
             add_question(
                 title,
                 answer_text,
