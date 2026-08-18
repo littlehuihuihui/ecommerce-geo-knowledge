@@ -6,10 +6,13 @@
   <title>知识图谱 · 数据分析知识导航 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="common.css" />
   <link rel="stylesheet" href="knowledge-graph-embed.css" />
-  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="preload" href="knowledge-graph-data.js" as="script" />
+  <link rel="preload" href="knowledge-graph-app.js" as="script" />
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js" as="script" />
   <style>
     body { margin: 0; background: #0a0e1a; }
     :root {
@@ -78,10 +81,14 @@
     </div>
   </header>
 
-  <div id="kgAutoRoot"></div>
+  <div id="kgAutoRoot">
+    <p style="padding:48px 24px;text-align:center;color:#94a3b8">图谱加载中…</p>
+  </div>
 
-  <script src="knowledge-graph-data.js"></script>
-  <script src="knowledge-graph-app.js"></script>
+  <script src="kg-loader.js"></script>
+  <script>
+    window.loadKgGraph();
+  </script>
   <script src="common.js"></script>
 </body>
 </html>

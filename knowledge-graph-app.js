@@ -1364,16 +1364,20 @@
 
   window.initKnowledgeGraph = initKnowledgeGraph;
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function autoStartKg() {
     var auto = document.getElementById("kgAutoRoot");
-    if (auto) {
-      var params = new URLSearchParams(location.search);
-      window.__kgInstance = initKnowledgeGraph({
-        root: auto,
-        startModule: params.get("module") || auto.dataset.module || null,
-        startNode: params.get("node") || params.get("q") || null,
-        startIndustry: params.get("industry") || params.get("category") || null
-      });
-    }
-  });
+    if (!auto || window.__kgInstance) return;
+    var params = new URLSearchParams(location.search);
+    window.__kgInstance = initKnowledgeGraph({
+      root: auto,
+      startModule: params.get("module") || auto.dataset.module || null,
+      startNode: params.get("node") || params.get("q") || null,
+      startIndustry: params.get("industry") || params.get("category") || null
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", autoStartKg);
+  } else {
+    autoStartKg();
+  }
 })();

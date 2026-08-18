@@ -6,7 +6,7 @@
   <title>指标字典 · 多行业数据百科</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="common.css" />
   <style>
     :root {
@@ -490,7 +490,6 @@
   </style>
 
   <link rel="stylesheet" href="knowledge-graph-embed.css" />
-  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
 
 </head>
 <body>
@@ -599,7 +598,6 @@
     </div>
   </div>
 
-  <script src="knowledge-graph-data.js"></script>
   <script>
     // 指标数据
     const metrics = [
@@ -1218,6 +1216,9 @@
     }
     if (modeParam === 'role') setBrowseMode('role');
     else renderMetrics();
+    if (window.idleLoadKgData) {
+      window.idleLoadKgData(function () { renderMetrics(); });
+    }
 
     // 渲染指标
     function renderMetrics() {
@@ -1402,40 +1403,10 @@
   
   
   <div id="kgPageMount" class="kg-embed" style="display:none;" data-module="metric"></div>
-  <script src="knowledge-graph-app.js"></script>
+  <script src="kg-loader.js"></script>
   <script>
-  (function () {
-    var mod = "metric";
-    var kg = null;
-    var mount = document.getElementById("kgPageMount");
-    function setView(mode) {
-      document.querySelectorAll(".view-btn").forEach(function (b) {
-        b.classList.toggle("active", b.getAttribute("data-view") === mode);
-      });
-      if (mode === "graph") {
-        document.body.classList.add("kg-graph-mode");
-        mount.style.display = "block";
-        mount.classList.add("is-on");
-        if (!kg) {
-          kg = window.initKnowledgeGraph({ root: mount, startModule: mod });
-        }
-      } else {
-        document.body.classList.remove("kg-graph-mode");
-        mount.style.display = "none";
-        mount.classList.remove("is-on");
-      }
-    }
-    document.querySelectorAll(".view-btn").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        setView(btn.getAttribute("data-view"));
-      });
-    });
-    if (location.hash === "#graph" || /[?&]view=graph/.test(location.search)) {
-      setView("graph");
-    }
-  })();
+    window.bindKgViewSwitch("metric");
   </script>
-
 <script src="common.js"></script>
 </body>
 </html>
