@@ -603,7 +603,36 @@
 
     // 初始化（script在页面底部，DOM已加载，直接执行）
     renderCategoryTabs();
+
+    // 支持从知识框架深链：?industry=ecommerce&q=GMV
+    (function applyUrlFilters() {
+      var params = new URLSearchParams(window.location.search);
+      var cat = params.get('category') || params.get('industry');
+      var q = params.get('q');
+      if (cat) {
+        currentCategory = cat;
+        document.querySelectorAll('#filterTags .filter-tag').forEach(function (t) {
+          t.classList.toggle('active', t.getAttribute('data-category') === cat);
+        });
+      }
+      if (q) {
+        document.getElementById('searchInput').value = q;
+        currentSearch = q.trim().toLowerCase();
+      }
+    })();
+
     renderQuestions();
+
+    // 若只有一张匹配卡，自动展开
+    (function autoExpandFromUrl() {
+      if (!currentSearch) return;
+      var cards = document.querySelectorAll('.question-card');
+      if (cards.length !== 1) return;
+      var card = cards[0];
+      if (typeof fillAnswer === 'function') fillAnswer(card);
+      card.classList.add('expanded');
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    })();
     
     // 搜索
     document.getElementById('searchInput').addEventListener('input', function(e) {
@@ -647,6 +676,15 @@
       });
     }
 
+    function textMatches(haystack, needle) {
+      if (!needle) return true;
+      var hay = String(haystack || '').toLowerCase();
+      var tokens = String(needle).toLowerCase().trim().split(/\s+/).filter(Boolean);
+      if (!tokens.length) return true;
+      if (tokens.length === 1) return hay.indexOf(tokens[0]) >= 0;
+      return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+    }
+
     // 渲染题目（首屏只渲染题干，答案在展开时再注入，避免一次写进巨大 DOM）
     function renderQuestions() {
       const container = document.getElementById('questionsContainer');
@@ -667,8 +705,7 @@
         // 搜索筛选
         if (currentSearch) {
           const hasMatch = cat.list && cat.list.some(q => 
-            (q.title || '').toLowerCase().includes(currentSearch) ||
-            answerSearchText(q).toLowerCase().includes(currentSearch)
+            textMatches((q.title || '') + ' ' + answerSearchText(q), currentSearch)
           );
           return hasMatch;
         }
@@ -691,8 +728,7 @@
         let filteredList = cat.list;
         if (currentSearch) {
           filteredList = cat.list.filter(q => 
-            (q.title || '').toLowerCase().includes(currentSearch) ||
-            answerSearchText(q).toLowerCase().includes(currentSearch)
+            textMatches((q.title || '') + ' ' + answerSearchText(q), currentSearch)
           );
         }
         

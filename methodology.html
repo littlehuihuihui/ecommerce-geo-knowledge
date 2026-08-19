@@ -1526,6 +1526,24 @@
       });
     }
 
+    // 支持从知识框架深链：?q=转化漏斗
+    (function applyUrlFilters() {
+      var params = new URLSearchParams(window.location.search);
+      var q = params.get('q');
+      var cat = params.get('category');
+      if (cat) {
+        currentCategory = cat;
+        document.querySelectorAll('.tab').forEach(function (t) {
+          t.classList.toggle('active', t.getAttribute('data-category') === cat);
+        });
+      }
+      if (q) {
+        searchKeyword = q.toLowerCase().trim();
+        var input = document.getElementById('searchInput');
+        if (input) input.value = q;
+      }
+    })();
+
     // 初始化（script在页面底部，DOM已经加载完成，直接执行）
     renderMethods();
     initTabs();
@@ -1566,7 +1584,10 @@
         // 搜索筛选
         if (searchKeyword) {
           const searchText = (m.name + m.subtitle + m.desc + m.categoryName + m.scenarios.join('')).toLowerCase();
-          if (!searchText.includes(searchKeyword)) {
+          const tokens = searchKeyword.split(/\s+/).filter(Boolean);
+          if (tokens.length > 1) {
+            if (!tokens.every(function (t) { return searchText.indexOf(t) >= 0; })) return false;
+          } else if (!searchText.includes(searchKeyword)) {
             return false;
           }
         }

@@ -442,6 +442,51 @@
   color: var(--text);
 }
 
+/* 知识框架 → 其它模块深链 */
+.fw-jump {
+  cursor: pointer;
+  position: relative;
+}
+.fw-jump:focus-visible {
+  outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
+  outline-offset: 2px;
+}
+.fw-jump-hint {
+  display: none;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--theme-color);
+  letter-spacing: 0.02em;
+}
+.fw-jump:hover .fw-jump-hint,
+.fw-jump:focus-visible .fw-jump-hint {
+  display: block;
+}
+.mc-item.fw-jump {
+  border-radius: 8px;
+  margin: 0 -6px;
+  padding: 8px 6px 10px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.mc-item.fw-jump:hover {
+  background: rgba(var(--theme-color-rgb), 0.08);
+}
+.mc-item.fw-jump:hover .mc-name {
+  color: var(--theme-color);
+}
+.north-star-card.fw-jump:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+}
+.scenario-card.fw-jump .fw-jump-hint,
+.framework-card.fw-jump .fw-jump-hint {
+  margin-top: 10px;
+}
+.scenario-card.fw-jump:hover .scenario-name,
+.framework-card.fw-jump:hover .framework-name {
+  color: var(--theme-color);
+}
+
 .mc-desc {
   font-size: 12px;
   color: var(--text-muted);
