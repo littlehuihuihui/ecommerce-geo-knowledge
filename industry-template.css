@@ -446,22 +446,43 @@
 .fw-jump {
   cursor: pointer;
   position: relative;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+a.fw-jump {
+  text-decoration: none;
+  color: inherit;
 }
 .fw-jump:focus-visible {
   outline: 2px solid rgba(var(--theme-color-rgb), 0.55);
   outline-offset: 2px;
 }
 .fw-jump-hint {
-  display: none;
+  display: inline-block;
   margin-top: 6px;
   font-size: 11px;
   font-weight: 600;
   color: var(--theme-color);
   letter-spacing: 0.02em;
+  opacity: 0.85;
 }
-.fw-jump:hover .fw-jump-hint,
-.fw-jump:focus-visible .fw-jump-hint {
-  display: block;
+.mc-item.fw-jump .fw-jump-hint {
+  display: none;
+}
+.mc-item.fw-jump:hover .fw-jump-hint,
+.mc-item.fw-jump:focus-visible .fw-jump-hint {
+  display: inline-block;
+}
+.scenario-card.fw-jump .fw-jump-hint,
+.framework-card.fw-jump .fw-jump-hint,
+.north-star-card.fw-jump .fw-jump-hint {
+  opacity: 0.7;
+}
+.scenario-card.fw-jump:hover .fw-jump-hint,
+.framework-card.fw-jump:hover .fw-jump-hint,
+.north-star-card.fw-jump:hover .fw-jump-hint {
+  opacity: 1;
 }
 .mc-item.fw-jump {
   border-radius: 8px;
@@ -477,10 +498,6 @@
 }
 .north-star-card.fw-jump:hover {
   border-color: rgba(var(--theme-color-rgb), 0.5);
-}
-.scenario-card.fw-jump .fw-jump-hint,
-.framework-card.fw-jump .fw-jump-hint {
-  margin-top: 10px;
 }
 .scenario-card.fw-jump:hover .scenario-name,
 .framework-card.fw-jump:hover .framework-name {
