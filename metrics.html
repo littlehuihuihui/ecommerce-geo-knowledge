@@ -888,6 +888,194 @@
       { name: "手术量", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "一定周期完成的手术台次。", formula: "手术量 = 统计期手术台次数", tags: ["规模指标"] },
       { name: "预约到诊率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "预约患者实际到诊比例。", formula: "到诊率 = 到诊人次 ÷ 预约人次 × 100%", tags: ["转化指标"] },
       { name: "次均费用", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "门诊或住院平均每次费用。", formula: "次均费用 = 总费用 ÷ 诊疗人次", tags: ["财务指标"] }
+,
+      // ===== 知识框架同步补齐 =====
+      { name: "SKU 数", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "在售商品 SKU 数量，反映供给宽度。", formula: "SKU数 = 期末在售商品种数", tags: ["商品指标"] },
+      { name: "支付转化率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "下单用户中完成支付的比例。", formula: "支付转化率 = 支付用户 ÷ 下单用户 × 100%", tags: ["转化指标", "核心指标"] },
+      { name: "CPC", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "单次点击成本，衡量投放获客单价。", formula: "CPC = 投放消耗 ÷ 点击次数", tags: ["投放指标", "成本指标"] },
+      { name: "DSR 评分", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "店铺动态评分（描述/服务/物流）。", formula: "DSR = 描述分/服务分/物流分（平台口径）", tags: ["体验指标", "质量指标"] },
+      { name: "优惠券使用率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "已发放优惠券中被核销使用的比例。", formula: "优惠券使用率 = 核销张数 ÷ 发放张数 × 100%", tags: ["营销指标"] },
+      { name: "客服响应时长", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "用户咨询到客服首次回复的平均时长。", formula: "响应时长 = 平均(首次回复时间 - 发起时间)", tags: ["服务指标"] },
+      { name: "新客数", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "统计期内首次成交的用户数。", formula: "新客数 = 首次成交用户数", tags: ["增长指标"] },
+      { name: "老客数", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "统计期内再次成交的老用户数。", formula: "老客数 = 非首次成交用户数", tags: ["留存指标"] },
+      { name: "物流时效", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "下单到签收或发货的平均时长。", formula: "物流时效 = 平均(签收/发货时间 - 下单时间)", tags: ["履约指标"] },
+      { name: "访问深度", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "人均浏览页面数，反映兴趣与路径效率。", formula: "访问深度 = PV ÷ UV", tags: ["流量指标"] },
+      { name: "跳失率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "只浏览一页即离开的会话比例（同跳出率）。", formula: "跳失率 = 单页会话 ÷ 总会话 × 100%", tags: ["体验指标"] },
+      { name: "观看UV", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播场次独立观看人数。", formula: "观看UV = 场次去重观看用户数", tags: ["流量指标", "核心指标"] },
+      { name: "观看PV", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播累计观看人次。", formula: "观看PV = 累计观看次数", tags: ["流量指标"] },
+      { name: "最高在线", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播峰值同时在线人数。", formula: "最高在线 = 场次内最大同时在线人数", tags: ["流量指标"] },
+      { name: "开播时长", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "本场直播持续时长。", formula: "开播时长 = 结束时间 - 开播时间", tags: ["运营指标"] },
+      { name: "新增粉丝", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播期间新增关注数。", formula: "新增粉丝 = 场次内新增关注用户数", tags: ["运营指标"] },
+      { name: "转粉率", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "观看用户转化为粉丝的比例。", formula: "转粉率 = 新增粉丝 ÷ 观看UV × 100%", tags: ["转化指标"] },
+      { name: "上架SKU数", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播间上架商品数量。", formula: "上架SKU数 = 本场实际上架商品种数", tags: ["商品指标"] },
+      { name: "UV价值", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "单位观看用户贡献的 GMV。", formula: "UV价值 = GMV ÷ 观看UV", tags: ["效率指标", "核心指标"] },
+      { name: "人均GMV", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "单位时间或人均产出的成交额（口径需注明）。", formula: "人均GMV = GMV ÷ 开播小时 或 GMV ÷ 观看UV", tags: ["效率指标"] },
+      { name: "爆款数量", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "销量或 GMV 超过阈值的商品数。", formula: "爆款数量 = 达阈值商品数（如销量>1万）", tags: ["商品指标"] },
+      { name: "讲解转化率", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "商品讲解时段内的成交转化。", formula: "讲解转化率 = 讲解期成交用户 ÷ 讲解期观看用户 × 100%", tags: ["转化指标"] },
+      { name: "支付转化率", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "下单到支付的转化比例。", formula: "支付转化率 = 支付订单 ÷ 下单订单 × 100%", tags: ["转化指标"] },
+      { name: "发货时效", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "支付后到发出包裹的平均时长。", formula: "发货时效 = 平均(发货时间 - 支付时间)", tags: ["履约指标"] },
+      { name: "客服响应", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播/售后咨询的平均响应时长。", formula: "客服响应 = 平均首次响应时长", tags: ["服务指标"] },
+      { name: "DSR评分", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播相关店铺动态评分。", formula: "DSR评分 = 描述/服务/物流综合分", tags: ["质量指标"] },
+      { name: "新增用户", category: "game", categoryName: "游戏", icon: "🎮", desc: "统计期新注册或新激活用户数。", formula: "新增用户 = 新注册(或新激活)用户数", tags: ["增长指标"] },
+      { name: "新增用户", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "统计期新下载/新注册用户数。", formula: "新增用户 = 新注册用户数", tags: ["增长指标"] },
+      { name: "活动 ROI", category: "game", categoryName: "游戏", icon: "🎮", desc: "活动投入产出比。", formula: "活动ROI = 活动带来增量收入 ÷ 活动成本", tags: ["运营指标", "成本指标"] },
+      { name: "人均时长", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "活跃用户平均使用/观看时长。", formula: "人均时长 = 总时长 ÷ 活跃用户", tags: ["活跃指标", "核心指标"] },
+      { name: "净新增MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "本期 MRR 净增长（新签+扩容-缩减-流失）。", formula: "净新增MRR = New + Expansion - Contraction - Churn", tags: ["收入指标", "核心指标"] },
+      { name: "开户数", category: "finance", categoryName: "金融", icon: "💰", desc: "统计期新开户数量。", formula: "开户数 = 新开立账户数", tags: ["增长指标"] },
+      { name: "铺货率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "目标网点中完成铺货的比例。", formula: "铺货率 = 已铺货网点数 ÷ 目标网点数 × 100%", tags: ["渠道指标", "核心指标"] },
+      { name: "网点数", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "覆盖或合作的终端网点数量。", formula: "网点数 = 期末有效合作网点数", tags: ["渠道指标"] },
+      { name: "渠道占比", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "某渠道销售额占总销售额比例。", formula: "渠道占比 = 渠道销售额 ÷ 总销售额 × 100%", tags: ["渠道指标"] },
+      { name: "品类占比", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "某品类销售额占总销售额比例。", formula: "品类占比 = 品类销售额 ÷ 总销售额 × 100%", tags: ["品类指标"] },
+      { name: "品牌渗透率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "目标人群中使用本品的比例。", formula: "品牌渗透率 = 本品用户数 ÷ 目标人群 × 100%", tags: ["品牌指标"] },
+      { name: "促销渗透率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "参与促销的销量或门店占比。", formula: "促销渗透率 = 促销销量(门店) ÷ 总销量(门店) × 100%", tags: ["营销指标"] },
+      { name: "市场份额", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "本品占品类市场的份额。", formula: "市场份额 = 本品销售额 ÷ 品类市场 × 100%", tags: ["战略指标"] },
+      { name: "均价", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "单位销量的平均成交价。", formula: "均价 = 销售额 ÷ 销售数量", tags: ["价格指标"] },
+      { name: "同比增长率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "相对去年同期的增长率。", formula: "同比 = (本期 - 去年同期) ÷ 去年同期 × 100%", tags: ["增长指标"] },
+      { name: "环比增长率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "相对上一周期的增长率。", formula: "环比 = (本期 - 上期) ÷ 上期 × 100%", tags: ["增长指标"] },
+      { name: "库存金额", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "期末库存占用资金。", formula: "库存金额 = Σ(库存数量 × 成本单价)", tags: ["库存指标"] },
+      { name: "滞销品占比", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "滞销 SKU 或金额占比。", formula: "滞销品占比 = 滞销库存金额 ÷ 总库存金额 × 100%", tags: ["库存指标"] },
+      { name: "新品占比", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "新品销售额或 SKU 占比。", formula: "新品占比 = 新品销售额 ÷ 总销售额 × 100%", tags: ["增长指标"] },
+      { name: "新品成功率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "上市新品达到成功标准的比例。", formula: "新品成功率 = 达标新品数 ÷ 上市新品数 × 100%", tags: ["增长指标"] },
+      { name: "月销量", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "月度整车或产品销售量。", formula: "月销量 = 统计月交付/零售销量", tags: ["规模指标", "核心指标"] },
+      { name: "车桩比", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "车辆保有量与公共充电桩数量比。", formula: "车桩比 = 新能源车保有量 ÷ 公共充电桩数", tags: ["基建指标"] },
+      { name: "门诊人次", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "门诊接诊人次数。", formula: "门诊人次 = 统计期门诊接诊人次", tags: ["规模指标"] },
+      { name: "门诊收入", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "门诊业务收入。", formula: "门诊收入 = 统计期门诊医疗收入", tags: ["财务指标"] },
+      { name: "住院收入", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "住院业务收入。", formula: "住院收入 = 统计期住院医疗收入", tags: ["财务指标"] },
+      { name: "平均等待时间", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "患者候诊/检查平均等待时长。", formula: "平均等待时间 = 总等待时长 ÷ 人次", tags: ["体验指标"] },
+      { name: "预约准时率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "按预约时段到诊或接诊的比例。", formula: "预约准时率 = 准时人次 ÷ 预约人次 × 100%", tags: ["运营指标"] },
+      { name: "医生人均门诊量", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "医生人均日门诊负荷。", formula: "人均门诊量 = 门诊人次 ÷ 出诊医生数", tags: ["效率指标"] },
+      { name: "手术室利用率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "手术室被占用时间占比。", formula: "手术室利用率 = 使用时长 ÷ 可开放时长 × 100%", tags: ["效率指标"] },
+      { name: "设备使用率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "大型设备开机或检查利用率。", formula: "设备使用率 = 实际机时 ÷ 可开放机时 × 100%", tags: ["效率指标"] },
+      { name: "检查报告时效", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "检查完成到报告出具的平均时长。", formula: "报告时效 = 平均(报告时间 - 检查完成时间)", tags: ["质量指标", "体验指标"] },
+      { name: "治愈率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "达到临床治愈标准的比例。", formula: "治愈率 = 治愈例数 ÷ 同期病例数 × 100%", tags: ["质量指标"] },
+      { name: "好转率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "病情好转的比例。", formula: "好转率 = 好转例数 ÷ 同期病例数 × 100%", tags: ["质量指标"] },
+      { name: "死亡率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "住院或特定病种死亡比例。", formula: "死亡率 = 死亡例数 ÷ 同期病例数 × 100%", tags: ["质量指标"] },
+      { name: "院内感染率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "住院患者发生院感的比例。", formula: "院内感染率 = 院感例数 ÷ 住院人次 × 100%", tags: ["质量指标"] },
+      { name: "不良事件发生率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "医疗不良事件发生频率。", formula: "不良事件发生率 = 不良事件数 ÷ 住院床日(或人次)", tags: ["质量指标"] },
+      { name: "复诊率", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "患者复诊比例。", formula: "复诊率 = 复诊人次 ÷ 门诊人次 × 100%", tags: ["运营指标"] },
+      { name: "病床周转次数", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "一定期内病床被使用的周转次数。", formula: "病床周转次数 = 出院人次 ÷ 平均开放床位数", tags: ["效率指标"] },
+      { name: "护士床位比", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "护理人力相对床位的配置。", formula: "护士床位比 = 护士人数 ÷ 开放床位数", tags: ["人力指标"] },
+      { name: "成本收入比", category: "healthcare", categoryName: "医疗健康", icon: "🏥", desc: "成本占收入的比例。", formula: "成本收入比 = 总成本 ÷ 总收入 × 100%", tags: ["财务指标"] },
+      { name: "30日留存率", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「30日留存率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "30日留存率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "MAU 月活跃用户", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「MAU 月活跃用户」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "MAU 月活跃用户 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "中腰部创作者比例", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「中腰部创作者比例」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "中腰部创作者比例 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "人均发布量", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「人均发布量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "人均发布量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "使用频次", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「使用频次」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "使用频次 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "内容消费多样性", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「内容消费多样性」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "内容消费多样性 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "召回率", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「召回率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "召回率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "平均播放时长", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「平均播放时长」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "平均播放时长 = 平均(结束时间 − 开始时间)", tags: ["框架同步"] },
+      { name: "广告点击率 CTR", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「广告点击率 CTR」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "广告点击率 CTR = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "播放完成度", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「播放完成度」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "播放完成度 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "活跃创作者数", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「活跃创作者数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "活跃创作者数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "点赞率", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「点赞率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "点赞率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "电商GMV", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「电商GMV」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "电商GMV = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "评论率", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「评论率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "评论率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "连续使用天数", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「连续使用天数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "连续使用天数 = 平均(结束时间 − 开始时间)", tags: ["框架同步"] },
+      { name: "重播率", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "内容/短视频常用指标「重播率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "重播率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "LTV", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「LTV」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "LTV = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "下单转化率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「下单转化率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "下单转化率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "平均停留时长", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「平均停留时长」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "平均停留时长 = 平均(结束时间 − 开始时间)", tags: ["框架同步"] },
+      { name: "退货率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「退货率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "退货率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "AUM 管理资产规模", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「AUM 管理资产规模」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "AUM 管理资产规模 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "CAC 获客成本", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「CAC 获客成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "CAC 获客成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "ROA 资产收益率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「ROA 资产收益率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ROA 资产收益率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "ROE 净资产收益率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「ROE 净资产收益率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ROE 净资产收益率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "中间业务收入", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「中间业务收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "中间业务收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "产品销量", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「产品销量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "产品销量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "可疑交易数", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「可疑交易数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "可疑交易数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "合规检查通过率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「合规检查通过率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "合规检查通过率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "平均持有期", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「平均持有期」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "平均持有期 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "户均资产", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「户均资产」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "户均资产 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "案件损失率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「案件损失率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "案件损失率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "活跃用户数", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「活跃用户数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "活跃用户数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "激活率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「激活率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "激活率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "赎回率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「赎回率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "赎回率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "风险敞口", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「风险敞口」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "风险敞口 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "SKU 数", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「SKU 数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "SKU 数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "销售额", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「销售额」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "销售额 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "销量", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「销量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "销量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "ACU 平均同时在线", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「ACU 平均同时在线」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ACU 平均同时在线 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "ARPPU 每付费用户收入", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「ARPPU 每付费用户收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ARPPU 每付费用户收入 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "ARPU 每用户平均收入", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「ARPU 每用户平均收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ARPU 每用户平均收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "DAU 日活跃用户", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「DAU 日活跃用户」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "DAU 日活跃用户 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "LTV 用户终身价值", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「LTV 用户终身价值」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "LTV 用户终身价值 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "MAU 月活跃用户", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「MAU 月活跃用户」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "MAU 月活跃用户 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "PCU 最高同时在线", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「PCU 最高同时在线」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "PCU 最高同时在线 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "付费漏斗", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「付费漏斗」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "付费漏斗 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "付费频次", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「付费频次」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "付费频次 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "功能使用率", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「功能使用率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "功能使用率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "新增付费率", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「新增付费率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "新增付费率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "新手完成率", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「新手完成率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "新手完成率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "日均启动次数", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「日均启动次数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "日均启动次数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "注册转化率", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「注册转化率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "注册转化率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "活动ROI", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「活动ROI」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "活动ROI = 收益(或增量) ÷ 投入成本", tags: ["框架同步"] },
+      { name: "活动参与率", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「活动参与率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "活动参与率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "留存提升", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「留存提升」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "留存提升 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "留存率曲线", category: "game", categoryName: "游戏", icon: "🎮", desc: "游戏常用指标「留存率曲线」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "留存率曲线 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "RFM 价值分层占比", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "通用数据分析常用指标「RFM 价值分层占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "RFM 价值分层占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "动态定价执行偏差", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "通用数据分析常用指标「动态定价执行偏差」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "动态定价执行偏差 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "可用房收益效率（Yield）", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "通用数据分析常用指标「可用房收益效率（Yield）」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "可用房收益效率（Yield） = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "新客占比", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "通用数据分析常用指标「新客占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "新客占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "渠道边际贡献", category: "general", categoryName: "通用数据分析", icon: "📊", desc: "通用数据分析常用指标「渠道边际贡献」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "渠道边际贡献 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "动销率", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播电商常用指标「动销率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "动销率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "好评率", category: "live-ecommerce", categoryName: "直播电商", icon: "🎥", desc: "直播电商常用指标「好评率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "好评率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "取消率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「取消率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "取消率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "品类GMV占比", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「品类GMV占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "品类GMV占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "品类增长率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「品类增长率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "品类增长率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "商圈密度", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商圈密度」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商圈密度 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "商圈渗透率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商圈渗透率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商圈渗透率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "商家GMV", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商家GMV」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商家GMV = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "商家入驻率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商家入驻率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商家入驻率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "商家留存率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商家留存率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商家留存率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "商家评分", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「商家评分」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "商家评分 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "新用户占比", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「新用户占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "新用户占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "获客成本 CAC", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「获客成本 CAC」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "获客成本 CAC = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "补贴ROI", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「补贴ROI」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "补贴ROI = 收益(或增量) ÷ 投入成本", tags: ["框架同步"] },
+      { name: "订单完成率", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「订单完成率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "订单完成率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "订单量", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「订单量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "订单量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "配送成本", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「配送成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "配送成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "骑手数量", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「骑手数量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "骑手数量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "骑手日完单量", category: "local-life", categoryName: "本地生活", icon: "📍", desc: "本地生活常用指标「骑手日完单量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "骑手日完单量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "人均作业效率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「人均作业效率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "人均作业效率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "供应商准时交付率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「供应商准时交付率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "供应商准时交付率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "供应链可视化覆盖率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「供应链可视化覆盖率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "供应链可视化覆盖率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "供应风险暴露指数", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「供应风险暴露指数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "供应风险暴露指数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "单位能耗成本", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「单位能耗成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "单位能耗成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "呆滞库存比例", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「呆滞库存比例」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "呆滞库存比例 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "库存持有成本率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「库存持有成本率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "库存持有成本率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "收货准确率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「收货准确率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "收货准确率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "签收异常率", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「签收异常率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "签收异常率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "自动化投资回收期", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「自动化投资回收期」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "自动化投资回收期 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "资产周转效率（物流相关）", category: "logistics", categoryName: "物流", icon: "🚚", desc: "物流常用指标「资产周转效率（物流相关）」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "资产周转效率（物流相关） = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "OEE 设备综合效率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「OEE 设备综合效率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "OEE 设备综合效率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "交付准时率 OTD", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「交付准时率 OTD」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "交付准时率 OTD = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "库存周转天数", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「库存周转天数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "库存周转天数 = 平均(结束时间 − 开始时间)", tags: ["框架同步"] },
+      { name: "生产效率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「生产效率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "生产效率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "良率 / 合格率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「良率 / 合格率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "良率 / 合格率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "设备故障率", category: "manufacturing", categoryName: "制造", icon: "🏭", desc: "制造常用指标「设备故障率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "设备故障率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "充电倍率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「充电倍率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "充电倍率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "出口占比", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「出口占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "出口占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "功率利用率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「功率利用率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "功率利用率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "单桩日均服务车次", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「单桩日均服务车次」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "单桩日均服务车次 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "单车毛利率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「单车毛利率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "单车毛利率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "增换购占比", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「增换购占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "增换购占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "循环寿命", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「循环寿命」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "循环寿命 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "快充桩占比", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「快充桩占比」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "快充桩占比 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "时间利用率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「时间利用率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "时间利用率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "月产量", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「月产量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "月产量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "电池成本", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「电池成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "电池成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "续航里程", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「续航里程」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "续航里程 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "自燃率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「自燃率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "自燃率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "订单转化率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「订单转化率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "订单转化率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "设备在线率", category: "newenergy", categoryName: "新能源", icon: "🔋", desc: "新能源常用指标「设备在线率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "设备在线率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "ARPU 每用户平均收入", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「ARPU 每用户平均收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ARPU 每用户平均收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "ARR 年度经常性收入", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「ARR 年度经常性收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ARR 年度经常性收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "CAC 客户获取成本", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「CAC 客户获取成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "CAC 客户获取成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
+      { name: "GRR 总收入留存率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「GRR 总收入留存率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "GRR 总收入留存率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "LTV 客户终身价值", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「LTV 客户终身价值」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "LTV 客户终身价值 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "MRR 月度经常性收入", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「MRR 月度经常性收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "MRR 月度经常性收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
+      { name: "NDR 净收入留存率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「NDR 净收入留存率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "NDR 净收入留存率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
+      { name: "功能使用率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "SaaS常用指标「功能使用率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "功能使用率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] }
     ];
 
     // 职能维度（按职能 Tab）
@@ -1198,6 +1386,7 @@
     const catParam = urlParams.get('category') || urlParams.get('industry');
     const modeParam = urlParams.get('mode');
     const roleParam = urlParams.get('role');
+    var deepLinkSearch = false;
     if (catParam) {
       currentCategory = catParam;
       document.querySelectorAll('#filterTags .filter-tag').forEach(function (t) {
@@ -1213,6 +1402,7 @@
     if (q) {
       document.getElementById('searchInput').value = q;
       currentSearch = q.toLowerCase();
+      deepLinkSearch = true;
     }
     if (modeParam === 'role') setBrowseMode('role');
     else renderMetrics();
@@ -1220,29 +1410,66 @@
       window.idleLoadKgData(function () { renderMetrics(); });
     }
 
+    function textMatchesMetric(m, search) {
+      if (!search) return true;
+      var hay = (
+        m.name + ' ' + m.desc + ' ' + m.formula + ' ' +
+        (m.tags || []).join(' ') + ' ' +
+        (m.logicTags || []).join(' ') + ' ' +
+        m.categoryName
+      ).toLowerCase();
+      var tokens = String(search).toLowerCase().trim().split(/\s+/).filter(Boolean);
+      if (!tokens.length) return true;
+      if (tokens.length === 1) return hay.indexOf(tokens[0]) >= 0;
+      return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+    }
+
     // 渲染指标
     function renderMetrics() {
       const container = document.getElementById('metricsContainer');
       const emptyState = document.getElementById('emptyState');
-      
-      let filtered = metrics.filter(m => {
-        const matchScope = browseMode === 'role'
-          ? (m.roles || []).indexOf(currentRole) >= 0
-          : m.category === currentCategory;
-        const logicText = (m.logicTags || []).join(' ').toLowerCase();
-        const roleText = (m.roles || []).map(function (id) {
-          return ROLE_MAP[id] ? ROLE_MAP[id].name : id;
-        }).join(' ').toLowerCase();
-        const matchSearch = !currentSearch || 
-          m.name.toLowerCase().includes(currentSearch) ||
-          m.desc.toLowerCase().includes(currentSearch) ||
-          m.formula.toLowerCase().includes(currentSearch) ||
-          m.tags.some(t => t.toLowerCase().includes(currentSearch)) ||
-          logicText.includes(currentSearch) ||
-          roleText.includes(currentSearch) ||
-          m.categoryName.toLowerCase().includes(currentSearch);
-        return matchScope && matchSearch;
-      });
+      var broadenNote = '';
+
+      function filterByScope(scopeMode) {
+        return metrics.filter(function (m) {
+          var matchScope;
+          if (browseMode === 'role') {
+            matchScope = (m.roles || []).indexOf(currentRole) >= 0;
+          } else if (scopeMode === 'industry+general') {
+            matchScope = m.category === currentCategory || m.category === 'general';
+          } else if (scopeMode === 'all') {
+            matchScope = true;
+          } else {
+            matchScope = m.category === currentCategory;
+          }
+          return matchScope && textMatchesMetric(m, currentSearch);
+        });
+      }
+
+      // 有搜索词时：先「当前行业+通用」，仍空再搜全库（知识框架深链常见）
+      var filtered;
+      if (browseMode === 'role') {
+        filtered = filterByScope('strict');
+      } else if (currentSearch) {
+        filtered = filterByScope('industry+general');
+        if (filtered.length === 0) {
+          filtered = filterByScope('all');
+          if (filtered.length > 0) {
+            broadenNote =
+              '<p class="fw-broaden-note">在「当前行业 + 通用」未精确命中「' +
+              String(document.getElementById('searchInput').value || currentSearch).replace(/</g, '&lt;') +
+              '」，已展示全库相关指标</p>';
+          }
+        } else if (deepLinkSearch || currentCategory !== 'general') {
+          var hasOther = filtered.some(function (m) { return m.category === 'general' && currentCategory !== 'general'; });
+          if (hasOther) {
+            broadenNote =
+              '<p class="fw-broaden-note">已同时展示「通用」类相关指标（部分框架指标收录在通用分类）</p>';
+          }
+        }
+      } else {
+        filtered = filterByScope('strict');
+      }
       
       // 空状态
       if (filtered.length === 0) {
@@ -1272,7 +1499,7 @@
       }
       
       // 渲染
-      let html = roleHint;
+      let html = broadenNote + roleHint;
       for (const [catName, catData] of Object.entries(grouped)) {
         html += `
           <div class="category-section">
@@ -1407,7 +1634,7 @@
   <script>
     window.bindKgViewSwitch("metric");
   </script>
-<script src="common.js?v=2"></script>
+<script src="common.js?v=8"></script>
 </body>
 </html>
 

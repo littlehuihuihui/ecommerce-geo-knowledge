@@ -41,6 +41,17 @@ body {
   line-height: 1.6;
 }
 
+.fw-broaden-note {
+  margin: 0 0 18px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(56, 189, 248, 0.08);
+  color: #7dd3fc;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 /* ========== 顶部导航栏 ========== */
 .encyclopedia-nav {
   position: fixed;

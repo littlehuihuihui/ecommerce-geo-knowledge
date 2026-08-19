@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="common.css" />
-  <link rel="preload" href="interview-data.js" as="script" />
+  <link rel="preload" href="interview-data.js?v=2" as="script" />
   <style>
     :root {
       --theme-color: #fbbf24;
@@ -582,7 +582,7 @@
     </div>
   </div>
 
-  <script src="interview-data.js"></script>
+  <script src="interview-data.js?v=2"></script>
   <script>
     // 面试题数据已拆到 interview-data.js，缩短 HTML 解析时间
     const questions = window.INTERVIEW_QUESTIONS || [];
@@ -679,10 +679,33 @@
     function textMatches(haystack, needle) {
       if (!needle) return true;
       var hay = String(haystack || '').toLowerCase();
-      var tokens = String(needle).toLowerCase().trim().split(/\s+/).filter(Boolean);
-      if (!tokens.length) return true;
-      if (tokens.length === 1) return hay.indexOf(tokens[0]) >= 0;
-      return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+      var n = String(needle || '').toLowerCase().trim();
+      if (!n) return true;
+      if (hay.indexOf(n) >= 0) return true;
+
+      // 多词 AND
+      var tokens = n.split(/\s+/).filter(Boolean);
+      if (tokens.length > 1) {
+        return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+      }
+
+      // 中文：去掉「怎么/如何/做」等后再比，解决「服务器容量规划」vs「服务器容量怎么规划」
+      var strip = /[怎么如何做的呢吗？?\s、，,。]/g;
+      var h2 = hay.replace(strip, '');
+      var n2 = n.replace(strip, '');
+      if (n2 && h2.indexOf(n2) >= 0) return true;
+
+      // 连续 2 字片段命中过半
+      if (/[\u4e00-\u9fff]/.test(n) && n.length >= 4) {
+        var parts = [];
+        for (var i = 0; i < n.length - 1; i++) parts.push(n.substr(i, 2));
+        var hit = 0;
+        for (var j = 0; j < parts.length; j++) {
+          if (hay.indexOf(parts[j]) >= 0) hit++;
+        }
+        if (hit >= Math.ceil(parts.length * 0.6)) return true;
+      }
+      return false;
     }
 
     // 渲染题目（首屏只渲染题干，答案在展开时再注入，避免一次写进巨大 DOM）
@@ -696,34 +719,58 @@
         emptyState.style.display = 'none';
         return;
       }
-      
-      // 筛选
-      let filteredCategories = questions.filter(cat => {
-        const matchCategory = currentCategory === 'all' || cat.category === currentCategory;
-        if (!matchCategory) return false;
-        
-        // 搜索筛选
-        if (currentSearch) {
-          const hasMatch = cat.list && cat.list.some(q => 
-            textMatches((q.title || '') + ' ' + answerSearchText(q), currentSearch)
-          );
-          return hasMatch;
+
+      function catsMatching(categoryFilter) {
+        return questions.filter(cat => {
+          const matchCategory = categoryFilter === 'all' || cat.category === categoryFilter;
+          if (!matchCategory) return false;
+          if (currentSearch) {
+            return cat.list && cat.list.some(q =>
+              textMatches((q.title || '') + ' ' + answerSearchText(q), currentSearch)
+            );
+          }
+          return !!(cat.list && cat.list.length);
+        });
+      }
+
+      // 筛选：行业内无结果时，自动放宽到全部（知识框架深链）
+      let filteredCategories = catsMatching(currentCategory);
+      var broadenHtml = '';
+      if (currentSearch && filteredCategories.length === 0 && currentCategory !== 'all') {
+        filteredCategories = catsMatching('all');
+        if (filteredCategories.length > 0) {
+          broadenHtml =
+            '<p class="fw-broaden-note">当前行业下未命中「' +
+            String(document.getElementById('searchInput').value || currentSearch).replace(/</g, '&lt;') +
+            '」，已展示其它行业相关题目</p>';
         }
-        return !!(cat.list && cat.list.length);
-      });
+      }
       
       // 空状态
       const totalQuestions = filteredCategories.reduce((sum, cat) => sum + cat.list.length, 0);
       if (filteredCategories.length === 0 || totalQuestions === 0) {
-        container.innerHTML = '';
-        emptyState.style.display = 'block';
-        return;
+        // 仍要算上搜索过滤后的题量
+        var anyLeft = false;
+        filteredCategories.forEach(cat => {
+          var list = cat.list;
+          if (currentSearch) {
+            list = cat.list.filter(q =>
+              textMatches((q.title || '') + ' ' + answerSearchText(q), currentSearch)
+            );
+          }
+          if (list.length) anyLeft = true;
+        });
+        if (!anyLeft) {
+          container.innerHTML = broadenHtml;
+          emptyState.style.display = 'block';
+          return;
+        }
       }
       
       emptyState.style.display = 'none';
       
       // 渲染
-      let html = '';
+      let html = broadenHtml;
       filteredCategories.forEach(cat => {
         let filteredList = cat.list;
         if (currentSearch) {
@@ -749,6 +796,12 @@
           </div>
         `;
       });
+
+      if (!html || html === broadenHtml) {
+        container.innerHTML = broadenHtml;
+        emptyState.style.display = 'block';
+        return;
+      }
       
       container.innerHTML = html;
       
@@ -928,7 +981,7 @@
   <script>
     window.bindKgViewSwitch("business_problem");
   </script>
-<script src="common.js?v=2"></script>
+<script src="common.js?v=8"></script>
 </body>
 </html>
 

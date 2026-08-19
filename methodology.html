@@ -1472,6 +1472,524 @@
           { name: "医疗", color: "cyan" }
         ],
         reference: "finance.html"
+      },
+      {
+        icon: "📐",
+        name: "GMV 拆解模型",
+        subtitle: "GMV Decomposition",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "将 GMV 拆为流量、转化、客单、复购等可运营因子，定位增长杠杆与下滑主因。",
+        formula: "GMV = 流量 × 转化率 × 客单价（× 复购次数）\n按渠道/品类/人群下钻贡献度",
+        scenarios: ["GMV归因", "大促复盘", "增长策略", "经营诊断"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "直播电商", color: "orange" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "📢",
+        name: "营销效果评估",
+        subtitle: "Marketing ROI",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "从曝光到转化追踪营销全链路，评估渠道 ROI 与预算分配效率。",
+        formula: "曝光 → 点击 → 转化 → ROI / LTV:CAC\n增量评估需对照组或因果口径",
+        scenarios: ["渠道评估", "预算分配", "活动复盘", "投放优化"],
+        industries: [
+          { name: "电商", color: "pink" },
+          { name: "零售", color: "" }
+        ],
+        reference: "ecommerce.html"
+      },
+      {
+        icon: "🧑‍🤝‍🧑",
+        name: "人货场模型",
+        subtitle: "People · Product · Place",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "从人、货、场三要素诊断经营问题，常用于直播电商与零售场域分析。",
+        formula: "人（流量/人设）× 货（选品/价格）× 场（氛围/节奏）→ 成交结果",
+        scenarios: ["直播复盘", "选品", "主播评估", "场域运营"],
+        industries: [
+          { name: "直播电商", color: "orange" },
+          { name: "零售", color: "" }
+        ],
+        reference: "live-ecommerce.html"
+      },
+      {
+        icon: "📋",
+        name: "直播复盘体系",
+        subtitle: "Live Review Framework",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "按流量、转化、货品、服务对单场直播系统复盘，沉淀可复用优化动作。",
+        formula: "目标核对 → 人货场拆解 → 时段/品贡献 → 问题清单 → 下场动作",
+        scenarios: ["直播复盘", "主播辅导", "排品优化"],
+        industries: [
+          { name: "直播电商", color: "orange" }
+        ],
+        reference: "live-ecommerce.html"
+      },
+      {
+        icon: "🏦",
+        name: "信用评分模型",
+        subtitle: "Credit Scoring",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 4,
+        desc: "基于申请与行为数据评估违约概率，支撑审批、额度与定价。",
+        formula: "特征工程 → 评分卡/模型 → PD → 额度与定价策略",
+        scenarios: ["信贷审批", "额度管理", "风险定价"],
+        industries: [
+          { name: "金融", color: "blue" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "⚖️",
+        name: "风险定价模型",
+        subtitle: "Risk-based Pricing",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 4,
+        desc: "按风险等级差异化利率与限额，平衡收益、损失与通过率。",
+        formula: "预期损失 EL = PD × LGD × EAD\n定价覆盖资金成本+风险成本+运营+利润",
+        scenarios: ["贷款定价", "产品设计", "组合管理"],
+        industries: [
+          { name: "金融", color: "blue" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "📒",
+        name: "资产负债管理 ALM",
+        subtitle: "Asset Liability Management",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 4,
+        desc: "统筹资产与负债的期限、利率与流动性结构，控制利率与流动性风险。",
+        formula: "久期缺口 / 流动性覆盖 / 净息差拆解 → 限额与再平衡",
+        scenarios: ["利率风险管理", "流动性", "净息差分析"],
+        industries: [
+          { name: "金融", color: "blue" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🧩",
+        name: "客户价值分层",
+        subtitle: "Customer Value Tiering",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "按价值、风险或规模对客户分层，指导差异化经营与资源投放。",
+        formula: "价值分 + 行为分 + 风险分 → 分层标签 → 策略矩阵",
+        scenarios: ["客户经营", "交叉销售", "资源分配"],
+        industries: [
+          { name: "金融", color: "blue" },
+          { name: "SaaS", color: "green" }
+        ],
+        reference: "finance.html"
+      },
+      {
+        icon: "🏪",
+        name: "品类管理",
+        subtitle: "Category Management",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "以品类为经营单元做角色定位、货盘与资源分配，提升整体利润与周转。",
+        formula: "品类角色（引流/利润/形象）→ 货盘结构 → KPI 与资源分配",
+        scenarios: ["货盘优化", "促销规划", "供应链协同"],
+        industries: [
+          { name: "快消", color: "orange" },
+          { name: "零售", color: "" }
+        ],
+        reference: "fmcg.html"
+      },
+      {
+        icon: "🛤️",
+        name: "渠道分销模型",
+        subtitle: "Distribution Model",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "分析分销层级、覆盖与动销，评估渠道效率与库存健康。",
+        formula: "覆盖（铺货）× 动销 × 价格/库存健康 → 渠道产出",
+        scenarios: ["渠道拓展", "经销管理", "缺货治理"],
+        industries: [
+          { name: "快消", color: "orange" }
+        ],
+        reference: "fmcg.html"
+      },
+      {
+        icon: "🔗",
+        name: "供应链优化",
+        subtitle: "Supply Chain Optimization",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "在服务水平约束下优化库存、补货与物流成本。",
+        formula: "需求预测 → 安全库存/补货 → 网络与运力 → 成本-时效权衡",
+        scenarios: ["库存优化", "缺货治理", "物流成本"],
+        industries: [
+          { name: "快消", color: "orange" },
+          { name: "物流", color: "blue" }
+        ],
+        reference: "fmcg.html"
+      },
+      {
+        icon: "👥",
+        name: "用户分层运营",
+        subtitle: "Segmented Operations",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "按价值、活跃或生命周期分层，匹配差异化触达与激励策略。",
+        formula: "分层规则 → 策略矩阵 → 实验验证 → 迁移监控",
+        scenarios: ["精细化运营", "召回", "付费转化"],
+        industries: [
+          { name: "游戏", color: "orange" },
+          { name: "SaaS", color: "green" },
+          { name: "内容", color: "purple" }
+        ],
+        reference: "game.html"
+      },
+      {
+        icon: "🔄",
+        name: "客户生命周期分析",
+        subtitle: "Customer Lifecycle",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 3,
+        desc: "沿获客-激活-成熟-衰退-流失阶段设计指标与干预动作。",
+        formula: "阶段定义 → 阶段转化率 → 流失预警 → 干预与复盘",
+        scenarios: ["客户成功", "续费", "扩容"],
+        industries: [
+          { name: "SaaS", color: "green" }
+        ],
+        reference: "saas.html"
+      },
+      {
+        icon: "🏥",
+        name: "DRG/DIP 付费分析",
+        subtitle: "DRG / DIP",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 4,
+        desc: "在按病种付费机制下分析盈亏、组内差异与临床路径合规。",
+        formula: "入组 → 权重/标杆费用 → 结余/亏损拆解 → 路径与耗占比优化",
+        scenarios: ["医保支付", "科室效益", "路径管理"],
+        industries: [
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "🗺️",
+        name: "临床路径分析",
+        subtitle: "Clinical Pathway",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "对比标准路径与实际诊疗过程，发现变异、延误与费用异常。",
+        formula: "标准路径节点 → 实际执行差异 → 原因归类 → 改进闭环",
+        scenarios: ["质量改进", "费用控制", "住院日管理"],
+        industries: [
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "⚙️",
+        name: "医院运营效率模型",
+        subtitle: "Hospital Operations",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "从床位、门诊、手术与人力等维度衡量医院运营效率。",
+        formula: "床位使用/周转 + 门诊负荷 + 手术利用率 + 人效 → 效率看板",
+        scenarios: ["资源配置", "科室对标", "高峰调度"],
+        industries: [
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "😊",
+        name: "患者满意度分析",
+        subtitle: "Patient Satisfaction",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "拆解候诊、诊疗、沟通与费用等体验因子，定位满意度短板。",
+        formula: "问卷/NPS → 维度得分 → 驱动因素 → 改进项与复测",
+        scenarios: ["体验提升", "投诉治理", "服务设计"],
+        industries: [
+          { name: "医疗", color: "cyan" }
+        ],
+        reference: "healthcare.html"
+      },
+      {
+        icon: "📍",
+        name: "商圈运营分析",
+        subtitle: "Trade Area Analysis",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "按商圈密度、供给与需求匹配评估拓展与运营优先级。",
+        formula: "需求密度 × 供给质量 × 履约能力 → 商圈分级与策略",
+        scenarios: ["商圈拓展", "运力配置", "补贴策略"],
+        industries: [
+          { name: "本地生活", color: "teal" }
+        ],
+        reference: "local-life.html"
+      },
+      {
+        icon: "🤝",
+        name: "供需匹配分析",
+        subtitle: "Supply-Demand Matching",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "刻画订单需求与运力/商家供给的时空匹配效率。",
+        formula: "需求热力 vs 供给热力 → 缺口 → 调度/招商动作",
+        scenarios: ["运力调度", "高峰保障", "商家增长"],
+        industries: [
+          { name: "本地生活", color: "teal" }
+        ],
+        reference: "local-life.html"
+      },
+      {
+        icon: "💸",
+        name: "补贴策略分析",
+        subtitle: "Subsidy Strategy",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "评估补贴对增长与利润的边际贡献，设计精细化补贴。",
+        formula: "补贴ROI = 增量毛利 ÷ 补贴成本；分层人群差异化补贴",
+        scenarios: ["补贴治理", "增长-利润平衡", "活动设计"],
+        industries: [
+          { name: "本地生活", color: "teal" }
+        ],
+        reference: "local-life.html"
+      },
+      {
+        icon: "🛵",
+        name: "骑手效率优化",
+        subtitle: "Courier Efficiency",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "从接单、路径与等待环节优化配送人效与时效。",
+        formula: "人效 = 完成单量 ÷ 出勤时长；拆解取餐等待/在途/异常",
+        scenarios: ["运力排班", "路径优化", "时效达标"],
+        industries: [
+          { name: "本地生活", color: "teal" }
+        ],
+        reference: "local-life.html"
+      },
+      {
+        icon: "🏭",
+        name: "仓储管理分析",
+        subtitle: "Warehouse Analytics",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "围绕入库、存储、拣选、出库的效率与准确率分析。",
+        formula: "收货时效 + 库位利用率 + 拣货效率/准确率 + 出库准时",
+        scenarios: ["仓作业优化", "库容规划", "质量改进"],
+        industries: [
+          { name: "物流", color: "blue" }
+        ],
+        reference: "logistics.html"
+      },
+      {
+        icon: "🚛",
+        name: "运输配送分析",
+        subtitle: "Transportation Analytics",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "评估运力、线路与交付时效、成本与货损。",
+        formula: "准时率 / 满载率 / 吨公里成本 / 货损率 → 线路优化",
+        scenarios: ["干线优化", "城配", "承运商评估"],
+        industries: [
+          { name: "物流", color: "blue" }
+        ],
+        reference: "logistics.html"
+      },
+      {
+        icon: "🔄",
+        name: "供应链协同",
+        subtitle: "SC Collaboration",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "通过信息共享与计划协同降低牛鞭效应与缺货/积压。",
+        formula: "需求共享 → 联合预测/补货 → 库存与服务水平共担",
+        scenarios: ["VMI", "缺货治理", "计划协同"],
+        industries: [
+          { name: "物流", color: "blue" }
+        ],
+        reference: "logistics.html"
+      },
+      {
+        icon: "📊",
+        name: "成本与效率分析",
+        subtitle: "Cost & Efficiency",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "拆解物流/运营成本结构，对标效率指标寻找降本空间。",
+        formula: "成本结构占比 + 单位成本 + 效率指标 → 改进优先级",
+        scenarios: ["降本", "外包决策", "网络优化"],
+        industries: [
+          { name: "物流", color: "blue" }
+        ],
+        reference: "logistics.html"
+      },
+      {
+        icon: "🛠️",
+        name: "精益生产 / TPM",
+        subtitle: "Lean / TPM",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "消除浪费并提升设备综合效率的精益与全员生产维护方法。",
+        formula: "识别七大浪费；OEE = 可用率 × 性能 × 质量；自主维护+计划维护",
+        scenarios: ["OEE提升", "换线缩短", "故障下降"],
+        industries: [
+          { name: "制造", color: "" }
+        ],
+        reference: "manufacturing.html"
+      },
+      {
+        icon: "🔌",
+        name: "充电基础设施分析",
+        subtitle: "Charging Infrastructure",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "评估充电网络覆盖、利用率与车桩匹配，支撑补能体验。",
+        formula: "覆盖半径 + 利用率 + 车桩比 + 故障率 → 选址与运维",
+        scenarios: ["选址", "运维", "用户体验"],
+        industries: [
+          { name: "新能源", color: "green" }
+        ],
+        reference: "new-energy.html"
+      },
+      {
+        icon: "🔋",
+        name: "电池技术与性能分析",
+        subtitle: "Battery Performance",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 3,
+        desc: "跟踪能量密度、衰减、快充与安全相关指标，支撑产品竞争力。",
+        formula: "续航/电耗 + SOH衰减 + 快充时长 + 热失控相关监控",
+        scenarios: ["产品对标", "质量分析", "用户体验"],
+        industries: [
+          { name: "新能源", color: "green" }
+        ],
+        reference: "new-energy.html"
+      },
+      {
+        icon: "✍️",
+        name: "创作者分层运营",
+        subtitle: "Creator Tiering",
+        category: "user",
+        categoryName: "用户分析",
+        difficulty: 2,
+        desc: "按产出、质量和粉丝价值对创作者分层，匹配流量与激励。",
+        formula: "产出×质量×商业价值 → 分层 → 扶持/治理策略",
+        scenarios: ["创作者增长", "冷启动", "生态治理"],
+        industries: [
+          { name: "内容", color: "purple" }
+        ],
+        reference: "content.html"
+      },
+      {
+        icon: "🎯",
+        name: "推荐算法评估",
+        subtitle: "RecSys Evaluation",
+        category: "datascience",
+        categoryName: "数据科学",
+        difficulty: 4,
+        desc: "用在线实验与离线指标评估推荐对时长、留存与多样性的影响。",
+        formula: "离线(AUC/Recall) + 在线(时长/留存/互动) + 护栏(多样性/安全)",
+        scenarios: ["推荐迭代", "AB实验", "体验平衡"],
+        industries: [
+          { name: "内容", color: "purple" }
+        ],
+        reference: "content.html"
+      },
+      {
+        icon: "🔻",
+        name: "用户消费漏斗",
+        subtitle: "Content Consumption Funnel",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "拆解曝光-点击-完播-互动-关注等消费路径，定位流失环节。",
+        formula: "曝光 → 点击 → 有效播放 → 完播/互动 → 关注/转化",
+        scenarios: ["内容优化", "推荐调参", "增长"],
+        industries: [
+          { name: "内容", color: "purple" }
+        ],
+        reference: "content.html"
+      },
+      {
+        icon: "📘",
+        name: "内容生命周期",
+        subtitle: "内容生命周期",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "来自行业知识框架的分析方法「内容生命周期」，用于结构化拆解业务问题与指标联动。",
+        formula: "明确目标 → 选指标与维度 → 对比归因 → 输出动作与复盘",
+        scenarios: ["经营诊断", "专题分析", "复盘"],
+        industries: [
+          { name: "通用", color: "" }
+        ],
+        reference: "frameworks.html"
+      },
+      {
+        icon: "📘",
+        name: "客户分层运营",
+        subtitle: "客户分层运营",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "来自行业知识框架的分析方法「客户分层运营」，用于结构化拆解业务问题与指标联动。",
+        formula: "明确目标 → 选指标与维度 → 对比归因 → 输出动作与复盘",
+        scenarios: ["经营诊断", "专题分析", "复盘"],
+        industries: [
+          { name: "通用", color: "" }
+        ],
+        reference: "frameworks.html"
+      },
+      {
+        icon: "📘",
+        name: "整车制造与销售",
+        subtitle: "整车制造与销售",
+        category: "business",
+        categoryName: "业务分析",
+        difficulty: 2,
+        desc: "来自行业知识框架的分析方法「整车制造与销售」，用于结构化拆解业务问题与指标联动。",
+        formula: "明确目标 → 选指标与维度 → 对比归因 → 输出动作与复盘",
+        scenarios: ["经营诊断", "专题分析", "复盘"],
+        industries: [
+          { name: "通用", color: "" }
+        ],
+        reference: "frameworks.html"
       }
     ];
 
@@ -1584,12 +2102,24 @@
         // 搜索筛选
         if (searchKeyword) {
           const searchText = (m.name + m.subtitle + m.desc + m.categoryName + m.scenarios.join('')).toLowerCase();
+          const compact = searchText.replace(/\s+/g, '');
           const tokens = searchKeyword.split(/\s+/).filter(Boolean);
+          var matched;
           if (tokens.length > 1) {
-            if (!tokens.every(function (t) { return searchText.indexOf(t) >= 0; })) return false;
-          } else if (!searchText.includes(searchKeyword)) {
-            return false;
+            matched = tokens.every(function (t) {
+              return searchText.indexOf(t) >= 0 || compact.indexOf(t.replace(/\s+/g, '')) >= 0;
+            });
+          } else {
+            var sk = searchKeyword.replace(/\s+/g, '');
+            matched = searchText.indexOf(searchKeyword) >= 0 || compact.indexOf(sk) >= 0;
+            if (!matched && searchKeyword.length >= 4) {
+              for (var len = Math.min(4, searchKeyword.length); len >= 2 && !matched; len--) {
+                matched = searchText.indexOf(searchKeyword.slice(-len)) >= 0 ||
+                  compact.indexOf(sk.slice(-len)) >= 0;
+              }
+            }
           }
+          if (!matched) return false;
         }
         return true;
       });
@@ -1660,6 +2190,6 @@
   <script>
     window.bindKgViewSwitch("methodology");
   </script>
-<script src="common.js?v=2"></script>
+<script src="common.js?v=8"></script>
 </body>
 </html>

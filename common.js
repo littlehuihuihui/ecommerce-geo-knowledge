@@ -73,7 +73,8 @@
     'manufacturing.html': 'manufacturing',
     'healthcare.html': 'healthcare',
     'new-energy.html': 'newenergy',
-    'logistics.html': 'logistics'
+    'logistics.html': 'logistics',
+    'tourism.html': 'general'
   };
 
   function resolveIndustry(path) {
@@ -101,6 +102,41 @@
       }
     }
     s = s.replace(/\s+[A-Za-z][A-Za-z0-9+._-]{1,12}\s*$/, '').trim();
+
+    // 框架常用名 → 字典/题库更易命中的词
+    var ALIAS = {
+      '访客数': 'UV',
+      '浏览量': 'PV',
+      '点击率': 'CTR',
+      '跳失率': '跳出',
+      '访问深度': 'PV',
+      '下单转化率': '转化率',
+      '支付转化率': '转化率',
+      '支付成功率': '支付',
+      '新客数': '获客',
+      '老客数': '复购',
+      '客服响应时长': '客服',
+      '物流时效': '履约',
+      '发货时效': '履约',
+      'DSR 评分': 'DSR',
+      'DSR评分': 'DSR',
+      '人均GMV': 'GMV',
+      '转化漏斗': '漏斗',
+      '用户生命周期': '生命周期',
+      'GMV 拆解': 'GMV',
+      '营销效果': 'ROI',
+      '营销 ROI': 'ROI',
+      '营销ROI': 'ROI',
+      'AARRR 海盗模型': 'AARRR',
+      'AARRR海盗模型': 'AARRR',
+      'ABC 分类法': 'ABC',
+      'PDCA 循环': 'PDCA',
+      'SPC 统计过程控制': 'SPC',
+      '牛鞭效应说明': '牛鞭',
+      '客户分层运营': '分层',
+      '用户分层运营': '分层'
+    };
+    if (ALIAS[s]) s = ALIAS[s];
     return s;
   }
 
@@ -168,6 +204,16 @@
       promoteToAnchor(item, buildModuleUrl('metrics.html', q, industry), 'metric');
     });
 
+    // 部分行业页用 metric-card / metric-name（物流、新能源、金融等）
+    document.querySelectorAll('.metric-card').forEach(function (card) {
+      if (card.getAttribute('data-fw-wired') === '1') return;
+      var nameEl = card.querySelector('.metric-name, h3');
+      if (!nameEl) return;
+      var q = normalizeJumpQuery(nameEl.textContent);
+      if (!q) return;
+      promoteToAnchor(card, buildModuleUrl('metrics.html', q, industry), 'metric');
+    });
+
     document.querySelectorAll('.ns-name').forEach(function (el) {
       var q = normalizeJumpQuery(el.textContent);
       if (!q) return;
@@ -179,7 +225,7 @@
       var nameEl = card.querySelector('.scenario-name');
       if (!nameEl) return;
       var q = normalizeJumpQuery(nameEl.textContent)
-        .replace(/(优化|评估|分析|归因|提升|策略)$/g, '')
+        .replace(/(优化|评估|分析|归因|提升|策略|规划)$/g, '')
         .trim();
       if (!q) q = normalizeJumpQuery(nameEl.textContent);
       if (!q) return;
@@ -195,6 +241,59 @@
       if (!q) q = normalizeJumpQuery(nameEl.textContent);
       if (!q) return;
       promoteToAnchor(card, buildModuleUrl('methodology.html', q, null), 'method');
+    });
+
+    // 区块说明：提示可点击跳转（全行业统一）
+    document.querySelectorAll('.section').forEach(function (section) {
+      var desc = section.querySelector('.section-desc');
+      if (!desc || /跳转|指标字典|方法论|业务问题/.test(desc.textContent)) return;
+      if (section.querySelector('.mc-item, .metric-card, .ns-switch')) {
+        desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
+          ' · 指标可点击跳转<strong>指标字典</strong>';
+      } else if (section.querySelector('.framework-card')) {
+        desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
+          ' · 点击卡片跳转<strong>方法论</strong>';
+      } else if (section.querySelector('.scenario-card')) {
+        desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
+          ' · 点击卡片跳转<strong>业务问题拆解</strong>';
+      }
+    });
+
+    // 用户价值分层 / ABC：整块出口，不逐张分层卡跳转
+    document.querySelectorAll('.tier-grid').forEach(function (grid) {
+      if (grid.getAttribute('data-fw-wired') === '1') return;
+      grid.setAttribute('data-fw-wired', '1');
+      var section = grid.closest('.section') || grid.parentElement;
+      var titleEl = section && section.querySelector('.section-title');
+      var title = titleEl ? titleEl.textContent : '';
+      var methodQ = '分层';
+      var problemQ = '分层';
+      if (/RFM/i.test(title) || /用户价值|用户分层|客户分层/.test(title)) {
+        methodQ = 'RFM';
+        problemQ = 'RFM';
+      } else if (/ABC/i.test(title) || /库存.*分类/.test(title)) {
+        methodQ = 'ABC';
+        problemQ = 'ABC';
+      } else if (/鲸鱼|大R|付费/.test(title)) {
+        methodQ = '分层';
+        problemQ = '付费';
+      }
+
+      var bar = document.createElement('div');
+      bar.className = 'fw-tier-jumps';
+      var html =
+        '<a class="fw-tier-jump" href="' + buildModuleUrl('methodology.html', methodQ, null) + '">方法论 · ' + methodQ + ' →</a>' +
+        '<a class="fw-tier-jump" href="' + buildModuleUrl('interview.html', problemQ, industry) + '">业务问题 · ' + problemQ + ' →</a>';
+      if (methodQ === 'RFM') {
+        html += '<a class="fw-tier-jump" href="' + buildModuleUrl('metrics.html', 'RFM', industry) + '">指标字典 · RFM →</a>';
+      }
+      bar.innerHTML = html;
+      grid.parentNode.insertBefore(bar, grid);
+
+      var desc = section && section.querySelector('.section-desc');
+      if (desc && !/跳转|方法论|业务问题/.test(desc.textContent)) {
+        desc.textContent = String(desc.textContent || '').replace(/\s*$/, '') + ' · 可跳转相关方法论与业务问题';
+      }
     });
   }
 

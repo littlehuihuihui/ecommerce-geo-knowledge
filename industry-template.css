@@ -496,6 +496,26 @@ a.fw-jump {
 .mc-item.fw-jump:hover .mc-name {
   color: var(--theme-color);
 }
+.metric-card.fw-jump {
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.metric-card.fw-jump:hover {
+  border-color: rgba(var(--theme-color-rgb), 0.5);
+  transform: translateY(-2px);
+}
+.metric-card.fw-jump:hover .metric-name,
+.metric-card.fw-jump:hover h3 {
+  color: var(--theme-color);
+}
+.metric-card.fw-jump .fw-jump-hint {
+  display: none;
+  margin-top: 8px;
+}
+.metric-card.fw-jump:hover .fw-jump-hint,
+.metric-card.fw-jump:focus-visible .fw-jump-hint {
+  display: inline-block;
+}
 .north-star-card.fw-jump:hover {
   border-color: rgba(var(--theme-color-rgb), 0.5);
 }
@@ -991,6 +1011,31 @@ a.fw-jump {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
+}
+
+.fw-tier-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+.fw-tier-jump {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--theme-color-rgb), 0.35);
+  background: rgba(var(--theme-color-rgb), 0.1);
+  color: var(--theme-color);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.fw-tier-jump:hover {
+  background: rgba(var(--theme-color-rgb), 0.18);
+  border-color: rgba(var(--theme-color-rgb), 0.55);
+  transform: translateY(-1px);
 }
 
 .tier-grid .tier-card {

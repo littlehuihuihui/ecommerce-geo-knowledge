@@ -129,16 +129,16 @@ def split_top_level_objects(block: str) -> list[str]:
 
 
 def get_field(obj: str, key: str) -> str | None:
-    # string / template
+    # string / template；兼容 name: "x" 与 "name": "x"
     m = re.search(
-        rf"(?:^|[{{,;\n])\s*{re.escape(key)}\s*:\s*((?:`(?:\\.|[^`])*`)|(?:\"(?:\\.|[^\"])*\")|(?:'(?:\\.|[^'])*'))",
+        rf"(?:^|[{{,;\n])\s*\"?{re.escape(key)}\"?\s*:\s*((?:`(?:\\.|[^`])*`)|(?:\"(?:\\.|[^\"])*\")|(?:'(?:\\.|[^'])*'))",
         obj,
         re.S,
     )
     if m:
         return parse_js_string(m.group(1))
     # number
-    m = re.search(rf"(?:^|[{{,;\n])\s*{re.escape(key)}\s*:\s*(\d+(?:\.\d+)?)", obj)
+    m = re.search(rf"(?:^|[{{,;\n])\s*\"?{re.escape(key)}\"?\s*:\s*(\d+(?:\.\d+)?)", obj)
     if m:
         return m.group(1)
     return None
@@ -244,8 +244,42 @@ def extract_methods() -> list[dict]:
 
 
 def extract_questions() -> list[dict]:
-    text = (ROOT / "interview.html").read_text(encoding="utf-8")
-    block = extract_array_block(text, "questions")
+    data_path = ROOT / "interview-data.js"
+    if data_path.exists():
+        text = data_path.read_text(encoding="utf-8")
+        m = re.search(r"(?:window\.)?INTERVIEW_QUESTIONS\s*=\s*\[", text)
+        if not m:
+            raise ValueError("cannot find INTERVIEW_QUESTIONS in interview-data.js")
+        start = m.end() - 1
+        depth = 0
+        in_str = None
+        escape = False
+        end = None
+        for i in range(start, len(text)):
+            ch = text[i]
+            if in_str:
+                if escape:
+                    escape = False
+                elif ch == "\\":
+                    escape = True
+                elif ch == in_str:
+                    in_str = None
+                continue
+            if ch in ('"', "'", "`"):
+                in_str = ch
+            elif ch == "[":
+                depth += 1
+            elif ch == "]":
+                depth -= 1
+                if depth == 0:
+                    end = i
+                    break
+        if end is None:
+            raise ValueError("unterminated INTERVIEW_QUESTIONS")
+        block = text[start + 1 : end]
+    else:
+        text = (ROOT / "interview.html").read_text(encoding="utf-8")
+        block = extract_array_block(text, "questions")
     cat_objs = split_top_level_objects(block)
     nodes = []
     seen = set()
@@ -333,7 +367,7 @@ def extract_questions() -> list[dict]:
         cat = get_field(cat_obj, "category") or "other"
         cat_name = get_field(cat_obj, "categoryName") or cat
         icon = get_field(cat_obj, "icon") or ""
-        m = re.search(r"list\s*:\s*\[", cat_obj)
+        m = re.search(r"\"?list\"?\s*:\s*\[", cat_obj)
         if not m:
             continue
         start = m.end() - 1
@@ -372,7 +406,7 @@ def extract_questions() -> list[dict]:
                 lead = get_field(qobj, "lead") or ""
                 parts = [lead] if lead else []
                 # 粗提取 framework 内中文句子/条目（JSON 风格）
-                fw_m = re.search(r"framework\s*:\s*\{", qobj)
+                fw_m = re.search(r"\"?framework\"?\s*:\s*\{", qobj)
                 if fw_m:
                     fw_start = fw_m.end() - 1
                     depth = 0
