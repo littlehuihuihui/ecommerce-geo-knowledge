@@ -32,7 +32,7 @@
 
     .search-box {
       flex: 1;
-      min-width: 240px;
+      min-width: 0;
       position: relative;
     }
 
@@ -454,7 +454,10 @@
     }
 
     @media (max-width: 768px) {
-}
+      .search-box { min-width: 0; width: 100%; }
+      .search-box input { font-size: 16px; }
+      .filter-bar { flex-direction: column; align-items: stretch; }
+    }
   </style>
 
   <link rel="stylesheet" href="knowledge-graph-embed.css" />
@@ -981,7 +984,7 @@
   <script>
     window.bindKgViewSwitch("business_problem");
   </script>
-<script src="common.js?v=8"></script>
+<script src="common.js?v=9"></script>
 </body>
 </html>
 

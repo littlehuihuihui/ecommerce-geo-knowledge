@@ -23,6 +23,7 @@
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
   --font: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
   --nav-height: 60px;
+  --nav-industries-height: 44px;
 }
 
 *, *::before, *::after {
@@ -278,6 +279,34 @@ body {
   flex-shrink: 0;
 }
 
+.nav-toggle {
+  display: none;
+  appearance: none;
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  color: var(--text);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  font-family: inherit;
+}
+.nav-toggle:hover {
+  border-color: rgba(148, 163, 184, 0.35);
+  background: var(--glass-highlight);
+}
+.nav-toggle[aria-expanded="true"] {
+  color: var(--accent);
+  border-color: rgba(56, 189, 248, 0.45);
+  background: var(--accent-soft);
+}
+
 .nav-search {
   position: relative;
 }
@@ -436,25 +465,106 @@ body {
 /* ========== 响应式 ========== */
 @media (max-width: 768px) {
   .encyclopedia-nav {
-    padding: 0 16px;
+    padding: 0 12px;
+    gap: 8px;
   }
-  
+
   .nav-logo {
-    margin-right: 20px;
+    margin-right: 8px;
     font-size: 14px;
   }
-  
-  .nav-search input {
-    width: 120px;
+
+  .nav-logo span:not(.nav-logo-icon) {
+    max-width: 7.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  
-  .nav-search input:focus {
-    width: 160px;
+
+  .nav-toggle {
+    display: inline-flex;
+    order: 3;
   }
-  
+
+  /* 无 JS 时：链接横滑，不挤爆顶栏 */
+  .nav-links {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
   .nav-link {
     padding: 6px 10px;
     font-size: 13px;
+  }
+
+  /* 有汉堡菜单时：收入抽屉 */
+  .encyclopedia-nav.nav-enhanced .nav-toggle {
+    margin-left: auto;
+  }
+
+  .encyclopedia-nav.nav-enhanced .nav-links {
+    display: none;
+    position: fixed;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 12px;
+    max-height: min(70vh, calc(100dvh - var(--nav-height)));
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: rgba(15, 23, 42, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+    z-index: 10002;
+  }
+
+  .encyclopedia-nav.nav-enhanced.nav-open .nav-links {
+    display: flex;
+  }
+
+  .encyclopedia-nav.nav-enhanced .nav-link {
+    padding: 12px 14px;
+    font-size: 15px;
+    white-space: normal;
+  }
+
+  .encyclopedia-nav.nav-enhanced .nav-link.active::after {
+    display: none;
+  }
+
+  /*
+   * 根因：固定顶栏里的搜索在滚动时叠在下方指标卡上。
+   * 各工具页已有页内搜索；移动端隐藏导航搜索，避免「悬浮搜索框」。
+   */
+  .nav-right .nav-search {
+    display: none;
+  }
+
+  .nav-right {
+    margin-left: 0;
+    order: 4;
+  }
+
+  /* 防止 iOS 聚焦输入框自动放大导致布局错位 */
+  .search-box input,
+  .nav-search input,
+  input[type="search"],
+  input[type="text"] {
+    font-size: 16px !important;
   }
 }
 

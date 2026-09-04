@@ -63,7 +63,8 @@
 
     .search-box {
       flex: 1;
-      min-width: 280px;
+      min-width: 0;
+      width: 100%;
       position: relative;
     }
 
@@ -483,8 +484,15 @@
     }
 
     @media (max-width: 768px) {
-.metrics-grid {
+      .metrics-grid {
         grid-template-columns: 1fr;
+      }
+      .filter-bar-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-box input {
+        font-size: 16px;
       }
     }
   </style>
@@ -1363,7 +1371,10 @@
           document.getElementById('searchInput').value = this.value;
           currentSearch = this.value.trim().toLowerCase();
           renderMetrics();
-          document.getElementById('searchInput').focus();
+          // 移动端避免 focus 触发视口缩放/滚动错位
+          if (window.matchMedia('(min-width: 769px)').matches) {
+            document.getElementById('searchInput').focus();
+          }
         }
       });
     }
@@ -1634,7 +1645,7 @@
   <script>
     window.bindKgViewSwitch("metric");
   </script>
-<script src="common.js?v=8"></script>
+<script src="common.js?v=9"></script>
 </body>
 </html>
 

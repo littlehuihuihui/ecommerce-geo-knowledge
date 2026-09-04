@@ -30,6 +30,8 @@
       navLinks.appendChild(platform);
     }
 
+    setupMobileNav();
+
     // 多北极星切换
     document.querySelectorAll('.ns-switch').forEach(function (root) {
       var tabs = root.querySelectorAll('.ns-tab');
@@ -49,6 +51,56 @@
     });
 
     wireFrameworkDeepLinks(path);
+  }
+
+  /** 手机端：折叠导航链接，避免固定顶栏搜索/链接叠在内容上 */
+  function setupMobileNav() {
+    var nav = document.querySelector('.encyclopedia-nav');
+    if (!nav || nav.querySelector('.nav-toggle')) return;
+    var links = nav.querySelector('.nav-links');
+    if (!links) return;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'nav-toggle';
+    btn.setAttribute('aria-label', '打开菜单');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = '☰';
+
+    var right = nav.querySelector('.nav-right');
+    if (right) {
+      nav.insertBefore(btn, right);
+    } else {
+      nav.appendChild(btn);
+    }
+
+    nav.classList.add('nav-enhanced');
+
+    function setOpen(open) {
+      nav.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+      btn.textContent = open ? '✕' : '☰';
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(!nav.classList.contains('nav-open'));
+    });
+
+    links.addEventListener('click', function (e) {
+      if (e.target.closest('a.nav-link')) setOpen(false);
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!nav.classList.contains('nav-open')) return;
+      if (nav.contains(e.target)) return;
+      setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
   }
 
   function currentPageName() {
