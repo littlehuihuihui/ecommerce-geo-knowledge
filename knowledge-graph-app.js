@@ -121,6 +121,7 @@
     var layerOf = {}; // nodeId -> 1|2|3
     var sideCollapsed = false;
     var panelCollapsed = false;
+    var panelWidth = 360; // 右侧详情栏宽度（可拖拽）
     var history = [];
     var showMore = { business_problem: 6, methodology: 6, metric: 6 };
     var showMoreL3 = { business_problem: 5, methodology: 5, metric: 5 };
@@ -355,6 +356,15 @@
       return byType;
     }
 
+    function setFocusMode(on) {
+      document.body.classList.toggle("kg-focus-mode", !!on);
+      if (!on) {
+        document.body.classList.remove("kg2-resizing");
+        var leftover = document.querySelector(".kg2-resize-mask");
+        if (leftover) leftover.remove();
+      }
+    }
+
     // ---------- render stages ----------
     function render() {
       if (stage === "landing") renderLanding();
@@ -363,6 +373,7 @@
     }
 
     function renderLanding() {
+      setFocusMode(false);
       destroyNet();
       var bpN = leavesOfType("business_problem").length;
       var mdN = leavesOfType("methodology").length;
@@ -424,6 +435,7 @@
     }
 
     function renderOverview() {
+      setFocusMode(false);
       destroyNet();
       var mod = overviewModule;
       var meta = TYPE[mod];
@@ -555,6 +567,13 @@
             if (mapped) industry = mapped;
           }
           renderOverview();
+          // 分类网格较高时，列表在下方，滚入视口避免「点了没反应」
+          setTimeout(function () {
+            var list = stageEl.querySelector(".kg2-ov-list");
+            if (list && list.scrollIntoView) {
+              list.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }, 30);
         });
       });
       stageEl.querySelectorAll(".kg2-leaf").forEach(function (el) {
@@ -640,6 +659,7 @@
     }
 
     function renderFocus() {
+      setFocusMode(true);
       var center = byId.get(centerId);
       if (!center) {
         stage = "landing";
@@ -677,7 +697,10 @@
         '    <div class="kg2-ctrl"><button type="button" id="kg2ZoomIn">＋</button><button type="button" id="kg2ZoomOut">－</button><button type="button" id="kg2Fit">◎</button></div>' +
         '    <button type="button" class="kg2-rail-btn kg2-rail-right" id="kg2TogglePanel" title="' + (panelCollapsed ? "展开右侧详情" : "收起右侧详情") + '">' + (panelCollapsed ? "«" : "»") + "</button>" +
         "  </div>" +
-        '  <aside class="kg2-panel open ' + (panelCollapsed ? "is-collapsed " : "") + (TYPE[panelNode.type] ? TYPE[panelNode.type].cls : "") + '" id="kg2Panel"></aside>' +
+        '  <aside class="kg2-panel open ' + (panelCollapsed ? "is-collapsed " : "") + (TYPE[panelNode.type] ? TYPE[panelNode.type].cls : "") + '" id="kg2Panel" style="width:' + panelWidth + 'px">' +
+        '    <div class="kg2-panel-resizer" id="kg2PanelResizer" title="拖拽左边缘调整宽度" aria-label="拖拽调整右侧栏宽度"></div>' +
+        '    <div class="kg2-panel-body" id="kg2PanelBody"></div>' +
+        "  </aside>" +
         "</div>";
 
       bindIndustrySwitcher(stageEl);
@@ -688,6 +711,7 @@
           } catch (e) {}
         }, 320);
       }
+      bindPanelResize(stageEl.querySelector("#kg2Panel"), stageEl.querySelector("#kg2PanelResizer"), refitGraph);
       stageEl.querySelector("#kg2ToggleSide").addEventListener("click", function () {
         sideCollapsed = !sideCollapsed;
         var focus = stageEl.querySelector(".kg2-focus");
@@ -1064,14 +1088,91 @@
       edgesDS.add(edgeObjs);
       network.setOptions({ physics: { enabled: true, stabilization: { enabled: true, iterations: 50, fit: true } } });
       network.startSimulation();
-      setTimeout(function () {
-        try { if (network) network.fit({ animation: { duration: 500, easingFunction: "easeInOutCubic" } }); } catch (e) {}
-      }, 80);
+      // 布局变化后强制重测画布，避免容器高度为 0 时点击无响应
+      function refitNow() {
+        try {
+          if (!network) return;
+          network.redraw();
+          network.fit({ animation: { duration: 420, easingFunction: "easeInOutCubic" } });
+        } catch (e) {}
+      }
+      requestAnimationFrame(function () {
+        refitNow();
+        setTimeout(refitNow, 120);
+        setTimeout(refitNow, 360);
+      });
       startPulse(center.id);
+    }
+
+    function bindPanelResize(panel, handle, onDone) {
+      if (!panel || !handle || handle.getAttribute("data-bound") === "1") return;
+      handle.setAttribute("data-bound", "1");
+      var dragging = false;
+      var startX = 0;
+      var startW = 0;
+      var mask = null;
+
+      function clampW(w) {
+        var focus = stageEl.querySelector(".kg2-focus");
+        var maxByViewport = Math.floor(window.innerWidth * 0.62);
+        var maxByFocus = focus ? Math.floor(focus.clientWidth * 0.58) : maxByViewport;
+        var max = Math.max(320, Math.min(720, maxByViewport, maxByFocus));
+        return Math.max(260, Math.min(max, Math.round(w)));
+      }
+
+      function cleanup() {
+        dragging = false;
+        panel.classList.remove("is-resizing");
+        document.body.classList.remove("kg2-resizing");
+        if (mask && mask.parentNode) mask.parentNode.removeChild(mask);
+        mask = null;
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        document.removeEventListener("pointercancel", onUp);
+        window.removeEventListener("blur", cleanup);
+      }
+
+      function onMove(e) {
+        if (!dragging) return;
+        var x = e.clientX;
+        if (x == null && e.touches && e.touches[0]) x = e.touches[0].clientX;
+        if (x == null) return;
+        var next = clampW(startW + (startX - x));
+        panelWidth = next;
+        panel.style.width = next + "px";
+      }
+
+      function onUp() {
+        if (!dragging) return;
+        cleanup();
+        if (typeof onDone === "function") onDone();
+      }
+
+      handle.addEventListener("pointerdown", function (e) {
+        if (panelCollapsed || panel.classList.contains("is-collapsed")) return;
+        if (window.matchMedia && window.matchMedia("(max-width: 960px)").matches) return;
+        if (e.button != null && e.button !== 0) return;
+        e.preventDefault();
+        e.stopPropagation();
+        dragging = true;
+        startX = e.clientX;
+        startW = panel.getBoundingClientRect().width || panelWidth;
+        panel.classList.add("is-resizing");
+        document.body.classList.add("kg2-resizing");
+        mask = document.createElement("div");
+        mask.className = "kg2-resize-mask";
+        document.body.appendChild(mask);
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onUp);
+        document.addEventListener("pointercancel", onUp);
+        window.addEventListener("blur", cleanup);
+      });
     }
 
     function renderPanel(node) {
       var panel = stageEl.querySelector("#kg2Panel");
+      var body = stageEl.querySelector("#kg2PanelBody") || panel;
+      if (!panel) return;
       var meta = TYPE[node.type] || TYPE.metric;
       var d = node.detail || {};
       var rel = relatedFor(node);
@@ -1143,14 +1244,15 @@
           "</div>";
       }
 
-      panel.innerHTML = html;
+      body.innerHTML = html;
       panel.className = "kg2-panel open " + (panelCollapsed ? "is-collapsed " : "") + meta.cls;
-      panel.querySelectorAll("[data-jump]").forEach(function (btn) {
+      panel.style.width = panelWidth + "px";
+      body.querySelectorAll("[data-jump]").forEach(function (btn) {
         btn.addEventListener("click", function () {
           enterFocus(btn.getAttribute("data-jump"), true);
         });
       });
-      var toggleL3 = panel.querySelector("#kg2ToggleL3");
+      var toggleL3 = body.querySelector("#kg2ToggleL3");
       if (toggleL3) {
         toggleL3.addEventListener("click", function () {
           var center = byId.get(centerId);
@@ -1165,7 +1267,7 @@
           renderPanel(node);
         });
       }
-      var exploreBtn = panel.querySelector("#kg2ExploreCenter");
+      var exploreBtn = body.querySelector("#kg2ExploreCenter");
       if (exploreBtn) {
         exploreBtn.addEventListener("click", function () {
           enterFocus(node.id, true);
@@ -1358,7 +1460,7 @@
     return {
       goLanding: function () { stage = "landing"; render(); },
       enterFocus: enterFocus,
-      destroy: function () { destroyNet(); }
+      destroy: function () { setFocusMode(false); destroyNet(); }
     };
   }
 

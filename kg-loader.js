@@ -29,7 +29,7 @@
     chain = chain.then(function () { return w.loadKgData(); });
     chain = chain.then(function () {
       if (w.initKnowledgeGraph) return;
-      return loadScript("knowledge-graph-app.js");
+      return loadScript("knowledge-graph-app.js?v=11");
     });
     return chain;
   };

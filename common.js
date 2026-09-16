@@ -31,6 +31,7 @@
     }
 
     setupMobileNav();
+    setupNavSearch();
 
     // 多北极星切换
     document.querySelectorAll('.ns-switch').forEach(function (root) {
@@ -100,6 +101,29 @@
 
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
+  /** 顶栏搜索回车 → 智能搜索（GitHub Pages 可用本地检索） */
+  function setupNavSearch() {
+    var input = document.querySelector('.encyclopedia-nav .nav-search input');
+    if (!input || input.getAttribute('data-nav-search') === '1') return;
+    input.setAttribute('data-nav-search', '1');
+    input.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter') return;
+      var q = (input.value || '').trim();
+      if (!q) return;
+      e.preventDefault();
+      var path = (location.pathname || '').replace(/\\/g, '/');
+      var inRag = /\/rag\//.test(path);
+      var base = '';
+      var scripts = document.querySelectorAll('script[src*="common.js"]');
+      if (scripts.length) {
+        var src = scripts[scripts.length - 1].getAttribute('src') || '';
+        if (src.indexOf('../') === 0) base = '../';
+      }
+      if (inRag) location.href = 'search.html?q=' + encodeURIComponent(q);
+      else location.href = base + 'rag/search.html?q=' + encodeURIComponent(q);
     });
   }
 

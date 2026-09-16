@@ -18,7 +18,27 @@
   color: var(--kg2-text);
   font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+/* 独立图谱页：body 已有 padding-top，这里再 margin 会导致画布被裁切、点击失效 */
+#kgAutoRoot > .kg2-page,
+#kgAutoRoot.kg-embed > .kg2-page {
+  margin-top: 0;
+}
+body.kg-focus-mode > .page-header,
+body.kg-focus-mode > header.page-header {
+  display: none !important;
+}
+body.kg-focus-mode #kgAutoRoot > .kg2-page {
+  min-height: calc(100vh - var(--nav-height, 60px));
+  height: calc(100vh - var(--nav-height, 60px));
+  overflow: hidden; /* 辐射图画布模式再锁滚动 */
+}
+body.kg-focus-mode #kgAutoRoot .kg2-stage,
+body.kg-focus-mode #kgAutoRoot .kg2-focus {
+  height: 100%;
+  min-height: 0;
 }
 
 .kg2-bgfx {
@@ -387,9 +407,15 @@
 .kg2-ov-node .sub { font-size: 11px; color: var(--kg2-muted); }
 .kg2-ov-node.is-on {
   border-color: rgba(168, 85, 247, 0.7);
-  box-shadow: 0 0 24px rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.35), 0 0 24px rgba(168, 85, 247, 0.25);
 }
-.kg2-ov-list { margin-top: 28px; border-top: 1px solid var(--kg2-border); padding-top: 20px; }
+.kg2-ov-list {
+  margin-top: 28px;
+  border-top: 1px solid var(--kg2-border);
+  padding-top: 20px;
+  padding-bottom: 64px;
+  scroll-margin-top: 72px;
+}
 .kg2-ov-list h4 { margin: 0 0 12px; font-size: 14px; color: var(--kg2-muted); }
 .kg2-empty, .kg2-empty-hint {
   margin: 8px 0 0;
@@ -697,12 +723,15 @@
   border-left: 1px solid var(--kg2-border);
   background: rgba(10, 14, 26, 0.82);
   backdrop-filter: blur(20px);
-  overflow: auto;
-  padding: 18px 16px;
+  overflow: hidden;
+  padding: 0;
   position: relative;
   transform: translateX(0);
   opacity: 1;
-  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.3s, width 0.28s ease, padding 0.28s ease, border-color 0.22s ease;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.3s, width 0.28s ease, border-color 0.22s ease;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 .kg2-panel.open { transform: translateX(0); opacity: 1; }
 .kg2-panel.is-collapsed,
@@ -716,6 +745,55 @@
   overflow: hidden;
   pointer-events: none;
   transform: translateX(12px);
+}
+.kg2-panel-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 18px 16px;
+}
+.kg2-panel-resizer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 5;
+  touch-action: none;
+  background: transparent;
+}
+.kg2-panel-resizer::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 48px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.35);
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+.kg2-panel-resizer:hover::after,
+.kg2-panel.is-resizing .kg2-panel-resizer::after {
+  opacity: 1;
+  background: rgba(6, 182, 212, 0.85);
+}
+.kg2-panel.is-resizing {
+  transition: none !important;
+  user-select: none;
+}
+body.kg2-resizing {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+.kg2-resize-mask {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  cursor: col-resize;
 }
 .kg2-panel.bp { box-shadow: inset 3px 0 0 var(--kg2-orange); }
 .kg2-panel.md { box-shadow: inset 3px 0 0 var(--kg2-green); }
@@ -830,13 +908,14 @@
   }
   .kg2-canvas-wrap { height: 52vh; min-height: 360px; }
   .kg2-panel {
-    width: 100%;
+    width: 100% !important;
     max-height: 40vh;
     transform: translateY(100%);
     border-left: none;
     border-top: 1px solid var(--kg2-border);
   }
   .kg2-panel.open { transform: translateY(0); }
+  .kg2-panel-resizer { display: none; }
 }
 
 .view-switch-wrap {
@@ -897,9 +976,21 @@ body.kg-graph-mode #methodsGrid,
 body.kg-graph-mode .methods-grid,
 body.kg-graph-mode #questionsContainer,
 body.kg-graph-mode .empty-state,
-body.kg-graph-mode .stats-bar,
-body.kg-graph-mode .view-switch-wrap {
+body.kg-graph-mode .stats-bar {
   display: none !important;
+}
+body.kg-graph-mode .view-switch-wrap {
+  display: flex !important;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  padding: 0;
+  background: transparent;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 body.kg-graph-mode #kgPageMount {
   position: fixed;

@@ -468,190 +468,283 @@
   </div>
 
   <script>
-    const API_BASE = 'http://localhost:5000/api';
+    const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+      ? 'http://localhost:5000/api'
+      : '';
     let currentMode = 'search';
+    let offlineReady = false;
+    let useOffline = !!API_BASE;
 
-    // 初始化（script在页面底部，DOM已加载，直接执行）
     loadStats();
     bindEvents();
+    warmOfflineIndex().then(function () {
+      var params = new URLSearchParams(location.search);
+      var q = params.get('q');
+      if (q) {
+        document.getElementById('searchInput').value = q;
+        doSearch();
+      }
+    });
 
-    // 绑定事件
     function bindEvents() {
-      // 搜索按钮
       document.getElementById('searchBtn').addEventListener('click', doSearch);
-      
-      // 回车搜索
-      document.getElementById('searchInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          doSearch();
-        }
+      document.getElementById('searchInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') doSearch();
       });
 
-      // 模式切换
-      document.querySelectorAll('.mode-tab').forEach(tab => {
-        tab.addEventListener('click', function() {
-          document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.mode-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          document.querySelectorAll('.mode-tab').forEach(function (t) { t.classList.remove('active'); });
           this.classList.add('active');
           currentMode = this.dataset.mode;
-          
-          // 更新placeholder
-          const input = document.getElementById('searchInput');
-          if (currentMode === 'search') {
-            input.placeholder = '输入你想了解的内容，比如：SaaS的核心指标有哪些？';
-          } else {
-            input.placeholder = '问一个问题，比如：什么是LTV/CAC？健康值是多少？';
-          }
+          var input = document.getElementById('searchInput');
+          input.placeholder = currentMode === 'search'
+            ? '输入你想了解的内容，比如：SaaS的核心指标有哪些？'
+            : '问一个问题，比如：什么是LTV/CAC？健康值是多少？';
         });
       });
 
-      // 搜索建议
-      document.querySelectorAll('.suggestion-tag').forEach(tag => {
-        tag.addEventListener('click', function() {
+      document.querySelectorAll('.suggestion-tag').forEach(function (tag) {
+        tag.addEventListener('click', function () {
           document.getElementById('searchInput').value = this.dataset.query;
           doSearch();
         });
       });
     }
 
-    // 加载统计信息
-    async function loadStats() {
-      try {
-        const res = await fetch(`${API_BASE}/stats`);
-        const data = await res.json();
-        document.getElementById('totalChunks').textContent = data.total_chunks || '-';
-      } catch (e) {
-        document.getElementById('totalChunks').textContent = '未连接';
-      }
-    }
-
-    // 执行搜索
-    async function doSearch() {
-      const query = document.getElementById('searchInput').value.trim();
-      if (!query) return;
-
-      const resultsArea = document.getElementById('resultsArea');
-      
-      // 显示加载状态
-      resultsArea.innerHTML = `
-        <div class="loading">
-          <div class="loading-spinner"></div>
-          <p>正在搜索中...</p>
-        </div>
-      `;
-
-      try {
-        if (currentMode === 'search') {
-          await doSemanticSearch(query);
-        } else {
-          await doAsk(query);
-        }
-      } catch (e) {
-        resultsArea.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">⚠️</div>
-            <p>搜索失败：${e.message}</p>
-            <p style="font-size: 13px; margin-top: 8px;">请确保后端服务已启动 (python app.py)</p>
-          </div>
-        `;
-      }
-    }
-
-    // 语义搜索
-    async function doSemanticSearch(query) {
-      const res = await fetch(`${API_BASE}/search`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, n_results: 5 })
+    function loadScript(src) {
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
       });
+    }
 
-      const data = await res.json();
-      const resultsArea = document.getElementById('resultsArea');
+    function warmOfflineIndex() {
+      if (window.KNOWLEDGE_GRAPH_DATA) {
+        offlineReady = true;
+        return Promise.resolve();
+      }
+      return loadScript('../knowledge-graph-data.js').then(function () {
+        offlineReady = !!window.KNOWLEDGE_GRAPH_DATA;
+      }).catch(function () {
+        offlineReady = false;
+      });
+    }
 
-      if (data.results.length === 0) {
-        resultsArea.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-icon">🔍</div>
-            <p>没有找到相关结果</p>
-          </div>
-        `;
+    function nodeUrl(n) {
+      var q = encodeURIComponent(n.name || '');
+      if (n.type === 'metric') return '../metrics.html?q=' + q + (n.category ? '&industry=' + encodeURIComponent(n.category) : '');
+      if (n.type === 'methodology') return '../methodology.html?q=' + q;
+      if (n.type === 'business_problem') return '../interview.html?q=' + q + (n.category ? '&industry=' + encodeURIComponent(n.category) : '');
+      return '../knowledge-graph.html?q=' + q;
+    }
+
+    function typeLabel(t) {
+      if (t === 'metric') return '指标字典';
+      if (t === 'methodology') return '方法论';
+      if (t === 'business_problem') return '业务问题';
+      return '知识';
+    }
+
+    function offlineSearch(query, limit) {
+      limit = limit || 8;
+      var DATA = window.KNOWLEDGE_GRAPH_DATA;
+      if (!DATA || !DATA.nodes) return [];
+      var q = String(query || '').trim().toLowerCase();
+      if (!q) return [];
+      var tokens = q.split(/\s+/).filter(Boolean);
+      var scored = [];
+      DATA.nodes.forEach(function (n) {
+        if (!n || n.isRoot || n.isCategory) return;
+        if (!n.type || ['metric', 'methodology', 'business_problem'].indexOf(n.type) < 0) return;
+        var blob = ((n.name || '') + ' ' + (n.description || '') + ' ' + (n.categoryName || '') + ' ' +
+          ((n.detail && n.detail.definition) || '') + ' ' + ((n.detail && n.detail.formula) || '')).toLowerCase();
+        var score = 0;
+        if (blob.indexOf(q) >= 0) score += 50;
+        tokens.forEach(function (t) {
+          if (blob.indexOf(t) >= 0) score += 12;
+          if ((n.name || '').toLowerCase().indexOf(t) >= 0) score += 20;
+        });
+        if (score <= 0) return;
+        var d = n.detail || {};
+        scored.push({
+          title: n.name,
+          category: typeLabel(n.type) + (n.categoryName ? ' · ' + n.categoryName : ''),
+          summary: d.definition || n.description || d.formula || '点击查看详情',
+          url: nodeUrl(n),
+          similarity: Math.min(0.99, score / 100),
+          _score: score
+        });
+      });
+      scored.sort(function (a, b) { return b._score - a._score; });
+      return scored.slice(0, limit);
+    }
+
+    function offlineAsk(question) {
+      var hits = offlineSearch(question, 5);
+      if (!hits.length) {
+        return {
+          answer: '本地知识库里没有找到足够匹配的内容。可以换个关键词，或直接打开指标字典 / 方法论 / 业务问题拆解浏览。',
+          sources: [],
+          note: '当前为 GitHub Pages 本地关键词检索（语义服务未连接）'
+        };
+      }
+      var lines = hits.slice(0, 3).map(function (h, i) {
+        return (i + 1) + '. 「' + h.title + '」：' + String(h.summary || '').slice(0, 80);
+      });
+      return {
+        answer: '根据本地知识库，与「' + question + '」较相关的条目：\n\n' + lines.join('\n'),
+        sources: hits,
+        note: '当前为本地关键词检索。启动 rag/app.py 后可启用语义检索与更完整问答。'
+      };
+    }
+
+    async function loadStats() {
+      var el = document.getElementById('totalChunks');
+      try {
+        if (useOfflineOnly()) throw new Error('skip');
+        var res = await fetch(API_BASE + '/stats', { signal: AbortSignal.timeout ? AbortSignal.timeout(2500) : undefined });
+        if (!res.ok) throw new Error('bad status');
+        var data = await res.json();
+        el.textContent = data.total_chunks || '-';
+        useOffline = true;
+      } catch (e) {
+        useOffline = false;
+        await warmOfflineIndex();
+        var n = (window.KNOWLEDGE_GRAPH_DATA && window.KNOWLEDGE_GRAPH_DATA.nodes)
+          ? window.KNOWLEDGE_GRAPH_DATA.nodes.filter(function (x) {
+              return x && !x.isRoot && !x.isCategory && ['metric', 'methodology', 'business_problem'].indexOf(x.type) >= 0;
+            }).length
+          : '-';
+        el.textContent = n;
+        showModeHint();
+      }
+    }
+
+    function useOfflineOnly() {
+      return !API_BASE;
+    }
+
+    function showModeHint() {
+      var sub = document.querySelector('.search-subtitle');
+      if (!sub || sub.getAttribute('data-offline') === '1') return;
+      sub.setAttribute('data-offline', '1');
+      sub.innerHTML = '线上静态站默认使用<strong>本地关键词检索</strong>（可跳转指标/方法/业务问题）。本机启动 <code>rag/app.py</code> 后可切换语义检索。';
+    }
+
+    async function doSearch() {
+      var query = document.getElementById('searchInput').value.trim();
+      if (!query) return;
+      var resultsArea = document.getElementById('resultsArea');
+      resultsArea.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>正在搜索中...</p></div>';
+      try {
+        if (currentMode === 'search') await doSemanticSearch(query);
+        else await doAsk(query);
+      } catch (e) {
+        resultsArea.innerHTML =
+          '<div class="empty-state"><div class="empty-icon">⚠️</div><p>搜索失败：' + escapeHtml(e.message || String(e)) +
+          '</p><p style="font-size:13px;margin-top:8px;">可尝试本地检索，或检查网络后重试</p></div>';
+      }
+    }
+
+    async function doSemanticSearch(query) {
+      var results = [];
+      var fromLocal = false;
+      if (useOffline && API_BASE) {
+        try {
+          var res = await fetch(API_BASE + '/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query, n_results: 5 })
+          });
+          if (!res.ok) throw new Error('api');
+          var data = await res.json();
+          results = data.results || [];
+        } catch (e) {
+          useOffline = false;
+        }
+      }
+      if (!results.length) {
+        await warmOfflineIndex();
+        results = offlineSearch(query, 8);
+        fromLocal = true;
+        showModeHint();
+      }
+      renderSearchResults(results, fromLocal);
+    }
+
+    function renderSearchResults(results, fromLocal) {
+      var resultsArea = document.getElementById('resultsArea');
+      if (!results.length) {
+        resultsArea.innerHTML = '<div class="empty-state"><div class="empty-icon">🔍</div><p>没有找到相关结果</p></div>';
         return;
       }
-
-      let html = `
-        <div class="results-section">
-          <div class="results-header">
-            <div class="results-count">找到 <strong>${data.total}</strong> 个相关结果</div>
-          </div>
-      `;
-
-      data.results.forEach((result, index) => {
-        const similarityPercent = (result.similarity * 100).toFixed(1);
-        html += `
-          <div class="result-card" onclick="window.open('${result.url}', '_blank')">
-            <div class="result-header">
-              <h3 class="result-title">${result.title}</h3>
-              <span class="result-score">相似度 ${similarityPercent}%</span>
-            </div>
-            <span class="result-category">${result.category}</span>
-            <p class="result-summary">${result.summary}</p>
-          </div>
-        `;
+      var html = '<div class="results-section"><div class="results-header"><div class="results-count">找到 <strong>' +
+        results.length + '</strong> 个相关结果' + (fromLocal ? '（本地检索）' : '') + '</div></div>';
+      results.forEach(function (result) {
+        var similarityPercent = ((result.similarity || 0) * 100).toFixed(1);
+        html +=
+          '<a class="result-card" href="' + escapeHtml(result.url) + '" style="display:block;text-decoration:none;color:inherit;">' +
+          '<div class="result-header"><h3 class="result-title">' + escapeHtml(result.title) + '</h3>' +
+          '<span class="result-score">相关度 ' + similarityPercent + '%</span></div>' +
+          '<span class="result-category">' + escapeHtml(result.category || '') + '</span>' +
+          '<p class="result-summary">' + escapeHtml(result.summary || '') + '</p></a>';
       });
-
       html += '</div>';
       resultsArea.innerHTML = html;
     }
 
-    // 智能问答
     async function doAsk(question) {
-      const res = await fetch(`${API_BASE}/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question, n_results: 3 })
+      var payload = null;
+      if (useOffline && API_BASE) {
+        try {
+          var res = await fetch(API_BASE + '/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question: question, n_results: 3 })
+          });
+          if (!res.ok) throw new Error('api');
+          payload = await res.json();
+        } catch (e) {
+          useOffline = false;
+        }
+      }
+      if (!payload) {
+        await warmOfflineIndex();
+        payload = offlineAsk(question);
+        showModeHint();
+      }
+      renderAsk(payload);
+    }
+
+    function renderAsk(data) {
+      var resultsArea = document.getElementById('resultsArea');
+      var html =
+        '<div class="answer-section"><div class="answer-card">' +
+        '<div class="answer-label">💡 回答</div>' +
+        '<div class="answer-text">' + escapeHtml(data.answer || '').replace(/\n/g, '<br>') + '</div>' +
+        '<div class="answer-sources"><div class="sources-title">📚 参考来源</div>';
+      (data.sources || []).forEach(function (source, index) {
+        var similarityPercent = ((source.similarity || 0) * 100).toFixed(1);
+        html +=
+          '<a class="source-item" href="' + escapeHtml(source.url) + '" style="display:flex;text-decoration:none;color:inherit;">' +
+          '<span class="source-title">' + (index + 1) + '. ' + escapeHtml(source.title) + '</span>' +
+          '<span class="source-score">' + similarityPercent + '%</span></a>';
       });
-
-      const data = await res.json();
-      const resultsArea = document.getElementById('resultsArea');
-
-      let html = `
-        <div class="answer-section">
-          <div class="answer-card">
-            <div class="answer-label">💡 回答</div>
-            <div class="answer-text">${escapeHtml(data.answer)}</div>
-            
-            <div class="answer-sources">
-              <div class="sources-title">📚 参考来源</div>
-      `;
-
-      data.sources.forEach((source, index) => {
-        const similarityPercent = (source.similarity * 100).toFixed(1);
-        html += `
-          <div class="source-item" onclick="window.open('${source.url}', '_blank')" style="cursor: pointer;">
-            <span class="source-title">${index + 1}. ${source.title}</span>
-            <span class="source-score">${similarityPercent}%</span>
-          </div>
-        `;
-      });
-
-      html += `
-            </div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-top: 16px;">
-              ${data.note || ''}
-            </p>
-          </div>
-        </div>
-      `;
-
+      html += '</div><p style="font-size:12px;color:var(--text-muted);margin-top:16px;">' +
+        escapeHtml(data.note || '') + '</p></div></div>';
       resultsArea.innerHTML = html;
     }
 
-    // HTML转义
     function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
+      var div = document.createElement('div');
+      div.textContent = text == null ? '' : String(text);
       return div.innerHTML;
     }
   </script>
-  <script src="../common.js"></script>
+  <script src="../common.js?v=10"></script>
 </body>
 </html>
