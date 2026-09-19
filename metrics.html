@@ -431,6 +431,32 @@
       color: var(--warning);
     }
 
+    /* 业务场景标签（可点击速查） */
+    .metric-tag.metric-scene {
+      background: rgba(56, 189, 248, 0.13);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .metric-tag.metric-scene::before {
+      content: "#";
+      opacity: 0.65;
+    }
+
+    .metric-tag.metric-scene:hover {
+      background: rgba(56, 189, 248, 0.28);
+      transform: translateY(-1px);
+    }
+
+    .metric-scene-note {
+      margin: -12px 0 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
     /* 分类区块 */
     .category-section {
       margin-bottom: 48px;
@@ -573,7 +599,7 @@
         </div>
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" placeholder="搜索指标名称、定义、公式、#标签..." id="searchInput" />
+          <input type="text" placeholder="搜索指标名称、定义、公式、#标签、#场景（如 香港 / 合规 / 保险）..." id="searchInput" />
         </div>
       </div>
       <div class="filter-tags" id="filterTags">
@@ -719,18 +745,18 @@
       { name: "PCU（最高同时在线）", category: "game", categoryName: "游戏", icon: "🎮", desc: "Peak Concurrent Users，同时在线人数峰值，衡量游戏热度峰值。", formula: "PCU = 当日同时在线最高人数", tags: ["热度指标"] },
 
       // ===== 金融行业 =====
-      { name: "逾期率", category: "finance", categoryName: "金融", icon: "💰", desc: "逾期贷款占总贷款的比例，衡量信贷资产质量。", formula: "逾期率 = 逾期贷款余额 ÷ 总贷款余额 × 100%", tags: ["核心指标", "风控"] },
-      { name: "不良率", category: "finance", categoryName: "金融", icon: "💰", desc: "不良贷款占总贷款的比例，更严格的资产质量指标。", formula: "不良率 = 不良贷款余额 ÷ 总贷款余额 × 100%", tags: ["风控指标", "核心指标"] },
-      { name: "坏账率 / 核销率", category: "finance", categoryName: "金融", icon: "💰", desc: "最终核销的坏账占比，实际损失率。", formula: "坏账率 = 核销坏账金额 ÷ 总放款金额 × 100%", tags: ["风控指标"] },
-      { name: "拨备覆盖率", category: "finance", categoryName: "金融", icon: "💰", desc: "贷款损失准备金覆盖不良贷款的比例，风险抵御能力。", formula: "拨备覆盖率 = 贷款损失准备 ÷ 不良贷款余额 × 100%", tags: ["风控指标"] },
-      { name: "AUM（管理资产规模）", category: "finance", categoryName: "金融", icon: "💰", desc: "Assets Under Management，管理的客户资产总规模。", formula: "AUM = 所有客户管理资产之和", tags: ["规模指标", "核心指标"] },
-      { name: "CAC（获客成本）", category: "finance", categoryName: "金融", icon: "💰", desc: "获取一个新客户的平均成本，金融行业获客成本通常较高。", formula: "CAC = 营销总费用 ÷ 新增客户数", tags: ["获客指标", "通用"] },
-      { name: "转化率", category: "finance", categoryName: "金融", icon: "💰", desc: "从线索到开户/购买产品的转化比例。", formula: "转化率 = 转化客户数 ÷ 线索数 × 100%", tags: ["转化指标", "通用"] },
-      { name: "净息差（NIM）", category: "finance", categoryName: "金融", icon: "💰", desc: "Net Interest Margin，利息收入与利息支出的差额占生息资产的比例。", formula: "净息差 = (利息收入 - 利息支出) ÷ 生息资产平均余额", tags: ["核心指标", "盈利"] },
-      { name: "ROA（资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Assets，净利润与总资产的比值，资产盈利能力。", formula: "ROA = 净利润 ÷ 平均总资产 × 100%", tags: ["盈利指标", "通用"] },
-      { name: "ROE（净资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Equity，净利润与净资产的比值，股东回报水平。", formula: "ROE = 净利润 ÷ 平均净资产 × 100%", tags: ["盈利指标", "通用"] },
-      { name: "欺诈率", category: "finance", categoryName: "金融", icon: "💰", desc: "欺诈交易占总交易的比例，反欺诈效果指标。", formula: "欺诈率 = 欺诈交易数 ÷ 总交易数 × 100%", tags: ["风控指标"] },
-      { name: "交叉销售率", category: "finance", categoryName: "金融", icon: "💰", desc: "客户购买多个产品的比例，衡量客户深度运营效果。", formula: "交叉销售率 = 购买多产品客户数 ÷ 总客户数 × 100%", tags: ["运营指标"] },
+      { name: "逾期率", category: "finance", categoryName: "金融", icon: "💰", desc: "逾期贷款占总贷款的比例，衡量信贷资产质量。", formula: "逾期率 = 逾期贷款余额 ÷ 总贷款余额 × 100%", tags: ["核心指标", "风控"], scene: ["风控", "银行"] },
+      { name: "不良率", category: "finance", categoryName: "金融", icon: "💰", desc: "不良贷款占总贷款的比例，更严格的资产质量指标。", formula: "不良率 = 不良贷款余额 ÷ 总贷款余额 × 100%", tags: ["风控指标", "核心指标"], scene: ["风控", "银行"] },
+      { name: "坏账率 / 核销率", category: "finance", categoryName: "金融", icon: "💰", desc: "最终核销的坏账占比，实际损失率。", formula: "坏账率 = 核销坏账金额 ÷ 总放款金额 × 100%", tags: ["风控指标"], scene: ["风控", "银行"] },
+      { name: "拨备覆盖率", category: "finance", categoryName: "金融", icon: "💰", desc: "贷款损失准备金覆盖不良贷款的比例，风险抵御能力。", formula: "拨备覆盖率 = 贷款损失准备 ÷ 不良贷款余额 × 100%", tags: ["风控指标"], scene: ["风控", "银行", "合规"] },
+      { name: "AUM（管理资产规模）", category: "finance", categoryName: "金融", icon: "💰", desc: "Assets Under Management，管理的客户资产总规模。", formula: "AUM = 所有客户管理资产之和", tags: ["规模指标", "核心指标"], scene: ["财富", "资管"] },
+      { name: "CAC（获客成本）", category: "finance", categoryName: "金融", icon: "💰", desc: "获取一个新客户的平均成本，金融行业获客成本通常较高。", formula: "CAC = 营销总费用 ÷ 新增客户数", tags: ["获客指标", "通用"], scene: ["营销", "财富"] },
+      { name: "转化率", category: "finance", categoryName: "金融", icon: "💰", desc: "从线索到开户/购买产品的转化比例。", formula: "转化率 = 转化客户数 ÷ 线索数 × 100%", tags: ["转化指标", "通用"], scene: ["营销"] },
+      { name: "净息差（NIM）", category: "finance", categoryName: "金融", icon: "💰", desc: "Net Interest Margin，利息收入与利息支出的差额占生息资产的比例。", formula: "净息差 = (利息收入 - 利息支出) ÷ 生息资产平均余额", tags: ["核心指标", "盈利"], scene: ["银行"] },
+      { name: "ROA（资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Assets，净利润与总资产的比值，资产盈利能力。", formula: "ROA = 净利润 ÷ 平均总资产 × 100%", tags: ["盈利指标", "通用"], scene: ["银行"] },
+      { name: "ROE（净资产收益率）", category: "finance", categoryName: "金融", icon: "💰", desc: "Return on Equity，净利润与净资产的比值，股东回报水平。", formula: "ROE = 净利润 ÷ 平均净资产 × 100%", tags: ["盈利指标", "通用"], scene: ["银行"] },
+      { name: "欺诈率", category: "finance", categoryName: "金融", icon: "💰", desc: "欺诈交易占总交易的比例，反欺诈效果指标。", formula: "欺诈率 = 欺诈交易数 ÷ 总交易数 × 100%", tags: ["风控指标"], scene: ["风控", "支付"] },
+      { name: "交叉销售率", category: "finance", categoryName: "金融", icon: "💰", desc: "客户购买多个产品的比例，衡量客户深度运营效果。", formula: "交叉销售率 = 购买多产品客户数 ÷ 总客户数 × 100%", tags: ["运营指标"], scene: ["财富", "客户"] },
 
             // ===== 内容/短视频 =====
       { name: "DAU 日活跃用户", category: "content", categoryName: "内容/短视频", icon: "🎬", desc: "每日打开APP的独立用户数，衡量平台用户规模。", formula: "DAU = 每日打开APP的独立用户数", tags: ["核心指标", "用户规模"] },
@@ -845,12 +871,11 @@
       { name: "NRR / NDR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "净收入留存，含扩张与流失。", formula: "NDR = (期初ARR + 扩张 - 流失 - 缩减) ÷ 期初ARR × 100%", tags: ["核心指标", "收入指标"] },
       { name: "激活率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "新用户完成关键激活行为的比例。", formula: "激活率 = 完成激活用户 ÷ 注册用户 × 100%", tags: ["转化指标"] },
       { name: "功能渗透率", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "使用某功能的活跃用户占比。", formula: "功能渗透率 = 功能使用用户 ÷ 活跃用户 × 100%", tags: ["产品指标"] },
-      { name: "逾期率", category: "finance", categoryName: "金融", icon: "🏦", desc: "贷款余额中逾期部分占比。", formula: "逾期率 = 逾期余额 ÷ 贷款余额 × 100%", tags: ["风控指标", "核心指标"] },
-      { name: "不良率（NPL）", category: "finance", categoryName: "金融", icon: "🏦", desc: "不良贷款占比。", formula: "NPL = 不良贷款余额 ÷ 贷款余额 × 100%", tags: ["风控指标", "核心指标"] },
-      { name: "通过率", category: "finance", categoryName: "金融", icon: "🏦", desc: "申请中审批通过的比例。", formula: "通过率 = 通过申请数 ÷ 总申请数 × 100%", tags: ["风控指标"] },
-      { name: "首逾率", category: "finance", categoryName: "金融", icon: "🏦", desc: "首次应还即逾期的比例。", formula: "首逾率 = 首次逾期客户 ÷ 放款客户 × 100%", tags: ["风控指标"] },
-      { name: "欺诈率", category: "finance", categoryName: "金融", icon: "🏦", desc: "确认欺诈案件占比。", formula: "欺诈率 = 欺诈损失或案件 ÷ 放款规模", tags: ["风控指标"] },
-      { name: "完件率", category: "finance", categoryName: "金融", icon: "🏦", desc: "开始申请后完成资料提交的比例。", formula: "完件率 = 完件申请 ÷ 进件申请 × 100%", tags: ["转化指标"] },
+      { name: "不良贷款生成率", category: "finance", categoryName: "金融", icon: "🏦", desc: "当期新生成不良贷款占期初贷款余额的比例，衡量资产质量恶化速度。", formula: "不良生成率 = 当期新生成不良贷款 ÷ 期初贷款余额 × 100%", tags: ["风控指标", "资产质量"], scene: ["风控", "银行"] },
+      { name: "通过率", category: "finance", categoryName: "金融", icon: "🏦", desc: "申请中审批通过的比例。", formula: "通过率 = 通过申请数 ÷ 总申请数 × 100%", tags: ["风控指标"], scene: ["风控"] },
+      { name: "首逾率", category: "finance", categoryName: "金融", icon: "🏦", desc: "首次应还即逾期的比例。", formula: "首逾率 = 首次逾期客户 ÷ 放款客户 × 100%", tags: ["风控指标"], scene: ["风控"] },
+      { name: "欺诈损失率", category: "finance", categoryName: "金融", icon: "🏦", desc: "确认欺诈导致的损失金额占交易规模的比例，衡量反欺诈的真实财务效果。", formula: "欺诈损失率 = 欺诈损失金额 ÷ 总交易金额 × 100%", tags: ["风控指标", "反欺诈"], scene: ["风控", "支付"] },
+      { name: "完件率", category: "finance", categoryName: "金融", icon: "🏦", desc: "开始申请后完成资料提交的比例。", formula: "完件率 = 完件申请 ÷ 进件申请 × 100%", tags: ["转化指标"], scene: ["营销", "风控"] },
       { name: "新手次留", category: "game", categoryName: "游戏", icon: "🎮", desc: "新玩家次日留存。", formula: "新手次留 = 次日活跃新玩家 ÷ 当日新玩家 × 100%", tags: ["留存指标", "核心指标"] },
       { name: "付费渗透率", category: "game", categoryName: "游戏", icon: "🎮", desc: "活跃玩家中付费占比。", formula: "付费渗透率 = 付费玩家 ÷ 活跃玩家 × 100%", tags: ["收入指标"] },
       { name: "在线时长", category: "game", categoryName: "游戏", icon: "🎮", desc: "玩家平均会话或日时长。", formula: "人均时长 = 总时长 ÷ 活跃用户", tags: ["活跃指标"] },
@@ -929,7 +954,7 @@
       { name: "活动 ROI", category: "game", categoryName: "游戏", icon: "🎮", desc: "活动投入产出比。", formula: "活动ROI = 活动带来增量收入 ÷ 活动成本", tags: ["运营指标", "成本指标"] },
       { name: "人均时长", category: "content", categoryName: "内容/短视频", icon: "📱", desc: "活跃用户平均使用/观看时长。", formula: "人均时长 = 总时长 ÷ 活跃用户", tags: ["活跃指标", "核心指标"] },
       { name: "净新增MRR", category: "saas", categoryName: "SaaS", icon: "☁️", desc: "本期 MRR 净增长（新签+扩容-缩减-流失）。", formula: "净新增MRR = New + Expansion - Contraction - Churn", tags: ["收入指标", "核心指标"] },
-      { name: "开户数", category: "finance", categoryName: "金融", icon: "💰", desc: "统计期新开户数量。", formula: "开户数 = 新开立账户数", tags: ["增长指标"] },
+      { name: "开户数", category: "finance", categoryName: "金融", icon: "💰", desc: "统计期新开户数量。", formula: "开户数 = 新开立账户数", tags: ["增长指标"], scene: ["银行", "客户"] },
       { name: "铺货率", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "目标网点中完成铺货的比例。", formula: "铺货率 = 已铺货网点数 ÷ 目标网点数 × 100%", tags: ["渠道指标", "核心指标"] },
       { name: "网点数", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "覆盖或合作的终端网点数量。", formula: "网点数 = 期末有效合作网点数", tags: ["渠道指标"] },
       { name: "渠道占比", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "某渠道销售额占总销售额比例。", formula: "渠道占比 = 渠道销售额 ÷ 总销售额 × 100%", tags: ["渠道指标"] },
@@ -984,21 +1009,62 @@
       { name: "下单转化率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「下单转化率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "下单转化率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
       { name: "平均停留时长", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「平均停留时长」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "平均停留时长 = 平均(结束时间 − 开始时间)", tags: ["框架同步"] },
       { name: "退货率", category: "ecommerce", categoryName: "电商", icon: "🛒", desc: "电商常用指标「退货率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "退货率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "AUM 管理资产规模", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「AUM 管理资产规模」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "AUM 管理资产规模 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "CAC 获客成本", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「CAC 获客成本」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "CAC 获客成本 = 相关成本合计 ÷ 对应规模口径", tags: ["框架同步"] },
-      { name: "ROA 资产收益率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「ROA 资产收益率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ROA 资产收益率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "ROE 净资产收益率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「ROE 净资产收益率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "ROE 净资产收益率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "中间业务收入", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「中间业务收入」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "中间业务收入 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "产品销量", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「产品销量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "产品销量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "可疑交易数", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「可疑交易数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "可疑交易数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "合规检查通过率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「合规检查通过率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "合规检查通过率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "平均持有期", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「平均持有期」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "平均持有期 = 按业务定义的标准统计口径", tags: ["框架同步"] },
-      { name: "户均资产", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「户均资产」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "户均资产 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "案件损失率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「案件损失率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "案件损失率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "活跃用户数", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「活跃用户数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "活跃用户数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
-      { name: "激活率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「激活率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "激活率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "赎回率", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「赎回率」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "赎回率 = 分子 ÷ 分母 × 100%（按业务口径定义分子分母）", tags: ["框架同步"] },
-      { name: "风险敞口", category: "finance", categoryName: "金融", icon: "💰", desc: "金融常用指标「风险敞口」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "风险敞口 = 按业务定义的标准统计口径", tags: ["框架同步"] },
+      { name: "AUM 净流入（NNA）", category: "finance", categoryName: "金融", icon: "💰", desc: "剔除市场涨跌后，客户资金净申购带来的资产增量，是财富管理真实增长的核心指标。", formula: "AUM 净流入 = 当期申购金额 − 当期赎回金额（不含市值变动）", tags: ["规模指标", "核心指标"], scene: ["财富", "资管", "跨境"] },
+      { name: "LTV / CAC 比", category: "finance", categoryName: "金融", icon: "💰", desc: "客户生命周期价值与获客成本的比值，衡量获客投入是否值得；通常 > 3 才算健康。", formula: "LTV/CAC = 客户生命周期价值 ÷ 获客成本", tags: ["价值指标", "获客指标"], scene: ["财富", "营销"] },
+      { name: "RAROC 风险调整资本回报率", category: "finance", categoryName: "金融", icon: "💰", desc: "风险调整后收益与经济资本的比值，衡量单位风险占用的回报，是风险定价的基准。", formula: "RAROC = (收入 − 资金成本 − 运营成本 − 预期损失) ÷ 经济资本", tags: ["盈利指标", "风控指标", "核心指标"], scene: ["银行", "风控"] },
+      { name: "RORWA 风险加权资产收益率", category: "finance", categoryName: "金融", icon: "💰", desc: "净利润与风险加权资产的比值，反映资本使用效率，常用于同业对标。", formula: "RORWA = 净利润 ÷ 平均风险加权资产 RWA × 100%", tags: ["盈利指标", "资本指标"], scene: ["银行"] },
+      { name: "中间业务收入占比", category: "finance", categoryName: "金融", icon: "💰", desc: "手续费及佣金净收入占营业收入的比重，反映非息收入与多元化盈利能力。", formula: "中间业务收入占比 = 手续费及佣金净收入 ÷ 营业收入 × 100%", tags: ["盈利指标", "结构指标"], scene: ["银行"] },
+      { name: "客户流失率", category: "finance", categoryName: "金融", icon: "💰", desc: "一定周期内资产清零或长期无交易的客户占比，是财富管理与零售银行的关键预警指标。", formula: "客户流失率 = 期内流失客户数 ÷ 期初客户数 × 100%", tags: ["留存指标", "预警指标"], scene: ["客户", "财富"] },
+      { name: "可疑交易数", category: "finance", categoryName: "金融", icon: "💰", desc: "反洗钱交易监控系统识别出的可疑交易告警数量，反映监控规则的触发规模与调查负荷。", formula: "可疑交易数 = 期内触发监控规则的告警笔数（按客户 / 案件去重后）", tags: ["合规指标", "风控指标"], scene: ["合规", "风控"] },
+      { name: "合规检查通过率", category: "finance", categoryName: "金融", icon: "💰", desc: "监管检查或内部合规检查中一次通过的检查项比例，反映合规管理水平。", formula: "合规检查通过率 = 一次通过检查项数 ÷ 检查项总数 × 100%", tags: ["合规指标"], scene: ["合规"] },
+      { name: "平均持有期", category: "finance", categoryName: "金融", icon: "💰", desc: "客户持有理财产品从买入到赎回的平均天数，反映产品期限匹配度与客户黏性。", formula: "平均持有期 = Σ 单笔持有天数 ÷ 赎回笔数", tags: ["运营指标", "留存指标"], scene: ["财富", "客户"] },
+      { name: "户均资产", category: "finance", categoryName: "金融", icon: "💰", desc: "客户平均管理资产规模，衡量客户质量与分层经营成效。", formula: "户均资产 = 期末 AUM ÷ 有效客户数", tags: ["规模指标", "客户指标"], scene: ["财富", "客户"] },
+      { name: "告警误报率 FPR", category: "finance", categoryName: "金融", icon: "💰", desc: "反洗钱交易监控告警中被判定为无效的比例，是规则调优的核心指标。", formula: "告警误报率 = 无效告警数 ÷ 总告警数 × 100%", tags: ["合规指标", "风控指标"], scene: ["合规", "风控"] },
+      { name: "额度使用率", category: "finance", categoryName: "金融", icon: "💰", desc: "已用授信额度占总授信额度的比例，反映客户杠杆水平与潜在敞口。", formula: "额度使用率 = 已用额度 ÷ 已批授信额度 × 100%", tags: ["风控指标", "额度管理"], scene: ["风控", "支付"] },
+      { name: "赎回率", category: "finance", categoryName: "金融", icon: "💰", desc: "理财产品当期被赎回金额占产品规模的比例，反映资金稳定性与产品竞争力。", formula: "赎回率 = 当期赎回金额 ÷ 期初产品规模 × 100%", tags: ["运营指标", "留存指标"], scene: ["资管", "财富"] },
+      { name: "风险敞口", category: "finance", categoryName: "金融", icon: "💰", desc: "在信用、市场、操作等风险下可能发生损失的资产总额，需按产品与交易对手分层统计。", formula: "风险敞口 = 表内余额 + 表外敞口 × 信用转换系数 CCF", tags: ["风控指标", "核心指标"], scene: ["风控", "银行"] },
+      { name: "风险加权资产 RWA", category: "finance", categoryName: "金融", icon: "💰", desc: "按监管风险权重加权后的资产规模，是资本充足率的分母，变动需拆为规模/结构/方法三因子。", formula: "RWA = 信用风险 RWA + 市场风险 RWA + 操作风险 RWA", tags: ["资本指标", "监管指标"], scene: ["银行", "合规"] },
+      // ===== 金融：信用风险量化与模型评估补齐 =====
+      { name: "PD 违约概率", category: "finance", categoryName: "金融", icon: "🏦", desc: "借款人在观察期内发生违约的概率，是信贷定价、拨备与资本计量的基础参数。", formula: "PD = 观察期内违约客户数 ÷ 期初正常客户数 × 100%", tags: ["风控指标", "信用风险", "核心指标"], scene: ["风控", "模型"] },
+      { name: "LGD 违约损失率", category: "finance", categoryName: "金融", icon: "🏦", desc: "违约发生后最终无法收回的敞口比例，受抵押品、清偿顺序与清收周期影响。", formula: "LGD = 1 − 回收率 = 损失金额 ÷ 违约敞口 EAD", tags: ["风控指标", "信用风险"], scene: ["风控", "模型"] },
+      { name: "EAD 违约风险敞口", category: "finance", categoryName: "金融", icon: "🏦", desc: "违约时点未偿还的总额度，含已用额度与已批未用额度按信用转换系数折算部分。", formula: "EAD = 表内余额 + 表外敞口 × CCF", tags: ["风控指标", "信用风险"], scene: ["风控", "模型"] },
+      { name: "ECL 预期信用损失", category: "finance", categoryName: "金融", icon: "🏦", desc: "IFRS 9 下的减值计提基础，分 12 个月 ECL 与全周期 ECL，按信用风险三阶段计量。", formula: "ECL = Σ (PD × LGD × EAD × 折现因子)", tags: ["监管指标", "减值", "核心指标"], scene: ["风控", "合规", "银行"] },
+      { name: "迁徙率", category: "finance", categoryName: "金融", icon: "🏦", desc: "不同逾期阶段之间客户迁移的比例，用于预测未来不良生成与拨备需求。", formula: "迁徙率 = 本期迁移至下一阶段的金额 ÷ 上期该阶段金额 × 100%", tags: ["风控指标", "资产质量"], scene: ["风控", "银行"] },
+      { name: "Vintage 账龄逾期率", category: "finance", categoryName: "金融", icon: "🏦", desc: "按放款月份分群、按账龄观察逾期率曲线，剥离客群与时间混杂效应。", formula: "账龄逾期率 = 第 n 期逾期余额 ÷ 该批次放款金额 × 100%", tags: ["风控指标", "资产质量"], scene: ["风控", "模型"] },
+      { name: "WOE 证据权重", category: "finance", categoryName: "金融", icon: "🏦", desc: "变量分箱后好坏样本占比的对数比，将连续变量转为单调编码，提升逻辑回归可解释性。", formula: "WOE = ln(坏样本占比 ÷ 好样本占比)", tags: ["模型指标", "特征工程"], scene: ["模型", "风控"] },
+      { name: "IV 信息值", category: "finance", categoryName: "金融", icon: "🏦", desc: "衡量特征预测力的筛选标准：<0.02 无用、0.1–0.3 中等、>0.5 需警惕信息泄漏。", formula: "IV = Σ (坏占比 − 好占比) × WOE", tags: ["模型指标", "特征工程"], scene: ["模型", "风控"] },
+      { name: "KS 统计量", category: "finance", categoryName: "金融", icon: "🏦", desc: "评分卡分数的最大区分能力，风控常用门槛 KS > 0.3，需与 AUC 结合判断。", formula: "KS = max|累计好样本% − 累计坏样本%|", tags: ["模型指标", "区分能力"], scene: ["模型", "风控"] },
+      { name: "AUC", category: "finance", categoryName: "金融", icon: "🏦", desc: "ROC 曲线下面积，衡量模型整体排序能力；0.5 为随机，0.7 以上为较好。", formula: "AUC = ∫ ROC 曲线下方面积", tags: ["模型指标", "区分能力"], scene: ["模型", "风控"] },
+      { name: "Gini 系数", category: "finance", categoryName: "金融", icon: "🏦", desc: "由 AUC 换算的区分能力指标，常用于与国际同业评分卡对标。", formula: "Gini = 2 × AUC − 1", tags: ["模型指标", "区分能力"], scene: ["模型", "风控"] },
+      { name: "PSI 群体稳定性指数", category: "finance", categoryName: "金融", icon: "🏦", desc: "监控分数分布随时间漂移：<0.1 稳定、0.1–0.25 关注、>0.25 预警并排查。", formula: "PSI = Σ (实际占比 − 预期占比) × ln(实际 ÷ 预期)", tags: ["模型指标", "模型监控"], scene: ["模型"] },
+      { name: "CSI 特征稳定性指数", category: "finance", categoryName: "金融", icon: "🏦", desc: "逐特征做稳定性监控，用于定位发生漂移的具体入模变量。", formula: "CSI = Σ (当期占比 − 基准占比) × ln(当期 ÷ 基准)", tags: ["模型指标", "模型监控"], scene: ["模型"] },
+      // ===== 金融：资本、流动性与合规补齐 =====
+      { name: "CET1 核心一级资本充足率", category: "finance", categoryName: "金融", icon: "🏛️", desc: "Basel III 最核心的资本监管指标，含最低要求、储备资本、逆周期缓冲与 D-SIB 附加资本。", formula: "CET1 比率 = 核心一级资本 ÷ 风险加权资产 RWA × 100%", tags: ["监管指标", "资本指标", "核心指标"], scene: ["银行", "合规"] },
+      { name: "资本充足率 CAR", category: "finance", categoryName: "金融", icon: "🏛️", desc: "总监管资本对风险加权资产的比率，覆盖信用、市场、操作三类风险。", formula: "CAR = 总监管资本 ÷ RWA × 100%", tags: ["监管指标", "资本指标"], scene: ["银行", "合规"] },
+      { name: "杠杆比率 Leverage Ratio", category: "finance", categoryName: "金融", icon: "🏛️", desc: "不依赖风险权重的资本约束，防止模型套利导致实际杠杆过高。", formula: "杠杆比率 = 一级资本 ÷ 表内外总敞口 × 100%", tags: ["监管指标", "资本指标"], scene: ["银行", "合规"] },
+      { name: "LCR 流动性覆盖率", category: "finance", categoryName: "金融", icon: "🏛️", desc: "压力情景下 30 天流动性是否充足，HKMA 要求不低于 100%。", formula: "LCR = 优质流动性资产 HQLA ÷ 未来 30 天净现金流出 × 100%", tags: ["监管指标", "流动性风险", "核心指标"], scene: ["银行", "合规"] },
+      { name: "NSFR 净稳定资金比率", category: "finance", categoryName: "金融", icon: "🏛️", desc: "一年期结构性流动性匹配度，要求不低于 100%，反映「短钱长用」程度。", formula: "NSFR = 可用稳定资金 ASF ÷ 所需稳定资金 RSF × 100%", tags: ["监管指标", "流动性风险"], scene: ["银行", "合规"] },
+      { name: "存贷比", category: "finance", categoryName: "金融", icon: "🏛️", desc: "贷款余额与存款余额的比值，衡量资金运用程度与流动性压力。", formula: "存贷比 = 各项贷款余额 ÷ 各项存款余额 × 100%", tags: ["流动性风险", "经营指标"], scene: ["银行"] },
+      { name: "KYC 完成率", category: "finance", categoryName: "金融", icon: "🔍", desc: "已完成客户尽职调查（CDD）的存量客户比例，未完成客户需限制交易。", formula: "KYC 完成率 = 已完成 CDD 客户数 ÷ 存量客户数 × 100%", tags: ["合规指标", "AML"], scene: ["合规", "香港"] },
+      { name: "制裁筛查命中率", category: "finance", categoryName: "金融", icon: "🔍", desc: "制裁与 PEP 筛查中真实命中占全部命中的比例，过低说明匹配规则过宽。", formula: "制裁筛查命中率 = 真实命中数 ÷ 筛查命中数 × 100%", tags: ["合规指标", "AML"], scene: ["合规"] },
+      { name: "STR 上报数", category: "finance", categoryName: "金融", icon: "🔍", desc: "期内向联合财富情报组（JFIU）提交的可疑交易报告数量，结合案均工时评估合规产能。", formula: "STR 上报数 = 期内提交的可疑交易报告份数", tags: ["合规指标", "AML"], scene: ["合规", "香港"] },
+      { name: "监管报送及时率", category: "finance", categoryName: "金融", icon: "🔍", desc: "按 HKMA/SFC 要求按期完成监管报送的比例，是合规基础能力指标。", formula: "监管报送及时率 = 按时报送次数 ÷ 应报送次数 × 100%", tags: ["合规指标", "监管指标"], scene: ["合规", "香港", "数据治理"] },
+      // ===== 金融：保险 / 证券资管 / 支付 / 财富管理补齐 =====
+      { name: "保费收入 GWP", category: "finance", categoryName: "金融", icon: "🛡️", desc: "保险公司的毛保费收入，需拆分为新单保费与续期保费，衡量规模与结构。", formula: "GWP = 新单保费 + 续期保费", tags: ["保险指标", "规模指标"], scene: ["保险"] },
+      { name: "赔付率", category: "finance", categoryName: "金融", icon: "🛡️", desc: "赔付支出与已赚保费的比值，是承保盈利能力的第一要素。", formula: "赔付率 = 赔付支出 ÷ 已赚保费 × 100%", tags: ["保险指标", "核心指标"], scene: ["保险"] },
+      { name: "综合成本率 COR", category: "finance", categoryName: "金融", icon: "🛡️", desc: "赔付率与费用率之和，低于 100% 代表承保业务盈利。", formula: "COR = 赔付率 + 费用率", tags: ["保险指标", "盈利指标"], scene: ["保险"] },
+      { name: "退保率", category: "finance", categoryName: "金融", icon: "🛡️", desc: "保单在期内被退保的比例，过高会侵蚀利润并影响现金流。", formula: "退保率 = 期内退保保单数 ÷ 期初有效保单数 × 100%", tags: ["保险指标", "留存指标"], scene: ["保险", "客户"] },
+      { name: "13 个月保单继续率", category: "finance", categoryName: "金融", icon: "🛡️", desc: "保单在第 13 个月仍继续缴费的比例，衡量留存与渠道质量的关键指标。", formula: "13 个月继续率 = 第 13 个月仍有效保单数 ÷ 对应批次保单数 × 100%", tags: ["保险指标", "留存指标", "核心指标"], scene: ["保险", "客户"] },
+      { name: "新业务价值 NBV", category: "finance", categoryName: "金融", icon: "🛡️", desc: "剔除资本成本后的新单未来利润现值，是寿险公司最重要的成长指标。", formula: "NBV = 新单未来可分配利润现值 − 资本成本", tags: ["保险指标", "价值指标"], scene: ["保险"] },
+      { name: "夏普比率", category: "finance", categoryName: "金融", icon: "📈", desc: "每承担一单位波动率所获得的超额收益，衡量投资组合的风险调整收益。", formula: "夏普比率 = (组合收益率 − 无风险利率) ÷ 收益率标准差", tags: ["投资指标", "风险调整收益"], scene: ["资管"] },
+      { name: "最大回撤", category: "finance", categoryName: "金融", icon: "📈", desc: "资产净值从历史最高点到最低点的最大跌幅，反映极端损失与客户体验。", formula: "最大回撤 = max(峰值净值 − 谷值净值) ÷ 峰值净值 × 100%", tags: ["投资指标", "风险指标"], scene: ["资管"] },
+      { name: "跟踪误差", category: "finance", categoryName: "金融", icon: "📈", desc: "组合收益与基准收益偏离程度的标准差，被动指数产品的核心考核指标。", formula: "跟踪误差 = std(组合收益 − 基准收益)", tags: ["投资指标", "被动管理"], scene: ["资管"] },
+      { name: "换手率", category: "finance", categoryName: "金融", icon: "📈", desc: "投资组合的证券买卖频繁程度，换手率过高会抬升交易成本与税负。", formula: "换手率 = min(买入金额, 卖出金额) ÷ 平均净资产 × 100%", tags: ["投资指标", "运营指标"], scene: ["资管"] },
+      { name: "授权率", category: "finance", categoryName: "金融", icon: "💳", desc: "支付或信用卡交易授权通过的比例，是风险控制与客户体验的平衡点。", formula: "授权率 = 授权通过笔数 ÷ 授权请求笔数 × 100%", tags: ["支付指标", "核心指标"], scene: ["支付", "风控"] },
+      { name: "拒付率 Chargeback Rate", category: "finance", categoryName: "金融", icon: "💳", desc: "持卡人发起拒付或争议交易的占比，过高会触发卡组织处罚与商户整改。", formula: "拒付率 = 拒付交易笔数 ÷ 总交易笔数 × 100%", tags: ["支付指标", "风控指标"], scene: ["支付", "风控"] },
+      { name: "笔均交易额", category: "finance", categoryName: "金融", icon: "💳", desc: "单笔交易的平均金额，用于识别大额异常与客群消费能力结构。", formula: "笔均交易额 = 交易总金额 ÷ 交易笔数", tags: ["支付指标", "结构指标"], scene: ["支付"] },
+      { name: "钱包份额", category: "finance", categoryName: "金融", icon: "💎", desc: "客户在本机构持有的资产占其可投资总资产的比例，衡量客户关系深度。", formula: "钱包份额 = 本机构 AUM ÷ 客户可投资总资产 × 100%", tags: ["财富管理", "客户指标"], scene: ["财富", "客户"] },
+      { name: "客均产品数", category: "finance", categoryName: "金融", icon: "💎", desc: "每位客户平均持有的产品数量，是交叉销售成效的核心结果指标。", formula: "客均产品数 = 产品持有总笔数 ÷ 有效客户数", tags: ["财富管理", "交叉销售"], scene: ["财富", "客户"] },
       { name: "SKU 数", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「SKU 数」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "SKU 数 = 统计期内按统一口径汇总", tags: ["框架同步"] },
       { name: "销售额", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「销售额」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "销售额 = 按业务定义的标准统计口径", tags: ["框架同步"] },
       { name: "销量", category: "fmcg", categoryName: "快消", icon: "🧴", desc: "快消常用指标「销量」，用于经营监控与问题定位；口径需与报表体系统一。", formula: "销量 = 统计期内按统一口径汇总", tags: ["框架同步"] },
@@ -1427,6 +1493,7 @@
         m.name + ' ' + m.desc + ' ' + m.formula + ' ' +
         (m.tags || []).join(' ') + ' ' +
         (m.logicTags || []).join(' ') + ' ' +
+        (m.scene || []).join(' ') + ' ' +
         m.categoryName
       ).toLowerCase();
       var tokens = String(search).toLowerCase().trim().split(/\s+/).filter(Boolean);
@@ -1545,10 +1612,36 @@
         var front = card.querySelector('.metric-face-front');
         if (front) {
           front.addEventListener('click', function (e) {
-            if (e.target.closest('.metric-flip-btn')) return;
+            if (e.target.closest('.metric-flip-btn') || e.target.closest('.metric-scene')) return;
             if (m) askJumpToGraph(m);
           });
         }
+
+        // 场景标签：点击按该场景速查（并自动切换到指标所属主分类）
+        card.querySelectorAll('.metric-scene').forEach(function (sceneEl) {
+          sceneEl.addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var scene = sceneEl.getAttribute('data-scene') || '';
+            if (!scene) return;
+            var cat = card.getAttribute('data-category');
+            if (browseMode !== 'industry') {
+              setBrowseMode('industry');
+            }
+            if (cat && currentCategory !== cat) {
+              currentCategory = cat;
+              document.querySelectorAll('#filterTags .filter-tag').forEach(function (t) {
+                t.classList.toggle('active', t.getAttribute('data-category') === cat);
+              });
+            }
+            var input = document.getElementById('searchInput');
+            if (input) input.value = scene;
+            currentSearch = scene.trim().toLowerCase();
+            renderMetrics();
+            var top = document.getElementById('metricsContainer');
+            if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        });
 
         var kgBtn = card.querySelector('.metric-back-kg');
         if (kgBtn) {
@@ -1607,6 +1700,9 @@
               <div class="metric-tags">
                 ${metric.tags.map((t, i) => `<span class="metric-tag ${tagColors[i % tagColors.length]}">${t}</span>`).join('')}
               </div>
+              ${(metric.scene && metric.scene.length) ? `<div class="metric-tags" style="margin-top:8px;">
+                ${metric.scene.map(s => `<span class="metric-tag metric-scene" data-scene="${String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}" title="点击按该场景速查">${highlight(String(s).replace(/</g, '&lt;'))}</span>`).join('')}
+              </div>` : ''}
               <div class="metric-card-hint">正面点击 → 知识图谱 · 右下角翻面看用途</div>
               <button type="button" class="metric-flip-btn" title="翻面查看详情" aria-label="翻面查看详情">↻</button>
             </div>

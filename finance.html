@@ -15,6 +15,74 @@
       --theme-color-rgb: 16, 185, 129;
       --theme-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
     }
+
+    /* 香港 vs 内地 对照表 */
+    .cmp-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--glass-border);
+      border-radius: 14px;
+      background: var(--glass);
+    }
+
+    .cmp-table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .cmp-table th,
+    .cmp-table td {
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.65;
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .cmp-table thead th {
+      background: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--theme-color);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .cmp-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .cmp-table tbody tr:hover {
+      background: rgba(var(--theme-color-rgb), 0.05);
+    }
+
+    .cmp-table th.cmp-dim,
+    .cmp-table td.cmp-dim {
+      white-space: nowrap;
+      font-weight: 600;
+      color: var(--text);
+      width: 1%;
+    }
+
+    .cmp-table td.cmp-hk {
+      color: #38bdf8;
+    }
+
+    .cmp-table code,
+    .cmp-table strong {
+      font-size: 12px;
+    }
+
+    .cmp-note {
+      margin: 12px 0 0;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 720px) {
+      .cmp-table { font-size: 12px; }
+      .cmp-table th, .cmp-table td { padding: 10px; }
+    }
   </style>
 </head>
 <body data-industry="finance">
@@ -54,23 +122,23 @@
       <div class="page-title-row">
         <div class="page-title-left">
           <h1 class="page-title">金融行业</h1>
-          <p class="page-subtitle">银行、证券、保险等金融领域的数据分析体系，风控、营销、运营三大核心方向</p>
+          <p class="page-subtitle">银行、证券、保险、资管、支付等金融领域的数据分析体系；覆盖风控、营销、运营三大方向，并补充<strong>香港金融监管与合规</strong>、<strong>Basel III / IFRS 9</strong>、<strong>AML/KYC</strong> 等本地化知识</p>
         </div>
         <div class="page-stats">
           <div class="stat-item">
-            <div class="stat-number">28+</div>
-            <div class="stat-label">核心指标</div>
+            <div class="stat-number">70+</div>
+            <div class="stat-label">覆盖指标</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">6</div>
-            <div class="stat-label">分析维度</div>
+            <div class="stat-number">11</div>
+            <div class="stat-label">知识章节</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">4</div>
+            <div class="stat-number">8</div>
             <div class="stat-label">分析框架</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number">5</div>
+            <div class="stat-number">8</div>
             <div class="stat-label">典型场景</div>
           </div>
         </div>
@@ -221,7 +289,7 @@
           <div class="metric-card">
             <h3 class="metric-name">拨备覆盖率</h3>
             <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
-            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例；内地监管参考线 ≥ 150%，香港按 IFRS 9 计提、无统一比例要求</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">风险敞口</h3>
@@ -400,7 +468,7 @@
           <div class="metric-card">
             <h3 class="metric-name">拨备覆盖率</h3>
             <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
-            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例；内地监管参考线 ≥ 150%，香港按 IFRS 9 计提、无统一比例要求</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">风险敞口</h3>
@@ -575,7 +643,7 @@
           <div class="metric-card">
             <h3 class="metric-name">拨备覆盖率</h3>
             <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
-            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例；内地监管参考线 ≥ 150%，香港按 IFRS 9 计提、无统一比例要求</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">风险敞口</h3>
@@ -664,7 +732,7 @@
           <div class="metric-card">
             <h3 class="metric-name">拨备覆盖率</h3>
             <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
-            <p class="metric-desc">风险准备金覆盖不良贷款的比例，监管要求 > 150%</p>
+            <p class="metric-desc">风险准备金覆盖不良贷款的比例；内地监管参考线 ≥ 150%，香港按 IFRS 9 计提、无统一比例要求</p>
           </div>
           <div class="metric-card">
             <h3 class="metric-name">风险敞口</h3>
@@ -805,7 +873,7 @@
         <span class="section-icon">🧩</span>
         金融数据分析框架
       </h2>
-      <p class="section-desc">金融行业经典的风险与运营分析方法论</p>
+      <p class="section-desc">金融行业经典的风险、合规与价值分析方法论（8 个框架）</p>
       <div class="framework-grid">
         <div class="framework-card">
           <div class="framework-icon">📊</div>
@@ -851,6 +919,50 @@
             <li>银行整体的风险与收益平衡</li>
           </ul>
         </div>
+        <div class="framework-card">
+          <div class="framework-icon">📉</div>
+          <h3 class="framework-name">IFRS 9 预期信用损失</h3>
+          <ul class="framework-list">
+            <li><strong>Stage 1</strong> - 初始确认后信用风险未显著上升，计提 12 个月 ECL</li>
+            <li><strong>Stage 2</strong> - 信用风险显著增加（SICR），计提全周期 ECL</li>
+            <li><strong>Stage 3</strong> - 已发生信用减值，全周期 ECL + 利息按净额计</li>
+            <li><strong>三要素</strong> - PD × LGD × EAD，折现后得 ECL</li>
+            <li>驱动拨备与损益波动，是香港银行财报分析的核心</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">RAROC 风险调整收益</h3>
+          <ul class="framework-list">
+            <li><strong>RAROC</strong> - 风险调整后收益 ÷ 经济资本，衡量单位风险回报</li>
+            <li><strong>RORWA</strong> - 净利润 ÷ 风险加权资产，衡量资本使用效率</li>
+            <li><strong>EVA</strong> - 税后净营业利润 − 资本成本 × 占用资本</li>
+            <li><strong>定价联动</strong> - RAROC &lt; 门槛收益率时调整定价或压缩额度</li>
+            <li>把「规模导向」转为「风险调整后的价值导向」</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🧪</div>
+          <h3 class="framework-name">评分卡开发与模型监控</h3>
+          <ul class="framework-list">
+            <li><strong>特征工程</strong> - 分箱、WOE 编码、IV 值筛选（IV &gt; 0.02 有效）</li>
+            <li><strong>建模</strong> - 逻辑回归 / GBDT，查 AUC、KS、Gini、Lift</li>
+            <li><strong>校准</strong> - 分数与违约概率一致性，看校准曲线与 Brier Score</li>
+            <li><strong>监控</strong> - 群体稳定性 PSI（&gt; 0.25 报警）、特征稳定性 CSI</li>
+            <li><strong>决策</strong> - 通过/拒绝/人工复核三档切割 + 额度与定价矩阵</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">💎</div>
+          <h3 class="framework-name">客户价值 LTV / CAC</h3>
+          <ul class="framework-list">
+            <li><strong>LTV</strong> - 客均贡献收入 × 毛利率 × 生命周期（含流失率折算）</li>
+            <li><strong>CAC</strong> - 获客总成本 ÷ 新增客户数，分渠道/产品看</li>
+            <li><strong>LTV/CAC</strong> - 健康线通常 &gt; 3，回收期 &lt; 12 个月</li>
+            <li><strong>钱包份额</strong> - 客户在本行 AUM ÷ 该客户可投资总资产</li>
+            <li><strong>客均产品数</strong> - 交叉销售深度的核心结果指标</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -864,7 +976,7 @@
       <div class="tier-grid">
         <div class="tier-card">
           <h3 class="tier-name">私人银行</h3>
-          <p class="tier-ratio">AUM > 600万</p>
+          <p class="tier-ratio">AUM > 600 万港元</p>
           <ul class="tier-features">
             <li>👑 1对1 专属理财师</li>
             <li>💎 定制化资产配置</li>
@@ -875,7 +987,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">高净值</h3>
-          <p class="tier-ratio">AUM 100-600万</p>
+          <p class="tier-ratio">AUM 100–600 万港元</p>
           <ul class="tier-features">
             <li>🎯 专属理财顾问</li>
             <li>📈 标准化资产配置</li>
@@ -886,7 +998,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">富裕客户</h3>
-          <p class="tier-ratio">AUM 20-100万</p>
+          <p class="tier-ratio">AUM 20–100 万港元</p>
           <ul class="tier-features">
             <li>📱 线上+线下服务</li>
             <li>💹 标准化理财推荐</li>
@@ -897,7 +1009,7 @@
         </div>
         <div class="tier-card">
           <h3 class="tier-name">大众客户</h3>
-          <p class="tier-ratio">AUM < 20万</p>
+          <p class="tier-ratio">AUM &lt; 20 万港元</p>
           <ul class="tier-features">
             <li>📱 纯线上自助服务</li>
             <li>💳 标准化产品</li>
@@ -942,13 +1054,625 @@
           <h3 class="scenario-name">资产配置优化</h3>
           <p class="scenario-desc">基于客户风险偏好和市场环境，优化资产配置组合，提升收益风险比</p>
         </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🧾</div>
+          <h3 class="scenario-name">保险理赔与退保分析</h3>
+          <p class="scenario-desc">监控理赔欺诈、赔付率与继续率，定位退保高发环节，优化产品与核保策略</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💳</div>
+          <h3 class="scenario-name">支付与信用卡实时风控</h3>
+          <p class="scenario-desc">授权率与拒付率监控、实时反欺诈规则调优，平衡风险损失与用户体验</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📋</div>
+          <h3 class="scenario-name">监管报送与合规监控</h3>
+          <p class="scenario-desc">按 HKMA/SFC 口径产出监管报表，做数据口径校验、报送及时率与差错率管理</p>
+        </div>
       </div>
+    </section>
+
+    <!-- 香港金融监管与市场环境 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🇭🇰</span>
+          香港金融监管与市场环境
+        </h2>
+        <span class="section-badge">本地业务必备</span>
+      </div>
+      <p class="section-desc">在香港做金融数据分析，必须清楚「谁在管、管什么、按什么口径报」。以下为面试高频考点。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🏛️</div>
+          <h3 class="method-name">四大监管机构</h3>
+          <p class="method-desc">
+            <strong>HKMA 金管局</strong>：银行、储值支付工具（SVF）、稳定币；<br />
+            <strong>SFC 证监会</strong>：证券、期货、资管、持牌法团；<br />
+            <strong>IA 保险业监管局</strong>：保险公司与中介人；<br />
+            <strong>MPFA 积金局</strong>：强积金 MPF 计划与受托人。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🏦</div>
+          <h3 class="method-name">三级银行制度</h3>
+          <p class="method-desc">
+            <strong>持牌银行</strong>：可做全面银行业务，可开储蓄/往来账户，存款金额与期限不限；<br />
+            <strong>有限制牌照银行</strong>：主要做商人银行与资本市场业务，存款额不低于 50 万港元（不限期限），最低资本 1 亿港元（约 <strong>27 家</strong>）；<br />
+            <strong>接受存款公司</strong>：仅可接受金额不低于 10 万港元、原始期限至少 3 个月的定期存款，不得做储蓄/往来，最低资本 2,500 万港元（约 <strong>12 家</strong>）。<br />
+            <strong>动态</strong>：HKMA 已于 2023 年 6 月完成三级制检讨，方向是<strong>简化为两级制</strong>——RLB 与 DTC 除最低资本外监管要求基本相同，且两者合计资产占比已不足 1%，自 2009 年起无新增 DTC 注册申请。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">💱</div>
+          <h3 class="method-name">联系汇率制度 LERS</h3>
+          <p class="method-desc">
+            港元与美元挂钩，设 <strong>7.75 强方 / 7.85 弱方</strong>兑换保证：触及 <strong>7.85 弱方</strong>时 HKMA
+            买入港元、银行体系总结余收缩、<strong>HIBOR 上升</strong>；触及 <strong>7.75 强方</strong>时卖出港元、
+            总结余扩张、<strong>HIBOR 下降</strong>。分析息差与净息差（NIM）时，必须先看懂 HIBOR 与美元利率（SOFR）的联动。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📱</div>
+          <h3 class="method-name">虚拟银行与储值支付工具</h3>
+          <p class="method-desc">
+            虚拟银行（如众安、汇立、Mox）以线上开户为主，重点看开户转化、激活率与单位经济模型；
+            储值支付工具（SVF，如 <strong>Tap &amp; Go 拍住赏</strong>、八达通、支付宝香港）需遵守
+            《支付系统及储值支付工具条例》，关注备付金覆盖率与商户交易规模。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">⚡</div>
+          <h3 class="method-name">转数快 FPS 与数字港元</h3>
+          <p class="method-desc">
+            FPS 支持手机号/邮箱/二维码即时转账，分析重点是<strong>成功率、失败原因分布、
+            平均到账时长、限额触发率</strong>；e-HKD 与 mBridge（多边央行数字货币桥）关注
+            试点交易量、对账一致性与洗钱监测能力。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🌉</div>
+          <h3 class="method-name">互联互通与财富管理</h3>
+          <p class="method-desc">
+            <strong>跨境理财通</strong>（南向/北向，额度与投资者资格）、<strong>债券通</strong>、
+            <strong>沪深港通</strong>、<strong>家族办公室</strong>与<strong>新资本投资者入境计划
+            （CIES）</strong>。分析焦点：跨境开户转化、汇兑与额度占用、AUM 净流入来源结构。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔐</div>
+          <h3 class="method-name">数据与隐私合规</h3>
+          <p class="method-desc">
+            <strong>PDPO 个人资料（私隐）条例</strong>约束客户数据的收集、使用与跨境转移；
+            金融机构还需满足 <strong>BCBS 239</strong> 风险数据聚合与报告原则，
+            并保留完整的<strong>数据血缘与审计追踪</strong>。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🌱</div>
+          <h3 class="method-name">绿色与可持续金融</h3>
+          <p class="method-desc">
+            香港绿色债券框架、HKMA 气候风险管理指引、<strong>TCFD/ISSB</strong> 披露要求。
+            分析重点是绿色资产占比、碳强度、气候情景下的信贷敞口迁移。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 金融风险全景 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🛰️</span>
+          金融风险全景与监控指标
+        </h2>
+        <span class="section-badge">八大风险</span>
+      </div>
+      <p class="section-desc">金融行业的风控不是「一个不良率」，而是多类风险各有一套指标体系与管理条线。面试时能分清边界，比只背指标更重要。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">📉</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">信用风险 Credit Risk</h3>
+            <p class="scenario-desc">交易对手不能履约带来的损失。分析链路：PD 违约概率 × LGD 违约损失率 × EAD 违约敞口 = 预期损失 EL；再看逾期率、不良率、迁徙率、拨备覆盖率与 IFRS 9 三阶段分布。</p>
+            <div class="scenario-tags">
+              <span class="tag">PD / LGD / EAD</span>
+              <span class="tag">不良率 NPL</span>
+              <span class="tag">迁徙率</span>
+              <span class="tag">拨备覆盖率</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📊</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">市场风险 Market Risk</h3>
+            <p class="scenario-desc">利率、汇率、股价、商品价格波动导致的损益波动。核心工具是 VaR / 压力 VaR / ES 预期损失、久期与凸性、Delta / Gamma 等希腊字母，以及限额占用与止损监控。</p>
+            <div class="scenario-tags">
+              <span class="tag">VaR / ES</span>
+              <span class="tag">久期 &amp; 凸性</span>
+              <span class="tag">外汇敞口</span>
+              <span class="tag">限额占用率</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">💧</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">流动性风险 Liquidity Risk</h3>
+            <p class="scenario-desc">无法以合理成本及时获得资金满足到期债务与客户提款的风险。香港银行需按 HKMA 流动性监管要求（《银行业（流动性）规则》及监管政策手册相关模块）监控 LCR 流动性覆盖率、NSFR 净稳定资金比率与期限错配缺口。</p>
+            <div class="scenario-tags">
+              <span class="tag">LCR</span>
+              <span class="tag">NSFR</span>
+              <span class="tag">流动性缺口</span>
+              <span class="tag">存贷比</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">⚙️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">操作风险 Operational Risk</h3>
+            <p class="scenario-desc">由流程、人员、系统或外部事件引发的损失。靠损失事件库、关键风险指标 KRI、风险控制自评估 RCSA 三件套管理，并做流程环节的损失归因。</p>
+            <div class="scenario-tags">
+              <span class="tag">损失事件库</span>
+              <span class="tag">KRI</span>
+              <span class="tag">RCSA</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🧮</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">模型风险 Model Risk</h3>
+            <p class="scenario-desc">模型本身失效或误用导致的决策损失。需要独立验证、模型清单与评级、定期回测与再校准、变更留痕，是评分卡与 IFRS 9 模型上线后的必答题。</p>
+            <div class="scenario-tags">
+              <span class="tag">独立验证</span>
+              <span class="tag">回测 Backtesting</span>
+              <span class="tag">PSI 监控</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🧭</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">集中度风险 Concentration Risk</h3>
+            <p class="scenario-desc">单一客户、行业、地区或产品过度集中导致的脆弱性。监管口径看单一客户敞口占比、前十大客户集中度、行业 HHI 指数与关联方敞口。</p>
+            <div class="scenario-tags">
+              <span class="tag">单一客户限额</span>
+              <span class="tag">行业集中度</span>
+              <span class="tag">HHI 指数</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🛡️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">科技与网络风险 Technology &amp; Cyber Risk</h3>
+            <p class="scenario-desc">系统故障、数据泄露、网络攻击导致的业务中断与合规处罚。HKMA 要求关键系统做业务连续性演练；指标看系统可用率、RTO/RPO 达标率、安全事件数与客户投诉。</p>
+            <div class="scenario-tags">
+              <span class="tag">系统可用率</span>
+              <span class="tag">RTO / RPO</span>
+              <span class="tag">安全事件数</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">⚖️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">合规与声誉风险 Compliance &amp; Reputation</h3>
+            <p class="scenario-desc">违反法规、监管要求或客户期望导致的处罚与信任损失。指标看监管处罚次数与金额、整改完成率、报送及时率、客户投诉率与投诉升级率。</p>
+            <div class="scenario-tags">
+              <span class="tag">监管处罚数</span>
+              <span class="tag">整改完成率</span>
+              <span class="tag">投诉率</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 监管资本与合规体系 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🏗️</span>
+          监管资本与合规体系
+        </h2>
+        <span class="section-badge">Basel III / IFRS 9</span>
+      </div>
+      <p class="section-desc">银行与保险的核心监管框架。香港金管局已全面实施 Basel III，并配合 IFRS 9 计提预期信用损失。</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3 class="metric-name">CET1 核心一级资本充足率</h3>
+          <div class="metric-formula">核心一级资本 ÷ 风险加权资产 RWA</div>
+          <p class="metric-desc">Basel III 最核心的资本监管指标，含最低要求 + 储备资本 + 逆周期缓冲，香港还叠加 D-SIB 附加资本</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">资本充足率 CAR</h3>
+          <div class="metric-formula">总监管资本 ÷ 风险加权资产 RWA</div>
+          <p class="metric-desc">覆盖信用、市场、操作风险加权后的资本充足度；分析时把 RWA 变动拆成「规模 / 结构 / 方法」三因子</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">杠杆比率 Leverage Ratio</h3>
+          <div class="metric-formula">一级资本 ÷ 表内外总敞口</div>
+          <p class="metric-desc">不依赖风险权重的「兜底」资本约束，防止模型套利导致实际杠杆过高</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LCR 流动性覆盖率</h3>
+          <div class="metric-formula">优质流动性资产 HQLA ÷ 未来 30 天净现金流出</div>
+          <p class="metric-desc">压力情景下 30 天流动性是否够用，监管要求 ≥ 100%；分析重点在 HQLA 结构与流出率假设</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">NSFR 净稳定资金比率</h3>
+          <div class="metric-formula">可用稳定资金 ASF ÷ 所需稳定资金 RSF</div>
+          <p class="metric-desc">一年期结构性流动性匹配，要求 ≥ 100%；反映「短钱长用」的程度</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">ECL 预期信用损失</h3>
+          <div class="metric-formula">ECL = Σ PD × LGD × EAD × 折现因子</div>
+          <p class="metric-desc">IFRS 9 下的减值计提基础，分 12 个月 ECL 与全周期 ECL；是香港银行利润波动的主要来源之一</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">SICR 信用风险显著增加</h3>
+          <div class="metric-formula">逾期天数 + 定性信号 + PD 变动阈值</div>
+          <p class="metric-desc">判定 Stage 1 → Stage 2 的规则；考虑 30 天逾期推定、外部评级下调、缓缴/重组等信号</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">压力测试通过率</h3>
+          <div class="metric-formula">压力情景下资本/流动性指标 ÷ 监管下限</div>
+          <p class="metric-desc">在利率急升、楼价下跌、失业率上升等情景下，资本与流动性是否仍达标；HKMA 会定期对银行体系做压力测试，并据此设定逆周期资本缓冲（CCyB）</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LTV 按揭成数</h3>
+          <div class="metric-formula">贷款金额 ÷ 物业估值</div>
+          <p class="metric-desc">香港按揭风险的核心指标；HKMA 用 LTV 上限与供款收入比 DSR 作为逆周期宏观审慎工具</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">DSR / DTI 供款收入比</h3>
+          <div class="metric-formula">每月供款 ÷ 每月收入</div>
+          <p class="metric-desc">评估借款人还款压力，叠加压力利率（如加息 2% 后仍 ≤ 60% 等口径）判断可负担性</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">HK RBC 保险偿付能力</h3>
+          <div class="metric-formula">可用资本 ÷ 订明资本要求 PCR</div>
+          <p class="metric-desc">香港风险为本资本制度（Risk-based Capital），要求 ≥ 100%，并设最低资本要求 MCR</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">报送及时率 / 差错率</h3>
+          <div class="metric-formula">按时报送次数 ÷ 应报送次数；差错笔数 ÷ 总报送笔数</div>
+          <p class="metric-desc">监管报送质量的直接体现；香港银行按日/月/季向 HKMA 报送流动性、资本、大额敞口等报表</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 信用风险量化链路 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🔬</span>
+          信用风险量化链路
+        </h2>
+        <span class="section-badge">评分卡全流程</span>
+      </div>
+      <p class="section-desc">从「数据 → 特征 → 模型 → 分数 → 策略」的完整链路，是信贷与风控数据分析最核心的技术功底，也是面试最容易被追问的部分。</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3 class="metric-name">PD 违约概率</h3>
+          <div class="metric-formula">Probability of Default</div>
+          <p class="metric-desc">观察期内违约客户数 ÷ 期初正常客户数；需区分资产池实际 PD 与模型预测 PD，并按年化口径统一</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LGD 违约损失率</h3>
+          <div class="metric-formula">1 − 回收率 = 损失金额 ÷ 违约敞口 EAD</div>
+          <p class="metric-desc">违约后最终收不回来的比例；受抵押品、清偿顺序、清收周期影响，按产品与担保方式分层估计</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">EAD 违约风险敞口</h3>
+          <div class="metric-formula">表内余额 + 表外敞口 × CCF 信用转换系数</div>
+          <p class="metric-desc">违约时点未偿还的总额度，含已用额度与已批未用额度按 CCF 折算的部分</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">EL 预期损失 / UL 非预期损失</h3>
+          <div class="metric-formula">EL = PD × LGD × EAD；UL 由经济资本覆盖</div>
+          <p class="metric-desc">EL 进定价与拨备，UL 用资本抵御；这是「风险定价」与「资本占用」的连接点</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">WOE 证据权重</h3>
+          <div class="metric-formula">WOE = ln(坏样本占比 ÷ 好样本占比)</div>
+          <p class="metric-desc">把连续变量分箱后转成单调的数值编码，让逻辑回归能捕捉非线性关系（也有文献按「好÷坏」定义，符号相反、IV 数值一致）</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">IV 信息值</h3>
+          <div class="metric-formula">IV = Σ (坏占比 − 好占比) × WOE</div>
+          <p class="metric-desc">特征预测力筛选标准：&lt; 0.02 无用，0.02–0.1 弱，0.1–0.3 中，0.3–0.5 强，&gt; 0.5 需警惕信息泄漏</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">KS 统计量</h3>
+          <div class="metric-formula">KS = max|累计好样本% − 累计坏样本%|</div>
+          <p class="metric-desc">分数的最大区分能力，风控评分卡常用门槛 KS &gt; 0.3；只反映单点差异，需与 AUC 同看</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">AUC / Gini</h3>
+          <div class="metric-formula">AUC = ROC 曲线下面积；Gini = 2 × AUC − 1</div>
+          <p class="metric-desc">整体排序能力，0.5 为随机；0.7 以上优秀，但落地时还要看通过率与坏账的权衡曲线</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">PSI 群体稳定性指数</h3>
+          <div class="metric-formula">PSI = Σ (实际占比 − 预期占比) × ln(实际 ÷ 预期)</div>
+          <p class="metric-desc">监控分数分布在时间上的漂移：&lt; 0.1 稳定，0.1–0.25 关注，&gt; 0.25 需预警并排查模型或客群变化</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">CSI 特征稳定性指数</h3>
+          <div class="metric-formula">CSI = Σ (当期占比 − 基准占比) × ln(当期 ÷ 基准)</div>
+          <p class="metric-desc">逐特征做稳定性监控，定位是哪一个入模变量发生了漂移，是模型监控的分诊工具</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">Lift / 累计增益</h3>
+          <div class="metric-formula">Lift = 命中坏样本率 ÷ 随机命中率</div>
+          <p class="metric-desc">营销与催收场景更关心「前 10% 抓了多少坏客户」，Lift 曲线直接决定名单规模与成本</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">Vintage 账龄分析</h3>
+          <div class="metric-formula">按放款月份 × 账龄观察逾期率曲线</div>
+          <p class="metric-desc">剥离客群与时间的混杂效应，判断是「新增质量变差」还是「自然成熟」；观察期不足会系统性低估风险</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 四条业务线指标 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🧩</span>
+          四条业务线的指标体系
+        </h2>
+        <span class="section-badge">保险 / 证券资管 / 支付 / 财富管理</span>
+      </div>
+      <p class="section-desc">银行之外，金融行业还有保险、证券资管、支付与财富管理四条主线，各有自己的「北极星 + 护栏 + 风控」组合。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🛡️</div>
+          <h3 class="method-name">保险：承保与续期</h3>
+          <p class="method-desc">
+            <strong>保费收入 GWP</strong>（新单 / 续期拆分）、<strong>新业务价值 NBV 与 NBV Margin</strong>；<br />
+            <strong>赔付率</strong> = 赔付支出 ÷ 已赚保费；<strong>费用率</strong>；<br />
+            <strong>综合成本率 COR</strong> = 赔付率 + 费用率（&lt; 100% 才承保盈利）；<br />
+            <strong>退保率</strong>、<strong>13 / 25 个月保单继续率</strong>（衡量留存与渠道质量）；<br />
+            寿险另看内含价值 EV、偿付能力 HK RBC 与 IFRS 17 下的合同服务边际 CSM。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📈</div>
+          <h3 class="method-name">证券与资管：收益与风险</h3>
+          <p class="method-desc">
+            <strong>AUM 净流入</strong> = 申购 − 赎回（与净值涨跌分离）；<br />
+            <strong>换手率</strong>、<strong>佣金率</strong>、<strong>人均客户资产</strong>；<br />
+            <strong>夏普比率</strong> = (组合收益 − 无风险利率) ÷ 波动率；<br />
+            <strong>最大回撤</strong>、<strong>跟踪误差</strong>、<strong>信息比率</strong>、<strong>Beta / Alpha</strong>；<br />
+            投顾看<strong>持仓集中度</strong>、<strong>适当性匹配率</strong>、<strong>产品复购率</strong>。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">💳</div>
+          <h3 class="method-name">支付与信用卡：交易与风险</h3>
+          <p class="method-desc">
+            <strong>授权率</strong> = 授权通过笔数 ÷ 授权请求笔数（核心体验 + 风险平衡点）；<br />
+            <strong>拒付率 / 争议率</strong>、<strong>欺诈损失率</strong>、<strong>实时规则命中率与误杀率</strong>；<br />
+            <strong>笔均交易额</strong>、<strong>交易成功率</strong>、<strong>平均授权时长</strong>；<br />
+            信用卡另看<strong>额度使用率</strong>、<strong>循环信贷占比</strong>、<strong>分期渗透率</strong>、<strong>MCC 商户结构</strong>与<strong>年费收入</strong>。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">💎</div>
+          <h3 class="method-name">财富管理与私人银行</h3>
+          <p class="method-desc">
+            <strong>AUM 与户均资产</strong>、<strong>钱包份额</strong>、<strong>客均产品数</strong>；<br />
+            <strong>客户分层迁移率</strong>（大众 → 富裕 → 高净值 → 私行）；<br />
+            <strong>净新增资产 NNA</strong>、<strong>资金留存率</strong>、<strong>产品货架渗透率</strong>；<br />
+            <strong>投顾产能</strong>（人均 AUM / 人均收入）、<strong>客户满意度 NPS</strong>；<br />
+            跨境场景另看<strong>跨境理财通额度使用率</strong>与<strong>汇兑成本</strong>。
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- 反洗钱与 KYC -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🔍</span>
+          反洗钱与 KYC / CDD 合规运营
+        </h2>
+        <span class="section-badge">AML / CFT</span>
+      </div>
+      <p class="section-desc">香港受《打击洗钱及恐怖分子资金筹集条例》与 HKMA/SFC 指引约束，合规分析是金融机构数据岗位的高频工作内容。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🪪</div>
+          <h3 class="method-name">KYC 与三级尽职调查</h3>
+          <p class="method-desc">
+            <strong>SDD 简化尽调</strong>：低风险客户，可简化身份核实；<br />
+            <strong>CDD 常规尽调</strong>：核实身份、实益拥有人、业务关系目的；<br />
+            <strong>EDD 加强尽调</strong>：PEP、高风险司法辖区、复杂股权结构的额外审查；<br />
+            并做<strong>持续监控</strong>：资料到期复核、客户风险评级定期更新。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📡</div>
+          <h3 class="method-name">交易监控规则与阈值调优</h3>
+          <p class="method-desc">
+            常见规则：单笔/累计金额异常、短期内高频小额拆分（structuring）、
+            与客户画像不符的跨境汇款、深夜高频转账、快进快出（in-and-out）；<br />
+            调优目标是<strong>在固定人力下最大化有效告警</strong>：看告警量、命中率、误报率与
+            每个调查员的案件产能，用回溯测试（backtesting）验证阈值调整。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📨</div>
+          <h3 class="method-name">可疑交易报告 STR</h3>
+          <p class="method-desc">
+            告警 → 分诊 → 调查 → 上报联合财富情报组（JFIU）的完整链路；<br />
+            关键指标：<strong>告警到结案时长</strong>、<strong>STR 上报数量与转化率</strong>、
+            <strong>回溯调查覆盖客户数</strong>；<br />
+            监管关注的是「有没有能力持续发现」，而不是单一案件金额。
+          </p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🚫</div>
+          <h3 class="method-name">制裁与 PEP 筛查</h3>
+          <p class="method-desc">
+            对开户、交易、名单变更时点做筛查：联合国/美国 OFAC/欧盟等制裁名单 + 政治人物 PEP 库；<br />
+            姓名匹配要处理<strong>音译、别名、同名不同人</strong>，因此产生大量误命中；<br />
+            指标看<strong>真命中率、误报处理时效、名单更新覆盖率</strong>。
+          </p>
+        </div>
+      </div>
+      <div class="metrics-grid" style="margin-top:20px;">
+        <div class="metric-card">
+          <h3 class="metric-name">KYC 完成率</h3>
+          <div class="metric-formula">已完成 CDD 客户 ÷ 存量客户</div>
+          <p class="metric-desc">未完成尽调的客户需限制交易；监管检查的第一张表就是它</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">CDD 复核及时率</h3>
+          <div class="metric-formula">按期完成复核客户数 ÷ 到期应复核客户数</div>
+          <p class="metric-desc">按客户风险等级设复核周期（高风险更短），逾期占比高说明合规资源不足</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">制裁筛查命中率</h3>
+          <div class="metric-formula">真实命中数 ÷ 筛查命中数</div>
+          <p class="metric-desc">命中率过低代表名单或匹配算法过宽，会淹没调查团队</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">告警误报率 FPR</h3>
+          <div class="metric-formula">误报告警数 ÷ 总告警数</div>
+          <p class="metric-desc">AML 规则调优的核心结果指标；误报率下降但漏报上升是典型失败模式</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">STR 上报数</h3>
+          <div class="metric-formula">期内向 JFIU 提交的可疑交易报告数量</div>
+          <p class="metric-desc">结合案均调查工时看合规团队产能与规则有效性</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">交易监控覆盖率</h3>
+          <div class="metric-formula">纳入监控的产品/渠道数 ÷ 全部产品渠道数</div>
+          <p class="metric-desc">新产品上线常遗漏监控配置，是监管处罚与整改的高发点</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 香港 vs 内地 对照表 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🆚</span>
+          香港 vs 内地：金融指标体系差异对照
+        </h2>
+        <span class="section-badge">跨境业务速查</span>
+      </div>
+      <p class="section-desc">同一件事，两地的监管主体、口径与指标名称都不一样。做跨境业务或港资机构的数据分析，先把这张表对齐，能避免大量「数字对不上」的沟通成本。</p>
+      <div class="cmp-table-wrap">
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th class="cmp-dim">维度</th>
+              <th>🇭🇰 香港</th>
+              <th>🇨🇳 内地</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cmp-dim">监管架构</td>
+              <td class="cmp-hk"><strong>HKMA 金管局</strong>（银行、SVF、稳定币）、<strong>SFC 证监会</strong>（证券资管）、<strong>IA 保险业监管局</strong>、<strong>MPFA 积金局</strong>——分业监管</td>
+              <td>中国人民银行（货币与支付）+ 国家金融监督管理总局（银行保险）+ 中国证监会（证券）</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">银行体系</td>
+              <td class="cmp-hk"><strong>三级银行制度</strong>：持牌银行 / 有限制牌照银行 / 接受存款公司；另有 8 家虚拟银行</td>
+              <td>政策性银行 + 国有大行 + 股份制银行 + 城商行 / 农商行 + 民营银行（含互联网银行）</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">利率与货币</td>
+              <td class="cmp-hk"><strong>联系汇率 LERS</strong>（7.75 强方 / 7.85 弱方兑换保证），利率跟随美元，港元看 <strong>HIBOR</strong>；离岸人民币 <strong>CNH</strong></td>
+              <td>独立货币政策，看 <strong>LPR</strong>（贷款市场报价利率）、MLF、DR007；在岸人民币 <strong>CNY</strong></td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">息差分析锚点</td>
+              <td class="cmp-hk">NIM 与「<strong>HIBOR − 美元利率（SOFR）</strong>」利差联动，需关注总结余与汇率触及兑换保证时的干预</td>
+              <td>NIM 与 <strong>LPR 变动 / 存款挂牌利率</strong>联动，关注存贷利差压缩</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">减值与拨备</td>
+              <td class="cmp-hk"><strong>IFRS 9</strong>：三阶段（Stage 1/2/3）+ 12 个月或全周期 <strong>ECL</strong>，含宏观情景权重</td>
+              <td>企业会计准则（与 IFRS 趋同）+ <strong>五级分类</strong>（正常/关注/次级/可疑/损失）与监管拨备覆盖率要求</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">资本监管</td>
+              <td class="cmp-hk">Basel III 全面实施：CET1 / 一级资本 / 总资本 + 储备资本 + 逆周期缓冲 + <strong>D-SIB 附加资本</strong></td>
+              <td>《商业银行资本管理办法》（Basel III 本地化），含差异化监管与国内系统重要性银行附加资本</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">流动性监管</td>
+              <td class="cmp-hk"><strong>LCR</strong>（≥100%）+ <strong>NSFR</strong>（≥100%），按 HKMA 流动性监管要求</td>
+              <td><strong>LCR + NSFR</strong> + 流动性匹配率 + 同业负债占比 + 优质流动性资产充足率</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">零售支付</td>
+              <td class="cmp-hk"><strong>FPS 转数快</strong>（手机号/邮箱/二维码即时转账）、<strong>SVF 储值支付工具牌照</strong>（如 Tap &amp; Go 拍住赏、八达通、支付宝香港）、关注备付金覆盖率</td>
+              <td>网联 / 银联清算体系、支付业务许可证（银行卡收单 / 网络支付）、备付金集中存管</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">数字银行 / 线上开户</td>
+              <td class="cmp-hk"><strong>虚拟银行</strong>：以线上渠道提供服务、不受实体分行限制，重点指标是开户转化、激活率与回本周期</td>
+              <td><strong>互联网银行 / 民营银行</strong>（如微众、网商），多依托生态场景，重点看规模与不良率</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">财富与跨境通道</td>
+              <td class="cmp-hk"><strong>跨境理财通</strong>（南向/北向，个人额度管理）、<strong>债券通</strong>、<strong>沪深港通</strong>、<strong>家族办公室</strong>、<strong>CIES 新资本投资者入境计划</strong></td>
+              <td>内地侧对应跨境理财通试点、<strong>QDII / QFII</strong>、基金互认；单边额度与投资者资格由内地监管认定</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">保险监管</td>
+              <td class="cmp-hk"><strong>IA 保险业监管局</strong> + <strong>HK RBC 风险为本资本</strong>（PCR / MCR）+ IFRS 17 下的合同服务边际 CSM</td>
+              <td>国家金融监督管理总局 + <strong>偿二代（C-ROSS）</strong> + 新保险合同准则（与 IFRS 17 实质趋同）</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">反洗钱 AML/CFT</td>
+              <td class="cmp-hk">《打击洗钱及恐怖分子资金筹集条例》+ HKMA/SFC 指引；STR 报 <strong>JFIU 联合财富情报组</strong>；CDD/EDD + 制裁与 PEP 筛查</td>
+              <td>《反洗钱法》（2025 年起施行新修订版）+ 中国人民银行反洗钱局；大额与可疑交易报告报 <strong>中国反洗钱监测分析中心</strong></td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">数据与隐私</td>
+              <td class="cmp-hk"><strong>PDPO 个人资料（私隐）条例</strong>：收集、使用、跨境转移均需合规依据与告知；金融业另需满足 BCBS 239 风险数据聚合原则</td>
+              <td><strong>个人信息保护法 + 数据安全法 + 网络安全法</strong>；重要数据出境需安全评估或标准合同</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">监管报送</td>
+              <td class="cmp-hk">按日 / 月 / 季向 <strong>HKMA</strong> 报送流动性、资本、大额敞口等报表；关注报送及时率与差错率</td>
+              <td>监管统计制度（<strong>1104 报表体系</strong>）+ <strong>EAST 数据报送</strong>，强调数据质量与校验规则</td>
+            </tr>
+            <tr>
+              <td class="cmp-dim">客户与产品口径</td>
+              <td class="cmp-hk">财富分层常按 <strong>AUM</strong>（以港元计）划分：大众 &lt; 20 万、富裕 20–100 万、高净值 100–600 万、私行 &gt; 600 万（各行口径有差异）；核心看 AUM 净流入、钱包份额、客均产品数</td>
+              <td>零售分层常按 <strong>AUM 或日均资产</strong>（如金卡 / 白金 / 私行），核心看 AUM、中收占比与客户数增长</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="cmp-note">
+        <strong>口径差异提醒（面试可加分）</strong>：
+        ① 香港看「AUM 净流入」而非单纯的 AUM 增长，必须剔除市值涨跌；
+        ② 内地关注「五级分类」，香港更强调 <strong>IFRS 9 三阶段</strong>与 SICR 判定；
+        ③ 流动性上香港以 <strong>LCR / NSFR</strong> 为主，内地还看流动性匹配率与同业负债占比；
+        ④ 同一名指标（如不良率）两地的重组、展期与逾期天数认定规则不同，跨地域对比前必须先做口径映射；
+        ⑤ 涉及客户资料跨境时，需同时满足 <strong>PDPO</strong> 与内地《个人信息保护法》的双向要求。
+      </p>
     </section>
   </main>
     <footer class="footer">
     <div class="container">
       <p>多行业数据百科 · 金融行业知识框架</p>
-      <p class="footer-sub">持续更新中 · 最后更新：2026年8月</p>
+      <p class="footer-sub">持续更新中 · 最后更新：2026年9月</p>
     </div>
   </footer>
   

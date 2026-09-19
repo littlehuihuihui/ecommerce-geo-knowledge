@@ -159,6 +159,32 @@
       color: var(--danger);
     }
 
+    /* 业务场景标签（可点击速查） */
+    .question-scene {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: -4px 0 12px;
+    }
+
+    .question-tag.scene-tag {
+      background: rgba(56, 189, 248, 0.14);
+      color: #38bdf8;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .question-tag.scene-tag::before {
+      content: "#";
+      opacity: 0.65;
+      margin-right: 1px;
+    }
+
+    .question-tag.scene-tag:hover {
+      background: rgba(56, 189, 248, 0.28);
+      transform: translateY(-1px);
+    }
+
     .question-answer {
       max-height: 0;
       overflow: hidden;
@@ -808,10 +834,10 @@
       
       container.innerHTML = html;
       
-      // 绑定展开/收起 + 知识图谱跳转
+      // 绑定展开/收起 + 知识图谱跳转 + 场景标签速查
       document.querySelectorAll('.question-card').forEach(card => {
         card.addEventListener('click', function(e) {
-          if (e.target.closest('.bp-kg-btn')) return;
+          if (e.target.closest('.bp-kg-btn') || e.target.closest('.scene-tag')) return;
           var willExpand = !this.classList.contains('expanded');
           if (willExpand) fillAnswer(this);
           this.classList.toggle('expanded');
@@ -826,6 +852,18 @@
             });
           });
         }
+        card.querySelectorAll('.scene-tag').forEach(function (tag) {
+          tag.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var scene = this.getAttribute('data-scene') || '';
+            var input = document.getElementById('searchInput');
+            if (input) input.value = scene;
+            currentSearch = scene.trim().toLowerCase();
+            renderQuestions();
+            var top = document.getElementById('questionsContainer');
+            if (top) top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          });
+        });
       });
     }
 
@@ -869,12 +907,13 @@
     }
 
     function answerSearchText(q) {
+      var scene = (Array.isArray(q.scene) ? q.scene.join(' ') : '');
       if (q.framework) {
-        try { return JSON.stringify(q.framework) + ' ' + (q.lead || ''); } catch (e) { return q.lead || ''; }
+        try { return scene + ' ' + JSON.stringify(q.framework) + ' ' + (q.lead || ''); } catch (e) { return scene + ' ' + (q.lead || ''); }
       }
-      if (Array.isArray(q.answer)) return q.answer.join(' ');
-      if (q.answer && typeof q.answer === 'object' && Array.isArray(q.answer)) return '';
-      return String(q.answer || '');
+      if (Array.isArray(q.answer)) return scene + ' ' + q.answer.join(' ');
+      if (q.answer && typeof q.answer === 'object' && Array.isArray(q.answer)) return scene;
+      return scene + ' ' + String(q.answer || '');
     }
 
     function formatAnswerHtml(q) {
@@ -951,6 +990,12 @@
       };
       const diff = difficultyMap[question.difficulty] || difficultyMap.medium;
       const hasFramework = !!question.framework;
+      const sceneTags = (Array.isArray(question.scene) ? question.scene : [])
+        .filter(Boolean)
+        .map(function (s) {
+          var safe = String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+          return '<span class="question-tag scene-tag" data-scene="' + safe + '">' + safe + '</span>';
+        }).join('');
       const safeTitle = String(question.title)
         .replace(/&/g, '&amp;')
         .replace(/"/g, '&quot;')
@@ -965,6 +1010,7 @@
               <span class="question-tag ${diff.class}">${diff.label}</span>
             </div>
           </div>
+          ${sceneTags ? '<div class="question-scene">' + sceneTags + '</div>' : ''}
           <div class="question-answer">
             <div class="answer-label">分析思路</div>
             <div class="answer-content"></div>
