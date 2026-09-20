@@ -25,12 +25,22 @@
     tourism: ["general"], // legacy → 通用
     healthcare: ["healthcare"],
     fmcg: ["fmcg"]
+    banking: ["banking"]
+    insurance: ["insurance"]
+    securities: ["securities"]
+    payment: ["payment"]
+    pension: ["pension"]
   };
 
   var INDUSTRY_OPTIONS = [
     ["general", "通用"],
     ["ecommerce", "电商"],
-    ["finance", "金融"],
+    ["finance", "金融通用"],
+    ["banking", "银行"],
+    ["insurance", "保险"],
+    ["securities", "证券与资管"],
+    ["payment", "支付与金融科技"],
+    ["pension", "养老金与公共金融"],
     ["game", "游戏"],
     ["content", "内容/短视频"],
     ["saas", "SaaS"],

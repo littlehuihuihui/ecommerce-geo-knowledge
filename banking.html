@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>银行 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #2563eb;
+      --theme-color-rgb: 37, 99, 235;
+      --theme-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    }
+  </style>
+</head>
+<body data-industry="banking">
+
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <a href="finance.html">金融行业</a> / <span>银行</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">🏦 银行</h1>
+          <p class="page-subtitle">存贷业务、信贷风控、资本与流动性、净息差与风险调整收益——银行数据分析的完整指标体系与香港监管口径</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">34</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">业务阶段</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>。</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="银行北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="acquire">
+            <span class="ns-tab-stage">获客</span>
+            <span class="ns-tab-name">新增有效客户数</span>
+            <span class="ns-tab-scene">渠道扩张、线上开户转化、KYC 通过率优化</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="scale">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">存贷规模</span>
+            <span class="ns-tab-scene">存款争夺、信贷投放节奏、资产负债结构优化</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="profit">
+            <span class="ns-tab-stage">盈利</span>
+            <span class="ns-tab-name">净息差 NIM</span>
+            <span class="ns-tab-scene">利率周期应对（HIBOR 与美元利率联动）、定价策略、客户贡献度评估</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="risk">
+            <span class="ns-tab-stage">风控</span>
+            <span class="ns-tab-name">不良率</span>
+            <span class="ns-tab-scene">资产质量承压、信贷扩张后的风险暴露、催收与核销策略</span>
+          </button>
+        </div>
+        <div class="ns-panel is-active" data-ns="acquire" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">新增有效客户数</div>
+              <div class="ns-formula">新增开户且完成首笔交易的去重客户数</div>
+            </div>
+            <div class="north-star-right"><p>银行的第一个瓶颈永远是获客与激活。用「有效客户」而不是「开户数」，才能避免冲量式低质获客。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>渠道扩张、线上开户转化、KYC 通过率优化</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">开户数</h3>
+            <div class="metric-formula">统计期新开立账户数</div>
+            <p class="metric-desc">规模指标；需与激活率一起看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户转化率</h3>
+            <div class="metric-formula">完成开户 ÷ 进入开户流程</div>
+            <p class="metric-desc">线上开户最大的流失点在身份核验与资料上传</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户激活率</h3>
+            <div class="metric-formula">首笔交易客户 ÷ 开户客户</div>
+            <p class="metric-desc">开户不等于客户，激活才是真实获客</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">CAC 获客成本</h3>
+            <div class="metric-formula">获客总费用 ÷ 新增有效客户</div>
+            <p class="metric-desc">按渠道拆分，并与 LTV 对比判断可持续性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道获客质量</h3>
+            <div class="metric-formula">各渠道 6 个月留存率与 AUM 贡献</div>
+            <p class="metric-desc">低质渠道会在半年后以流失与坏账形式反噬</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">KYC 完成率</h3>
+            <div class="metric-formula">已完成 CDD 客户 ÷ 存量客户</div>
+            <p class="metric-desc">未完成尽调的客户需限制交易，是合规底线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">开户拒绝率</h3>
+            <div class="metric-formula">拒绝开户 ÷ 申请开户</div>
+            <p class="metric-desc">过高说明规则过严或客群不匹配，需分群诊断</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户投诉率</h3>
+            <div class="metric-formula">投诉件数 ÷ 有效客户数</div>
+            <p class="metric-desc">获客阶段的强推与误导会直接反映在投诉上</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">可疑开户占比</h3>
+            <div class="metric-formula">可疑开户数 ÷ 新开户数</div>
+            <p class="metric-desc">身份冒用与空壳账户的第一道防线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">AML 告警数</h3>
+            <div class="metric-formula">期内触发交易监控规则的告警笔数</div>
+            <p class="metric-desc">开户环节的异常行为是后续洗钱的前置信号</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">制裁与 PEP 命中率</h3>
+            <div class="metric-formula">真实命中数 ÷ 筛查命中数</div>
+            <p class="metric-desc">命中率过低说明匹配规则过宽，淹没调查团队</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="scale" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">存贷规模</div>
+              <div class="ns-formula">存款余额 / 生息资产规模（同看贷款投放）</div>
+            </div>
+            <div class="north-star-right"><p>规模阶段的核心是「资产负债表能否长大且结构健康」：既要存贷款增长，也要看期限与集中度。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>存款争夺、信贷投放节奏、资产负债结构优化</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">存款余额</h3>
+            <div class="metric-formula">各项存款期末余额</div>
+            <p class="metric-desc">需按活期/定期、零售/对公拆分看成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">贷款余额</h3>
+            <div class="metric-formula">各项贷款期末余额</div>
+            <p class="metric-desc">按产品（按揭/信用卡/贸易融资）拆分</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">存贷比</h3>
+            <div class="metric-formula">各项贷款余额 ÷ 各项存款余额</div>
+            <p class="metric-desc">反映资金运用程度，过高则流动性承压</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活期存款占比</h3>
+            <div class="metric-formula">活期存款 ÷ 总存款</div>
+            <p class="metric-desc">活期占比决定资金成本，是 NIM 的核心变量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">期末 AUM ÷ 有效客户数</div>
+            <p class="metric-desc">衡量客户质量与分层经营成效</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">存款集中度</h3>
+            <div class="metric-formula">前十大存款客户占比</div>
+            <p class="metric-desc">过度集中意味着一家客户流失即可冲击流动性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户流失率</h3>
+            <div class="metric-formula">期内流失客户 ÷ 期初客户</div>
+            <p class="metric-desc">规模增长要与留存一起看，否则是漏桶</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道结构均衡度</h3>
+            <div class="metric-formula">线上/网点/对公的规模占比</div>
+            <p class="metric-desc">单一渠道依赖会放大经营波动</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">LCR 流动性覆盖率</h3>
+            <div class="metric-formula">HQLA ÷ 未来 30 天净现金流出</div>
+            <p class="metric-desc">HKMA 要求不低于 100%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">NSFR 净稳定资金比率</h3>
+            <div class="metric-formula">ASF ÷ RSF</div>
+            <p class="metric-desc">一年期结构性流动性匹配，要求不低于 100%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">期限错配缺口</h3>
+            <div class="metric-formula">各期限档资产 − 负债缺口</div>
+            <p class="metric-desc">短钱长用是流动性风险的主要来源</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="profit" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">净息差 NIM</div>
+              <div class="ns-formula">(利息收入 − 利息支出) ÷ 生息资产平均余额</div>
+            </div>
+            <div class="north-star-right"><p>规模起来后必须看盈利质量：NIM 决定利差空间，中间业务收入决定收入的抗周期性，RAROC 决定资源该投给谁。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>利率周期应对（HIBOR 与美元利率联动）、定价策略、客户贡献度评估</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">(利息收入 − 利息支出) ÷ 生息资产平均余额</div>
+            <p class="metric-desc">香港银行的 NIM 与 HIBOR − 美元利率利差强相关</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净利息收入</h3>
+            <div class="metric-formula">利息收入 − 利息支出</div>
+            <p class="metric-desc">拆成「规模 × 利差」两因子看贡献</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入占比</h3>
+            <div class="metric-formula">手续费及佣金净收入 ÷ 营业收入</div>
+            <p class="metric-desc">非息收入占比越高，收入越抗周期</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">成本收入比</h3>
+            <div class="metric-formula">营业费用 ÷ 营业收入</div>
+            <p class="metric-desc">效率指标，通常以 45% 以内为健康</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RAROC</h3>
+            <div class="metric-formula">(收入 − 资金成本 − 运营成本 − 预期损失) ÷ 经济资本</div>
+            <p class="metric-desc">低于门槛收益率的业务应调整定价或额度</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">ROA</h3>
+            <div class="metric-formula">净利润 ÷ 平均总资产</div>
+            <p class="metric-desc">反映资产使用效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品渗透率</h3>
+            <div class="metric-formula">持有该产品的客户 ÷ 有效客户</div>
+            <p class="metric-desc">渗透率提升是中间业务收入的来源</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户满意度 NPS</h3>
+            <div class="metric-formula">推荐者占比 − 贬损者占比</div>
+            <p class="metric-desc">服务体验会通过流失率反作用于盈利</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">盈利的前提是资产质量，不能以风险换规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额</div>
+            <p class="metric-desc">内地参考线 ≥ 150%；香港按 IFRS 9 计提</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">风险加权资产 RWA</h3>
+            <div class="metric-formula">信用 + 市场 + 操作风险加权资产</div>
+            <p class="metric-desc">RWA 增速快于利润，会稀释 ROE</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="risk" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">不良率</div>
+              <div class="ns-formula">不良贷款余额 ÷ 总贷款余额</div>
+            </div>
+            <div class="north-star-right"><p>风控阶段以资产质量优先：不良率是滞后指标，真正的抓手是首逾率、迁徙率与不良生成率。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>资产质量承压、信贷扩张后的风险暴露、催收与核销策略</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">通常指逾期 90 天以上，需与监管口径一致</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额</div>
+            <p class="metric-desc">按 M1/M2/M3+ 分档看，早于不良率暴露</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">迁徙率</h3>
+            <div class="metric-formula">本期迁移至下一阶段金额 ÷ 上期该阶段金额</div>
+            <p class="metric-desc">M0→M1→M2→M3 的迁移矩阵，判断风险传导速度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良贷款生成率</h3>
+            <div class="metric-formula">当期新生成不良 ÷ 期初贷款余额</div>
+            <p class="metric-desc">衡量恶化速度，是拨备需求的前瞻指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">Vintage 账龄逾期率</h3>
+            <div class="metric-formula">第 n 期逾期余额 ÷ 该批次放款金额</div>
+            <p class="metric-desc">按放款月份分群，定位是哪几个批次恶化</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">通过率</h3>
+            <div class="metric-formula">审批通过客户 ÷ 申请客户</div>
+            <p class="metric-desc">放宽准入要同步设不良率与首逾率上限</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">催收回款率</h3>
+            <div class="metric-formula">催回金额 ÷ 应催金额</div>
+            <p class="metric-desc">配合催收 ROI（回收金额 ÷ 催收成本）看效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">重组与展期占比</h3>
+            <div class="metric-formula">重组展期金额 ÷ 总贷款余额</div>
+            <p class="metric-desc">被延后的风险只是推迟确认，不是消失</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">CET1 核心一级资本充足率</h3>
+            <div class="metric-formula">核心一级资本 ÷ RWA</div>
+            <p class="metric-desc">Basel III 最核心的资本监管指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">杠杆比率</h3>
+            <div class="metric-formula">一级资本 ÷ 表内外总敞口</div>
+            <p class="metric-desc">不依赖风险权重的兜底约束</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">大额敞口占比</h3>
+            <div class="metric-formula">单一客户敞口 ÷ 资本基础</div>
+            <p class="metric-desc">集中度风险的核心监管指标</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">📉</span> 信贷与资产质量</h2>
+      <p class="section-desc">贷前中后全链路的资产质量指标，早于不良率暴露问题</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">逾期率</h3>
+            <div class="metric-formula">逾期贷款余额 ÷ 总贷款余额 × 100%</div>
+            <p class="metric-desc">按 M1/M2/M3+ 分档，M1 是前瞻信号</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良率</h3>
+            <div class="metric-formula">不良贷款余额 ÷ 总贷款余额 × 100%</div>
+            <p class="metric-desc">银行监管核心指标，通常指逾期 90 天以上</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">坏账率 / 核销率</h3>
+            <div class="metric-formula">核销坏账金额 ÷ 总放款金额 × 100%</div>
+            <p class="metric-desc">反映真实的最终损失</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拨备覆盖率</h3>
+            <div class="metric-formula">贷款损失准备 ÷ 不良贷款余额 × 100%</div>
+            <p class="metric-desc">风险抵御能力；内地参考线 ≥ 150%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不良贷款生成率</h3>
+            <div class="metric-formula">当期新生成不良 ÷ 期初贷款余额 × 100%</div>
+            <p class="metric-desc">衡量资产质量恶化速度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">迁徙率</h3>
+            <div class="metric-formula">本期迁移至下一阶段金额 ÷ 上期该阶段金额</div>
+            <p class="metric-desc">判断风险在各逾期档之间的传导速度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">Vintage 账龄逾期率</h3>
+            <div class="metric-formula">第 n 期逾期余额 ÷ 该批次放款金额</div>
+            <p class="metric-desc">剥离客群与时间混杂效应</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首逾率</h3>
+            <div class="metric-formula">首次逾期客户 ÷ 放款客户 × 100%</div>
+            <p class="metric-desc">新客质量最灵敏的指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">额度使用率</h3>
+            <div class="metric-formula">已用额度 ÷ 已批授信额度 × 100%</div>
+            <p class="metric-desc">反映客户杠杆与潜在敞口</p>
+          </div>
+      </div>
+    </section>
+
+    
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💰</span> 盈利与效率</h2>
+      <p class="section-desc">从利差到风险调整收益，回答钱从哪来、投给谁更值</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">净息差 NIM</h3>
+            <div class="metric-formula">(利息收入 − 利息支出) ÷ 生息资产平均余额</div>
+            <p class="metric-desc">香港市场与 HIBOR − 美元利率利差强相关</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROA</h3>
+            <div class="metric-formula">净利润 ÷ 平均总资产 × 100%</div>
+            <p class="metric-desc">资产盈利能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">ROE</h3>
+            <div class="metric-formula">净利润 ÷ 平均净资产 × 100%</div>
+            <p class="metric-desc">股东资本回报</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">中间业务收入占比</h3>
+            <div class="metric-formula">手续费及佣金净收入 ÷ 营业收入 × 100%</div>
+            <p class="metric-desc">收入结构的抗周期能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">成本收入比</h3>
+            <div class="metric-formula">营业费用 ÷ 营业收入 × 100%</div>
+            <p class="metric-desc">经营效率，行业通常以 45% 以内为健康</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RAROC</h3>
+            <div class="metric-formula">风险调整后收益 ÷ 经济资本</div>
+            <p class="metric-desc">资源分配与定价的门槛指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">RORWA</h3>
+            <div class="metric-formula">净利润 ÷ 平均 RWA × 100%</div>
+            <p class="metric-desc">衡量资本使用效率，常用于同业对标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">期末 AUM ÷ 有效客户数</div>
+            <p class="metric-desc">客户质量与分层经营成效</p>
+          </div>
+      </div>
+    </section>
+
+    
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span> 银行分析框架</h2>
+      <p class="section-desc">银行信贷、资本与盈利的经典分析框架</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">📊</div>
+          <h3 class="framework-name">信用评分卡 A/B/C 卡</h3>
+          <ul class="framework-list">
+            <li><strong>A 卡（申请）</strong> - 贷前准入评估</li>
+            <li><strong>B 卡（行为）</strong> - 贷中额度与预警管理</li>
+            <li><strong>C 卡（催收）</strong> - 贷后回收概率排序</li>
+            <li>特征工程：分箱 → WOE → IV 筛选</li>
+            <li>评估：AUC / KS / PSI / CSI</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🏗️</div>
+          <h3 class="framework-name">巴塞尔 III 资本框架</h3>
+          <ul class="framework-list">
+            <li><strong>三大支柱</strong> - 最低资本要求 / 监督检查 / 市场约束</li>
+            <li><strong>CET1 与总资本</strong> - 含储备资本、逆周期缓冲、D-SIB 附加</li>
+            <li><strong>杠杆比率</strong> - 不依赖风险权重的兜底约束</li>
+            <li><strong>LCR / NSFR</strong> - 短期与结构性流动性</li>
+            <li>RWA 拆解：规模 / 结构 / 方法</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📉</div>
+          <h3 class="framework-name">IFRS 9 预期信用损失三阶段</h3>
+          <ul class="framework-list">
+            <li><strong>Stage 1</strong> - 12 个月 ECL</li>
+            <li><strong>Stage 2</strong> - SICR（风险显著增加）→ 全周期 ECL</li>
+            <li><strong>Stage 3</strong> - 已减值，利息按净额计</li>
+            <li>三要素：PD × LGD × EAD × 折现</li>
+            <li>宏观情景权重与拨备波动归因</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">⚖️</div>
+          <h3 class="framework-name">资产负债管理 ALM</h3>
+          <ul class="framework-list">
+            <li><strong>久期缺口</strong> - 利率变动的净资产敞口</li>
+            <li><strong>重定价缺口</strong> - 利率敏感性分档</li>
+            <li><strong>流动性分层</strong> - HQLA 与流出率假设</li>
+            <li>资本规划与分红节奏</li>
+            <li>利率周期下的 NIM 管理</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">RAROC 风险调整定价</h3>
+          <ul class="framework-list">
+            <li>成本构成：资金成本 + 运营成本 + 预期损失 + 资本占用</li>
+            <li>RAROC 不低于门槛收益率才承接</li>
+            <li>按客户与产品做资源分配</li>
+            <li>EVA = 收益 − 资本成本 × 占用资本</li>
+            <li>把规模导向转为价值导向</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🌩️</div>
+          <h3 class="framework-name">压力测试与情景分析</h3>
+          <ul class="framework-list">
+            <li>情景：利率急升、楼价下跌、失业率上升、跨境资金流出</li>
+            <li>传导：宏观变量 → PD/LGD → ECL → 净利润 → CET1</li>
+            <li>流动性传导：存款流失率 → HQLA → LCR</li>
+            <li>输出：突破监管下限的时点与条件</li>
+            <li>结论落到限额、定价与资本规划</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👑</span> 零售银行客户分层与经营策略</h2>
+      <p class="section-desc">按 AUM 分层并匹配差异化服务（以港元计，各行口径有差异）</p>
+      <div class="tier-grid">
+        <div class="tier-card tier-high">
+          <h3 class="tier-name">私人银行</h3>
+          <p class="tier-ratio">AUM > 600 万</p>
+          <ul class="tier-features">
+            <li>👑 1 对 1 专属客户经理</li>
+            <li>💎 定制化资产配置与另类投资</li>
+            <li>🏛️ 家族办公室与税务规划</li>
+            <li>🔒 专属信贷额度与资本市场服务</li>
+            <li>💰 贡献 50%+ 的零售收入</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <h3 class="tier-name">高净值</h3>
+          <p class="tier-ratio">AUM 100–600 万</p>
+          <ul class="tier-features">
+            <li>🎯 专属理财顾问</li>
+            <li>📈 标准化资产配置组合</li>
+            <li>💼 专属理财产品与优先认购</li>
+            <li>🎁 贵宾服务与费率优惠</li>
+            <li>💰 贡献约 30% 收入</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <h3 class="tier-name">富裕客户</h3>
+          <p class="tier-ratio">AUM 20–100 万</p>
+          <ul class="tier-features">
+            <li>📱 线上 + 网点双通道服务</li>
+            <li>💹 标准化理财推荐</li>
+            <li>💳 信用卡与消费信贷交叉销售</li>
+            <li>🎯 重点提升产品持有数</li>
+            <li>💰 贡献约 15% 收入</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">大众客户</h3>
+          <p class="tier-ratio">AUM < 20 万</p>
+          <ul class="tier-features">
+            <li>📱 以线上自助服务为主</li>
+            <li>💳 标准化存贷与支付产品</li>
+            <li>📢 数字化批量营销</li>
+            <li>🎯 把活跃客户培育为富裕客户</li>
+            <li>💰 贡献约 5% 收入</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span> 典型分析场景</h2>
+      <p class="section-desc">银行数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">🛡️</div>
+          <h3 class="scenario-name">信用风险评估</h3>
+          <p class="scenario-desc">构建评分卡评估违约概率，优化审批策略、额度与定价矩阵</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📉</div>
+          <h3 class="scenario-name">不良率上升归因</h3>
+          <p class="scenario-desc">沿新增 / 存量 / 处置三线拆解，定位是哪一批客群或渠道恶化</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💧</div>
+          <h3 class="scenario-name">流动性与资本监控</h3>
+          <p class="scenario-desc">监控 LCR / NSFR / CET1 与限额占用，做压力情景下的达标测算</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📊</div>
+          <h3 class="scenario-name">净息差与定价分析</h3>
+          <p class="scenario-desc">拆解规模与利差贡献，结合 HIBOR 与资金成本优化产品定价</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🕵️</div>
+          <h3 class="scenario-name">反欺诈与反洗钱监测</h3>
+          <p class="scenario-desc">规则与模型组合识别可疑交易，平衡风险损失与误杀成本</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">👥</div>
+          <h3 class="scenario-name">客户分层与交叉销售</h3>
+          <p class="scenario-desc">按 AUM 分层做产品渗透，提升钱包份额与客户留存</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港银行监管要点</h2>
+        <span class="section-badge">本地业务必备</span>
+      </div>
+      <p class="section-desc">在香港做银行业数据分析，必须先对齐监管主体、口径与本地制度。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">🏛️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">三级银行制度</h3>
+            <p class="scenario-desc">持牌银行可做全面业务、存款金额期限不限；有限制牌照银行主要做商人银行与资本市场业务，存款 ≥ 50 万港元不限期限（约 27 家）；接受存款公司仅可接受 ≥ 10 万港元且原始期限 ≥ 3 个月的定期存款（约 12 家）。HKMA 已于 2023 年 6 月完成检讨，方向是简化为两级制。</p>
+            <div class="scenario-tags">
+              <span class="tag">持牌银行</span>
+              <span class="tag">有限制牌照银行</span>
+              <span class="tag">接受存款公司</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">💱</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">联系汇率与利率传导</h3>
+            <p class="scenario-desc">7.75 强方 / 7.85 弱方兑换保证：触及 7.85 弱方时 HKMA 买入港元、银行体系总结余收缩、HIBOR 上升；触及 7.75 强方时卖出港元、总结余扩张、HIBOR 下降。NIM 分析必须先看懂 HIBOR 与美元利率（SOFR）的联动。</p>
+            <div class="scenario-tags">
+              <span class="tag">LERS</span>
+              <span class="tag">HIBOR</span>
+              <span class="tag">总结余</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📋</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">监管报送与数据治理</h3>
+            <p class="scenario-desc">按日 / 月 / 季向 HKMA 报送流动性、资本、大额敞口等报表，考核报送及时率与差错率；同时满足 BCBS 239 风险数据聚合与报告原则，保留完整数据血缘与审计追踪。</p>
+            <div class="scenario-tags">
+              <span class="tag">报送及时率</span>
+              <span class="tag">差错率</span>
+              <span class="tag">BCBS 239</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🔐</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">客户资料与隐私合规</h3>
+            <p class="scenario-desc">受《个人资料（私隐）条例》（PDPO）约束：收集、使用与跨境转移均需合规依据与告知；反洗钱遵循《打击洗钱及恐怖分子资金筹集条例》，可疑交易报 JFIU。</p>
+            <div class="scenario-tags">
+              <span class="tag">PDPO</span>
+              <span class="tag">AML/CFT</span>
+              <span class="tag">JFIU</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🔬</span> 评分卡开发与模型监控链路</h2>
+        <span class="section-badge">技术底座</span>
+      </div>
+      <p class="section-desc">从数据到决策的完整链路，是银行风控数据分析最核心的技术功底，也是面试最容易被追问的部分。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🧱</div>
+          <h3 class="method-name">① 特征工程</h3>
+          <p class="method-desc">连续变量分箱、WOE 编码、IV 筛选（低于 0.02 剔除），并检查单调性与缺失值处理。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🧪</div>
+          <h3 class="method-name">② 建模与分数刻度</h3>
+          <p class="method-desc">逻辑回归或 GBDT；Score = A − B × ln(odds)，其中 odds = (1 − PD) ÷ PD。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📏</div>
+          <h3 class="method-name">③ 区分度评估</h3>
+          <p class="method-desc">AUC、KS、Gini、Lift 曲线；用时间外样本（OOT）验证，避免信息泄漏。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🎯</div>
+          <h3 class="method-name">④ 校准与切割点</h3>
+          <p class="method-desc">用校准曲线与 Brier Score 检验 PD 准确性；按通过率—坏账权衡曲线选切割点并设人工复核带。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📡</div>
+          <h3 class="method-name">⑤ 上线与监控</h3>
+          <p class="method-desc">冠军-挑战者并行运行；月度 PSI/CSI、季度 KS/AUC 回测、年度重校准。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🗂️</div>
+          <h3 class="method-name">⑥ 模型治理</h3>
+          <p class="method-desc">模型卡、独立验证报告、变更留痕与回退预案，满足模型风险治理要求。</p>
+        </div>
+      </div>
+    </section>
+<section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🏗️</span>
+          监管资本与合规体系
+        </h2>
+        <span class="section-badge">Basel III / IFRS 9</span>
+      </div>
+      <p class="section-desc">银行与保险的核心监管框架。香港金管局已全面实施 Basel III，并配合 IFRS 9 计提预期信用损失。</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3 class="metric-name">CET1 核心一级资本充足率</h3>
+          <div class="metric-formula">核心一级资本 ÷ 风险加权资产 RWA</div>
+          <p class="metric-desc">Basel III 最核心的资本监管指标，含最低要求 + 储备资本 + 逆周期缓冲，香港还叠加 D-SIB 附加资本</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">资本充足率 CAR</h3>
+          <div class="metric-formula">总监管资本 ÷ 风险加权资产 RWA</div>
+          <p class="metric-desc">覆盖信用、市场、操作风险加权后的资本充足度；分析时把 RWA 变动拆成「规模 / 结构 / 方法」三因子</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">杠杆比率 Leverage Ratio</h3>
+          <div class="metric-formula">一级资本 ÷ 表内外总敞口</div>
+          <p class="metric-desc">不依赖风险权重的「兜底」资本约束，防止模型套利导致实际杠杆过高</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LCR 流动性覆盖率</h3>
+          <div class="metric-formula">优质流动性资产 HQLA ÷ 未来 30 天净现金流出</div>
+          <p class="metric-desc">压力情景下 30 天流动性是否够用，监管要求 ≥ 100%；分析重点在 HQLA 结构与流出率假设</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">NSFR 净稳定资金比率</h3>
+          <div class="metric-formula">可用稳定资金 ASF ÷ 所需稳定资金 RSF</div>
+          <p class="metric-desc">一年期结构性流动性匹配，要求 ≥ 100%；反映「短钱长用」的程度</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">ECL 预期信用损失</h3>
+          <div class="metric-formula">ECL = Σ PD × LGD × EAD × 折现因子</div>
+          <p class="metric-desc">IFRS 9 下的减值计提基础，分 12 个月 ECL 与全周期 ECL；是香港银行利润波动的主要来源之一</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">SICR 信用风险显著增加</h3>
+          <div class="metric-formula">逾期天数 + 定性信号 + PD 变动阈值</div>
+          <p class="metric-desc">判定 Stage 1 → Stage 2 的规则；考虑 30 天逾期推定、外部评级下调、缓缴/重组等信号</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">压力测试通过率</h3>
+          <div class="metric-formula">压力情景下资本/流动性指标 ÷ 监管下限</div>
+          <p class="metric-desc">在利率急升、楼价下跌、失业率上升等情景下，资本与流动性是否仍达标；HKMA 会定期对银行体系做压力测试，并据此设定逆周期资本缓冲（CCyB）</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LTV 按揭成数</h3>
+          <div class="metric-formula">贷款金额 ÷ 物业估值</div>
+          <p class="metric-desc">香港按揭风险的核心指标；HKMA 用 LTV 上限与供款收入比 DSR 作为逆周期宏观审慎工具</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">DSR / DTI 供款收入比</h3>
+          <div class="metric-formula">每月供款 ÷ 每月收入</div>
+          <p class="metric-desc">评估借款人还款压力，叠加压力利率（如加息 2% 后仍 ≤ 60% 等口径）判断可负担性</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">HK RBC 保险偿付能力</h3>
+          <div class="metric-formula">可用资本 ÷ 订明资本要求 PCR</div>
+          <p class="metric-desc">香港风险为本资本制度（Risk-based Capital），要求 ≥ 100%，并设最低资本要求 MCR</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">报送及时率 / 差错率</h3>
+          <div class="metric-formula">按时报送次数 ÷ 应报送次数；差错笔数 ÷ 总报送笔数</div>
+          <p class="metric-desc">监管报送质量的直接体现；香港银行按日/月/季向 HKMA 报送流动性、资本、大额敞口等报表</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 信用风险量化链路 -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="section-icon">🔬</span>
+          信用风险量化链路
+        </h2>
+        <span class="section-badge">评分卡全流程</span>
+      </div>
+      <p class="section-desc">从「数据 → 特征 → 模型 → 分数 → 策略」的完整链路，是信贷与风控数据分析最核心的技术功底，也是面试最容易被追问的部分。</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3 class="metric-name">PD 违约概率</h3>
+          <div class="metric-formula">Probability of Default</div>
+          <p class="metric-desc">观察期内违约客户数 ÷ 期初正常客户数；需区分资产池实际 PD 与模型预测 PD，并按年化口径统一</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">LGD 违约损失率</h3>
+          <div class="metric-formula">1 − 回收率 = 损失金额 ÷ 违约敞口 EAD</div>
+          <p class="metric-desc">违约后最终收不回来的比例；受抵押品、清偿顺序、清收周期影响，按产品与担保方式分层估计</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">EAD 违约风险敞口</h3>
+          <div class="metric-formula">表内余额 + 表外敞口 × CCF 信用转换系数</div>
+          <p class="metric-desc">违约时点未偿还的总额度，含已用额度与已批未用额度按 CCF 折算的部分</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">EL 预期损失 / UL 非预期损失</h3>
+          <div class="metric-formula">EL = PD × LGD × EAD；UL 由经济资本覆盖</div>
+          <p class="metric-desc">EL 进定价与拨备，UL 用资本抵御；这是「风险定价」与「资本占用」的连接点</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">WOE 证据权重</h3>
+          <div class="metric-formula">WOE = ln(坏样本占比 ÷ 好样本占比)</div>
+          <p class="metric-desc">把连续变量分箱后转成单调的数值编码，让逻辑回归能捕捉非线性关系（也有文献按「好÷坏」定义，符号相反、IV 数值一致）</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">IV 信息值</h3>
+          <div class="metric-formula">IV = Σ (坏占比 − 好占比) × WOE</div>
+          <p class="metric-desc">特征预测力筛选标准：&lt; 0.02 无用，0.02–0.1 弱，0.1–0.3 中，0.3–0.5 强，&gt; 0.5 需警惕信息泄漏</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">KS 统计量</h3>
+          <div class="metric-formula">KS = max|累计好样本% − 累计坏样本%|</div>
+          <p class="metric-desc">分数的最大区分能力，风控评分卡常用门槛 KS &gt; 0.3；只反映单点差异，需与 AUC 同看</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">AUC / Gini</h3>
+          <div class="metric-formula">AUC = ROC 曲线下面积；Gini = 2 × AUC − 1</div>
+          <p class="metric-desc">整体排序能力，0.5 为随机；0.7 以上优秀，但落地时还要看通过率与坏账的权衡曲线</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">PSI 群体稳定性指数</h3>
+          <div class="metric-formula">PSI = Σ (实际占比 − 预期占比) × ln(实际 ÷ 预期)</div>
+          <p class="metric-desc">监控分数分布在时间上的漂移：&lt; 0.1 稳定，0.1–0.25 关注，&gt; 0.25 需预警并排查模型或客群变化</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">CSI 特征稳定性指数</h3>
+          <div class="metric-formula">CSI = Σ (当期占比 − 基准占比) × ln(当期 ÷ 基准)</div>
+          <p class="metric-desc">逐特征做稳定性监控，定位是哪一个入模变量发生了漂移，是模型监控的分诊工具</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">Lift / 累计增益</h3>
+          <div class="metric-formula">Lift = 命中坏样本率 ÷ 随机命中率</div>
+          <p class="metric-desc">营销与催收场景更关心「前 10% 抓了多少坏客户」，Lift 曲线直接决定名单规模与成本</p>
+        </div>
+        <div class="metric-card">
+          <h3 class="metric-name">Vintage 账龄分析</h3>
+          <div class="metric-formula">按放款月份 × 账龄观察逾期率曲线</div>
+          <p class="metric-desc">剥离客群与时间的混杂效应，判断是「新增质量变差」还是「自然成熟」；观察期不足会系统性低估风险</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 监管资本与合规体系 -->
+    
+
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 银行知识框架</p>
+      <p class="footer-sub">持续更新中 · 银行细分方向 · 最后更新：2026年9月</p>
+    </div>
+  </footer>
+  <script src="common.js?v=10"></script>
+</body>
+</html>

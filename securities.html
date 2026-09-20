@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>证券与资管 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #8b5cf6;
+      --theme-color-rgb: 139, 92, 246;
+      --theme-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+  </style>
+</head>
+<body data-industry="securities">
+
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <a href="finance.html">金融行业</a> / <span>证券与资管</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">📈 证券与资管</h1>
+          <p class="page-subtitle">AUM 与净流入、收益与风险指标、财富客户经营——证券与资产管理机构的数据分析体系，含跨境理财通等本地业务</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">14</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">业务阶段</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>。</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="证券与资管北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="aum">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">AUM 管理资产规模</span>
+            <span class="ns-tab-scene">规模目标分解、产品货架规划、渠道拓展</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="return">
+            <span class="ns-tab-stage">收益</span>
+            <span class="ns-tab-name">风险调整后收益</span>
+            <span class="ns-tab-scene">产品业绩评估、投顾方案设计、客户沟通材料</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="client">
+            <span class="ns-tab-stage">客户</span>
+            <span class="ns-tab-name">钱包份额</span>
+            <span class="ns-tab-scene">客户分层经营、交叉销售、流失预警</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="ops">
+            <span class="ns-tab-stage">运营</span>
+            <span class="ns-tab-name">运营效率</span>
+            <span class="ns-tab-scene">运营成本管控、数字化替代、流程自动化</span>
+          </button>
+        </div>
+        <div class="ns-panel is-active" data-ns="aum" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">AUM 管理资产规模</div>
+              <div class="ns-formula">期末客户托管资产总规模</div>
+            </div>
+            <div class="north-star-right"><p>资管机构的第一指标是 AUM，但必须把「净流入」与「市值涨跌」分开看，否则会把行情当成业务能力。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>规模目标分解、产品货架规划、渠道拓展</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 管理资产规模</h3>
+            <div class="metric-formula">期末客户托管资产总规模</div>
+            <p class="metric-desc">按客户、产品、渠道多维拆解</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 净流入（NNA）</h3>
+            <div class="metric-formula">当期申购金额 − 当期赎回金额</div>
+            <p class="metric-desc">剔除市值变动后的真实增长</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净流入率</h3>
+            <div class="metric-formula">AUM 净流入 ÷ 期初 AUM</div>
+            <p class="metric-desc">衡量增长动能，避免只看绝对规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">期末 AUM ÷ 有效客户数</div>
+            <p class="metric-desc">客户质量与分层经营成效</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新客 AUM 贡献</h3>
+            <div class="metric-formula">新客流入 ÷ 总净流入</div>
+            <p class="metric-desc">区分新客拉新与老客加仓的贡献</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">客户留存率</h3>
+            <div class="metric-formula">期末仍在存客户 ÷ 期初客户</div>
+            <p class="metric-desc">规模增长要与留存一起看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">产品货架渗透率</h3>
+            <div class="metric-formula">持有该品类客户 ÷ 总客户</div>
+            <p class="metric-desc">货架缺口会导致资金流向同业</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户满意度 NPS</h3>
+            <div class="metric-formula">推荐者占比 − 贬损者占比</div>
+            <p class="metric-desc">投顾服务质量的前置指标</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">资金集中度</h3>
+            <div class="metric-formula">前十大客户 AUM 占比</div>
+            <p class="metric-desc">单一客户赎回即可冲击规模</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">短期套利资金占比</h3>
+            <div class="metric-formula">持有期 < 90 天资金 ÷ 总 AUM</div>
+            <p class="metric-desc">高频申赎会放大流动性压力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">适当性匹配率</h3>
+            <div class="metric-formula">风险等级匹配客户 ÷ 总客户</div>
+            <p class="metric-desc">错配是投诉与监管处罚的高发点</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="return" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">风险调整后收益</div>
+              <div class="ns-formula">夏普比率 = (组合收益率 − 无风险利率) ÷ 收益率标准差</div>
+            </div>
+            <div class="north-star-right"><p>资管的竞争力最终体现在「承担单位风险换来的收益」，而不是绝对收益排名。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>产品业绩评估、投顾方案设计、客户沟通材料</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">夏普比率</h3>
+            <div class="metric-formula">(组合收益率 − 无风险利率) ÷ 收益率标准差</div>
+            <p class="metric-desc">风险调整后收益的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">最大回撤</h3>
+            <div class="metric-formula">max(峰值净值 − 谷值净值) ÷ 峰值净值</div>
+            <p class="metric-desc">反映极端损失与客户体验</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">年化收益率</h3>
+            <div class="metric-formula">(期末净值 ÷ 期初净值)^(1/年数) − 1</div>
+            <p class="metric-desc">需与基准和同类对比</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">跟踪误差</h3>
+            <div class="metric-formula">std(组合收益 − 基准收益)</div>
+            <p class="metric-desc">被动产品的核心考核指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">信息比率</h3>
+            <div class="metric-formula">超额收益 ÷ 跟踪误差</div>
+            <p class="metric-desc">主动管理能力的度量</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">波动率</h3>
+            <div class="metric-formula">收益率标准差</div>
+            <p class="metric-desc">与客户风险偏好匹配</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">持仓集中度</h3>
+            <div class="metric-formula">前十大持仓市值占比</div>
+            <p class="metric-desc">集中度高则尾部风险大</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">换手率</h3>
+            <div class="metric-formula">min(买入, 卖出) ÷ 平均净资产</div>
+            <p class="metric-desc">过高会侵蚀净收益</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">产品亏损客户占比</h3>
+            <div class="metric-formula">持有亏损产品客户 ÷ 总客户</div>
+            <p class="metric-desc">直接影响投诉与赎回</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">非理性赎回率</h3>
+            <div class="metric-formula">下跌期赎回金额 ÷ 总赎回</div>
+            <p class="metric-desc">反映客户风险教育与陪伴质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净值偏差</h3>
+            <div class="metric-formula">实际申赎净值与估值偏差</div>
+            <p class="metric-desc">估值准确性关系到投资者利益</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="client" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">钱包份额</div>
+              <div class="ns-formula">本机构 AUM ÷ 客户可投资总资产</div>
+            </div>
+            <div class="north-star-right"><p>客户的钱包是有限的，份额比规模更能反映客户关系的真实深度。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>客户分层经营、交叉销售、流失预警</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">钱包份额</h3>
+            <div class="metric-formula">本机构 AUM ÷ 客户可投资总资产</div>
+            <p class="metric-desc">依赖客户申报数据，需定期更新</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客均产品数</h3>
+            <div class="metric-formula">产品持有总笔数 ÷ 有效客户数</div>
+            <p class="metric-desc">交叉销售深度，与留存强相关</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户流失率</h3>
+            <div class="metric-formula">期内流失客户 ÷ 期初客户</div>
+            <p class="metric-desc">资产清零或长期无交易需分开定义</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">Σ 单笔持有天数 ÷ 赎回笔数</div>
+            <p class="metric-desc">反映产品期限匹配与客户黏性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户分层迁移率</h3>
+            <div class="metric-formula">升级/降级客户数 ÷ 期初客户数</div>
+            <p class="metric-desc">衡量经营成效而非静态分层</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">投顾产能</h3>
+            <div class="metric-formula">人均管理 AUM / 人均收入</div>
+            <p class="metric-desc">服务质量与规模扩张的平衡</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">触达频次</h3>
+            <div class="metric-formula">人均触达次数</div>
+            <p class="metric-desc">过度触达会导致打扰与退订</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">投诉率</h3>
+            <div class="metric-formula">投诉件数 ÷ 有效客户数</div>
+            <p class="metric-desc">销售与服务质量的结果指标</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">流失预警覆盖率</h3>
+            <div class="metric-formula">已纳入预警客户 ÷ 应预警客户</div>
+            <p class="metric-desc">预警机制是否覆盖高风险客群</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">大额赎回预警数</h3>
+            <div class="metric-formula">触发大额赎回阈值的客户数</div>
+            <p class="metric-desc">单客户或单日赎回占比超阈值即预警</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">不当销售案件数</h3>
+            <div class="metric-formula">认定不当销售的案件数</div>
+            <p class="metric-desc">直接关联监管处罚</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="ops" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">运营效率</div>
+              <div class="ns-formula">人均管理规模 / 单位运营成本</div>
+            </div>
+            <div class="north-star-right"><p>资管是人力密集行业，运营效率决定长期费用率，也决定中小机构能否盈利。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>运营成本管控、数字化替代、流程自动化</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">费用率</h3>
+            <div class="metric-formula">运营费用 ÷ 平均 AUM</div>
+            <p class="metric-desc">与规模负相关，规模效应的重要体现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均管理规模</h3>
+            <div class="metric-formula">AUM ÷ 投研与运营人数</div>
+            <p class="metric-desc">人力效率指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交易成功率</h3>
+            <div class="metric-formula">成功交易笔数 ÷ 交易指令笔数</div>
+            <p class="metric-desc">失败原因需分类统计</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">对账差异率</h3>
+            <div class="metric-formula">差异笔数 ÷ 总对账笔数</div>
+            <p class="metric-desc">运营质量的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">流程自动化率</h3>
+            <div class="metric-formula">自动化处理笔数 ÷ 总笔数</div>
+            <p class="metric-desc">决定成本结构的长期演化</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">系统可用率</h3>
+            <div class="metric-formula">可用时长 ÷ 应服务时长</div>
+            <p class="metric-desc">交易时段中断影响直接且严重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户服务响应时长</h3>
+            <div class="metric-formula">平均首次响应时长</div>
+            <p class="metric-desc">体验指标，影响留存</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">差错率</h3>
+            <div class="metric-formula">差错笔数 ÷ 总处理笔数</div>
+            <p class="metric-desc">运营风险的直接度量</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">操作风险事件数</h3>
+            <div class="metric-formula">期内操作风险事件数</div>
+            <p class="metric-desc">含清算、估值、划款等环节</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规检查问题数</h3>
+            <div class="metric-formula">内外部检查发现问题数</div>
+            <p class="metric-desc">反映流程控制强度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">监管报送差错率</h3>
+            <div class="metric-formula">差错报送笔数 ÷ 总报送笔数</div>
+            <p class="metric-desc">报送质量直接影响监管评价</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💰</span> 规模与资金流</h2>
+      <p class="section-desc">AUM 及其变动拆解，把客户的钱和市场的钱分开</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">AUM（管理资产规模）</h3>
+            <div class="metric-formula">期末客户托管资产总规模</div>
+            <p class="metric-desc">按客户、产品、渠道多维拆解</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">AUM 净流入（NNA）</h3>
+            <div class="metric-formula">当期申购金额 − 当期赎回金额</div>
+            <p class="metric-desc">剔除市值变动后的真实增长</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净流入率</h3>
+            <div class="metric-formula">AUM 净流入 ÷ 期初 AUM × 100%</div>
+            <p class="metric-desc">衡量增长动能</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赎回率</h3>
+            <div class="metric-formula">当期赎回金额 ÷ 期初产品规模 × 100%</div>
+            <p class="metric-desc">反映产品稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">户均资产</h3>
+            <div class="metric-formula">期末 AUM ÷ 有效客户数</div>
+            <p class="metric-desc">客户质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均持有期</h3>
+            <div class="metric-formula">Σ 单笔持有天数 ÷ 赎回笔数</div>
+            <p class="metric-desc">期限匹配与黏性</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">📈</span> 收益与风险</h2>
+      <p class="section-desc">风险调整后收益，而不是绝对收益排名</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">夏普比率</h3>
+            <div class="metric-formula">(组合收益率 − 无风险利率) ÷ 收益率标准差</div>
+            <p class="metric-desc">单位风险超额收益</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">最大回撤</h3>
+            <div class="metric-formula">max(峰值净值 − 谷值净值) ÷ 峰值净值 × 100%</div>
+            <p class="metric-desc">极端损失与客户体验</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">跟踪误差</h3>
+            <div class="metric-formula">std(组合收益 − 基准收益)</div>
+            <p class="metric-desc">被动产品核心考核项</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">换手率</h3>
+            <div class="metric-formula">min(买入, 卖出) ÷ 平均净资产 × 100%</div>
+            <p class="metric-desc">过高会侵蚀净收益</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">波动率</h3>
+            <div class="metric-formula">收益率标准差</div>
+            <p class="metric-desc">与客户风险偏好匹配</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">信息比率</h3>
+            <div class="metric-formula">超额收益 ÷ 跟踪误差</div>
+            <p class="metric-desc">主动管理能力</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👥</span> 客户与运营</h2>
+      <p class="section-desc">客户关系深度与运营效率</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">钱包份额</h3>
+            <div class="metric-formula">本机构 AUM ÷ 客户可投资总资产 × 100%</div>
+            <p class="metric-desc">客户关系深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客均产品数</h3>
+            <div class="metric-formula">产品持有总笔数 ÷ 有效客户数</div>
+            <p class="metric-desc">交叉销售深度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户流失率</h3>
+            <div class="metric-formula">期内流失客户 ÷ 期初客户 × 100%</div>
+            <p class="metric-desc">与留存联合解读</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交叉销售率</h3>
+            <div class="metric-formula">持有多个产品客户 ÷ 总客户 × 100%</div>
+            <p class="metric-desc">客户经营成效</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">费用率</h3>
+            <div class="metric-formula">运营费用 ÷ 平均 AUM</div>
+            <p class="metric-desc">规模效应体现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">对账差异率</h3>
+            <div class="metric-formula">差异笔数 ÷ 总对账笔数</div>
+            <p class="metric-desc">运营质量核心指标</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span> 证券与资管分析框架</h2>
+      <p class="section-desc">资管与财富管理的经典分析框架</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🧮</div>
+          <h3 class="framework-name">AUM 变动恒等式</h3>
+          <ul class="framework-list">
+            <li><strong>AUM 变动 = 净流入 + 市值涨跌 + 其他调整</strong></li>
+            <li>先剥离市场因素，再谈客户经营</li>
+            <li>按客户、产品、渠道三层拆解净流入</li>
+            <li>净流入率与持有期判断资金质量</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">均值-方差资产配置</h3>
+          <ul class="framework-list">
+            <li>刻画各资产类别期望收益、波动率与相关性</li>
+            <li>给定风险下最大化收益，求有效前沿</li>
+            <li>约束：权重上下限、单产品上限、流动性</li>
+            <li>再平衡：偏离阈值或固定周期</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">⚖️</div>
+          <h3 class="framework-name">风险调整收益评估</h3>
+          <ul class="framework-list">
+            <li><strong>夏普比率</strong> - 单位风险的超额收益</li>
+            <li><strong>最大回撤</strong> - 极端情景下的体验</li>
+            <li><strong>信息比率</strong> - 主动管理能力</li>
+            <li>业绩要与基准、同类、自身历史三维对比</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">💎</div>
+          <h3 class="framework-name">客户分层与钱包份额</h3>
+          <ul class="framework-list">
+            <li>按 AUM 分层并匹配产品与投顾服务</li>
+            <li>钱包份额 = 本机构 AUM ÷ 客户可投资总资产</li>
+            <li>客均产品数与留存强相关</li>
+            <li>低份额高资产客户是首要提升对象</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🌉</div>
+          <h3 class="framework-name">跨境理财通业务分析</h3>
+          <ul class="framework-list">
+            <li>南向 / 北向分开看，额度与资格受监管约束</li>
+            <li>链路：资格认定 → 开户 → 汇兑 → 首次投资 → 复购</li>
+            <li>额度使用率与汇兑成本是关键运营指标</li>
+            <li>南北向客户行为差异大，不能合并分析</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👑</span> 财富客户分层与配置服务</h2>
+      <p class="section-desc">按 AUM 分层匹配服务（以港元计，各行口径有差异）</p>
+      <div class="tier-grid">
+        <div class="tier-card tier-high">
+          <h3 class="tier-name">私人银行</h3>
+          <p class="tier-ratio">AUM > 600 万</p>
+          <ul class="tier-features">
+            <li>👑 1 对 1 投顾与家族办公室服务</li>
+            <li>💎 另类投资与私募产品</li>
+            <li>🌍 全球资产配置与税务规划</li>
+            <li>🔒 专属信贷与资本市场服务</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <h3 class="tier-name">高净值</h3>
+          <p class="tier-ratio">AUM 100–600 万</p>
+          <ul class="tier-features">
+            <li>🎯 专属理财顾问</li>
+            <li>📈 多资产组合配置</li>
+            <li>💼 优先认购与费率优惠</li>
+            <li>📊 定期资产检视</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <h3 class="tier-name">富裕客户</h3>
+          <p class="tier-ratio">AUM 20–100 万</p>
+          <ul class="tier-features">
+            <li>📱 线上 + 网点双通道</li>
+            <li>💹 标准化组合推荐</li>
+            <li>🎯 提升产品持有数</li>
+            <li>📊 自动化投顾工具</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">大众客户</h3>
+          <p class="tier-ratio">AUM < 20 万</p>
+          <ul class="tier-features">
+            <li>📱 以线上自助为主</li>
+            <li>💰 货基与指数产品</li>
+            <li>📢 数字化批量投教</li>
+            <li>🎯 培育为富裕客户</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span> 典型分析场景</h2>
+      <p class="section-desc">证券与资管数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">📉</div>
+          <h3 class="scenario-name">AUM 净流入为负</h3>
+          <p class="scenario-desc">剥离市值因素，按客户、产品、渠道定位流失来源</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💎</div>
+          <h3 class="scenario-name">钱包份额下降</h3>
+          <p class="scenario-desc">定位产品缺失、体验断点与服务问题，给出提升路径</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🧮</div>
+          <h3 class="scenario-name">资产配置优化</h3>
+          <p class="scenario-desc">按风险偏好做有效前沿与再平衡，控制回撤</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🔁</div>
+          <h3 class="scenario-name">客户流失预警与挽留</h3>
+          <p class="scenario-desc">按概率 × 价值排序，分层设计挽留动作</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📊</div>
+          <h3 class="scenario-name">产品业绩归因</h3>
+          <p class="scenario-desc">拆解收益来源与风险暴露，评估基金经理能力</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🌉</div>
+          <h3 class="scenario-name">跨境理财通经营分析</h3>
+          <p class="scenario-desc">额度使用、汇兑成本与首投转化，南北向分开看</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港证券与资管监管要点</h2>
+        <span class="section-badge">本地业务必备</span>
+      </div>
+      <p class="section-desc">香港资管业务受 SFC 证监会监管，跨境与财富管理另有专门的互联互通机制。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">🏛️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">SFC 证监会与持牌法团</h3>
+            <p class="scenario-desc">证券、期货、资管与投顾业务需持牌（第 1/4/9 类等），受《证券及期货条例》约束，并遵守客户资产隔离与适当性要求。</p>
+            <div class="scenario-tags">
+              <span class="tag">SFC</span>
+              <span class="tag">持牌法团</span>
+              <span class="tag">适当性</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🌉</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">互联互通机制</h3>
+            <p class="scenario-desc">沪深港通、债券通打通两地市场；跨境理财通（南向/北向）面向个人投资者设额度与资格要求，是财富管理的重要增量渠道。</p>
+            <div class="scenario-tags">
+              <span class="tag">跨境理财通</span>
+              <span class="tag">债券通</span>
+              <span class="tag">沪深港通</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🏦</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">财富管理平台特性</h3>
+            <p class="scenario-desc">香港是离岸财富管理中心，产品货架覆盖全球资产；家族办公室与新资本投资者入境计划（CIES）带来高净值客户增量。</p>
+            <div class="scenario-tags">
+              <span class="tag">离岸财富</span>
+              <span class="tag">家族办公室</span>
+              <span class="tag">CIES</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📋</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">披露与投资者保护</h3>
+            <p class="scenario-desc">产品需按 SFC 要求披露费用与风险；销售过程需留痕，并满足《个人资料（私隐）条例》（PDPO）的客户资料使用与跨境转移要求。</p>
+            <div class="scenario-tags">
+              <span class="tag">信息披露</span>
+              <span class="tag">销售留痕</span>
+              <span class="tag">PDPO</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🔁</span> 资管数据链路与常见坑</h2>
+        <span class="section-badge">实操</span>
+      </div>
+      <p class="section-desc">资管数据分析最容易出错的地方，往往不在公式，而在口径。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">📐</div>
+          <h3 class="method-name">① 口径先行</h3>
+          <p class="method-desc">申购赎回按确认日还是交易日、分红再投是否计入净流入、是否含机构专户，必须先对齐。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🧩</div>
+          <h3 class="method-name">② 剥离市场因素</h3>
+          <p class="method-desc">AUM 变动 = 净流入 + 市值涨跌 + 其他调整；把行情当成客户经营是最高频的错误。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📊</div>
+          <h3 class="method-name">③ 分层再看总量</h3>
+          <p class="method-desc">总量达标但某分层失守是常态，必须按客户分层、产品与渠道下钻。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">⏱️</div>
+          <h3 class="method-name">④ 看资金质量</h3>
+          <p class="method-desc">净流入率与持有期分布，识别短期套利资金与稳定资金。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔒</div>
+          <h3 class="method-name">⑤ 合规护栏</h3>
+          <p class="method-desc">适当性匹配率与投诉率是不可让步的护栏，任何营销方案都要先过这一关。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">♻️</div>
+          <h3 class="method-name">⑥ 复盘闭环</h3>
+          <p class="method-desc">把净流入结论回流到投顾考核、产品货架与营销预算，形成闭环。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 证券与资管知识框架</p>
+      <p class="footer-sub">持续更新中 · 证券与资管细分方向 · 最后更新：2026年9月</p>
+    </div>
+  </footer>
+  <script src="common.js?v=10"></script>
+</body>
+</html>

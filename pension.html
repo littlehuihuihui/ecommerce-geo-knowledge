@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>养老金与公共金融 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #14b8a6;
+      --theme-color-rgb: 20, 184, 166;
+      --theme-gradient: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+    }
+  </style>
+</head>
+<body data-industry="pension">
+
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <a href="finance.html">金融行业</a> / <span>养老金与公共金融</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">🧓 养老金与公共金融</h1>
+          <p class="page-subtitle">强积金 MPF、公务员退休保障、年金与退休充足度，以及公共财政与政府数据项目——「香港政府 + 金融」交集最密的一块，也是公共部门数据岗位的高频考点</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">20</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">业务阶段</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>。</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="养老金与公共金融北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="coverage">
+            <span class="ns-tab-stage">覆盖</span>
+            <span class="ns-tab-name">强积金参与率</span>
+            <span class="ns-tab-scene">雇主合规稽查、自雇人士纳管、新入职雇员登记</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="asset">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">强积金总资产</span>
+            <span class="ns-tab-scene">资产规模监测、基金表现评估、自愿性供款推广</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="adequacy">
+            <span class="ns-tab-stage">充足度</span>
+            <span class="ns-tab-name">退休收入替代率</span>
+            <span class="ns-tab-scene">退休充足度研究、政策评估、成员退休规划服务</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="ops">
+            <span class="ns-tab-stage">运营</span>
+            <span class="ns-tab-name">受托人运营质量</span>
+            <span class="ns-tab-scene">受托人绩效评估、eMPF 平台运营、服务时效监控</span>
+          </button>
+        </div>
+        <div class="ns-panel is-active" data-ns="coverage" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">强积金参与率</div>
+              <div class="ns-formula">已参与 MPF 的有关雇员数 ÷ 应参与的有关雇员数</div>
+            </div>
+            <div class="north-star-right"><p>退休保障的第一道关口是「有没有覆盖到」。覆盖率的提升靠雇主合规稽查，而不是靠成员自愿。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>雇主合规稽查、自雇人士纳管、新入职雇员登记</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">强积金参与率</h3>
+            <div class="metric-formula">已参与雇员数 ÷ 应参与雇员数 × 100%</div>
+            <p class="metric-desc">按行业与雇主规模拆分，建筑与餐饮是难点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增参与成员数</h3>
+            <div class="metric-formula">期内新登记成员数</div>
+            <p class="metric-desc">含新入职与自雇人士</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">雇主登记合规率</h3>
+            <div class="metric-formula">已完成登记雇主 ÷ 应登记雇主 × 100%</div>
+            <p class="metric-desc">新雇主须在开业 60 天内登记</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供款合规率</h3>
+            <div class="metric-formula">按期足额供款雇主 ÷ 应供款雇主 × 100%</div>
+            <p class="metric-desc">供款日与供款额双重合规</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自雇人士参与率</h3>
+            <div class="metric-formula">已参与自雇人士 ÷ 应参与自雇人士 × 100%</div>
+            <p class="metric-desc">自雇群体是长期短板</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">成员投诉率</h3>
+            <div class="metric-formula">投诉件数 ÷ 有效成员数</div>
+            <p class="metric-desc">反映受托人服务与雇主行为问题</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">计划选择充分率</h3>
+            <div class="metric-formula">已完成计划选择的成员 ÷ 新成员</div>
+            <p class="metric-desc">未选择会进入默认安排</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">受托人服务质量评分</h3>
+            <div class="metric-formula">服务指标综合评分</div>
+            <p class="metric-desc">供款处理时效与查询响应是重点</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">拖欠供款案件数</h3>
+            <div class="metric-formula">期内立案的拖欠供款案件数</div>
+            <p class="metric-desc">含雇主违反供款义务案件</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">违规雇主数</h3>
+            <div class="metric-formula">被认定违规的雇主数</div>
+            <p class="metric-desc">直接对应罚则与追讨行动</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">罚款与追讨金额</h3>
+            <div class="metric-formula">期内罚款与追讨款项合计</div>
+            <p class="metric-desc">合规执法的产出指标</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="asset" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">强积金总资产</div>
+              <div class="ns-formula">所有 MPF 计划下的成员权益总额</div>
+            </div>
+            <div class="north-star-right"><p>MPF 是香港最大的退休储蓄池，规模分析必须把「净供款流入」与「投资回报」分开，否则会把市场行情当成制度成效。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>资产规模监测、基金表现评估、自愿性供款推广</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">强积金总资产</h3>
+            <div class="metric-formula">所有计划成员权益总额</div>
+            <p class="metric-desc">变动 = 净供款流入 + 投资回报 − 提取</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净供款流入</h3>
+            <div class="metric-formula">期内供款 − 期内提取</div>
+            <p class="metric-desc">剔除非投资因素的制度真实增长</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均账户余额</h3>
+            <div class="metric-formula">总资产 ÷ 有效账户数</div>
+            <p class="metric-desc">反映累积水平，需按年龄分层看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自愿性供款占比</h3>
+            <div class="metric-formula">自愿性供款 ÷ 总供款 × 100%</div>
+            <p class="metric-desc">衡量成员主动储蓄意愿</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可扣税自愿性供款 TVC 金额</h3>
+            <div class="metric-formula">期内 TVC 供款合计</div>
+            <p class="metric-desc">税务优惠是主要推动力</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">账户碎片化率</h3>
+            <div class="metric-formula">持有 3 个以上账户的成员 ÷ 总成员</div>
+            <p class="metric-desc">换工会累积碎片账户，影响管理效率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">账户合并数</h3>
+            <div class="metric-formula">期内完成的账户合并数</div>
+            <p class="metric-desc">eMPF 平台推动的治理重点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">基金转换率</h3>
+            <div class="metric-formula">转换基金成员 ÷ 总成员</div>
+            <p class="metric-desc">过高说明成员频繁择时，值得引导</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">基金集中度</h3>
+            <div class="metric-formula">前五大基金资产占比</div>
+            <p class="metric-desc">集中度影响竞争与费用水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">高风险基金占比</h3>
+            <div class="metric-formula">股票类基金资产 ÷ 总资产</div>
+            <p class="metric-desc">与成员年龄结构应匹配</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">投资回报波动率</h3>
+            <div class="metric-formula">基金回报率标准差</div>
+            <p class="metric-desc">短期波动会引发非理性转换</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="adequacy" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">退休收入替代率</div>
+              <div class="ns-formula">退休后收入 ÷ 退休前收入</div>
+            </div>
+            <div class="north-star-right"><p>制度成功的最终标准不是规模，而是「退休后够不够用」。替代率是最能反映政策成效的指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>退休充足度研究、政策评估、成员退休规划服务</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">退休收入替代率</h3>
+            <div class="metric-formula">退休后收入 ÷ 退休前收入 × 100%</div>
+            <p class="metric-desc">世界银行建议目标区间 40%–70%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">预期累积额</h3>
+            <div class="metric-formula">按当前供款与假设回报推算的退休余额</div>
+            <p class="metric-desc">需给出乐观/中性/悲观三档</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">年金化比例</h3>
+            <div class="metric-formula">选择年金化领取的资产 ÷ 退休资产</div>
+            <p class="metric-desc">对应长寿风险的对冲程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">低余额账户占比</h3>
+            <div class="metric-formula">余额低于阈值的账户 ÷ 总账户</div>
+            <p class="metric-desc">低余额账户难以支撑退休生活</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">默认投资策略使用率</h3>
+            <div class="metric-formula">使用 DIS 的成员 ÷ 未主动选择的成员</div>
+            <p class="metric-desc">帮助不会选择的成员自动配置</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">成员投资知识水平</h3>
+            <div class="metric-formula">金融素养调查得分</div>
+            <p class="metric-desc">影响成员自主决策质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退休规划工具使用率</h3>
+            <div class="metric-formula">使用退休计算器的成员 ÷ 活跃成员</div>
+            <p class="metric-desc">工具是行为干预的低成本手段</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">成员满意度</h3>
+            <div class="metric-formula">满意度调查综合得分</div>
+            <p class="metric-desc">制度信任度的体现</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">长寿风险敞口</h3>
+            <div class="metric-formula">预期余寿内资产缺口</div>
+            <p class="metric-desc">人均寿命延长带来的系统性风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">提前提取比例</h3>
+            <div class="metric-formula">以永久离港为由提取的金额 ÷ 提取总额</div>
+            <p class="metric-desc">影响制度资金池稳定性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">低收入群体覆盖率</h3>
+            <div class="metric-formula">低收入雇员参与率</div>
+            <p class="metric-desc">制度公平性的核心观察点</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="ops" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">受托人运营质量</div>
+              <div class="ns-formula">行政费率 TER + 供款到账时效 + 投诉处理时效</div>
+            </div>
+            <div class="north-star-right"><p>MPF 是长期复利的游戏，费用率与服务时效对最终退休金的侵蚀远大于短期回报差异。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>受托人绩效评估、eMPF 平台运营、服务时效监控</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">行政费率 TER</h3>
+            <div class="metric-formula">基金行政与管理费用 ÷ 基金资产 × 100%</div>
+            <p class="metric-desc">费用率对长期复利影响极大</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">供款到账时效</h3>
+            <div class="metric-formula">雇主支付到受托人入账的平均天数</div>
+            <p class="metric-desc">直接影响成员投资时间</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">权益处理时效</h3>
+            <div class="metric-formula">提取与转移申请的平均处理天数</div>
+            <p class="metric-desc">体验与投诉的主要来源</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">投诉处理时效</h3>
+            <div class="metric-formula">投诉从受理到结案的平均天数</div>
+            <p class="metric-desc">监管关注的服务质量指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">计划转移成功率</h3>
+            <div class="metric-formula">成功转移申请 ÷ 发起转移申请</div>
+            <p class="metric-desc">失败原因需按计划与资料问题分类</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">数据准确率</h3>
+            <div class="metric-formula">准确记录数 ÷ 总记录数</div>
+            <p class="metric-desc">成员权益准确性是底线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">系统可用率</h3>
+            <div class="metric-formula">可用时长 ÷ 应服务时长</div>
+            <p class="metric-desc">eMPF 平台化后更加关键</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">成员满意度 NPS</h3>
+            <div class="metric-formula">推荐者占比 − 贬损者占比</div>
+            <p class="metric-desc">服务体验的总体结果</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">监管处分次数</h3>
+            <div class="metric-formula">期内受监管处分次数</div>
+            <p class="metric-desc">受托人合规水平</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">审计发现问题数</h3>
+            <div class="metric-formula">内外部审计发现问题数</div>
+            <p class="metric-desc">反映流程控制强度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">数据泄露事件数</h3>
+            <div class="metric-formula">期内数据安全事件数</div>
+            <p class="metric-desc">涉及 PDPO 合规与声誉</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧓</span> 强积金 MPF 核心指标</h2>
+      <p class="section-desc">参与、供款与账户管理的核心口径</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">强积金参与率</h3>
+            <div class="metric-formula">已参与有关雇员数 ÷ 应参与有关雇员数 × 100%</div>
+            <p class="metric-desc">按行业与雇主规模拆解</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">强积金总资产</h3>
+            <div class="metric-formula">所有计划成员权益总额</div>
+            <p class="metric-desc">变动 = 净供款流入 + 投资回报 − 提取</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">净供款流入</h3>
+            <div class="metric-formula">期内供款 − 期内提取</div>
+            <p class="metric-desc">剔除投资因素的制度真实增长</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">人均账户余额</h3>
+            <div class="metric-formula">总资产 ÷ 有效账户数</div>
+            <p class="metric-desc">需按年龄分层看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">自愿性供款占比</h3>
+            <div class="metric-formula">自愿性供款 ÷ 总供款 × 100%</div>
+            <p class="metric-desc">反映主动储蓄意愿</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可扣税自愿性供款 TVC</h3>
+            <div class="metric-formula">期内 TVC 供款合计</div>
+            <p class="metric-desc">税务优惠是主要驱动力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">行政费率 TER</h3>
+            <div class="metric-formula">行政与管理费用 ÷ 基金资产 × 100%</div>
+            <p class="metric-desc">长期复利的隐形侵蚀</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">基金转换率</h3>
+            <div class="metric-formula">转换基金成员 ÷ 总成员 × 100%</div>
+            <p class="metric-desc">过高说明择时行为频繁</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🎯</span> 退休充足度</h2>
+      <p class="section-desc">制度成效的最终检验标准</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">退休收入替代率</h3>
+            <div class="metric-formula">退休后收入 ÷ 退休前收入 × 100%</div>
+            <p class="metric-desc">世界银行建议目标区间 40%–70%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">预期累积额</h3>
+            <div class="metric-formula">按当前供款与假设回报推算的退休余额</div>
+            <p class="metric-desc">需给出乐观、中性、悲观三档</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">年金化比例</h3>
+            <div class="metric-formula">选择年金化领取的资产 ÷ 退休资产 × 100%</div>
+            <p class="metric-desc">对冲长寿风险的程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">低余额账户占比</h3>
+            <div class="metric-formula">余额低于阈值的账户 ÷ 总账户 × 100%</div>
+            <p class="metric-desc">难以支撑退休生活的账户比例</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">默认投资策略使用率</h3>
+            <div class="metric-formula">使用 DIS 的成员 ÷ 未主动选择成员 × 100%</div>
+            <p class="metric-desc">帮助不会选择者自动配置</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退休规划工具使用率</h3>
+            <div class="metric-formula">使用退休计算器的成员 ÷ 活跃成员 × 100%</div>
+            <p class="metric-desc">低成本的行为干预手段</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🏛️</span> 公共财政与政府项目</h2>
+      <p class="section-desc">公共部门数据岗位的核心指标</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">财政储备</h3>
+            <div class="metric-formula">期末财政储备余额</div>
+            <p class="metric-desc">相当于多少个月政府开支是常用口径</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">政府收入结构</h3>
+            <div class="metric-formula">利得税 / 薪俸税 / 印花税 / 地价收入占比</div>
+            <p class="metric-desc">收入结构决定财政抗周期能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">政府支出结构</h3>
+            <div class="metric-formula">教育 / 社福 / 医疗 / 基建占比</div>
+            <p class="metric-desc">社福与医疗的长期上升趋势最值得关注</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">综合账目盈余/赤字</h3>
+            <div class="metric-formula">收入 − 支出</div>
+            <p class="metric-desc">区分经营账目与非经营账目</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">项目验收通过率</h3>
+            <div class="metric-formula">一次验收通过项 ÷ 验收项总数 × 100%</div>
+            <p class="metric-desc">公共项目交付质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">数据准确率与报送及时率</h3>
+            <div class="metric-formula">准确记录 ÷ 总记录；按时报送 ÷ 应报送</div>
+            <p class="metric-desc">数据治理的两条基本线</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span> 养老金与公共金融分析框架</h2>
+      <p class="section-desc">退休保障制度、充足度测算与公共项目的分析框架</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🏛️</div>
+          <h3 class="framework-name">三层退休保障体系</h3>
+          <ul class="framework-list">
+            <li><strong>第一支柱</strong> - 社会保障：综援、长者生活津贴（政府提供）</li>
+            <li><strong>第二支柱</strong> - 强积金 MPF、公务员退休金与公积金（雇主雇员共同供款）</li>
+            <li><strong>第三支柱</strong> - 自愿储蓄：TVC、可扣税年金 QDAP、香港年金计划</li>
+            <li>三层合计才是完整的退休收入来源，分析单一层会低估缺口</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🧮</div>
+          <h3 class="framework-name">MPF 供款与权益计算</h3>
+          <ul class="framework-list">
+            <li><strong>强制性供款</strong> - 雇主与雇员各按有关入息的 5%，设有最低与最高有关入息水平</li>
+            <li><strong>自雇人士</strong> - 按收入档位供款，可选择更高档</li>
+            <li><strong>权益归属</strong> - 强制性供款权益依法归属成员</li>
+            <li>自愿性供款与 TVC 的税务处理不同，需分开统计</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🎯</div>
+          <h3 class="framework-name">退休充足度测算</h3>
+          <ul class="framework-list">
+            <li>核心是替代率：退休收入 ÷ 退休前收入</li>
+            <li>关键假设：退休年龄、预期寿命、通胀、投资回报</li>
+            <li>必须给三档情景，而不是单点预测</li>
+            <li>输出「缺口金额 + 弥补手段（提高供款 / 延后退休 / 年金化）」</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📋</div>
+          <h3 class="framework-name">公共部门项目验收框架</h3>
+          <ul class="framework-list">
+            <li>政策目标翻译成可量化指标（效率、质量、成效、合规）</li>
+            <li>验收标准需可抽样复核：误差容忍区间与核验比例</li>
+            <li>用户验收测试（UAT）与签字流程</li>
+            <li>变更管理与知识转移（文档、培训、支持期）</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔐</div>
+          <h3 class="framework-name">政府数据治理要点</h3>
+          <ul class="framework-list">
+            <li><strong>PDPO</strong> - 个人资料收集、使用与跨境转移需合规依据</li>
+            <li>数据分类分级与访问控制</li>
+            <li>跨部门数据共享的合法基础与最小必要原则</li>
+            <li>审计追踪与数据血缘，满足问责要求</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👑</span> 三层退休保障体系与覆盖重点</h2>
+      <p class="section-desc">香港退休收入由三个支柱共同构成，分析缺口时必须三层合并计算</p>
+      <div class="tier-grid">
+        <div class="tier-card tier-high">
+          <h3 class="tier-name">第一支柱 · 社会保障</h3>
+          <p class="tier-ratio">政府提供，安全网</p>
+          <ul class="tier-features">
+            <li>🏛️ 综合社会保障援助（综援）</li>
+            <li>👵 长者生活津贴（高额/普通）</li>
+            <li>🎗️ 高龄津贴（生果金）</li>
+            <li>🎯 目标：保基本生活，不替代收入</li>
+            <li>📊 覆盖率与领取率是政策核心指标</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <h3 class="tier-name">第二支柱 · 强制性储蓄</h3>
+          <p class="tier-ratio">雇主雇员共同供款</p>
+          <ul class="tier-features">
+            <li>💼 强积金 MPF（有关入息 5% + 5%）</li>
+            <li>🏛️ 公务员退休金 / 公积金计划</li>
+            <li>📈 受托人与基金选择影响长期回报</li>
+            <li>🔁 继续率与账户碎片化是治理重点</li>
+            <li>💰 费率 TER 对复利影响显著</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <h3 class="tier-name">第三支柱 · 自愿储蓄</h3>
+          <p class="tier-ratio">个人主动补充</p>
+          <ul class="tier-features">
+            <li>💵 可扣税自愿性供款 TVC</li>
+            <li>📉 可扣税延期年金 QDAP</li>
+            <li>🧓 香港年金计划（即享年金）</li>
+            <li>🏠 个人投资与自置物业</li>
+            <li>🎯 目标：把替代率从 40% 提到 60%+</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">缺口与干预</h3>
+          <p class="tier-ratio">三层合计后的差额</p>
+          <ul class="tier-features">
+            <li>📐 测算：目标替代率 − 三层预计收入</li>
+            <li>⏰ 干预手段：提高供款、延后退休、年金化</li>
+            <li>🎓 金融素养教育提升自主决策质量</li>
+            <li>📊 政策评估看整体充足率而非单层规模</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span> 典型分析场景</h2>
+      <p class="section-desc">养老金与公共金融数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">📋</div>
+          <h3 class="scenario-name">参与率与供款合规分析</h3>
+          <p class="scenario-desc">按行业与雇主规模定位未覆盖群体，评估稽查成效</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🧩</div>
+          <h3 class="scenario-name">MPF 账户碎片化治理</h3>
+          <p class="scenario-desc">量化碎片账户规模，推动合并与 eMPF 平台化</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🎯</div>
+          <h3 class="scenario-name">退休充足度与缺口测算</h3>
+          <p class="scenario-desc">三层合并测算替代率，给出三档情景与干预手段</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">📈</div>
+          <h3 class="scenario-name">基金选择与默认策略分析</h3>
+          <p class="scenario-desc">分析成员风险错配与 DIS 使用情况，做行为干预</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💹</div>
+          <h3 class="scenario-name">受托人运营质量与费率对比</h3>
+          <p class="scenario-desc">对比 TER、供款时效与投诉处理，评估受托人绩效</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏛️</div>
+          <h3 class="scenario-name">公共项目数据验收与报送</h3>
+          <p class="scenario-desc">把政策目标翻译成可验收指标，做抽样复核与审计追踪</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港退休保障与公共金融制度</h2>
+        <span class="section-badge">港府场景核心</span>
+      </div>
+      <p class="section-desc">这是「香港政府 + 金融」交集最密的一块，也是公共部门数据岗位最容易被问到的地方。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">💼</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">强积金 MPF 制度</h3>
+            <p class="scenario-desc">2000 年 12 月起实施，雇主与雇员各按有关入息的 5% 强制性供款，设最低与最高有关入息水平；自雇人士按收入档供款。由积金局（MPFA）监管计划与受托人，eMPF 平台推动账户集中与流程标准化。</p>
+            <div class="scenario-tags">
+              <span class="tag">MPFA 积金局</span>
+              <span class="tag">5% + 5%</span>
+              <span class="tag">eMPF</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🏛️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">公务员退休保障</h3>
+            <p class="scenario-desc">旧制为长俸（按服务年限与退休前薪酬计算），新制（2000 年后入职）为公积金计划（雇主与公务员共同供款）；分析重点是财政承担、退休年龄与延期安排。</p>
+            <div class="scenario-tags">
+              <span class="tag">长俸</span>
+              <span class="tag">公积金计划</span>
+              <span class="tag">财政承担</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🧓</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">年金与退休产品</h3>
+            <p class="scenario-desc">香港年金计划（即享年金，终身领取）与可扣税延期年金（QDAP，保费可享税务扣减）是第三支柱的主要工具，重点关注投保年龄结构、年金化比例与长寿风险对冲效果。</p>
+            <div class="scenario-tags">
+              <span class="tag">香港年金计划</span>
+              <span class="tag">QDAP</span>
+              <span class="tag">长寿风险</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🎗️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">社会保障与福利</h3>
+            <p class="scenario-desc">综合社会保障援助（综援）、长者生活津贴（高额/普通）与高龄津贴构成第一支柱安全网；分析重点是覆盖人数、领取率、财政支出趋势与漏保率。</p>
+            <div class="scenario-tags">
+              <span class="tag">综援</span>
+              <span class="tag">长者生活津贴</span>
+              <span class="tag">漏保率</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">💰</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">公共财政与政府账目</h3>
+            <p class="scenario-desc">财政收入以利得税、薪俸税、印花税与地价收入为主；财政储备常以「相当于多少个月政府开支」衡量。社福与医疗支出的长期上升趋势是财政可持续性的核心课题。</p>
+            <div class="scenario-tags">
+              <span class="tag">财政储备</span>
+              <span class="tag">收入结构</span>
+              <span class="tag">支出结构</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🧾</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">政府数据项目与采购</h3>
+            <p class="scenario-desc">公共部门项目需对齐政策目标、明确验收标准并留痕；数据类项目还涉及 OGCIO 的开放数据（data.gov.hk）、政府云部署与招投标流程要求。</p>
+            <div class="scenario-tags">
+              <span class="tag">OGCIO</span>
+              <span class="tag">开放数据</span>
+              <span class="tag">招投标与验收</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">📋</span> 政府数据项目交付要点</h2>
+        <span class="section-badge">项目交付</span>
+      </div>
+      <p class="section-desc">公共部门数据项目与商业项目最大的差别是「必须可验收、可审计」。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🎯</div>
+          <h3 class="method-name">① 政策目标翻译</h3>
+          <p class="method-desc">把「提升效率 / 加强透明度 / 改善服务」翻译成可量化指标：处理时长、覆盖率、差错率、公众使用率。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📐</div>
+          <h3 class="method-name">② 定义验收标准</h3>
+          <p class="method-desc">标准必须可抽样复核：抽样比例、误差容忍区间、性能与响应时间要求，避免结项争议。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔐</div>
+          <h3 class="method-name">③ 隐私与安全合规</h3>
+          <p class="method-desc">涉及个人资料须符合 PDPO：收集目的、使用范围、跨境转移与保留期都要有合规依据。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔍</div>
+          <h3 class="method-name">④ 数据质量门禁</h3>
+          <p class="method-desc">在数据接入环节设校验规则：完整性、一致性、及时性、口径可追溯。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🧪</div>
+          <h3 class="method-name">⑤ UAT 与试运行</h3>
+          <p class="method-desc">用户验收测试用例、签字流程与试运行期，是公共项目必不可少的环节。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔄</div>
+          <h3 class="method-name">⑥ 知识与运维移交</h3>
+          <p class="method-desc">文档、培训、支持期与责任边界，避免上线后无人会用、无人能维护。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 养老金与公共金融知识框架</p>
+      <p class="footer-sub">持续更新中 · 养老金与公共金融细分方向 · 最后更新：2026年9月</p>
+    </div>
+  </footer>
+  <script src="common.js?v=10"></script>
+</body>
+</html>

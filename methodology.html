@@ -454,6 +454,11 @@
       <div class="tab" data-category="marketing">营销增长</div>
       <div class="tab" data-category="operation">运营效率</div>
       <div class="tab" data-category="finance">金融与财务</div>
+      <div class="tab" data-category="banking">银行</div>
+      <div class="tab" data-category="insurance">保险</div>
+      <div class="tab" data-category="securities">证券资管</div>
+      <div class="tab" data-category="payment">支付</div>
+      <div class="tab" data-category="pension">养老金</div>
       <div class="tab" data-category="strategy">战略决策</div>
       <div class="tab" data-category="quality">质量生产</div>
       <div class="tab" data-category="statistics">统计分析</div>
@@ -826,7 +831,7 @@
         name: "杜邦分析",
         subtitle: "DuPont Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 3,
         desc: "将净资产收益率(ROE)拆解为净利率、资产周转率、权益乘数三个因子，层层归因。",
         formula: "ROE = 净利率 × 资产周转率 × 权益乘数\n= (净利润÷营收) × (营收÷总资产) × (总资产÷净资产)",
@@ -839,11 +844,11 @@
         reference: "manufacturing.html"
       },
       {
-        icon: "📈",
+        icon: "🏛️",
         name: "本量利分析",
         subtitle: "CVP Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 2,
         desc: "分析成本、销量、利润三者之间的关系，帮助制定生产和定价决策。",
         formula: "利润 = (单价 - 单位变动成本) × 销量 - 固定成本\n边际贡献 = 单价 - 单位变动成本\n边际贡献率 = 边际贡献 ÷ 单价",
@@ -856,11 +861,11 @@
         reference: "manufacturing.html"
       },
       {
-        icon: "💰",
+        icon: "🏛️",
         name: "边际贡献分析",
         subtitle: "Contribution Margin Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 2,
         desc: "衡量产品销售收入扣除变动成本后，对覆盖固定成本和创造利润的贡献能力。",
         formula: "单位边际贡献 = 单价 - 单位变动成本\n边际贡献率 = 单位边际贡献 ÷ 单价 × 100%\n总边际贡献 = 销售收入 × 边际贡献率",
@@ -873,11 +878,11 @@
         reference: "manufacturing.html"
       },
       {
-        icon: "⚖️",
+        icon: "🏛️",
         name: "盈亏平衡分析",
         subtitle: "Break-even Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 2,
         desc: "计算企业达到不盈不亏状态所需的销量或收入，是经营决策的重要参考点。",
         formula: "盈亏平衡点销量 = 固定成本 ÷ (单价 - 单位变动成本)\n盈亏平衡点收入 = 固定成本 ÷ 边际贡献率\n安全边际率 = (实际销量 - 盈亏销量) ÷ 实际销量",
@@ -890,11 +895,11 @@
         reference: "manufacturing.html"
       },
       {
-        icon: "📊",
+        icon: "🏛️",
         name: "预算差异分析",
         subtitle: "Budget Variance Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 2,
         desc: "对比实际结果与预算的差异，分析差异原因，评估经营绩效，指导后续预算调整。",
         formula: "差异额 = 实际值 - 预算值\n差异率 = 差异额 ÷ 预算值 × 100%\n差异归因：量差、价差、效率差、结构差",
@@ -907,11 +912,11 @@
         reference: "manufacturing.html"
       },
       {
-        icon: "📈",
+        icon: "🏛️",
         name: "敏感性分析",
         subtitle: "Sensitivity Analysis",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 3,
         desc: "分析关键因素变动对结果的影响程度，识别最敏感因素，评估决策风险。",
         formula: "敏感系数 = 目标值变动% ÷ 因素值变动%\n敏感系数绝对值越大，因素越敏感\n单因素/多因素/情景分析",
@@ -926,11 +931,11 @@
 
       // ========== 金融风控与监管 ==========
       {
-        icon: "🧪",
+        icon: "🏛️",
         name: "信用评分卡开发",
         subtitle: "Credit Scorecard Development",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "banking",
+        categoryName: "银行",
         difficulty: 4,
         desc: "用历史信贷数据构建可解释的违约预测模型：分箱 → WOE 编码 → IV 筛选 → 逻辑回归 → 分数刻度 → 策略切分，并做区分度与稳定性监控。",
         formula: "WOE = ln(坏样本占比 ÷ 好样本占比)\nIV = Σ (坏占比 − 好占比) × WOE\nScore = A − B × ln(odds)，odds = (1−PD) ÷ PD\n评估：AUC / KS / Gini / PSI",
@@ -943,11 +948,11 @@
         reference: "finance.html"
       },
       {
-        icon: "📉",
+        icon: "🏦",
         name: "IFRS 9 预期信用损失三阶段",
         subtitle: "IFRS 9 ECL Staging",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "banking",
+        categoryName: "银行",
         difficulty: 4,
         desc: "把金融资产按信用风险变化分为三阶段，分别计提 12 个月或全周期预期信用损失 ECL，驱动拨备与损益。",
         formula: "ECL = PD × LGD × EAD × 折现因子\nStage 1：信用风险未显著上升 → 12 个月 ECL\nStage 2：SICR（信用风险显著增加）→ 全周期 ECL\nStage 3：已减值 → 全周期 ECL，利息按净额计",
@@ -960,11 +965,11 @@
         reference: "finance.html"
       },
       {
-        icon: "🌩️",
+        icon: "🏦",
         name: "压力测试",
         subtitle: "Stress Testing",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "banking",
+        categoryName: "银行",
         difficulty: 4,
         desc: "在宏观或市场极端情景下，测算资本、流动性与拨备的变化，评估机构能否持续满足监管下限。",
         formula: "资本影响 = Σ (情景 PD 变化 × LGD × EAD) ÷ RWA\n流动性影响 = 压力净现金流出下的 LCR\n通过判断：压力后指标 ≥ 监管下限",
@@ -977,11 +982,11 @@
         reference: "finance.html"
       },
       {
-        icon: "🎯",
+        icon: "🏦",
         name: "RAROC 风险调整收益定价",
         subtitle: "RAROC-based Pricing",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "banking",
+        categoryName: "银行",
         difficulty: 4,
         desc: "把预期损失、资金成本与资本占用计入定价，用风险调整后的资本回报率判断一笔业务是否值得做。",
         formula: "RAROC = (收入 − 资金成本 − 运营成本 − 预期损失) ÷ 经济资本\nEVA = 收入 − 成本 − 预期损失 − 经济资本 × 资本成本率\n决策：RAROC ≥ 门槛收益率 才承接",
@@ -994,11 +999,11 @@
         reference: "finance.html"
       },
       {
-        icon: "📡",
+        icon: "🏦",
         name: "反洗钱交易监控规则调优",
         subtitle: "AML Transaction Monitoring Tuning",
         category: "finance",
-        categoryName: "金融与财务",
+        categoryName: "金融通用",
         difficulty: 4,
         desc: "在固定调查人力下，通过阈值与规则组合优化，让告警更「有效」：既压降误报率，又不放弃可疑案件。",
         formula: "误报率 FPR = 无效告警 ÷ 总告警\n命中率 = 真实可疑 ÷ 总告警\n规则有效性 = 命中率 × 案值 ÷ 调查工时\n方法：回溯测试 + 阈值扫描 + 分群差异化阈值",
@@ -1011,11 +1016,11 @@
         reference: "finance.html"
       },
       {
-        icon: "💎",
+        icon: "🏛️",
         name: "客户生命周期价值 LTV / CAC",
         subtitle: "LTV / CAC Analysis",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "securities",
+        categoryName: "证券与资管",
         difficulty: 3,
         desc: "按渠道、产品与客群拆解获客成本与客户全生命周期贡献，判断增长是否可持续，并指导预算分配。",
         formula: "LTV = 客均年贡献收入 × 毛利率 × (1 ÷ 年流失率)\nCAC = 获客总成本 ÷ 新增客户数\n回本周期 = CAC ÷ 客均年贡献毛利\n健康线：LTV/CAC > 3",
@@ -1028,11 +1033,11 @@
         reference: "finance.html"
       },
       {
-        icon: "🧮",
+        icon: "📈",
         name: "资产配置优化（均值-方差）",
         subtitle: "Mean-Variance Optimization",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "securities",
+        categoryName: "证券与资管",
         difficulty: 4,
         desc: "在给定风险偏好下求解收益最大化或风险最小化的资产权重，画出有效前沿，并按客户风险等级映射到具体组合。",
         formula: "组合期望收益 = Σ wᵢ × E(rᵢ)\n组合方差 = ΣΣ wᵢ wⱼ σᵢ σⱼ ρᵢⱼ\n有效前沿：给定 σ 下最大化 E(r)\n约束：权重上下限、久期、流动性、适当性匹配",
@@ -1045,11 +1050,11 @@
         reference: "finance.html"
       },
       {
-        icon: "⏳",
+        icon: "📈",
         name: "久期缺口分析",
         subtitle: "Duration Gap Analysis",
-        category: "finance",
-        categoryName: "金融与财务",
+        category: "banking",
+        categoryName: "银行",
         difficulty: 3,
         desc: "用资产与负债的久期错配衡量利率风险：利率变动时，净资产价值会如何变化，是银行 ALM 的核心工具。",
         formula: "久期缺口 DGAP = 资产久期 − (负债 ÷ 资产) × 负债久期\n净资产占资产比重的变动率 ≈ −DGAP × (Δi ÷ (1 + i))\n正缺口 → 利率上升时净资产受损",
@@ -1064,7 +1069,7 @@
 
       // ========== 战略决策 ==========
       {
-        icon: "🏆",
+        icon: "🏦",
         name: "竞品对标分析",
         subtitle: "Competitive Benchmarking",
         category: "strategy",
@@ -2130,6 +2135,157 @@
           { name: "通用", color: "" }
         ],
         reference: "frameworks.html"
+      }
+,
+      {
+        icon: "⚖️",
+        name: "承保盈利拆解（COR）",
+        subtitle: "Combined Ratio Decomposition",
+        category: "insurance",
+        categoryName: "保险",
+        difficulty: 3,
+        desc: "把综合成本率拆成赔付率与费用率，再往下拆赔付频次与案均赔付，定位承保亏损的真实来源。",
+        formula: "COR = 赔付率 + 费用率\n赔付率 = 赔付频次 × 案均赔付 ÷ 已赚保费\nCOR < 100% 才承保盈利",
+        scenarios: ["险种盈利分析","渠道质量回溯","费用管控","定价调整"],
+        industries: [
+          { name: "保险", color: "blue" }
+        ],
+        reference: "insurance.html"
+      },
+      {
+        icon: "🔁",
+        name: "继续率与退保管理",
+        subtitle: "Persistency Management",
+        category: "insurance",
+        categoryName: "保险",
+        difficulty: 3,
+        desc: "按承保月份做批次（Vintage）继续率分析，区分销售质量、扣款失败与代理人脱落三类原因。",
+        formula: "13 个月继续率 = 第 13 个月仍有效保单 ÷ 对应批次保单\n退保率 = 期内退保保单 ÷ 期初有效保单\n失效 = 扣款失败 + 主动退保 + 代理人服务中断",
+        scenarios: ["续期管理","渠道质量评估","代理人考核","退保挽留"],
+        industries: [
+          { name: "保险", color: "blue" }
+        ],
+        reference: "insurance.html"
+      },
+      {
+        icon: "📐",
+        name: "HK RBC 偿付能力测算",
+        subtitle: "Risk-based Capital",
+        category: "insurance",
+        categoryName: "保险",
+        difficulty: 4,
+        desc: "香港风险为本资本制度下的偿付能力评估：以可用资本覆盖订明资本要求，并做压力情景下的达标测算。",
+        formula: "偿付能力充足率 = 可用资本 ÷ 订明资本要求 PCR\n要求 ≥ 100%，并设最低资本要求 MCR\n压力情景：利率急变、退保潮、巨灾、资产减值",
+        scenarios: ["偿付能力监控","资本规划","压力测试","分红政策评估"],
+        industries: [
+          { name: "保险", color: "blue" }
+        ],
+        reference: "insurance.html"
+      },
+      {
+        icon: "🛡️",
+        name: "实时风控三层防御",
+        subtitle: "Layered Real-time Fraud Control",
+        category: "payment",
+        categoryName: "支付与金融科技",
+        difficulty: 4,
+        desc: "规则层毫秒级拦截、模型层精准评分、验证层用二次验证替代拒绝，最后把灰名单转人工调查。",
+        formula: "欺诈损失率 = 欺诈损失金额 ÷ 总交易金额\n误杀成本 = 损失营收 × 边际利润率 + 客诉成本\n决策：规则 → 模型 → 二次验证 → 人工复核",
+        scenarios: ["实时反欺诈","误杀治理","规则调优","授权率优化"],
+        industries: [
+          { name: "支付与金融科技", color: "blue" }
+        ],
+        reference: "payment.html"
+      },
+      {
+        icon: "⚖️",
+        name: "授权率与拒付管理",
+        subtitle: "Authorization & Chargeback",
+        category: "payment",
+        categoryName: "支付与金融科技",
+        difficulty: 3,
+        desc: "按拒绝原因码拆解授权失败，区分策略性拒绝与技术性失败；同时用商户维度管理拒付率与卡组织评级。",
+        formula: "授权率 = 授权通过 ÷ 授权请求\n拒付率 = 拒付笔数 ÷ 总交易笔数\n决策：原因码分类 → 阈值差异化 → 灰度与回滚",
+        scenarios: ["授权率下降排查","拒付治理","商户风控","通道质量评估"],
+        industries: [
+          { name: "支付与金融科技", color: "blue" }
+        ],
+        reference: "payment.html"
+      },
+      {
+        icon: "🧮",
+        name: "钱包单位经济模型 UE",
+        subtitle: "Wallet Unit Economics",
+        category: "payment",
+        categoryName: "支付与金融科技",
+        difficulty: 3,
+        desc: "按活跃钱包测算单笔毛利与获客回收周期，决定补贴力度与商户定价的可持续边界。",
+        formula: "单笔毛利 = 手续费收入 − 通道成本 − 风控与运营成本\n回收周期 = 获客成本 ÷ 月均毛利\n决策：按商户类型与渠道分层看，平均 UE 无决策价值",
+        scenarios: ["补贴力度测算","商户定价","渠道取舍","盈亏平衡分析"],
+        industries: [
+          { name: "支付与金融科技", color: "blue" }
+        ],
+        reference: "payment.html"
+      },
+      {
+        icon: "🎯",
+        name: "退休充足度测算（替代率）",
+        subtitle: "Retirement Adequacy",
+        category: "pension",
+        categoryName: "养老金与公共金融",
+        difficulty: 4,
+        desc: "把三层退休收入合并，测算退休后收入替代率与缺口，并给出提高供款、延后退休、年金化三条干预路径。",
+        formula: "替代率 = 退休后收入 ÷ 退休前收入\n目标区间：40%–70%（世界银行建议）\n缺口 = 目标替代率 − 三层预计收入",
+        scenarios: ["退休充足度研究","政策评估","成员退休规划","年金产品设计"],
+        industries: [
+          { name: "养老金与公共金融", color: "blue" }
+        ],
+        reference: "pension.html"
+      },
+      {
+        icon: "🏛️",
+        name: "三层退休保障体系",
+        subtitle: "Three-pillar Framework",
+        category: "pension",
+        categoryName: "养老金与公共金融",
+        difficulty: 3,
+        desc: "按世界银行三支柱框架梳理退休收入来源，避免只看单一支柱而低估或高估充足度。",
+        formula: "第一支柱：社会保障（综援、长者生活津贴）\n第二支柱：强积金 MPF、公务员退休金/公积金\n第三支柱：自愿储蓄（TVC、QDAP、香港年金计划）",
+        scenarios: ["退休保障政策分析","覆盖缺口识别","多支柱协同评估"],
+        industries: [
+          { name: "养老金与公共金融", color: "blue" }
+        ],
+        reference: "pension.html"
+      },
+      {
+        icon: "📋",
+        name: "公共部门项目验收框架",
+        subtitle: "Public Sector Acceptance",
+        category: "pension",
+        categoryName: "养老金与公共金融",
+        difficulty: 3,
+        desc: "把政策目标翻译成可量化、可抽样复核的验收指标，并用 UAT、变更管理与知识转移形成交付闭环。",
+        formula: "验收 = 政策目标 → 可量化指标 → 抽样复核比例 → 误差容忍区间\n效率 / 质量 / 成效 / 合规 四类指标\n闭环：UAT 签字 → 试运行 → 培训与移交",
+        scenarios: ["政府数据项目","公共部门 KPI 设计","招投标验收","知识转移"],
+        industries: [
+          { name: "养老金与公共金融", color: "blue" }
+        ],
+        reference: "pension.html"
+      },
+      {
+        icon: "💎",
+        name: "客户分层与钱包份额",
+        subtitle: "Wallet Share Management",
+        category: "securities",
+        categoryName: "证券与资管",
+        difficulty: 3,
+        desc: "按 AUM 分层，用钱包份额与客均产品数衡量客户关系深度，并识别低份额高资产客户的提升空间。",
+        formula: "钱包份额 = 本机构 AUM ÷ 客户可投资总资产\n客均产品数 = 产品持有总笔数 ÷ 有效客户数\n目标客群：低份额 × 高资产",
+        scenarios: ["客户分层经营","交叉销售","份额提升","流失预警"],
+        industries: [
+          { name: "证券与资管", color: "blue" }
+        ],
+        reference: "securities.html"
       }
     ];
 

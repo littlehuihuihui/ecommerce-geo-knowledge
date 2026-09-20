@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>支付与金融科技 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #f97316;
+      --theme-color-rgb: 249, 115, 22;
+      --theme-gradient: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    }
+  </style>
+</head>
+<body data-industry="payment">
+
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <a href="finance.html">金融行业</a> / <span>支付与金融科技</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">💳 支付与金融科技</h1>
+          <p class="page-subtitle">交易与授权、反欺诈实时风控、钱包与商户经营——支付机构的数据分析体系，含 FPS 转数快、SVF 储值支付工具与虚拟银行等香港本地牌照业务</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">18</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">业务阶段</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>。</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="支付与金融科技北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="volume">
+            <span class="ns-tab-stage">规模</span>
+            <span class="ns-tab-name">交易额 TPV</span>
+            <span class="ns-tab-scene">商户拓展、活动冲量、渠道合作谈判</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="wallet">
+            <span class="ns-tab-stage">用户</span>
+            <span class="ns-tab-name">月活跃钱包数</span>
+            <span class="ns-tab-scene">钱包拉新、绑卡转化、活跃度运营</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="revenue">
+            <span class="ns-tab-stage">收益</span>
+            <span class="ns-tab-name">支付收入</span>
+            <span class="ns-tab-scene">商户定价、通道成本优化、收入结构升级</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="fraud">
+            <span class="ns-tab-stage">风控</span>
+            <span class="ns-tab-name">欺诈损失率</span>
+            <span class="ns-tab-scene">实时规则调优、误杀治理、监管检查应对</span>
+          </button>
+        </div>
+        <div class="ns-panel is-active" data-ns="volume" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">交易额 TPV</div>
+              <div class="ns-formula">期内支付交易总金额</div>
+            </div>
+            <div class="north-star-right"><p>支付业务的规模来自「交易额 × 费率」，但真正决定体验与风险的是授权与拒付这两端的平衡。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>商户拓展、活动冲量、渠道合作谈判</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">交易额 TPV</h3>
+            <div class="metric-formula">期内支付交易总金额</div>
+            <p class="metric-desc">按渠道、商户类型、地区拆解</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交易笔数</h3>
+            <div class="metric-formula">期内成功交易笔数</div>
+            <p class="metric-desc">笔数与笔均是两条不同的增长路径</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">笔均交易额</h3>
+            <div class="metric-formula">交易总金额 ÷ 交易笔数</div>
+            <p class="metric-desc">识别大额异常与客群消费结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">活跃钱包数</h3>
+            <div class="metric-formula">期内发生过交易的账户数</div>
+            <p class="metric-desc">规模的真实基础</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交易成功率</h3>
+            <div class="metric-formula">成功交易 ÷ 发起交易</div>
+            <p class="metric-desc">与授权率、渠道故障相关</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">平均授权时长</h3>
+            <div class="metric-formula">授权请求到返回的平均时长</div>
+            <p class="metric-desc">直接影响收银台体验与转化</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">商户覆盖率</h3>
+            <div class="metric-formula">已签约商户 ÷ 目标商户</div>
+            <p class="metric-desc">收单网络的广度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户投诉率</h3>
+            <div class="metric-formula">投诉笔数 ÷ 交易笔数</div>
+            <p class="metric-desc">体验问题的结果指标</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">授权率</h3>
+            <div class="metric-formula">授权通过笔数 ÷ 授权请求笔数 × 100%</div>
+            <p class="metric-desc">体验与风险的平衡点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拒付率 Chargeback Rate</h3>
+            <div class="metric-formula">拒付交易笔数 ÷ 总交易笔数 × 100%</div>
+            <p class="metric-desc">过高会触发卡组织处罚</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈损失率</h3>
+            <div class="metric-formula">欺诈损失金额 ÷ 总交易金额 × 100%</div>
+            <p class="metric-desc">反欺诈的财务结果</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="wallet" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">月活跃钱包数</div>
+              <div class="ns-formula">期内有交易或登录行为的去重账户数</div>
+            </div>
+            <div class="north-star-right"><p>支付的钱包是高频场景，活跃度决定交易频次，而绑卡与首笔交易是激活的关键两步。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>钱包拉新、绑卡转化、活跃度运营</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">MAU 月活跃钱包</h3>
+            <div class="metric-formula">有交易或登录行为的去重账户数</div>
+            <p class="metric-desc">需与交易频次一起看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新增绑卡数</h3>
+            <div class="metric-formula">期内新增成功绑卡账户数</div>
+            <p class="metric-desc">绑卡是支付的前提</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">绑卡成功率</h3>
+            <div class="metric-formula">绑卡成功数 ÷ 发起绑卡数</div>
+            <p class="metric-desc">失败原因需按银行与卡种分类</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">首笔交易转化率</h3>
+            <div class="metric-formula">完成首笔交易账户 ÷ 新绑卡账户</div>
+            <p class="metric-desc">激活质量的关键指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">钱包留存率</h3>
+            <div class="metric-formula">次月仍有交易的账户 ÷ 本月活跃账户</div>
+            <p class="metric-desc">反映是否形成使用习惯</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">KYC 完成率</h3>
+            <div class="metric-formula">已完成实名认证账户 ÷ 注册账户</div>
+            <p class="metric-desc">未完成实名将受限交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">备付金覆盖率</h3>
+            <div class="metric-formula">备付金 ÷ 客户储值余额</div>
+            <p class="metric-desc">SVF 持牌机构的合规底线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户满意度 NPS</h3>
+            <div class="metric-formula">推荐者占比 − 贬损者占比</div>
+            <p class="metric-desc">高频业务的体验口碑</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">账户盗用率</h3>
+            <div class="metric-formula">盗用投诉账户 ÷ 活跃账户</div>
+            <p class="metric-desc">账户安全的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">触发监控规则的告警笔数</div>
+            <p class="metric-desc">AML 监测的规模指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">制裁与 PEP 筛查命中率</h3>
+            <div class="metric-formula">真实命中数 ÷ 筛查命中数</div>
+            <p class="metric-desc">命中率过低会淹没调查团队</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="revenue" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">支付收入</div>
+              <div class="ns-formula">手续费收入 + 服务费收入</div>
+            </div>
+            <div class="north-star-right"><p>支付是低毛利高规模生意，收益能力取决于费率、商户结构与单位交易成本。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>商户定价、通道成本优化、收入结构升级</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">支付收入</h3>
+            <div class="metric-formula">手续费收入 + 服务费收入</div>
+            <p class="metric-desc">按商户类型与渠道拆分</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">综合费率 Take Rate</h3>
+            <div class="metric-formula">支付收入 ÷ 交易额 × 100%</div>
+            <p class="metric-desc">反映定价能力与商户结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">有效商户数</h3>
+            <div class="metric-formula">期内有交易的商户数</div>
+            <p class="metric-desc">签约不等于活跃</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单商户交易额</h3>
+            <div class="metric-formula">交易额 ÷ 有效商户数</div>
+            <p class="metric-desc">商户质量的体现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">单笔交易成本</h3>
+            <div class="metric-formula">通道与运营成本 ÷ 交易笔数</div>
+            <p class="metric-desc">决定单位经济模型</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">成本收入比</h3>
+            <div class="metric-formula">成本 ÷ 收入 × 100%</div>
+            <p class="metric-desc">低毛利业务对成本极敏感</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">系统可用率</h3>
+            <div class="metric-formula">可用时长 ÷ 应服务时长</div>
+            <p class="metric-desc">支付中断影响直接且严重</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">对账差异率</h3>
+            <div class="metric-formula">差异笔数 ÷ 总对账笔数</div>
+            <p class="metric-desc">资金安全的基础指标</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">商户欺诈率</h3>
+            <div class="metric-formula">欺诈商户数 ÷ 有效商户数</div>
+            <p class="metric-desc">商户准入与持续监控的重点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拒付损失</h3>
+            <div class="metric-formula">拒付金额合计</div>
+            <p class="metric-desc">直接影响毛利与卡组织评级</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合规处罚次数</h3>
+            <div class="metric-formula">期内监管处罚次数与金额</div>
+            <p class="metric-desc">持牌经营的硬约束</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="fraud" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">欺诈损失率</div>
+              <div class="ns-formula">欺诈损失金额 ÷ 总交易金额 × 100%</div>
+            </div>
+            <div class="north-star-right"><p>实时风控的目标不是零欺诈，而是在给定体验与营收约束下最小化总成本。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>实时规则调优、误杀治理、监管检查应对</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈损失率</h3>
+            <div class="metric-formula">欺诈损失金额 ÷ 总交易金额 × 100%</div>
+            <p class="metric-desc">反欺诈的财务结果指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数 × 100%</div>
+            <p class="metric-desc">按欺诈类型分开统计</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">告警命中率</h3>
+            <div class="metric-formula">真实欺诈告警数 ÷ 总告警数</div>
+            <p class="metric-desc">规则有效性的核心指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">误杀率</h3>
+            <div class="metric-formula">被误拦的好交易 ÷ 总拦截交易</div>
+            <p class="metric-desc">体验与营收的隐性成本</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案均调查工时</h3>
+            <div class="metric-formula">总调查工时 ÷ 调查案件数</div>
+            <p class="metric-desc">合规团队的产能指标</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">授权通过率</h3>
+            <div class="metric-formula">授权通过 ÷ 授权请求</div>
+            <p class="metric-desc">误杀会直接反映在这一项上</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户申诉率</h3>
+            <div class="metric-formula">申诉笔数 ÷ 拦截笔数</div>
+            <p class="metric-desc">误杀的社会化反馈</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">二次验证通过率</h3>
+            <div class="metric-formula">验证通过 ÷ 发起验证</div>
+            <p class="metric-desc">分层拦截的替代方案效果</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">实时规则覆盖率</h3>
+            <div class="metric-formula">纳入实时监控的交易占比</div>
+            <p class="metric-desc">新渠道上线常遗漏配置</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">名单命中率</h3>
+            <div class="metric-formula">黑名单命中笔数 ÷ 总交易笔数</div>
+            <p class="metric-desc">名单质量与更新频率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">名单更新覆盖率</h3>
+            <div class="metric-formula">已同步名单数 ÷ 应同步名单数</div>
+            <p class="metric-desc">制裁名单变更需及时生效</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💳</span> 交易与授权</h2>
+      <p class="section-desc">支付体验与风险平衡的核心指标</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">授权率</h3>
+            <div class="metric-formula">授权通过笔数 ÷ 授权请求笔数 × 100%</div>
+            <p class="metric-desc">体验与风险的平衡点</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交易成功率</h3>
+            <div class="metric-formula">成功交易 ÷ 发起交易 × 100%</div>
+            <p class="metric-desc">含通道故障等技术性失败</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">笔均交易额</h3>
+            <div class="metric-formula">交易总金额 ÷ 交易笔数</div>
+            <p class="metric-desc">识别大额异常与消费结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">拒付率 Chargeback Rate</h3>
+            <div class="metric-formula">拒付交易笔数 ÷ 总交易笔数 × 100%</div>
+            <p class="metric-desc">过高触发卡组织处罚</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">交易额 TPV</h3>
+            <div class="metric-formula">期内支付交易总金额</div>
+            <p class="metric-desc">规模基础</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">平均授权时长</h3>
+            <div class="metric-formula">授权请求到返回的平均耗时</div>
+            <p class="metric-desc">超过 2 秒会显著影响转化</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🕵️</span> 反欺诈与合规</h2>
+      <p class="section-desc">实时风控与持牌合规的核心指标</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈率</h3>
+            <div class="metric-formula">欺诈交易笔数 ÷ 总交易笔数 × 100%</div>
+            <p class="metric-desc">按欺诈类型分开统计</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">欺诈损失率</h3>
+            <div class="metric-formula">欺诈损失金额 ÷ 总交易金额 × 100%</div>
+            <p class="metric-desc">反欺诈的财务结果</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">告警误报率 FPR</h3>
+            <div class="metric-formula">无效告警数 ÷ 总告警数 × 100%</div>
+            <p class="metric-desc">规则调优的核心结果指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">KYC 完成率</h3>
+            <div class="metric-formula">已完成实名账户 ÷ 注册账户 × 100%</div>
+            <p class="metric-desc">未完成实名将受限交易</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">制裁筛查命中率</h3>
+            <div class="metric-formula">真实命中数 ÷ 筛查命中数 × 100%</div>
+            <p class="metric-desc">命中率过低淹没调查团队</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">可疑交易数</h3>
+            <div class="metric-formula">触发监控规则的告警笔数</div>
+            <p class="metric-desc">按客户与案件去重后统计</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港支付基础设施</h2>
+      <p class="section-desc">本地牌照与清算体系的关键指标</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">FPS 转账成功率</h3>
+            <div class="metric-formula">成功转账笔数 ÷ 发起转账笔数</div>
+            <p class="metric-desc">失败原因需按银行与场景分类</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">FPS 平均到账时长</h3>
+            <div class="metric-formula">发起至到账的平均时长</div>
+            <p class="metric-desc">转数快承诺即时到账</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">备付金覆盖率</h3>
+            <div class="metric-formula">备付金 ÷ 客户储值余额 × 100%</div>
+            <p class="metric-desc">SVF 持牌机构的合规底线</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">储值金额</h3>
+            <div class="metric-formula">客户账户储值余额合计</div>
+            <p class="metric-desc">与商户交易规模一起看</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">二维码收单占比</h3>
+            <div class="metric-formula">二维码交易额 ÷ 总交易额</div>
+            <p class="metric-desc">本地小微商户的主要形态</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">跨境汇款笔数与金额</h3>
+            <div class="metric-formula">期内跨境汇款笔数与金额</div>
+            <p class="metric-desc">涉及汇兑与洗钱监测</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span> 支付与金融科技分析框架</h2>
+      <p class="section-desc">支付业务的风控、收益与合规分析框架</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">🛡️</div>
+          <h3 class="framework-name">实时风控三层防御</h3>
+          <ul class="framework-list">
+            <li><strong>规则层</strong> - 金额/频次/设备/时间/关联，毫秒级拦截</li>
+            <li><strong>模型层</strong> - 有监督评分 + 无监督异常检测</li>
+            <li><strong>验证层</strong> - 二次验证（短信、生物识别）代替直接拒绝</li>
+            <li><strong>人工层</strong> - 灰名单转人工调查</li>
+            <li>同时盯欺诈损失率、告警命中率、误杀率、案均工时</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">⚖️</div>
+          <h3 class="framework-name">授权率与拒付管理</h3>
+          <ul class="framework-list">
+            <li>按拒绝原因码拆分：额度不足、风控拒绝、账户异常、商户风险</li>
+            <li>区分策略性拒绝与技术性失败，后者常是通道问题</li>
+            <li>优质客户放宽、风险客群收紧的差异化阈值</li>
+            <li>拒付管理：商户准入、争议举证、卡组织评级</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🏛️</div>
+          <h3 class="framework-name">SVF 储值支付工具合规</h3>
+          <ul class="framework-list">
+            <li>持牌要求：资本、备付金与储备账户管理</li>
+            <li>备付金覆盖率与资金隔离是监管红线</li>
+            <li>《支付系统及储值支付工具条例》下的持续合规义务</li>
+            <li>反洗钱：客户尽调、交易监控、可疑交易报告</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🧮</div>
+          <h3 class="framework-name">钱包单位经济模型 UE</h3>
+          <ul class="framework-list">
+            <li><strong>单笔毛利 = 手续费收入 − 通道成本 − 风控与运营成本</strong></li>
+            <li>活跃钱包的获客成本与生命周期贡献</li>
+            <li>回收周期决定补贴力度上限</li>
+            <li>按商户类型与渠道分层看，平均 UE 没有决策价值</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📡</div>
+          <h3 class="framework-name">AML 交易监控调优</h3>
+          <ul class="framework-list">
+            <li>规则：金额异常、高频拆分（structuring）、快进快出、跨境偏离</li>
+            <li>用回溯测试验证阈值，确保召回率底线</li>
+            <li>分群差异化阈值：零售、私行、本地、跨境各不相同</li>
+            <li>在固定人力下最大化有效告警产出</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👑</span> 商户分层与经营策略</h2>
+      <p class="section-desc">支付机构需按商户价值与风险分层管理，资源分配与风控强度各不同</p>
+      <div class="tier-grid">
+        <div class="tier-card tier-high">
+          <h3 class="tier-name">高价值商户</h3>
+          <p class="tier-ratio">交易额 Top 10%</p>
+          <ul class="tier-features">
+            <li>🤝 专属客户经理与大客户支持</li>
+            <li>💹 定制费率与结算周期</li>
+            <li>🔧 技术对接与 API 支持</li>
+            <li>📊 联合营销与数据分析服务</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <h3 class="tier-name">成长商户</h3>
+          <p class="tier-ratio">交易额中位以上</p>
+          <ul class="tier-features">
+            <li>📈 成长激励与费率阶梯</li>
+            <li>🎯 上活动与流量位</li>
+            <li>📊 经营看板与行业对标</li>
+            <li>💡 产品组合建议</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <h3 class="tier-name">长尾小微</h3>
+          <p class="tier-ratio">交易额低但数量多</p>
+          <ul class="tier-features">
+            <li>📱 纯线上自助接入</li>
+            <li>💳 标准化二维码收单</li>
+            <li>🤖 自动化风控与客服</li>
+            <li>📢 批量运营与内容触达</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">风险商户</h3>
+          <p class="tier-ratio">高风险行业或高拒付</p>
+          <ul class="tier-features">
+            <li>🔒 加强准入与持续监控</li>
+            <li>📉 提高准备金或缩短结算周期</li>
+            <li>🚫 触达阈值即退出</li>
+            <li>📋 拒付与争议专项管理</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span> 典型分析场景</h2>
+      <p class="section-desc">支付与金融科技数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">📉</div>
+          <h3 class="scenario-name">授权率下降排查</h3>
+          <p class="scenario-desc">按拒绝原因码与渠道拆解，区分策略拒绝与技术失败</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">💸</div>
+          <h3 class="scenario-name">拒付率上升归因</h3>
+          <p class="scenario-desc">定位商户与行业来源，平衡商户体验与卡组织评级</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🕵️</div>
+          <h3 class="scenario-name">反欺诈误杀治理</h3>
+          <p class="scenario-desc">量化误杀成本，用分层审核替代直接拒绝</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">👛</div>
+          <h3 class="scenario-name">钱包活跃度下降</h3>
+          <p class="scenario-desc">拆交易频次与场景覆盖，定位是绑卡、首笔还是留存问题</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏪</div>
+          <h3 class="scenario-name">商户流失分析</h3>
+          <p class="scenario-desc">按分层与行业看流失，区分费率、结算与服务原因</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">⚡</div>
+          <h3 class="scenario-name">FPS 交易异常监控</h3>
+          <p class="scenario-desc">成功率、到账时长与失败原因分布，定位银行侧与场景侧问题</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港支付牌照与基础设施</h2>
+        <span class="section-badge">本地业务必备</span>
+      </div>
+      <p class="section-desc">香港支付业务涉及多种牌照与清算体系，是面试本地支付岗位的必考内容。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">⚡</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">FPS 转数快</h3>
+            <p class="scenario-desc">HKMA 推出的即时转账系统，支持手机号、邮箱、FPS ID 与二维码转账，7×24 即时到账且免手续费；分析重点是成功率、失败原因分布、平均到账时长与限额触发率。</p>
+            <div class="scenario-tags">
+              <span class="tag">FPS</span>
+              <span class="tag">即时转账</span>
+              <span class="tag">成功率</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">💳</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">SVF 储值支付工具牌照</h3>
+            <p class="scenario-desc">受《支付系统及储值支付工具条例》监管，需满足资本与备付金（储备账户）要求；本地例子包括 Tap & Go 拍住赏（HKT Payment，电讯盈科系）、八达通与支付宝香港。</p>
+            <div class="scenario-tags">
+              <span class="tag">SVF</span>
+              <span class="tag">备付金</span>
+              <span class="tag">Tap & Go</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🏦</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">虚拟银行</h3>
+            <p class="scenario-desc">香港共发出 8 张虚拟银行牌照（如众安、汇立、Mox），以线上开户为主、不受实体分行限制；分析重点是开户转化、激活率与单位经济模型。</p>
+            <div class="scenario-tags">
+              <span class="tag">虚拟银行</span>
+              <span class="tag">线上开户</span>
+              <span class="tag">UE</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🪙</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">e-HKD 与 mBridge</h3>
+            <p class="scenario-desc">数码港元（e-HKD）试点与多边央行数字货币桥（mBridge）关注试点交易量、对账一致性与洗钱监测能力。</p>
+            <div class="scenario-tags">
+              <span class="tag">e-HKD</span>
+              <span class="tag">mBridge</span>
+              <span class="tag">CBDC</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🔓</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">开放银行与数据合规</h3>
+            <p class="scenario-desc">香港开放 API 框架（HKMA Open API）推动银行与第三方数据互通；客户资料使用需符合 PDPO，跨境转移需合规依据。</p>
+            <div class="scenario-tags">
+              <span class="tag">Open API</span>
+              <span class="tag">PDPO</span>
+              <span class="tag">数据治理</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🔁</span> 支付数据链路与常见坑</h2>
+        <span class="section-badge">实操</span>
+      </div>
+      <p class="section-desc">支付数据分析的技术难点集中在实时性、口径与误杀成本三处。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">⏱️</div>
+          <h3 class="method-name">① 实时性要求</h3>
+          <p class="method-desc">授权环节毫秒级、交易环节秒级；离线分析无法替代实时决策链路。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📐</div>
+          <h3 class="method-name">② 口径先行</h3>
+          <p class="method-desc">授权率是否含冲正与预授权、交易额是否含退款，口径不清结论就会互相矛盾。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">⚖️</div>
+          <h3 class="method-name">③ 误杀成本量化</h3>
+          <p class="method-desc">误杀成本 = 损失营收 × 边际利润率 + 客诉成本；只看欺诈损失会做出错误取舍。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🧩</div>
+          <h3 class="method-name">④ 区分技术失败</h3>
+          <p class="method-desc">把通道超时等技术性失败与策略性拒绝分开，否则会误判风控过严。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🔍</div>
+          <h3 class="method-name">⑤ 商户维度下钻</h3>
+          <p class="method-desc">拒付与欺诈往往集中在少数商户或行业，按商户分层比按交易分层更有效。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">♻️</div>
+          <h3 class="method-name">⑥ 申诉回流闭环</h3>
+          <p class="method-desc">把申诉结果回流到规则调整，形成闭环，否则误杀会长期累积。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 支付与金融科技知识框架</p>
+      <p class="footer-sub">持续更新中 · 支付与金融科技细分方向 · 最后更新：2026年9月</p>
+    </div>
+  </footer>
+  <script src="common.js?v=10"></script>
+</body>
+</html>

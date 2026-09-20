@@ -5,16 +5,110 @@
 import sys
 import os
 import re
+import glob
 
-# 添加本地包路径
+
+def _ensure_sqlite_supported():
+    """chromadb 要求 sqlite3 >= 3.35；旧版 Python（如 Windows 上的 3.8）自带更低版本。
+
+    做法：在任何地方 import sqlite3 之前，先从本机其他 Python 安装（或环境变量
+    SQLITE3_DLL 指定的路径）预加载一个更新的 sqlite3.dll。DLL 基名必须与原文件
+    同名（sqlite3.dll），Windows 才会复用已加载模块，从而不改动 Python 安装。
+    注意：必须早于首次 import sqlite3 执行，否则 _sqlite3.pyd 已绑定旧 DLL。
+    """
+    if sys.version_info >= (3, 9):
+        # 现代 Python 自带的 sqlite3 已满足 chromadb 要求，直接跳过
+        try:
+            import sqlite3
+            if tuple(int(x) for x in sqlite3.sqlite_version.split('.')[:3]) >= (3, 35, 0):
+                return
+        except Exception:
+            return
+
+    import ctypes
+    import glob
+    import shutil
+    import tempfile
+
+    candidates = []
+    env_dll = os.environ.get('SQLITE3_DLL')
+    if env_dll:
+        candidates.append(env_dll)
+    home = os.path.expanduser('~')
+    roots = [
+        os.path.join(home, 'AppData', 'Local', 'Programs', 'Python'),
+        r'C:\Program Files',
+        'C:\\',
+    ]
+    for root in roots:
+        if os.path.isdir(root):
+            candidates.extend(sorted(glob.glob(os.path.join(root, '**', 'DLLs', 'sqlite3.dll'),
+                                              recursive=False), reverse=True))
+    # 兜底：按已知版本目录直接拼路径
+    for ver in ('Python312', 'Python311', 'Python310', 'Python39'):
+        candidates.append(os.path.join(home, 'AppData', 'Local', 'Programs', 'Python', ver, 'DLLs', 'sqlite3.dll'))
+
+    tmp_dir = os.path.join(tempfile.gettempdir(), 'sqlite3_shim')
+    for dll in candidates:
+        if not dll or not os.path.exists(dll):
+            continue
+        try:
+            os.makedirs(tmp_dir, exist_ok=True)
+            target = os.path.join(tmp_dir, 'sqlite3.dll')
+            shutil.copy2(dll, target)
+            ctypes.CDLL(target)          # 必须早于任何 import sqlite3
+        except Exception:
+            continue
+        import sqlite3
+        if tuple(int(x) for x in sqlite3.sqlite_version.split('.')[:3]) >= (3, 35, 0):
+            print("[sqlite shim] 已预加载 %s → sqlite3 %s" % (dll, sqlite3.sqlite_version))
+            return
+    print("[sqlite shim] 未找到可用的新版 sqlite3.dll，"
+          "请设置环境变量 SQLITE3_DLL 指向 sqlite3(>=3.35) 的 DLL 后重试")
+
+
+_ensure_sqlite_supported()
+
+def _ensure_posthog_importable():
+    """chromadb 的遥测模块会 import posthog；新版 posthog 需要 Python >= 3.9。
+
+    若当前环境无法导入 posthog，则注入 rag/_stubs 下的极简桩模块
+    （不发送任何遥测数据），保证 chromadb 可用。
+    """
+    try:
+        import posthog  # noqa: F401
+        return
+    except Exception:
+        pass
+    stub_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_stubs')
+    if os.path.isdir(stub_dir) and stub_dir not in sys.path:
+        sys.path.insert(0, stub_dir)
+        print("[posthog stub] 真实 posthog 不可用，已启用空实现桩模块（不上报任何数据）")
+
+
+_ensure_posthog_importable()
+
+
+# 依赖路径：优先使用当前环境（site-packages）已安装的包；
+# 仅当导入失败时，才回退到本地打包目录（旧环境打包的包可能不兼容新版 Python）。
 PACKAGE_DIR = os.path.join(os.path.dirname(__file__), 'packages')
-if os.path.exists(PACKAGE_DIR):
-    sys.path.insert(0, PACKAGE_DIR)
-
-# 添加D盘的包路径（Windows路径长度限制 workaround）
 RAG_PKGS = r'D:\rag_pkgs'
-if os.path.exists(RAG_PKGS):
-    sys.path.insert(0, RAG_PKGS)
+
+
+def _ensure_deps_on_path():
+    for mod in ('bs4', 'lxml', 'sentence_transformers', 'chromadb'):
+        try:
+            __import__(mod)
+        except Exception:
+            break
+    else:
+        return  # 环境已具备全部依赖，无需注入打包路径
+    for p in (PACKAGE_DIR, RAG_PKGS):
+        if os.path.exists(p):
+            sys.path.insert(0, p)
+
+
+_ensure_deps_on_path()
 
 from bs4 import BeautifulSoup
 from sentence_transformers import SentenceTransformer
@@ -29,43 +123,67 @@ CHUNK_SIZE = 500  # 字符数
 CHUNK_OVERLAP = 100  # 重叠字符数
 
 # 需要索引的HTML文件（排除导航等重复内容）
+# 说明：改为自动发现根目录页面，避免新增页面后清单过期。
+# 如需排除某页，加入 EXCLUDE 即可。
+EXCLUDE_FILES = {
+    'education.html',      # 跳转桩页
+    'knowledge-graph.html',# 空壳页，KG 内容由 JS 动态渲染
+}
+EXCLUDE_PREFIX = '_'      # 下划线开头的临时/开发文件不索引
+MIN_SIZE_KB = 1.0         # 小于 1KB 的页面视为跳转桩页，跳过
+# 优先索引顺序（其余按文件名字典序追加）
+PRIORITY_FILES = [
+    'index.html', 'frameworks.html', 'metrics.html', 'methodology.html',
+    'interview.html', 'graph.html', 'knowledge-graph.html',
+]
+
+def _is_indexable(filepath):
+    """体积过小的页面（跳转桩页）不索引"""
+    try:
+        return os.path.getsize(filepath) / 1024.0 >= MIN_SIZE_KB
+    except OSError:
+        return False
+
+
 def get_html_files():
-    """获取所有需要索引的HTML文件"""
+    """自动发现根目录与子目录下所有需索引的 HTML 页面"""
     html_files = []
-    
-    # 根目录页面
-    root_files = [
-        'index.html', 'metrics.html', 'methodology.html', 
-        'graph.html', 'interview.html', 'learning-path.html',
-        'manufacturing.html', 'saas.html', 'game.html',
-        'finance.html', 'education.html', 'live-ecommerce.html',
-        'local-life.html', 'content.html', 'fmcg.html',
-        'healthcare.html', 'ecommerce.html'
-    ]
-    
-    for f in root_files:
+
+    # 根目录页面（自动发现）
+    discovered = sorted(
+        f for f in os.listdir(BASE_DIR)
+        if f.endswith('.html')
+        and f not in EXCLUDE_FILES
+        and not f.startswith(EXCLUDE_PREFIX)
+    )
+    ordered = [f for f in PRIORITY_FILES if f in discovered] + \
+              [f for f in discovered if f not in PRIORITY_FILES]
+    for f in ordered:
         filepath = os.path.join(BASE_DIR, f)
-        if os.path.exists(filepath):
+        if os.path.exists(filepath) and _is_indexable(filepath):
             html_files.append({
                 'path': filepath,
                 'url': f'../{f}',
                 'category': '知识框架'
             })
-    
+
     # 子目录页面
     sub_dirs = ['新能源', '旅游业', '物流']
     for sub_dir in sub_dirs:
         dir_path = os.path.join(BASE_DIR, sub_dir)
         if os.path.isdir(dir_path):
-            for filename in os.listdir(dir_path):
-                if filename.endswith('.html'):
-                    filepath = os.path.join(dir_path, filename)
-                    html_files.append({
-                        'path': filepath,
-                        'url': f'../{sub_dir}/{filename}',
-                        'category': sub_dir
-                    })
-    
+            for filename in sorted(os.listdir(dir_path)):
+                if not filename.endswith('.html'):
+                    continue
+                filepath = os.path.join(dir_path, filename)
+                if not _is_indexable(filepath):
+                    continue
+                html_files.append({
+                    'path': filepath,
+                    'url': f'../{sub_dir}/{filename}',
+                    'category': sub_dir
+                })
+
     return html_files
 
 def extract_text_from_html(filepath):

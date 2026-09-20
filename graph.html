@@ -1050,13 +1050,198 @@
             ]
           }
         ]
+      },
+      banking: {
+        name: '银行',
+        centerColor: '#2563eb',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#2563eb',
+            nodes: [
+              { name: '逾期率', desc: '贷款逾期的比例，按 M1/M2/M3+ 分档', formula: '逾期率 = 逾期贷款余额 ÷ 总贷款余额 × 100%', scenarios: ['资产质量', '风险预警'], related: ['不良率', '迁徙率', '拨备覆盖率'] },
+              { name: '不良率', desc: '不良贷款占比，银行监管核心指标', formula: '不良率 = 不良贷款余额 ÷ 总贷款余额 × 100%', scenarios: ['资产质量', '拨备计提'], related: ['逾期率', '不良生成率', '拨备覆盖率'] },
+              { name: '净息差 NIM', desc: '利息净收入占生息资产的比例', formula: 'NIM = (利息收入 − 利息支出) ÷ 生息资产平均余额', scenarios: ['盈利分析', '定价策略'], related: ['ROE', '存贷比', 'RAROC 风险调整定价'] },
+              { name: 'CET1 核心一级资本充足率', desc: 'Basel III 最核心的资本监管指标', formula: 'CET1 = 核心一级资本 ÷ RWA', scenarios: ['资本管理', '监管达标'], related: ['LCR', '杠杆比率', '压力测试'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '信用评分卡', desc: 'A/B/C 卡覆盖贷前、贷中与催收', formula: 'WOE/IV → 逻辑回归 → AUC/KS → PSI 监控', scenarios: ['贷前准入', '额度定价', '催收排序'], related: ['PD/LGD/EAD', '反欺诈', 'RAROC 风险调整定价'] },
+              { name: 'IFRS 9 三阶段', desc: '按信用风险变化分阶段计提预期信用损失', formula: 'ECL = PD × LGD × EAD × 折现因子', scenarios: ['拨备计提', 'SICR 判定'], related: ['ECL', '不良率', '压力测试'] },
+              { name: '压力测试', desc: '极端情景下的资本与流动性测算', formula: '情景 PD 变化 → ECL → 净利润 → CET1', scenarios: ['资本规划', '限额管理'], related: ['CET1 核心一级资本充足率', 'LCR', 'IFRS 9 三阶段'] },
+              { name: '久期缺口分析', desc: '资产负债久期错配的利率风险度量', formula: 'DGAP = 资产久期 − (负债 ÷ 资产) × 负债久期', scenarios: ['利率风险', '资产负债匹配'], related: ['净息差 NIM', 'LCR', '压力测试'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '信用风险评估', desc: '评估借款人违约概率与还款能力', scenarios: ['信贷审批', '额度管理', '定价策略'], related: ['信用评分卡', 'PD/LGD/EAD', '不良率'] },
+              { name: '不良率上升归因', desc: '沿新增、存量、处置三线定位恶化来源', scenarios: ['资产质量诊断', '催收策略', '准入收紧'], related: ['不良率', '迁徙率', 'Vintage 账龄分析'] },
+              { name: '流动性与资本监控', desc: '监控 LCR、NSFR、CET1 与限额占用', scenarios: ['监管达标', '压力情景', '分红决策'], related: ['CET1 核心一级资本充足率', 'LCR', '压力测试'] },
+              { name: '客户分层与交叉销售', desc: '按 AUM 分层提升钱包份额', scenarios: ['财富管理', '产品渗透', '客户留存'], related: ['户均资产', '交叉销售率', '客户流失率'] }
+            ]
+          }
+        ]
+      },
+      insurance: {
+        name: '保险',
+        centerColor: '#0ea5e9',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#0ea5e9',
+            nodes: [
+              { name: '保费收入 GWP', desc: '毛保费收入，需拆新单与续期', formula: 'GWP = 新单保费 + 续期保费', scenarios: ['规模分析', '渠道评估'], related: ['新业务价值 NBV', '13 个月保单继续率', '综合成本率 COR'] },
+              { name: '赔付率', desc: '赔付支出占已赚保费的比例', formula: '赔付率 = 赔付支出 ÷ 已赚保费 × 100%', scenarios: ['赔付率上升归因', '核保策略'], related: ['综合成本率 COR', '案均赔付', '核保拒保率'] },
+              { name: '综合成本率 COR', desc: '承保盈利的核心指标', formula: 'COR = 赔付率 + 费用率', scenarios: ['险种盈利分析', '费用管控'], related: ['赔付率', '费用率', '承保利润'] },
+              { name: '13 个月保单继续率', desc: '一年内保单留存，寿险核心考核指标', formula: '继续率 = 第 13 个月仍有效保单 ÷ 对应批次保单', scenarios: ['续期管理', '渠道质量'], related: ['退保率', '25 个月保单继续率', '代理人产能'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '承保盈利三角', desc: '把 COR 拆成赔付率与费用率', formula: 'COR = 赔付率 + 费用率，低于 100% 才盈利', scenarios: ['险种盈利分析', '渠道质量回溯'], related: ['综合成本率 COR', '赔付率', '费用率'] },
+              { name: '继续率与退保管理', desc: '按批次分析留存与流失原因', formula: '13/25 个月继续率按 Vintage 批次跟踪', scenarios: ['续期管理', '退保挽留'], related: ['13 个月保单继续率', '退保率', '代理人产能'] },
+              { name: 'HK RBC 偿付能力', desc: '香港风险为本资本制度下的偿付能力管理', formula: '偿付能力充足率 = 可用资本 ÷ PCR', scenarios: ['资本规划', '压力测试'], related: ['HK RBC 偿付能力充足率', '久期缺口分析', '合同服务边际 CSM'] },
+              { name: '保险欺诈识别', desc: '用短期出险与集中度异常识别欺诈', formula: '短期出险率 × 关系网络集中度', scenarios: ['理赔风控', '调查名单'], related: ['理赔欺诈率', '赔付率', '反欺诈'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '赔付率上升归因', desc: '拆频次与案均赔付定位恶化来源', scenarios: ['核保调整', '费率调整', '理赔治理'], related: ['赔付率', '案均赔付', '承保盈利三角'] },
+              { name: '继续率下降诊断', desc: '按批次定位问题并区分销售与服务原因', scenarios: ['续期提醒', '代理人考核', '佣金递延'], related: ['13 个月保单继续率', '退保率', '继续率与退保管理'] },
+              { name: '偿付能力监控', desc: '监控可用资本与资本要求', scenarios: ['资本管理', '资产配置', '分红决策'], related: ['HK RBC 偿付能力充足率', 'HK RBC 偿付能力', '压力测试'] },
+              { name: '渠道产能与质量', desc: '对比各渠道产能、COR 与继续率', scenarios: ['佣金调整', '资源投放', '渠道治理'], related: ['综合成本率 COR', '代理人产能', '渠道贡献占比'] }
+            ]
+          }
+        ]
+      },
+      securities: {
+        name: '证券与资管',
+        centerColor: '#8b5cf6',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#8b5cf6',
+            nodes: [
+              { name: 'AUM 管理资产规模', desc: '客户托管资产总规模', formula: 'AUM = 所有客户管理资产之和', scenarios: ['规模分析', '货架规划'], related: ['AUM 净流入（NNA）', '户均资产', '钱包份额'] },
+              { name: 'AUM 净流入（NNA）', desc: '剔除市值变动的真实资金增长', formula: '净流入 = 当期申购 − 当期赎回', scenarios: ['增长拆解', '资金质量'], related: ['AUM 管理资产规模', '赎回率', 'AUM 变动恒等式'] },
+              { name: '夏普比率', desc: '单位风险的超额收益', formula: '夏普比率 = (组合收益 − 无风险利率) ÷ 波动率', scenarios: ['业绩评估', '产品设计'], related: ['最大回撤', '信息比率', '风险调整收益评估'] },
+              { name: '钱包份额', desc: '本机构 AUM 占客户可投资总资产的比例', formula: '钱包份额 = 本机构 AUM ÷ 客户可投资总资产', scenarios: ['客户经营', '份额提升'], related: ['客均产品数', '客户分层与钱包份额', '交叉销售率'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: 'AUM 变动恒等式', desc: '把净流入与市值涨跌分离', formula: 'AUM 变动 = 净流入 + 市值涨跌 + 其他调整', scenarios: ['增长拆解', '流失诊断'], related: ['AUM 净流入（NNA）', '赎回率', '钱包份额'] },
+              { name: '均值-方差资产配置', desc: '在给定风险下求有效前沿', formula: '组合方差 = ΣΣ wᵢwⱼσᵢσⱼρᵢⱼ', scenarios: ['组合设计', '风险匹配', '再平衡'], related: ['最大回撤', '夏普比率', '资产配置优化'] },
+              { name: '风险调整收益评估', desc: '用夏普、回撤与信息比率评估业绩', formula: '夏普 / 最大回撤 / 信息比率三维对比', scenarios: ['业绩归因', '投顾沟通'], related: ['夏普比率', '最大回撤', '跟踪误差'] },
+              { name: '客户分层与钱包份额', desc: '按 AUM 分层提升关系深度', formula: '钱包份额 × 客均产品数', scenarios: ['客户经营', '交叉销售'], related: ['钱包份额', '客均产品数', '客户流失率'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: 'AUM 净流入为负', desc: '剥离市值因素定位流失来源', scenarios: ['产品调整', '渠道优化', '客户挽留'], related: ['AUM 净流入（NNA）', 'AUM 变动恒等式', '赎回率'] },
+              { name: '钱包份额下降', desc: '定位产品缺失、体验与份额流失', scenarios: ['产品引入', '投顾服务', '分层经营'], related: ['钱包份额', '客户分层与钱包份额', '客均产品数'] },
+              { name: '资产配置优化', desc: '按风险偏好做组合与再平衡', scenarios: ['组合设计', '回撤控制', '客户沟通'], related: ['资产配置优化', '最大回撤', '夏普比率'] },
+              { name: '跨境理财通经营', desc: '额度使用、汇兑成本与首投转化', scenarios: ['跨境开户', '额度管理', '产品匹配'], related: ['AUM 净流入（NNA）', '钱包份额', '适当性匹配率'] }
+            ]
+          }
+        ]
+      },
+      payment: {
+        name: '支付与金融科技',
+        centerColor: '#f97316',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#f97316',
+            nodes: [
+              { name: '授权率', desc: '授权通过占授权请求的比例', formula: '授权率 = 授权通过笔数 ÷ 授权请求笔数 × 100%', scenarios: ['授权率下降排查', '体验优化'], related: ['拒付率 Chargeback Rate', '欺诈损失率', '平均授权时长'] },
+              { name: '拒付率 Chargeback Rate', desc: '拒付交易占比，过高触发卡组织处罚', formula: '拒付率 = 拒付笔数 ÷ 总交易笔数 × 100%', scenarios: ['拒付治理', '商户风控'], related: ['授权率', '商户欺诈率', '欺诈损失率'] },
+              { name: '欺诈损失率', desc: '欺诈损失金额占交易金额的比例', formula: '欺诈损失率 = 欺诈损失金额 ÷ 总交易金额 × 100%', scenarios: ['反欺诈', '实时风控'], related: ['欺诈率', '告警误报率 FPR', '实时风控三层防御'] },
+              { name: '备付金覆盖率', desc: 'SVF 持牌机构的合规底线', formula: '备付金覆盖率 = 备付金 ÷ 客户储值余额 × 100%', scenarios: ['合规监控', '资金安全'], related: ['储值金额', 'KYC 完成率', 'SVF 储值支付工具合规'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '实时风控三层防御', desc: '规则、模型、验证三层组合拦截', formula: '规则 → 模型 → 二次验证 → 人工调查', scenarios: ['实时反欺诈', '误杀治理'], related: ['欺诈损失率', '告警误报率 FPR', '授权率'] },
+              { name: '授权率与拒付管理', desc: '按原因码拆解并做商户治理', formula: '原因码分类 → 差异化阈值 → 灰度切换', scenarios: ['授权率下降排查', '拒付治理'], related: ['授权率', '拒付率 Chargeback Rate', '商户欺诈率'] },
+              { name: '钱包单位经济模型 UE', desc: '按活跃钱包测算单笔毛利与回本', formula: '单笔毛利 = 手续费收入 − 通道成本 − 风控成本', scenarios: ['补贴测算', '定价决策'], related: ['笔均交易额', '交易额 TPV', '单笔交易成本'] },
+              { name: 'AML 交易监控调优', desc: '在固定人力下最大化有效告警', formula: '误报率 × 命中率 × 案均工时', scenarios: ['规则调优', '监管整改'], related: ['告警误报率 FPR', '可疑交易数', 'STR 上报数'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '授权率下降排查', desc: '区分策略拒绝与技术失败', scenarios: ['规则调整', '通道修复', '体验优化'], related: ['授权率', '授权率与拒付管理', '平均授权时长'] },
+              { name: '反欺诈误杀治理', desc: '量化误杀成本并做分层拦截', scenarios: ['分层审核', '二次验证', '规则调优'], related: ['欺诈损失率', '告警误报率 FPR', '实时风控三层防御'] },
+              { name: '钱包活跃度下降', desc: '拆频次与场景覆盖定位断点', scenarios: ['首笔激活', '场景扩展', '分层召回'], related: ['MAU 月活跃钱包', 'FPS 转账成功率', '交易成功率'] },
+              { name: 'FPS 交易异常监控', desc: '按环节与原因码定位转账失败', scenarios: ['限额优化', '对手机构协同', '渠道修复'], related: ['FPS 转账成功率', 'FPS 平均到账时长', '交易成功率'] }
+            ]
+          }
+        ]
+      },
+      pension: {
+        name: '养老金与公共金融',
+        centerColor: '#14b8a6',
+        categories: [
+          {
+            name: '核心指标',
+            color: '#14b8a6',
+            nodes: [
+              { name: '强积金参与率', desc: '已参与 MPF 的有关雇员占比', formula: '参与率 = 已参与雇员 ÷ 应参与雇员 × 100%', scenarios: ['覆盖分析', '合规稽查'], related: ['供款合规率', '雇主登记合规率', '拖欠供款案件数'] },
+              { name: '强积金总资产', desc: '所有 MPF 计划的成员权益总额', formula: '总资产 = 各计划成员权益合计', scenarios: ['规模监测', '基金评估'], related: ['净供款流入', '人均账户余额', 'AUM 变动恒等式'] },
+              { name: '退休收入替代率', desc: '退休后收入占退休前收入的比例', formula: '替代率 = 退休后收入 ÷ 退休前收入 × 100%', scenarios: ['充足度测算', '政策评估'], related: ['预期累积额', '年金化比例', '退休充足度测算'] },
+              { name: '行政费率 TER', desc: '基金行政与管理费用占资产比例', formula: 'TER = 行政与管理费用 ÷ 基金资产 × 100%', scenarios: ['受托人评估', '费用管控'], related: ['强积金总资产', '受托人运营质量', '净供款流入'] }
+            ]
+          },
+          {
+            name: '分析方法',
+            color: '#10b981',
+            nodes: [
+              { name: '三层退休保障体系', desc: '按世界银行三支柱梳理退休收入', formula: '第一支柱社会保障 + 第二支柱强制储蓄 + 第三支柱自愿储蓄', scenarios: ['政策分析', '覆盖缺口'], related: ['退休收入替代率', '强积金参与率', '可扣税自愿性供款 TVC'] },
+              { name: '退休充足度测算', desc: '三层合并测算替代率与缺口', formula: '缺口 = 目标替代率 − 三层预计收入', scenarios: ['充足度研究', '成员规划'], related: ['退休收入替代率', '预期累积额', '年金化比例'] },
+              { name: '公共部门项目验收框架', desc: '把政策目标翻译成可验收指标', formula: '政策目标 → 可量化指标 → 抽样复核 → UAT', scenarios: ['政府数据项目', 'KPI 设计'], related: ['项目验收通过率', '数据质量校验通过率', '报送差错率'] },
+              { name: 'MPF 供款与权益计算', desc: '强制性供款与自愿性供款的权益归属', formula: '供款 = 有关入息 × 5%（雇主 + 雇员）', scenarios: ['供款合规', '权益计算'], related: ['供款合规率', '强积金参与率', '可扣税自愿性供款 TVC'] }
+            ]
+          },
+          {
+            name: '业务场景',
+            color: '#f59e0b',
+            nodes: [
+              { name: '参与率与供款合规', desc: '按行业与雇主规模定位未覆盖群体', scenarios: ['合规稽查', '雇主教育', 'eMPF 对账'], related: ['强积金参与率', '供款合规率', '拖欠供款案件数'] },
+              { name: '账户碎片化治理', desc: '量化碎片账户并推动合并', scenarios: ['账户合并', 'eMPF 平台', '转职节点干预'], related: ['账户碎片化率', '强积金总资产', '行政费率 TER'] },
+              { name: '退休充足度与缺口', desc: '三层合并测算缺口与干预路径', scenarios: ['政策建议', '产品设计', '成员教育'], related: ['退休收入替代率', '退休充足度测算', '年金化比例'] },
+              { name: '公共项目验收与报送', desc: '可复核的验收标准与数据质量门禁', scenarios: ['项目验收', '隐私合规', '知识移交'], related: ['项目验收通过率', '公共部门项目验收框架', '数据质量校验通过率'] }
+            ]
+          }
+        ]
       }
     };
 
     // 行业标签配置
     const industries = [
       { key: 'ecommerce', name: '电商' },
-      { key: 'finance', name: '金融' },
+      { key: 'finance', name: '金融通用' },
+      { key: 'banking', name: '银行' },
+      { key: 'insurance', name: '保险' },
+      { key: 'securities', name: '证券与资管' },
+      { key: 'payment', name: '支付与金融科技' },
+      { key: 'pension', name: '养老金与公共金融' },
       { key: 'game', name: '游戏' },
       { key: 'content', name: '内容/短视频' },
       { key: 'saas', name: 'SaaS' },

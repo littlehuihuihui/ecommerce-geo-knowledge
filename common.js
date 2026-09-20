@@ -140,6 +140,11 @@
   var FRAMEWORK_INDUSTRY_MAP = {
     'ecommerce.html': 'ecommerce',
     'finance.html': 'finance',
+    'banking.html': 'banking',
+    'insurance.html': 'insurance',
+    'securities.html': 'securities',
+    'payment.html': 'payment',
+    'pension.html': 'pension',
     'game.html': 'game',
     'content.html': 'content',
     'saas.html': 'saas',

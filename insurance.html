@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>保险 · 多行业数据百科</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="common.css" />
+  <link rel="stylesheet" href="industry-template.css" />
+  <style>
+    :root {
+      --theme-color: #0ea5e9;
+      --theme-color-rgb: 14, 165, 233;
+      --theme-gradient: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
+  </style>
+</head>
+<body data-industry="insurance">
+
+  <nav class="encyclopedia-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">百</span>
+      <span>行业数据百科</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">首页</a>
+      <a href="metrics.html" class="nav-link">指标字典</a>
+      <a href="methodology.html" class="nav-link">方法论</a>
+      <a href="knowledge-graph.html" class="nav-link">知识图谱</a>
+      <a href="interview.html" class="nav-link">业务问题拆解</a>
+      <a href="frameworks.html" class="nav-link">知识框架</a>
+      <a href="rag/search.html" class="nav-link">✨ 智能搜索</a>
+      <a href="https://littlehuihuihui.github.io/data-analyst-gallery/" class="nav-link" target="_blank" rel="noopener">个人展馆</a>
+      <a href="https://littlehuihuihui.github.io/financial-data-portfolio/" class="nav-link" target="_blank" rel="noopener">数据平台</a>
+    </div>
+    <div class="nav-right">
+      <div class="nav-search">
+        <span class="nav-search-icon">🔍</span>
+        <input type="text" placeholder="搜索..." />
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">首页</a> / <a href="finance.html">金融行业</a> / <span>保险</span>
+      </div>
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <h1 class="page-title">🛡️ 保险</h1>
+          <p class="page-subtitle">寿险与财险的承保盈利、继续率与退保、准备金与偿付能力——保险数据分析的指标体系和香港监管口径（IA、HK RBC、IFRS 17）</p>
+        </div>
+        <div class="page-stats">
+          <div class="stat-item">
+            <div class="stat-number">20</div>
+            <div class="stat-label">指标字典</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">4</div>
+            <div class="stat-label">业务阶段</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">5</div>
+            <div class="stat-label">分析框架</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">6</div>
+            <div class="stat-label">典型场景</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ 北极星指标</h2>
+        <span class="section-badge">按业务阶段切换</span>
+      </div>
+      <p class="section-desc" style="margin-top:-8px;margin-bottom:18px;">点选北极星后，下方展开该阶段的<strong>完整指标监控体系</strong>。</p>
+      <div class="ns-switch">
+        <div class="ns-tabs" role="tablist" aria-label="保险北极星" style="--ns-cols: 4">
+          <button type="button" class="ns-tab is-active" role="tab" aria-selected="true" data-ns="newbiz">
+            <span class="ns-tab-stage">获客</span>
+            <span class="ns-tab-name">新单保费 FYP</span>
+            <span class="ns-tab-scene">代理人渠道扩张、银保合作、产品上市与推广</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="retention">
+            <span class="ns-tab-stage">留存</span>
+            <span class="ns-tab-name">13 个月保单继续率</span>
+            <span class="ns-tab-scene">续期管理、渠道质量回溯、代理人考核优化</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="profit">
+            <span class="ns-tab-stage">盈利</span>
+            <span class="ns-tab-name">综合成本率 COR</span>
+            <span class="ns-tab-scene">险种盈利分析、费用管控、渠道质量评估</span>
+          </button>
+          <button type="button" class="ns-tab" role="tab" aria-selected="false" data-ns="solvency">
+            <span class="ns-tab-stage">风控</span>
+            <span class="ns-tab-name">HK RBC 偿付能力充足率</span>
+            <span class="ns-tab-scene">资本管理、资产负债匹配、压力情景测试</span>
+          </button>
+        </div>
+        <div class="ns-panel is-active" data-ns="newbiz" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">新单保费 FYP</div>
+              <div class="ns-formula">首年保费收入（首年化保费）</div>
+            </div>
+            <div class="north-star-right"><p>保险增长的第一指标是「新单保费」，但要同时看件均、渠道质量与核保结果，否则会陷入高佣金驱动的低质量增长。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>代理人渠道扩张、银保合作、产品上市与推广</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">新单保费 FYP</h3>
+            <div class="metric-formula">首年化保费收入</div>
+            <p class="metric-desc">拆新单件数与件均保费，识别是量增还是额增</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">件均保费</h3>
+            <div class="metric-formula">新单保费 ÷ 新单件数</div>
+            <p class="metric-desc">件均过低说明产品与客群不匹配</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">代理人产能</h3>
+            <div class="metric-formula">人均新单保费 FYP</div>
+            <p class="metric-desc">产能下降要区分是人力流失还是活动率下降</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">咨询到签单转化率</h3>
+            <div class="metric-formula">签单件数 ÷ 有效咨询件数</div>
+            <p class="metric-desc">反映需求匹配与销售能力</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新单结构</h3>
+            <div class="metric-formula">储蓄型 / 保障型占比，期交 / 趸交占比</div>
+            <p class="metric-desc">期交与保障型占比决定长期价值</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">适当性匹配率</h3>
+            <div class="metric-formula">风险测评与产品匹配件数 ÷ 总签单</div>
+            <p class="metric-desc">强监管项，错配对会转化为投诉与退保</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">销售误导案件数</h3>
+            <div class="metric-formula">期内认定误导案件数</div>
+            <p class="metric-desc">直接关联监管处罚与声誉风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户投诉率</h3>
+            <div class="metric-formula">投诉件数 ÷ 有效保单数</div>
+            <p class="metric-desc">获客端问题的滞后体现</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">短期出险率</h3>
+            <div class="metric-formula">投保 1 年内出险件数 ÷ 新单件数</div>
+            <p class="metric-desc">识别逆选择与带病投保</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">核保拒保率</h3>
+            <div class="metric-formula">拒保件数 ÷ 承保申请件数</div>
+            <p class="metric-desc">过高说明前端告知与筛选不到位</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">健康告知不实率</h3>
+            <div class="metric-formula">事后发现未如实告知件数 ÷ 抽查件数</div>
+            <p class="metric-desc">理赔纠纷与欺诈的源头</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="retention" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">13 个月保单继续率</div>
+              <div class="ns-formula">第 13 个月仍有效保单数 ÷ 对应批次保单数</div>
+            </div>
+            <div class="north-star-right"><p>保险是长周期生意，继续率同时衡量销售质量与服务水平，是比保费规模更重要的健康指标。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>续期管理、渠道质量回溯、代理人考核优化</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">13 个月保单继续率</h3>
+            <div class="metric-formula">第 13 个月仍有效保单数 ÷ 对应批次保单数</div>
+            <p class="metric-desc">衡量一年内留存，寿险核心考核指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">25 个月保单继续率</h3>
+            <div class="metric-formula">第 25 个月仍有效保单数 ÷ 对应批次保单数</div>
+            <p class="metric-desc">反映两年期价值实现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退保率</h3>
+            <div class="metric-formula">期内退保保单数 ÷ 期初有效保单数</div>
+            <p class="metric-desc">主动退保与失效需分开统计</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">续期保费收入</h3>
+            <div class="metric-formula">期内续期保费到账金额</div>
+            <p class="metric-desc">决定存量价值的兑现程度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">Vintage 批次继续率</h3>
+            <div class="metric-formula">按承保月份分群看继续率曲线</div>
+            <p class="metric-desc">定位是哪几个批次拖累整体</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">客户满意度 NPS</h3>
+            <div class="metric-formula">推荐者占比 − 贬损者占比</div>
+            <p class="metric-desc">服务体验通过续期行为体现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">保全变更量</h3>
+            <div class="metric-formula">期内保全变更件数</div>
+            <p class="metric-desc">变更激增常预示需求错配</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">客户投诉率</h3>
+            <div class="metric-formula">投诉件数 ÷ 有效保单数</div>
+            <p class="metric-desc">投诉与退保高度相关</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">扣款失败率</h3>
+            <div class="metric-formula">扣款失败件数 ÷ 应扣款件数</div>
+            <p class="metric-desc">续期流失的技术性原因，可通过多通道挽回</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">代理人脱落率</h3>
+            <div class="metric-formula">离职代理人数 ÷ 期初代理人数</div>
+            <p class="metric-desc">孤儿保单的继续率显著更低</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">睡眠保单占比</h3>
+            <div class="metric-formula">长期无服务无缴费保单 ÷ 有效保单</div>
+            <p class="metric-desc">隐性流失的前置状态</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="profit" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">综合成本率 COR</div>
+              <div class="ns-formula">赔付率 + 费用率</div>
+            </div>
+            <div class="north-star-right"><p>承保盈利的本质是 COR 低于 100%。只看保费规模会掩盖亏损型增长，COR 才是承保质量的答案。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>险种盈利分析、费用管控、渠道质量评估</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">综合成本率 COR</h3>
+            <div class="metric-formula">赔付率 + 费用率</div>
+            <p class="metric-desc">低于 100% 代表承保盈利</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赔付率</h3>
+            <div class="metric-formula">赔付支出 ÷ 已赚保费</div>
+            <p class="metric-desc">拆成赔付频次 × 案均赔付</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">费用率</h3>
+            <div class="metric-formula">费用支出 ÷ 已赚保费</div>
+            <p class="metric-desc">含获客佣金与运营费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">已赚保费</h3>
+            <div class="metric-formula">保费收入 − 未到期责任准备金变动</div>
+            <p class="metric-desc">与保费收入口径不同，是赔付率的分母</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">承保利润</h3>
+            <div class="metric-formula">已赚保费 × (1 − COR)</div>
+            <p class="metric-desc">正数才是承保赚钱</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">投资收益率</h3>
+            <div class="metric-formula">投资收益 ÷ 平均投资资产</div>
+            <p class="metric-desc">承保亏损常靠投资端弥补，但不可长期依赖</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新业务价值 NBV</h3>
+            <div class="metric-formula">新单未来可分配利润现值 − 资本成本</div>
+            <p class="metric-desc">反映新单的长期盈利性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">内含价值 EV</h3>
+            <div class="metric-formula">有效业务价值 + 调整后净资产</div>
+            <p class="metric-desc">衡量公司整体经济价值</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">未决赔款准备金充足性</h3>
+            <div class="metric-formula">实际赔付 ÷ 计提准备金</div>
+            <p class="metric-desc">准备金不足会滞后体现为利润下滑</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">准备金偏差</h3>
+            <div class="metric-formula">实际赔付与预期赔付的偏差率</div>
+            <p class="metric-desc">精算假设是否合理的核心检验</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">再保分出比例</h3>
+            <div class="metric-formula">分出保费 ÷ 总保费</div>
+            <p class="metric-desc">影响净敞口与巨灾风险</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ns-panel" data-ns="solvency" role="tabpanel">
+          <div class="north-star-card">
+            <div class="north-star-left">
+              <div class="ns-name">HK RBC 偿付能力充足率</div>
+              <div class="ns-formula">可用资本 ÷ 订明资本要求 PCR</div>
+            </div>
+            <div class="north-star-right"><p>香港自 2024 年起实施风险为本资本制度（HK RBC），偿付能力充足率是保险公司经营的生命线。</p></div>
+          </div>
+          <div class="ns-scene-banner"><strong>应用场景</strong><span>资本管理、资产负债匹配、压力情景测试</span></div>
+          <div class="ns-system-head">
+            <h3 class="ns-system-title">本阶段完整监控体系</h3>
+            <p class="ns-system-desc">指标按「核心驱动 / 护栏 / 风控」围绕当前北极星分组。</p>
+          </div>
+          <div class="ns-metric-groups">
+            <div class="ns-group ns-group-core">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">核心驱动指标</h3>
+                <span class="ns-group-tag">推动北极星</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">偿付能力充足率</h3>
+            <div class="metric-formula">可用资本 ÷ 订明资本要求 PCR</div>
+            <p class="metric-desc">要求 ≥ 100%，并设最低资本要求 MCR</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">订明资本要求 PCR</h3>
+            <div class="metric-formula">按风险计量的资本要求</div>
+            <p class="metric-desc">含保险风险、市场风险、信用风险与操作风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">久期缺口</h3>
+            <div class="metric-formula">资产久期 − (负债 ÷ 资产) × 负债久期</div>
+            <p class="metric-desc">利率变动对偿付能力的敏感度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产负债匹配度</h3>
+            <div class="metric-formula">各期限档资产与负债现值比</div>
+            <p class="metric-desc">负债久期长于资产是主要风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资本回报率</h3>
+            <div class="metric-formula">税后利润 ÷ 可用资本</div>
+            <p class="metric-desc">资本使用效率</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-guard">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">护栏指标</h3>
+                <span class="ns-group-tag">质量与体验</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">投资资产评级分布</h3>
+            <div class="metric-formula">各评级档资产占比</div>
+            <p class="metric-desc">低评级资产占比上升会拉高资本要求</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">资产集中度</h3>
+            <div class="metric-formula">单一交易对手敞口占比</div>
+            <p class="metric-desc">集中度风险直接影响资本计量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">流动性覆盖率</h3>
+            <div class="metric-formula">优质流动资产 ÷ 压力净流出</div>
+            <p class="metric-desc">退保潮下的现金兑付能力</p>
+          </div>
+              </div>
+            </div>
+            <div class="ns-group ns-group-risk">
+              <div class="ns-group-head">
+                <h3 class="ns-group-title">风控 / 质量指标</h3>
+                <span class="ns-group-tag">边界与健康</span>
+              </div>
+              <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">理赔欺诈率</h3>
+            <div class="metric-formula">可疑理赔件数 ÷ 总理赔件数</div>
+            <p class="metric-desc">直接侵蚀赔付率</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">巨灾敞口</h3>
+            <div class="metric-formula">单一灾害情景下的最大损失</div>
+            <p class="metric-desc">财险的核心尾部风险</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">大案风险敞口</h3>
+            <div class="metric-formula">超阈值单案敞口合计</div>
+            <p class="metric-desc">极端案件对利润的冲击</p>
+          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🛡️</span> 承保与赔付</h2>
+      <p class="section-desc">承保盈利的核心指标：COR 及其两个构成因子</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">保费收入 GWP</h3>
+            <div class="metric-formula">新单保费 + 续期保费</div>
+            <p class="metric-desc">需拆新旧单与期交趸交结构</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">已赚保费</h3>
+            <div class="metric-formula">保费收入 − 未到期责任准备金变动</div>
+            <p class="metric-desc">赔付率的分母，与保费收入不同</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">赔付率</h3>
+            <div class="metric-formula">赔付支出 ÷ 已赚保费 × 100%</div>
+            <p class="metric-desc">拆成赔付频次 × 案均赔付</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">费用率</h3>
+            <div class="metric-formula">费用支出 ÷ 已赚保费 × 100%</div>
+            <p class="metric-desc">含佣金与运营费用</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">综合成本率 COR</h3>
+            <div class="metric-formula">赔付率 + 费用率</div>
+            <p class="metric-desc">低于 100% 才承保盈利</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">案均赔付</h3>
+            <div class="metric-formula">赔付总金额 ÷ 赔付件数</div>
+            <p class="metric-desc">单案变贵还是出险变多，对策不同</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🔁</span> 留存与渠道</h2>
+      <p class="section-desc">保险的长周期健康度，比保费规模更重要</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">13 个月保单继续率</h3>
+            <div class="metric-formula">第 13 个月仍有效保单数 ÷ 对应批次保单数</div>
+            <p class="metric-desc">年留存，寿险核心考核指标</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">25 个月保单继续率</h3>
+            <div class="metric-formula">第 25 个月仍有效保单数 ÷ 对应批次保单数</div>
+            <p class="metric-desc">两年期价值实现度</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">退保率</h3>
+            <div class="metric-formula">期内退保保单数 ÷ 期初有效保单数</div>
+            <p class="metric-desc">主动退保与失效分开统计</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">件均保费</h3>
+            <div class="metric-formula">新单保费 ÷ 新单件数</div>
+            <p class="metric-desc">产品与客群匹配度的体现</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">渠道贡献占比</h3>
+            <div class="metric-formula">各渠道保费 ÷ 总保费</div>
+            <p class="metric-desc">代理人、银保、经纪、线上差异很大</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">代理人产能</h3>
+            <div class="metric-formula">人均新单保费 FYP</div>
+            <p class="metric-desc">区分人力流失与活动率下降</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🏛️</span> 价值与偿付能力</h2>
+      <p class="section-desc">保险公司的长期价值与资本充足度</p>
+      <div class="metrics-grid">
+          <div class="metric-card">
+            <h3 class="metric-name">新业务价值 NBV</h3>
+            <div class="metric-formula">新单未来可分配利润现值 − 资本成本</div>
+            <p class="metric-desc">新单的长期盈利性</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">新业务价值率 NBV Margin</h3>
+            <div class="metric-formula">NBV ÷ 新单保费</div>
+            <p class="metric-desc">反映产品结构与渠道质量</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">内含价值 EV</h3>
+            <div class="metric-formula">有效业务价值 + 调整后净资产</div>
+            <p class="metric-desc">公司整体经济价值</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">HK RBC 偿付能力充足率</h3>
+            <div class="metric-formula">可用资本 ÷ 订明资本要求 PCR × 100%</div>
+            <p class="metric-desc">香港风险为本资本制度，要求 ≥ 100%</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">合同服务边际 CSM</h3>
+            <div class="metric-formula">IFRS 17 下未实现利润的递延</div>
+            <p class="metric-desc">IFRS 17 下的利润释放来源</p>
+          </div>
+          <div class="metric-card">
+            <h3 class="metric-name">投资收益率</h3>
+            <div class="metric-formula">投资收益 ÷ 平均投资资产 × 100%</div>
+            <p class="metric-desc">承保亏损常靠投资端弥补</p>
+          </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">🧩</span> 保险分析框架</h2>
+      <p class="section-desc">保险承保、留存与偿付能力的经典分析框架</p>
+      <div class="framework-grid">
+        <div class="framework-card">
+          <div class="framework-icon">⚖️</div>
+          <h3 class="framework-name">承保盈利三角</h3>
+          <ul class="framework-list">
+            <li><strong>COR = 赔付率 + 费用率</strong></li>
+            <li><strong>低于 100%</strong> - 承保盈利；高于 100% 靠投资端弥补</li>
+            <li>按险种、渠道、地区拆 COR</li>
+            <li>赔付率拆频次 × 案均赔付</li>
+            <li>渠道质量回溯：高赔付渠道调整佣金与授权</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🔁</div>
+          <h3 class="framework-name">继续率与退保管理</h3>
+          <ul class="framework-list">
+            <li><strong>13 / 25 个月继续率</strong> 按批次（Vintage）监控</li>
+            <li>退保原因分类：销售误导、扣款失败、代理人脱落、产品竞争力</li>
+            <li>续期提醒与多通道触达机制</li>
+            <li>把继续率纳入代理人考核与佣金递延</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">📊</div>
+          <h3 class="framework-name">准备金与 IFRS 17</h3>
+          <ul class="framework-list">
+            <li><strong>未决赔款准备金</strong> - 含已发生未报案 IBNR</li>
+            <li><strong>合同服务边际 CSM</strong> - 未来利润的递延释放</li>
+            <li>实际赔付与预期偏差分析</li>
+            <li>精算假设更新对利润的影响</li>
+            <li>准备金充足性检验</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🏛️</div>
+          <h3 class="framework-name">HK RBC 偿付能力管理</h3>
+          <ul class="framework-list">
+            <li><strong>可用资本 ÷ PCR</strong>，并设最低资本要求 MCR</li>
+            <li>资产负债久期匹配与利率风险</li>
+            <li>投资资产评级分布影响资本要求</li>
+            <li>压力情景：利率急变、退保潮、巨灾</li>
+            <li>资本规划与分红政策联动</li>
+          </ul>
+        </div>
+        <div class="framework-card">
+          <div class="framework-icon">🕵️</div>
+          <h3 class="framework-name">保险欺诈识别</h3>
+          <ul class="framework-list">
+            <li><strong>短期出险</strong> - 投保后短期集中出险</li>
+            <li><strong>集中度异常</strong> - 同一医院、维修厂、中介集中承保</li>
+            <li>关系网络识别团伙欺诈</li>
+            <li>案件分级审核与调查名单</li>
+            <li>理赔欺诈率与调查命中率双指标</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">👑</span> 保险销售渠道分层与经营重点</h2>
+      <p class="section-desc">不同渠道的客户质量、COR 与继续率差异很大，必须分层评估</p>
+      <div class="tier-grid">
+        <div class="tier-card tier-high">
+          <h3 class="tier-name">代理人渠道</h3>
+          <p class="tier-ratio">产能与活动率为核心</p>
+          <ul class="tier-features">
+            <li>👥 人均 FYP 与活动率</li>
+            <li>🔁 继续率与孤儿保单率</li>
+            <li>💼 培训与晋升体系留存代理人</li>
+            <li>🎯 适合复杂保障型与高价值产品</li>
+            <li>⚠️ 脱落率是最大风险</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-mid">
+          <h3 class="tier-name">银保渠道</h3>
+          <p class="tier-ratio">规模大、件均中等</p>
+          <ul class="tier-features">
+            <li>🏦 网点覆盖与驻点产能</li>
+            <li>💰 储蓄型产品为主</li>
+            <li>🔁 继续率常低于代理人渠道</li>
+            <li>⚠️ 关注销售误导与适当性</li>
+            <li>📊 与银行分成结构影响费用率</li>
+          </ul>
+        </div>
+        <div class="tier-card tier-low">
+          <h3 class="tier-name">经纪与代理公司</h3>
+          <p class="tier-ratio">专业度高、比价充分</p>
+          <ul class="tier-features">
+            <li>🤝 多渠道比价，客户决策更理性</li>
+            <li>📉 费率竞争激烈，费用率高</li>
+            <li>🎯 适合团险与企业客户</li>
+            <li>📊 需重点监控渠道集中度</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <h3 class="tier-name">线上直销</h3>
+          <p class="tier-ratio">件均低、量大</p>
+          <ul class="tier-features">
+            <li>📱 标准化简单产品</li>
+            <li>⚡ 转化率与页面体验为主</li>
+            <li>🤖 自动化核保与理赔</li>
+            <li>⚠️ 逆选择风险更高，需强化健康告知</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="section-icon">💡</span> 典型分析场景</h2>
+      <p class="section-desc">保险数据分析最常见的业务问题</p>
+      <div class="scenario-grid">
+        <div class="scenario-card">
+          <div class="scenario-icon">📈</div>
+          <h3 class="scenario-name">赔付率上升归因</h3>
+          <p class="scenario-desc">拆频次与案均赔付，按险种、渠道、地区定位恶化来源</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🔁</div>
+          <h3 class="scenario-name">继续率下降诊断</h3>
+          <p class="scenario-desc">按批次 Vintage 定位问题批次，区分销售质量与服务断点</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🚪</div>
+          <h3 class="scenario-name">退保率上升分析</h3>
+          <p class="scenario-desc">区分主动退保与失效，定位扣款失败、代理人脱落等可控因素</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🕵️</div>
+          <h3 class="scenario-name">理赔欺诈识别</h3>
+          <p class="scenario-desc">短期出险与集中度异常识别，兼顾调查成本与误杀</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">🏛️</div>
+          <h3 class="scenario-name">偿付能力监控</h3>
+          <p class="scenario-desc">监控可用资本与 PCR，做利率与退保潮压力情景测算</p>
+        </div>
+        <div class="scenario-card">
+          <div class="scenario-icon">👥</div>
+          <h3 class="scenario-name">渠道产能与质量分析</h3>
+          <p class="scenario-desc">对比各渠道产能、COR 与继续率，优化佣金与资源投放</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🇭🇰</span> 香港保险监管与本地制度</h2>
+        <span class="section-badge">本地业务必备</span>
+      </div>
+      <p class="section-desc">香港保险业由 IA 保险业监管局监管，并在 2024 年 7 月起实施风险为本资本制度，这是面试本地岗位的高频考点。</p>
+      <div class="scenario-list">
+        <div class="scenario-item">
+          <div class="scenario-icon">🏛️</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">IA 保险业监管局</h3>
+            <p class="scenario-desc">2017 年起独立监管保险公司与保险中介人（取代此前的保险业监理处），负责发牌、监管、市场行为与消费者保护。</p>
+            <div class="scenario-tags">
+              <span class="tag">IA</span>
+              <span class="tag">发牌</span>
+              <span class="tag">市场行为</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📐</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">HK RBC 风险为本资本制度</h3>
+            <p class="scenario-desc">2024 年 7 月起实施：以「可用资本 ÷ 订明资本要求 PCR」计量偿付能力充足率，要求 ≥ 100%，并设最低资本要求 MCR；风险覆盖保险、市场、信用与操作风险。</p>
+            <div class="scenario-tags">
+              <span class="tag">PCR</span>
+              <span class="tag">MCR</span>
+              <span class="tag">偿付能力</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">📘</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">IFRS 17 与合同服务边际 CSM</h3>
+            <p class="scenario-desc">新保险合同准则下，未实现利润以合同服务边际（CSM）递延，并按服务提供进度逐步释放为利润，改变了寿险利润的确认节奏。</p>
+            <div class="scenario-tags">
+              <span class="tag">IFRS 17</span>
+              <span class="tag">CSM</span>
+              <span class="tag">利润释放</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🧓</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">与退休保障的衔接</h3>
+            <p class="scenario-desc">保险产品是强积金（MPF）与自愿性供款之外的重要退休储备工具，可扣税年金（QDAP）与延期年金是常见切入点。</p>
+            <div class="scenario-tags">
+              <span class="tag">MPF</span>
+              <span class="tag">QDAP</span>
+              <span class="tag">退休储备</span>
+            </div>
+          </div>
+        </div>
+        <div class="scenario-item">
+          <div class="scenario-icon">🌉</div>
+          <div class="scenario-content">
+            <h3 class="scenario-title">大湾区与跨境业务</h3>
+            <p class="scenario-desc">跨境保险服务与售后服务中心是政策热点，涉及跨境客户身份核验、理赔与资金流合规。</p>
+            <div class="scenario-tags">
+              <span class="tag">大湾区</span>
+              <span class="tag">跨境理赔</span>
+              <span class="tag">客户身份核验</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">🔗</span> 保险核心业务链与数据抓手</h2>
+        <span class="section-badge">全流程</span>
+      </div>
+      <p class="section-desc">从核保到投资，每个环节都有决定最终 COR 的数据抓手。</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">🔍</div>
+          <h3 class="method-name">① 核保</h3>
+          <p class="method-desc">健康告知核验、既往理赔与体检数据交叉，控制逆选择；抓手是拒保率、加费率与短期出险率。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📝</div>
+          <h3 class="method-name">② 承保</h3>
+          <p class="method-desc">定价与承保条件制定；抓手是险种结构、渠道结构与费差益。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🗂️</div>
+          <h3 class="method-name">③ 保全</h3>
+          <p class="method-desc">保单信息变更、减保、复效；抓手是保全变更量与变更原因分布。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">🧾</div>
+          <h3 class="method-name">④ 理赔</h3>
+          <p class="method-desc">案件分级审核与反欺诈；抓手是案均赔付、结案时效与欺诈率。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">💰</div>
+          <h3 class="method-name">⑤ 投资</h3>
+          <p class="method-desc">资产负债匹配与收益实现；抓手是投资收益率与久期缺口。</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📊</div>
+          <h3 class="method-name">⑥ 报告</h3>
+          <p class="method-desc">IFRS 17 与 HK RBC 双口径披露；抓手是 CSM 变动与偿付能力充足率。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <p>多行业数据百科 · 保险知识框架</p>
+      <p class="footer-sub">持续更新中 · 保险细分方向 · 最后更新：2026年9月</p>
+    </div>
+  </footer>
+  <script src="common.js?v=10"></script>
+</body>
+</html>
