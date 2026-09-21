@@ -272,6 +272,16 @@
     return a;
   }
 
+  function isConcretePageLink(el) {
+    if (!el || el.tagName !== 'A') return false;
+    var href = (el.getAttribute('href') || '').trim();
+    if (!href || href.charAt(0) === '#') return false;
+    if (/^(https?:|mailto:)/i.test(href)) return true;
+    // 指标字典 / 方法论 / 业务问题 仍允许按卡片名改写搜索
+    if (/^(metrics|interview|methodology)\.html/i.test(href)) return false;
+    return /\.html/i.test(href);
+  }
+
   function wireFrameworkDeepLinks(path) {
     var industry = resolveIndustry(path);
     if (!industry) return;
@@ -303,6 +313,8 @@
     });
 
     document.querySelectorAll('.scenario-card').forEach(function (card) {
+      // 金融总览等：卡片本身已链到细分行业页，不要改成题库关键词搜索
+      if (isConcretePageLink(card)) return;
       var nameEl = card.querySelector('.scenario-name');
       if (!nameEl) return;
       var q = normalizeJumpQuery(nameEl.textContent)
@@ -314,6 +326,7 @@
     });
 
     document.querySelectorAll('.framework-card').forEach(function (card) {
+      if (isConcretePageLink(card)) return;
       var nameEl = card.querySelector('.framework-name');
       if (!nameEl) return;
       var q = normalizeJumpQuery(nameEl.textContent)
@@ -335,8 +348,14 @@
         desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
           ' · 点击卡片跳转<strong>方法论</strong>';
       } else if (section.querySelector('.scenario-card')) {
-        desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
-          ' · 点击卡片跳转<strong>业务问题拆解</strong>';
+        var plainScenario = false;
+        section.querySelectorAll('.scenario-card').forEach(function (card) {
+          if (!isConcretePageLink(card)) plainScenario = true;
+        });
+        if (plainScenario) {
+          desc.innerHTML = desc.innerHTML.replace(/\s*$/, '') +
+            ' · 点击卡片跳转<strong>业务问题拆解</strong>';
+        }
       }
     });
 

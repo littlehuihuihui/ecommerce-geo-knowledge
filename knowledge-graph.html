@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="knowledge-graph-embed.css?v=11" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="preload" href="knowledge-graph-data.js" as="script" />
-  <link rel="preload" href="knowledge-graph-app.js?v=11" as="script" />
+  <link rel="preload" href="knowledge-graph-app.js?v=13" as="script" />
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js" as="script" />
   <style>
     body { margin: 0; background: #0a0e1a; }
@@ -85,7 +85,7 @@
     <p style="padding:48px 24px;text-align:center;color:#94a3b8">图谱加载中…</p>
   </div>
 
-  <script src="kg-loader.js"></script>
+  <script src="kg-loader.js?v=13"></script>
   <script>
     window.loadKgGraph().catch(function () {
       var el = document.getElementById("kgAutoRoot");

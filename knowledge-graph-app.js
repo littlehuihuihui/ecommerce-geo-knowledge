@@ -24,11 +24,11 @@
     newenergy: ["newenergy"],
     tourism: ["general"], // legacy → 通用
     healthcare: ["healthcare"],
-    fmcg: ["fmcg"]
-    banking: ["banking"]
-    insurance: ["insurance"]
-    securities: ["securities"]
-    payment: ["payment"]
+    fmcg: ["fmcg"],
+    banking: ["banking"],
+    insurance: ["insurance"],
+    securities: ["securities"],
+    payment: ["payment"],
     pension: ["pension"]
   };
 
@@ -935,12 +935,15 @@
           var x = Math.cos(ang) * r;
           var y = -Math.sin(ang) * r;
           l2Positions[node.id] = { x: x, y: y, ang: ang, r: r };
+          // 从中心内侧弹出，交给弹簧拉到目标半径（对齐数据平台入场）
+          var x0 = x * 0.58;
+          var y0 = y * 0.58;
           var isExp = expandedId === node.id;
           nodeObjs.push({
             id: node.id,
             label: trunc(node.name, 6),
             title: node.name + (isExp ? "（第2层·已展开）" : "（第2层·点击展开第3层）"),
-            x: x, y: y, fixed: false,
+            x: x0, y: y0, fixed: false,
             shape: "dot",
             size: isExp ? 34 : 30,
             color: {
@@ -960,6 +963,7 @@
             to: node.id,
             color: { color: meta.color, opacity: 0.55 },
             width: 2.4,
+            length: r,
             smooth: { enabled: true, type: "curvedCW", roundness: 0.28 },
             arrows: { to: { enabled: true, scaleFactor: 0.4 } }
           });
@@ -986,11 +990,14 @@
           var r3 = pos.r + 115 + (j % 2) * 18;
           var x3 = Math.cos(ang3) * r3;
           var y3 = -Math.sin(ang3) * r3;
+          var edgeLen3 = Math.hypot(x3 - pos.x, y3 - pos.y) || 120;
+          var x30 = pos.x * 0.42 + x3 * 0.58;
+          var y30 = pos.y * 0.42 + y3 * 0.58;
           nodeObjs.push({
             id: child.id,
             label: trunc(child.name, 5),
             title: child.name + "（第3层·终点，仅查看详情）",
-            x: x3, y: y3, fixed: false,
+            x: x30, y: y30, fixed: false,
             shape: "dot",
             size: 20,
             color: {
@@ -1011,6 +1018,7 @@
             to: child.id,
             color: { color: meta3.color, opacity: 0.35 },
             width: 1.4,
+            length: edgeLen3,
             dashes: true,
             smooth: { enabled: true, type: "curvedCW", roundness: 0.35 },
             arrows: { to: { enabled: true, scaleFactor: 0.3 } }
@@ -1033,10 +1041,17 @@
           interaction: { hover: true, dragNodes: true, dragView: true, zoomView: true, tooltipDelay: 80 },
           physics: {
             enabled: true,
-            barnesHut: { gravitationalConstant: -1800, centralGravity: 0.05, springLength: 120, springConstant: 0.04, damping: 0.5, avoidOverlap: 0.7 },
-            stabilization: { enabled: true, iterations: 60, fit: true },
-            maxVelocity: 30,
-            minVelocity: 0.4
+            barnesHut: {
+              gravitationalConstant: -1600,
+              centralGravity: 0.012,
+              springLength: 180,
+              springConstant: 0.16,
+              damping: 0.28,
+              avoidOverlap: 0.82
+            },
+            stabilization: { enabled: true, iterations: 70, fit: false },
+            maxVelocity: 42,
+            minVelocity: 0.08
           },
           layout: { improvedLayout: false }
         });
@@ -1081,14 +1096,29 @@
         });
         network.on("stabilizationIterationsDone", function () {
           if (!network) return;
+          // 稳定后仍保留弹簧，拖动能回弹，而不是把阻尼拧死
           network.setOptions({
             physics: {
-              barnesHut: { gravitationalConstant: -800, centralGravity: 0.02, springLength: 140, springConstant: 0.02, damping: 0.72, avoidOverlap: 0.5 },
-              minVelocity: 0.15,
-              maxVelocity: 10,
+              barnesHut: {
+                gravitationalConstant: -1200,
+                centralGravity: 0.01,
+                springLength: 180,
+                springConstant: 0.1,
+                damping: 0.38,
+                avoidOverlap: 0.7
+              },
+              minVelocity: 0.06,
+              maxVelocity: 24,
               stabilization: { enabled: false }
             }
           });
+          try {
+            network.fit({ animation: { duration: 420, easingFunction: "easeInOutCubic" } });
+          } catch (e) {}
+        });
+        network.on("dragEnd", function () {
+          if (!network) return;
+          network.startSimulation();
         });
       }
 
@@ -1096,21 +1126,11 @@
       edgesDS.clear();
       nodesDS.add(nodeObjs);
       edgesDS.add(edgeObjs);
-      network.setOptions({ physics: { enabled: true, stabilization: { enabled: true, iterations: 50, fit: true } } });
+      network.setOptions({ physics: { enabled: true, stabilization: { enabled: true, iterations: 70, fit: false } } });
       network.startSimulation();
-      // 布局变化后强制重测画布，避免容器高度为 0 时点击无响应
-      function refitNow() {
-        try {
-          if (!network) return;
-          network.redraw();
-          network.fit({ animation: { duration: 420, easingFunction: "easeInOutCubic" } });
-        } catch (e) {}
-      }
-      requestAnimationFrame(function () {
-        refitNow();
-        setTimeout(refitNow, 120);
-        setTimeout(refitNow, 360);
-      });
+      setTimeout(function () {
+        try { if (network) network.redraw(); } catch (e) {}
+      }, 60);
       startPulse(center.id);
     }
 

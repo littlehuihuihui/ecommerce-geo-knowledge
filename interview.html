@@ -645,8 +645,20 @@
         });
       }
       if (q) {
-        document.getElementById('searchInput').value = q;
-        currentSearch = q.trim().toLowerCase();
+        var named = (questions || []).find(function (c) {
+          return c && (c.categoryName === q || c.category === q);
+        });
+        if (named) {
+          currentCategory = named.category;
+          currentSearch = '';
+          document.getElementById('searchInput').value = '';
+          document.querySelectorAll('#filterTags .filter-tag').forEach(function (t) {
+            t.classList.toggle('active', t.getAttribute('data-category') === named.category);
+          });
+        } else {
+          document.getElementById('searchInput').value = q;
+          currentSearch = q.trim().toLowerCase();
+        }
       }
     })();
 
@@ -1027,7 +1039,7 @@
   
   
   <div id="kgPageMount" class="kg-embed" style="display:none;" data-module="business_problem"></div>
-  <script src="kg-loader.js"></script>
+  <script src="kg-loader.js?v=13"></script>
   <script>
     window.bindKgViewSwitch("business_problem");
   </script>
