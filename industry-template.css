@@ -881,7 +881,7 @@ a.fw-jump {
   }
 
   .page-stats {
-    gap: 20px;
+    gap: 16px;
   }
 
   .north-star-card {
@@ -904,6 +904,21 @@ a.fw-jump {
 
   .scenario-item {
     flex-direction: column;
+  }
+
+  /* 小屏单列，避免 minmax(240px) 撑出横向滚动 */
+  .scenario-grid,
+  .framework-grid,
+  .metrics-grid,
+  .method-grid,
+  .tier-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card,
+  .scenario-card,
+  .framework-card {
+    min-width: 0;
   }
 }
 
@@ -1152,6 +1167,6 @@ a.fw-jump {
 
 @media (max-width: 768px) {
   .tier-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }

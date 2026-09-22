@@ -566,6 +566,17 @@ body {
   input[type="text"] {
     font-size: 16px !important;
   }
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .container,
+  .section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 }
 
 /* ========== 工具页顶栏（对齐行业知识框架上半区） ========== */
@@ -691,7 +702,15 @@ body {
     font-size: 28px;
   }
   .page-stats {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 18px;
+    width: 100%;
+  }
+  .page-subtitle,
+  .section-desc {
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 

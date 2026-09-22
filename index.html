@@ -121,7 +121,13 @@
       font-size: 15px;
       color: var(--text-muted);
       max-width: 500px;
+      width: 100%;
       margin: 0 auto;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      box-sizing: border-box;
+      padding: 0 2px;
     }
 
     /* 行业卡片网格 */
@@ -303,11 +309,21 @@
     @media (max-width: 768px) {
       .hero-title { font-size: 32px; }
       .hero-subtitle { font-size: 15px; }
-      .hero-stats { gap: 30px; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; justify-content: center; }
+      .hero-stat { min-width: 72px; }
       .hero-stat-num { font-size: 28px; }
       .section-title { font-size: 22px; }
       .industry-grid { grid-template-columns: 1fr; }
       .tool-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 18px;
+        width: 100%;
+      }
+      .page-header .page-title { font-size: 28px; }
+      .section { padding: 40px 16px; }
+      .section-desc { font-size: 14px; }
     }
   </style>
 </head>
@@ -341,7 +357,7 @@
 <!-- 页面头部（对齐行业知识框架上半区） -->
   <header class="page-header">
     <div class="container">
-      <div class="page-header-badge">🚀 持续更新中 · 13 大行业 · 知识框架可点进</div>
+      <div class="page-header-badge">🚀 持续更新中 · 18 个行业入口 · 知识框架可点进</div>
       <div class="page-title-row">
         <div class="page-title-left">
           <h1 class="page-title">多行业数据百科</h1>
@@ -644,6 +660,6 @@
     </p>
     <p style="margin-top: 8px; font-size: 12px;">持续更新中 · 最后更新：2026年8月</p>
   </footer>
-  <script src="common.js?v=10"></script>
+  <script src="common.js?v=11"></script>
 </body>
 </html>

@@ -536,7 +536,7 @@
         </div>
         <div class="page-stats">
           <div class="stat-item">
-            <div class="stat-number">150+</div>
+            <div class="stat-number">190+</div>
             <div class="stat-label">业务问题</div>
           </div>
           <div class="stat-item">
@@ -785,6 +785,20 @@
             '<p class="fw-broaden-note">当前行业下未命中「' +
             String(document.getElementById('searchInput').value || currentSearch).replace(/</g, '&lt;') +
             '」，已展示其它行业相关题目</p>';
+        }
+      }
+      // 关键词仍完全无命中：清空搜索，回落到当前分类（避免场景卡跳进空白页）
+      if (currentSearch && filteredCategories.length === 0) {
+        var failedQ = String(document.getElementById('searchInput').value || currentSearch);
+        currentSearch = '';
+        document.getElementById('searchInput').value = '';
+        filteredCategories = catsMatching(currentCategory);
+        if (filteredCategories.length === 0) filteredCategories = catsMatching('all');
+        if (filteredCategories.length > 0) {
+          broadenHtml =
+            '<p class="fw-broaden-note">未找到与「' +
+            failedQ.replace(/</g, '&lt;') +
+            '」匹配的题目，已展示该分类下全部业务问题</p>';
         }
       }
       
@@ -1043,7 +1057,7 @@
   <script>
     window.bindKgViewSwitch("business_problem");
   </script>
-<script src="common.js?v=10"></script>
+<script src="common.js?v=11"></script>
 </body>
 </html>
 
