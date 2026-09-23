@@ -1537,10 +1537,30 @@
         (m.scene || []).join(' ') + ' ' +
         m.categoryName
       ).toLowerCase();
-      var tokens = String(search).toLowerCase().trim().split(/\s+/).filter(Boolean);
-      if (!tokens.length) return true;
-      if (tokens.length === 1) return hay.indexOf(tokens[0]) >= 0;
-      return tokens.every(function (t) { return hay.indexOf(t) >= 0; });
+      var n = String(search).toLowerCase().trim();
+      if (!n) return true;
+      if (hay.indexOf(n) >= 0) return true;
+      var tokens = n.split(/\s+/).filter(Boolean);
+      if (tokens.length > 1 && tokens.every(function (t) { return hay.indexOf(t) >= 0; })) return true;
+      // 去语气词 / 连接词后再比
+      var strip = /[怎么如何做的呢吗？?\s、，,。！!与和／/]/g;
+      var h2 = hay.replace(strip, '');
+      var n2 = n.replace(strip, '');
+      if (n2 && h2.indexOf(n2) >= 0) return true;
+      // 「净息差与定价」→ 先试左侧核心词
+      var left = n.split(/[与和／/\s]/).filter(Boolean)[0] || '';
+      if (left.length >= 2 && hay.indexOf(left) >= 0) return true;
+      // 中文连续 2 字片段命中过半
+      if (/[\u4e00-\u9fff]/.test(n) && n.length >= 4) {
+        var parts = [];
+        for (var i = 0; i < n.length - 1; i++) parts.push(n.substr(i, 2));
+        var hit = 0;
+        for (var j = 0; j < parts.length; j++) {
+          if (hay.indexOf(parts[j]) >= 0) hit++;
+        }
+        if (hit >= Math.ceil(parts.length * 0.6)) return true;
+      }
+      return false;
     }
 
     // 渲染指标
@@ -1584,6 +1604,21 @@
           if (hasOther) {
             broadenNote =
               '<p class="fw-broaden-note">已同时展示「通用」类相关指标（部分框架指标收录在通用分类）</p>';
+          }
+        }
+        // 关键词仍无命中（框架页指标名未收录字典）：清空搜索，回落到当前行业，避免空白页
+        if (filtered.length === 0) {
+          var failedQ = String(document.getElementById('searchInput').value || currentSearch);
+          currentSearch = '';
+          document.getElementById('searchInput').value = '';
+          deepLinkSearch = false;
+          filtered = filterByScope('strict');
+          if (filtered.length === 0) filtered = filterByScope('all');
+          if (filtered.length > 0) {
+            broadenNote =
+              '<p class="fw-broaden-note">未找到与「' +
+              failedQ.replace(/</g, '&lt;') +
+              '」匹配的指标，已展示当前分类下全部指标</p>';
           }
         }
       } else {
@@ -1782,7 +1817,7 @@
   <script>
     window.bindKgViewSwitch("metric");
   </script>
-<script src="common.js?v=11"></script>
+<script src="common.js?v=12"></script>
 </body>
 </html>
 

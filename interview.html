@@ -732,10 +732,14 @@
       }
 
       // 中文：去掉「怎么/如何/做」等后再比，解决「服务器容量规划」vs「服务器容量怎么规划」
-      var strip = /[怎么如何做的呢吗？?\s、，,。]/g;
+      var strip = /[怎么如何做的呢吗？?\s、，,。！!]/g;
       var h2 = hay.replace(strip, '');
       var n2 = n.replace(strip, '');
       if (n2 && h2.indexOf(n2) >= 0) return true;
+
+      // 「净息差与定价」→ 左侧核心词
+      var left = n.split(/[与和／/]/).filter(Boolean)[0] || '';
+      if (left.length >= 2 && hay.indexOf(left) >= 0) return true;
 
       // 连续 2 字片段命中过半
       if (/[\u4e00-\u9fff]/.test(n) && n.length >= 4) {
@@ -748,6 +752,27 @@
         if (hit >= Math.ceil(parts.length * 0.6)) return true;
       }
       return false;
+    }
+
+    function searchVariants(raw) {
+      var n = String(raw || '').trim();
+      if (!n) return [];
+      var out = [n];
+      var left = n.split(/[与和／/\s]/).filter(Boolean)[0];
+      if (left && left !== n && left.length >= 2) out.push(left);
+      var stripped = n.replace(/(优化|评估|分析|归因|提升|策略|规划|监控|治理|测算|对比|报送|运营)$/g, '').trim();
+      if (stripped && stripped !== n) out.push(stripped);
+      if (/[\u4e00-\u9fff]/.test(n) && n.length > 4) {
+        out.push(n.slice(0, 4));
+        out.push(n.slice(0, 2));
+      }
+      var seen = {};
+      return out.filter(function (x) {
+        var k = x.toLowerCase();
+        if (!x || seen[k]) return false;
+        seen[k] = 1;
+        return true;
+      });
     }
 
     // 渲染题目（首屏只渲染题干，答案在展开时再注入，避免一次写进巨大 DOM）
@@ -778,6 +803,31 @@
       // 筛选：行业内无结果时，自动放宽到全部（知识框架深链）
       let filteredCategories = catsMatching(currentCategory);
       var broadenHtml = '';
+      if (currentSearch && filteredCategories.length === 0) {
+        // 先试缩短关键词（净息差与定价 → 净息差）
+        var variants = searchVariants(document.getElementById('searchInput').value || currentSearch);
+        for (var vi = 0; vi < variants.length; vi++) {
+          currentSearch = variants[vi].toLowerCase();
+          filteredCategories = catsMatching(currentCategory);
+          if (filteredCategories.length) {
+            document.getElementById('searchInput').value = variants[vi];
+            broadenHtml =
+              '<p class="fw-broaden-note">已用更短关键词「' +
+              String(variants[vi]).replace(/</g, '&lt;') +
+              '」匹配</p>';
+            break;
+          }
+          filteredCategories = catsMatching('all');
+          if (filteredCategories.length) {
+            document.getElementById('searchInput').value = variants[vi];
+            broadenHtml =
+              '<p class="fw-broaden-note">当前行业未命中，已用「' +
+              String(variants[vi]).replace(/</g, '&lt;') +
+              '」在全部行业中展示相关题目</p>';
+            break;
+          }
+        }
+      }
       if (currentSearch && filteredCategories.length === 0 && currentCategory !== 'all') {
         filteredCategories = catsMatching('all');
         if (filteredCategories.length > 0) {
@@ -1057,7 +1107,7 @@
   <script>
     window.bindKgViewSwitch("business_problem");
   </script>
-<script src="common.js?v=11"></script>
+<script src="common.js?v=12"></script>
 </body>
 </html>
 

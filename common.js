@@ -182,7 +182,13 @@
         s = (cn.length ? cn[cn.length - 1] : parts[0]) || s;
       }
     }
-    s = s.replace(/\s+[A-Za-z][A-Za-z0-9+._-]{1,12}\s*$/, '').trim();
+    // 前缀英文缩写优先：CAC 获客成本 → CAC
+    var leadAcronym = s.match(/^([A-Za-z][A-Za-z0-9+._-]{1,16})\b/);
+    if (leadAcronym && /[\u4e00-\u9fff]/.test(s)) {
+      s = leadAcronym[1];
+    } else {
+      s = s.replace(/\s+[A-Za-z][A-Za-z0-9+._-]{1,12}\s*$/, '').trim();
+    }
 
     // 框架常用名 → 字典/题库更易命中的词
     var ALIAS = {
@@ -215,10 +221,31 @@
       'SPC 统计过程控制': 'SPC',
       '牛鞭效应说明': '牛鞭',
       '客户分层运营': '分层',
-      '用户分层运营': '分层'
+      '用户分层运营': '分层',
+      '信用风险评估': '信用风险',
+      '不良率上升归因': '不良',
+      '客户流失预警': '流失',
+      '服务器容量规划': '服务器容量'
     };
     if (ALIAS[s]) s = ALIAS[s];
     return s;
+  }
+
+  /** 深链搜索词：尽量短、易命中，避免整句场景名导致空结果 */
+  function compactJumpQuery(raw, kind) {
+    var q = normalizeJumpQuery(raw);
+    if (!q) return '';
+    if (kind === 'scenario') {
+      q = q.replace(/(优化|评估|分析|归因|提升|策略|规划|监控|治理|测算|对比|报送|运营)$/g, '').trim() || q;
+    } else if (kind === 'method') {
+      q = q.replace(/(分析|模型|评估|框架|方法)$/g, '').trim() || q;
+    }
+    // 「A与B」过长时取左侧核心词
+    if (/[与和／/]/.test(q) && q.length >= 6) {
+      var left = q.split(/[与和／/]/)[0].replace(/\s+/g, '').trim();
+      if (left.length >= 2) q = left;
+    }
+    return q;
   }
 
   function buildModuleUrl(page, q, industry) {
@@ -290,7 +317,7 @@
     document.querySelectorAll('.mc-item').forEach(function (item) {
       var nameEl = item.querySelector('.mc-name');
       if (!nameEl) return;
-      var q = normalizeJumpQuery(nameEl.textContent);
+      var q = compactJumpQuery(nameEl.textContent, 'metric');
       if (!q) return;
       promoteToAnchor(item, buildModuleUrl('metrics.html', q, industry), 'metric');
     });
@@ -300,13 +327,13 @@
       if (card.getAttribute('data-fw-wired') === '1') return;
       var nameEl = card.querySelector('.metric-name, h3');
       if (!nameEl) return;
-      var q = normalizeJumpQuery(nameEl.textContent);
+      var q = compactJumpQuery(nameEl.textContent, 'metric');
       if (!q) return;
       promoteToAnchor(card, buildModuleUrl('metrics.html', q, industry), 'metric');
     });
 
     document.querySelectorAll('.ns-name').forEach(function (el) {
-      var q = normalizeJumpQuery(el.textContent);
+      var q = compactJumpQuery(el.textContent, 'metric');
       if (!q) return;
       var wrap = el.closest('.north-star-card') || el;
       promoteToAnchor(wrap, buildModuleUrl('metrics.html', q, industry), 'metric');
@@ -317,10 +344,7 @@
       if (isConcretePageLink(card)) return;
       var nameEl = card.querySelector('.scenario-name');
       if (!nameEl) return;
-      var q = normalizeJumpQuery(nameEl.textContent)
-        .replace(/(优化|评估|分析|归因|提升|策略|规划)$/g, '')
-        .trim();
-      if (!q) q = normalizeJumpQuery(nameEl.textContent);
+      var q = compactJumpQuery(nameEl.textContent, 'scenario');
       if (!q) return;
       promoteToAnchor(card, buildModuleUrl('interview.html', q, industry), 'scenario');
     });
@@ -329,10 +353,7 @@
       if (isConcretePageLink(card)) return;
       var nameEl = card.querySelector('.framework-name');
       if (!nameEl) return;
-      var q = normalizeJumpQuery(nameEl.textContent)
-        .replace(/(分析|模型|评估|框架)$/g, '')
-        .trim();
-      if (!q) q = normalizeJumpQuery(nameEl.textContent);
+      var q = compactJumpQuery(nameEl.textContent, 'method');
       if (!q) return;
       promoteToAnchor(card, buildModuleUrl('methodology.html', q, null), 'method');
     });

@@ -2399,18 +2399,34 @@
         if (searchKeyword) {
           const searchText = (m.name + m.subtitle + m.desc + m.categoryName + m.scenarios.join('')).toLowerCase();
           const compact = searchText.replace(/\s+/g, '');
-          const tokens = searchKeyword.split(/\s+/).filter(Boolean);
+          const n = String(searchKeyword).toLowerCase().trim();
+          const tokens = n.split(/\s+/).filter(Boolean);
           var matched;
           if (tokens.length > 1) {
             matched = tokens.every(function (t) {
               return searchText.indexOf(t) >= 0 || compact.indexOf(t.replace(/\s+/g, '')) >= 0;
             });
           } else {
-            var sk = searchKeyword.replace(/\s+/g, '');
-            matched = searchText.indexOf(searchKeyword) >= 0 || compact.indexOf(sk) >= 0;
-            if (!matched && searchKeyword.length >= 4) {
-              for (var len = Math.min(4, searchKeyword.length); len >= 2 && !matched; len--) {
-                matched = searchText.indexOf(searchKeyword.slice(-len)) >= 0 ||
+            var sk = n.replace(/\s+/g, '');
+            matched = searchText.indexOf(n) >= 0 || compact.indexOf(sk) >= 0;
+            if (!matched) {
+              var left = n.split(/[与和／/\s]/).filter(Boolean)[0] || '';
+              if (left.length >= 2) {
+                matched = searchText.indexOf(left) >= 0 || compact.indexOf(left.replace(/\s+/g, '')) >= 0;
+              }
+            }
+            if (!matched && /[\u4e00-\u9fff]/.test(n) && n.length >= 4) {
+              var parts = [];
+              for (var i = 0; i < n.length - 1; i++) parts.push(n.substr(i, 2));
+              var hit = 0;
+              for (var j = 0; j < parts.length; j++) {
+                if (searchText.indexOf(parts[j]) >= 0 || compact.indexOf(parts[j]) >= 0) hit++;
+              }
+              matched = hit >= Math.ceil(parts.length * 0.6);
+            }
+            if (!matched && n.length >= 4) {
+              for (var len = Math.min(4, n.length); len >= 2 && !matched; len--) {
+                matched = searchText.indexOf(n.slice(-len)) >= 0 ||
                   compact.indexOf(sk.slice(-len)) >= 0;
               }
             }
@@ -2420,6 +2436,28 @@
         return true;
       });
 
+      var broadenNote = '';
+      // 深链关键词无命中时：清空搜索，展示当前分类，避免空白
+      if (filtered.length === 0 && searchKeyword) {
+        var failedQ = searchKeyword;
+        searchKeyword = '';
+        var input = document.getElementById('searchInput');
+        if (input) input.value = '';
+        filtered = methods.filter(function (m) {
+          return currentCategory === 'all' || m.category === currentCategory;
+        });
+        if (filtered.length === 0) {
+          filtered = methods.slice();
+          currentCategory = 'all';
+        }
+        if (filtered.length > 0) {
+          broadenNote =
+            '<p class="fw-broaden-note">未找到与「' +
+            String(failedQ).replace(/</g, '&lt;') +
+            '」匹配的方法，已展示当前分类下全部方法论</p>';
+        }
+      }
+
       if (filtered.length === 0) {
         grid.innerHTML = '';
         emptyState.style.display = 'block';
@@ -2427,7 +2465,7 @@
       }
 
       emptyState.style.display = 'none';
-      grid.innerHTML = filtered.map(m => createMethodCard(m)).join('');
+      grid.innerHTML = (broadenNote || '') + filtered.map(m => createMethodCard(m)).join('');
 
       grid.querySelectorAll('.method-card').forEach(function (card) {
         card.addEventListener('click', function () {
@@ -2486,6 +2524,6 @@
   <script>
     window.bindKgViewSwitch("methodology");
   </script>
-<script src="common.js?v=11"></script>
+<script src="common.js?v=12"></script>
 </body>
 </html>
