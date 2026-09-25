@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<title>强积金年金化 · 终身收入与长寿对冲</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root { --ink:#1a1a1a; --muted:#555; --line:#ddd; --bg:#f7f7f5; --navy:#0b3d5c; --gold:#b08d3c; --green:#4a7c59; }
+  body { margin:0; font-family:"Microsoft YaHei","PingFang TC",sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:1100px; margin:0 auto; padding:24px 18px 48px; }
+  h1 { font-size:1.4rem; color:var(--navy); margin:0 0 6px; }
+  .sub { color:var(--muted); font-size:.9rem; line-height:1.5; }
+  .warn { background:#fff8e8; border-left:4px solid var(--gold); padding:10px 12px; margin:14px 0 18px; font-size:.88rem; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media(max-width:800px){ .grid { grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px; }
+  .card h2 { font-size:.98rem; margin:0 0 10px; }
+  canvas { max-height:300px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>强积金年金化 · 退休收入结构与长寿对冲</h1>
+  <p class="sub">对象三「65岁账户余额」→ 部分/全部转为香港年金式终身给付；剩余余额按对象三方式提取。基准个体入职25/退休65/中位数入息。</p>
+  <div class="warn" id="disc"></div>
+  <div class="grid">
+    <div class="card"><h2>图1 · 退休收入结构（男·基准）年金 + 剩余提取</h2><canvas id="c1"></canvas></div>
+    <div class="card"><h2>图2 · 退休收入结构（女·基准）</h2><canvas id="c2"></canvas></div>
+    <div class="card"><h2>图3 · 账户耗尽年龄 vs 年金化比例（男）</h2><canvas id="c3"></canvas></div>
+    <div class="card"><h2>图4 · 账户耗尽年龄 vs 年金化比例（女）</h2><canvas id="c4"></canvas></div>
+  </div>
+</div>
+<script>
+const D = {"struct_male": {"ratios": ["0%", "25%", "50%", "75%", "100%"], "annuity": [0.0, 73793.58, 147587.16, 221380.74, 295174.32], "draw": [401230.65, 327437.07, 253643.49, 179849.91, 0.0], "floor": [0.0, 73793.58, 147587.16, 221380.74, 295174.32], "total": [401230.65, 401230.65, 401230.65, 401230.65, 295174.32]}, "struct_female": {"ratios": ["0%", "25%", "50%", "75%", "100%"], "annuity": [0.0, 67432.06, 134864.13, 202296.19, 269728.26], "draw": [401230.65, 333798.59, 266366.52, 198934.46, 0.0], "floor": [0.0, 67432.06, 134864.13, 202296.19, 269728.26], "total": [401230.65, 401230.65, 401230.65, 401230.65, 269728.26]}, "dep_male": {"labels": ["0%", "25%", "50%", "75%", "100%"], "ages": [77.9, 76.66, 74.77, 71.59, 120.0], "floors": [0.0, 73793.58, 147587.16, 221380.74, 295174.32]}, "dep_female": {"labels": ["0%", "25%", "50%", "75%", "100%"], "ages": [77.9, 76.39, 74.23, 70.9, 120.0], "floors": [0.0, 67432.06, 134864.13, 202296.19, 269728.26]}, "base_balance": 4241010.31, "disclaimer": "年金化对冲长寿风险，但降低流动性与遗产弹性；跨境支付通等为产品演进背景，未入定价方程。"};
+document.getElementById('disc').textContent = D.disclaimer + ' 基准退休余额约 $' + Math.round(D.base_balance).toLocaleString() + '。';
+
+function stackChart(id, pack) {
+  new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{
+      labels: pack.ratios,
+      datasets:[
+        {label:'年金（终身）', data:pack.annuity, backgroundColor:'#0b3d5c', stack:'s'},
+        {label:'剩余余额提取', data:pack.draw, backgroundColor:'#b08d3c', stack:'s'},
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{position:'bottom'}, title:{display:false}},
+      scales:{
+        x:{stacked:true, title:{display:true, text:'年金化比例'}},
+        y:{stacked:true, title:{display:true, text:'年收入（港元）'}}
+      }
+    }
+  });
+}
+function depChart(id, pack, color) {
+  new Chart(document.getElementById(id), {
+    type:'line',
+    data:{
+      labels: pack.labels,
+      datasets:[
+        {label:'账户耗尽年龄（剩余部分；120≈不耗尽）', data:pack.ages, borderColor:color, tension:.25, fill:false},
+      ]
+    },
+    options:{
+      responsive:true,
+      plugins:{legend:{position:'bottom'}},
+      scales:{
+        y:{min:65, max:125, title:{display:true, text:'年龄'}},
+        x:{title:{display:true, text:'年金化比例'}}
+      }
+    }
+  });
+}
+stackChart('c1', D.struct_male);
+stackChart('c2', D.struct_female);
+depChart('c3', D.dep_male, '#0b3d5c');
+depChart('c4', D.dep_female, '#b08d3c');
+</script>
+</body>
+</html>

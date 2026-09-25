@@ -1,0 +1,8 @@
+T01 rows=1332 years=2020-2056
+T02 rows=3348 scenarios=['中', '低', '高']
+T03 rows=186
+  2026中·默认(新上下限) 缴费人数=255.7205万 总供款=912.3亿
+  2026中·对照(旧上下限) 总供款=767.16亿
+T04 rows=465
+T05 rows=744
+OUT=D:\cursor\行业百科\data\mpf-system-projection\p0_foundation

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<title>强积金个体账户 · 充足率与长寿风险</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root { --ink:#1a1a1a; --muted:#5a5a5a; --line:#ddd; --bg:#fafafa; --accent:#0b3d5c; --gold:#b08d3c; }
+  body { margin:0; font-family:"Microsoft YaHei","PingFang TC",sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width:1100px; margin:0 auto; padding:24px 18px 48px; }
+  h1 { font-size:1.45rem; margin:0 0 6px; color:var(--accent); }
+  .sub { color:var(--muted); font-size:.9rem; line-height:1.5; margin-bottom:16px; }
+  .warn { background:#fff8e8; border-left:4px solid var(--gold); padding:10px 12px; margin:12px 0 20px; font-size:.88rem; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:800px){ .grid { grid-template-columns:1fr; } }
+  .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px; }
+  .card h2 { font-size:1rem; margin:0 0 10px; }
+  canvas { max-height:320px; }
+  table { width:100%; border-collapse:collapse; font-size:.82rem; margin-top:8px; }
+  th,td { border:1px solid var(--line); padding:4px 6px; text-align:left; }
+  th { background:#f0f0f0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>强积金个体账户 · 积累、充足率与长寿风险</h1>
+  <p class="sub">视角：代表性个体（非制度总账户）。入职25岁、退休65岁、起薪约入息中位数 $20,500/月；供款5%+5%，现行/假设上下限按年切换。单位：港元。</p>
+  <div class="warn" id="disclaimer"></div>
+  <div class="grid">
+    <div class="card"><h2>图1 · 账户积累曲线（男·基准回报）</h2><canvas id="c1"></canvas></div>
+    <div class="card"><h2>图2 · 退休时余额（三情景×性别）</h2><canvas id="c2"></canvas></div>
+    <div class="card"><h2>图3 · 账户耗尽年龄分布（男·4%规则 MC）</h2><canvas id="c3"></canvas></div>
+    <div class="card"><h2>图4 · 账户耗尽年龄分布（女·4%规则 MC）</h2><canvas id="c4"></canvas></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h2>寿命锚点</h2>
+    <div id="anchors"></div>
+  </div>
+</div>
+<script>
+const D = {"accumulation": {"ages": [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64], "balance": [24600.0, 51143.4, 79747.57, 110536.28, 143640.08, 179196.58, 217350.9, 258255.99, 302073.08, 348972.08, 399132.06, 452741.68, 509999.74, 571115.66, 636310.03, 705815.22, 779875.95, 858749.92, 942708.52, 1032037.48, 1127037.66, 1228025.75, 1335335.15, 1448766.58, 1567756.14, 1692576.19, 1823512.42, 1960864.53, 2104946.89, 2256089.29, 2414637.67, 2580954.91, 2755421.7, 2938437.37, 3130420.8, 3331811.42, 3543070.18, 3764680.62, 3997149.97, 4241010.31], "cum_contrib": [24600.0, 49938.0, 76036.14, 102917.22, 130604.74, 159122.88, 188496.57, 218751.47, 249914.01, 282011.43, 315071.77, 349123.93, 384197.65, 420323.57, 457533.28, 495859.28, 535335.06, 575995.11, 617874.96, 661011.21, 705441.55, 751204.8, 798340.94, 846340.94, 894340.94, 942340.94, 990340.94, 1038340.94, 1086340.94, 1134340.94, 1182340.94, 1230340.94, 1278340.94, 1326340.94, 1374340.94, 1422340.94, 1470340.94, 1518340.94, 1566340.94, 1614340.94], "cum_invest": [0.0, 1205.4, 3711.43, 7619.06, 13035.34, 20073.7, 28854.33, 39504.53, 52159.07, 66960.65, 84060.28, 103617.75, 125802.1, 150792.08, 178776.75, 209955.94, 244540.89, 282754.81, 324833.55, 371026.27, 421596.11, 476820.95, 536994.22, 602425.64, 673415.2, 750235.25, 833171.48, 922523.59, 1018605.96, 1121748.35, 1232296.73, 1350613.97, 1477080.76, 1612096.43, 1756079.86, 1909470.48, 2072729.24, 2246339.68, 2430809.03, 2626669.37]}, "retire_balance": {"labels": ["保守", "基准", "乐观"], "male": [2836460.08, 4241010.31, 6855592.02], "female": [2836460.08, 4241010.31, 6855592.02]}, "hist_male": {"labels": ["79-82", "82-86", "86-89", "89-92", "92-96", "96-99", "99-102", "102-105", "105-109", "109-112", "112-115", "115-119", "119-122", "122-125", "125-129", "129-132", "132-135", "135-138", "138-142", "142-145"], "counts": [30, 112, 146, 170, 133, 116, 100, 65, 63, 48, 48, 34, 27, 20, 14, 9, 15, 11, 11, 828]}, "hist_female": {"labels": ["79-82", "82-86", "86-89", "89-92", "92-96", "96-99", "99-102", "102-105", "105-109", "109-112", "112-115", "115-119", "119-122", "122-125", "125-129", "129-132", "132-135", "135-138", "138-142", "142-145"], "counts": [30, 112, 146, 170, 133, 116, 100, 65, 63, 48, 48, 34, 27, 20, 14, 9, 15, 11, 11, 828]}, "anchors": {"median_income": 20500.0, "le_male": 83.3, "le_female": 88.7, "e65_male": 18.0, "e65_female": 24.0}, "disclaimer": "强积金不提供长寿风险保障：账户耗尽后无自动续付，长寿风险由个人承担。"};
+document.getElementById('disclaimer').textContent = D.disclaimer;
+document.getElementById('anchors').innerHTML =
+  `入息中位数 $${D.anchors.median_income.toLocaleString()}/月；` +
+  `预期寿命 男 ${D.anchors.le_male} / 女 ${D.anchors.le_female}；` +
+  `65岁余命 男≈${D.anchors.e65_male}年 / 女≈${D.anchors.e65_female}年。`;
+
+new Chart(document.getElementById('c1'), {
+  type:'line',
+  data:{
+    labels:D.accumulation.ages,
+    datasets:[
+      {label:'期末余额', data:D.accumulation.balance, borderColor:'#0b3d5c', tension:.2, pointRadius:0},
+      {label:'累计供款', data:D.accumulation.cum_contrib, borderColor:'#b08d3c', tension:.2, pointRadius:0},
+      {label:'累计投资收益', data:D.accumulation.cum_invest, borderColor:'#5a8f6b', tension:.2, pointRadius:0},
+    ]
+  },
+  options:{responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{title:{display:true,text:'港元'}}, x:{title:{display:true,text:'年龄'}}}
+});
+
+new Chart(document.getElementById('c2'), {
+  type:'bar',
+  data:{
+    labels:D.retire_balance.labels,
+    datasets:[
+      {label:'男', data:D.retire_balance.male, backgroundColor:'#0b3d5c'},
+      {label:'女', data:D.retire_balance.female, backgroundColor:'#b08d3c'},
+    ]
+  },
+  options:{responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{title:{display:true,text:'退休余额（港元）'}}}
+});
+
+function histChart(id, pack, color){
+  new Chart(document.getElementById(id), {
+    type:'bar',
+    data:{ labels:pack.labels, datasets:[{label:'频数', data:pack.counts, backgroundColor:color}] },
+    options:{responsive:true, plugins:{legend:{display:false}}, scales:{x:{ticks:{maxRotation:60, minRotation:45, font:{size:9}}}, y:{title:{display:true,text:'模拟次数'}}}
+  });
+}
+histChart('c3', D.hist_male, '#0b3d5c99');
+histChart('c4', D.hist_female, '#b08d3c99');
+</script>
+</body>
+</html>

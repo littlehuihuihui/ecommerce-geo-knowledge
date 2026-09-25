@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<title>强积金制度总账户 · 一页纸摘要</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Microsoft YaHei", "PingFang TC", "Noto Sans CJK SC", sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.35;
+    color: #1a1a1a;
+    max-width: 190mm;
+    margin: 0 auto;
+    padding: 8mm 10mm;
+  }
+  h1 {
+    font-size: 13pt;
+    margin: 0 0 4px;
+    letter-spacing: 0.02em;
+  }
+  .sub {
+    font-size: 9pt;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 10.5pt;
+    margin: 8px 0 4px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+  }
+  .one-liner {
+    background: #f3f3f3;
+    padding: 6px 8px;
+    margin: 4px 0 6px;
+    font-size: 10pt;
+  }
+  ul { margin: 2px 0 4px 1.1em; padding: 0; }
+  li { margin: 1px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+    margin: 4px 0;
+  }
+  th, td {
+    border: 1px solid #bbb;
+    padding: 3px 6px;
+    text-align: left;
+  }
+  th { background: #eee; font-weight: 600; }
+  .footer {
+    margin-top: 8px;
+    font-size: 8.5pt;
+    color: #555;
+    border-top: 1px solid #ccc;
+    padding-top: 4px;
+  }
+  @media print {
+    body { padding: 0; max-width: none; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+  <p class="no-print" style="font-size:9pt;color:#666;">浏览器打开后 Ctrl+P 打印为 A4；演示页请另开 mpf_integrated_30y_dashboard.html</p>
+
+  <h1>强积金制度总账户 · 30 年现金流预测｜一页纸</h1>
+  <p class="sub">研究/教学投影 · 非积金局官方精算 · 基准情景 r≈4.9% · 单位：亿港元</p>
+
+  <h2>1. 一句话定位</h2>
+  <p class="one-liner">我构建了一个强积金制度总账户的 30 年现金流预测模型，用队列成分法捕捉人口结构变化，用四层架构拆解资金进出。</p>
+
+  <h2>2. 核心结论（3）</h2>
+  <ul>
+    <li>基准下 30 年内资产持续上升</li>
+    <li>30 年内未见制度净流出拐点</li>
+    <li>回报每降 1%，期末少约 2.6 万亿</li>
+  </ul>
+
+  <h2>3. 关键数字（5｜基准）</h2>
+  <table>
+    <tr><th>指标</th><th>数值</th><th>来源</th></tr>
+    <tr><td>2026 起始总资产</td><td><b>16,700</b></td><td>积金局量级（约 2026 年中）</td></tr>
+    <tr><td>30 年累计供款</td><td><b>约 3.69 万亿</b></td><td>模型缴费层 2026–2056</td></tr>
+    <tr><td>30 年累计提取</td><td><b>约 1.85 万亿</b></td><td>模型领取层汇总</td></tr>
+    <tr><td>资产峰值</td><td>投影期内未见顶；2056 末约 <b>12.04 万亿</b></td><td>模型拐点表</td></tr>
+    <tr><td>净流出年份</td><td><b>30 年内未出现</b>（2056 时 W/C≈0.96）</td><td>W＞C+投资收益</td></tr>
+  </table>
+
+  <h2>4. 模型亮点（3）</h2>
+  <ul>
+    <li>队列成分法（非线性外推，捕捉婴儿潮退休洪峰）</li>
+    <li>分性别分年龄（支持男 / 女 / 混合切换）</li>
+    <li>交互可调参数（约 6 个滑块实时更新）</li>
+  </ul>
+
+  <h2>5. 数据来源</h2>
+  <p style="margin:2px 0;">积金局《统计摘要》与年报量级 · 政府统计处人口/生命表 · 假设项均在数据字典标注「真实/假设」</p>
+
+  <p class="footer">
+    恒等式：A(t+1)=A(t)×(1+r)+C−W−Offset　｜　演示：mpf_integrated_30y_dashboard.html　｜　完整讲稿：11_interview_briefing_pack.md
+  </p>
+</body>
+</html>

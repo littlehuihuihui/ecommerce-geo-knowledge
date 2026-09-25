@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>强积金制度总账户 · 30年演化仪表盘（2026–2056）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --navy:#1a3a5c; --navy-2:#244a73; --gold:#c9a227; --gold-soft:#e8d48a;
+  --bg:#f5f6f8; --card:#ffffff; --text:#1e293b; --muted:#64748b; --line:#e2e8f0;
+  --green:#2f9e7a; --coral:#d4655a; --cyan:#3b82a0;
+  --font:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text);min-width:1024px}
+.wrap{max-width:1280px;margin:0 auto;padding:20px 20px 48px}
+header.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy-2));
+  color:#fff;border-radius:16px;padding:22px 26px;box-shadow:0 10px 30px rgba(26,58,92,.18);
+}
+.eyebrow{color:var(--gold-soft);font-size:12px;letter-spacing:.14em;font-weight:600}
+h1{margin:8px 0 0;font-size:1.65rem;font-weight:700}
+.sub{margin:8px 0 0;opacity:.88;font-size:.92rem;line-height:1.55;max-width:85ch}
+details.note{margin-top:14px;background:rgba(255,255,255,.08);border-radius:10px;padding:0}
+details.note summary{cursor:pointer;padding:12px 14px;color:var(--gold-soft);font-weight:600;list-style:none}
+details.note .body{padding:0 14px 14px;font-size:.86rem;line-height:1.65;opacity:.92}
+details.note code{color:var(--gold-soft)}
+.controls{margin-top:16px;display:grid;grid-template-columns:1.15fr 1fr;gap:14px}
+.card{background:var(--card);border-radius:14px;padding:16px 18px;box-shadow:0 4px 16px rgba(26,58,92,.06);border:1px solid var(--line)}
+.card h2{margin:0 0 12px;font-size:.95rem;color:var(--navy)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btns button{
+  border:1px solid var(--line);background:#fff;color:var(--navy);padding:8px 14px;border-radius:999px;
+  cursor:pointer;font:inherit;font-size:.88rem;
+}
+.btns button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btns.gold button.active{background:var(--gold);border-color:var(--gold);color:#1a1405}
+.sliders{display:grid;gap:10px}
+.slider-row{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center}
+.slider-row label{font-size:.84rem;color:var(--muted)}
+.slider-row output{text-align:right;font-size:.84rem;color:var(--navy);font-weight:600;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.year-row{display:grid;grid-template-columns:90px 1fr 64px;gap:10px;align-items:center;margin-top:12px}
+.year-val{font-size:1.25rem;font-weight:700;color:var(--gold);text-align:right}
+.kpis{margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(26,58,92,.05)}
+.kpi .l{font-size:.72rem;color:var(--muted);letter-spacing:.04em}
+.kpi .v{margin-top:6px;font-size:1.15rem;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+.kpi .v.gold{color:var(--gold)}
+.kpi .h{margin-top:4px;font-size:.72rem;color:var(--muted)}
+.grid{margin-top:14px;display:grid;grid-template-columns:1.15fr .85fr;gap:14px}
+.mod{background:var(--card);border-radius:14px;padding:14px 16px;border:1px solid var(--line);box-shadow:0 4px 16px rgba(26,58,92,.05);min-height:380px;display:flex;flex-direction:column}
+.mod.wide{grid-column:1/-1}
+.mod h3{margin:0;font-size:1rem;color:var(--navy)}
+.mod .desc{margin:6px 0 10px;font-size:.8rem;color:var(--muted);line-height:1.5}
+.chart{flex:1;min-height:300px;position:relative}
+.chart canvas{max-height:340px}
+#sankey,#waterfall{min-height:320px}
+footer{margin-top:22px;padding:16px 4px;color:var(--muted);font-size:.78rem;line-height:1.65;border-top:1px solid var(--line)}
+footer strong{color:var(--navy)}
+
+/* —— 模块9 设计思路面板 —— */
+details.design-panel{
+  margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 4px 16px rgba(26,58,92,.06);overflow:hidden;
+}
+details.design-panel>summary{
+  cursor:pointer;list-style:none;padding:14px 18px;display:flex;align-items:center;gap:10px;
+  font-weight:700;color:var(--navy);font-size:.98rem;user-select:none;
+}
+details.design-panel>summary::-webkit-details-marker{display:none}
+details.design-panel>summary .chev{
+  margin-left:auto;width:10px;height:10px;border-right:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  transform:rotate(45deg);transition:transform .2s;
+}
+details.design-panel[open]>summary .chev{transform:rotate(-135deg);margin-top:6px}
+details.design-panel>summary .badge{
+  font-size:.68rem;font-weight:600;letter-spacing:.06em;color:#1a1405;background:var(--gold);
+  padding:3px 8px;border-radius:999px;
+}
+.design-body{padding:4px 18px 18px;border-top:1px solid var(--line)}
+.design-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.design-card{
+  background:linear-gradient(165deg,#f8fafc,#fff);border:1px solid var(--line);border-radius:12px;padding:14px 14px 12px;
+}
+.design-card .ico{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:1.05rem;
+  background:rgba(26,58,92,.08);margin-bottom:8px;
+}
+.design-card h4{margin:0 0 6px;font-size:.9rem;color:var(--navy)}
+.design-card p,.design-card li{margin:0;font-size:.8rem;color:var(--muted);line-height:1.55}
+.design-card ul{margin:6px 0 0;padding-left:1.1em}
+.design-card.wide{grid-column:1/-1}
+.flow-mini{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px;font-size:.78rem;font-weight:600;color:var(--navy)}
+.flow-mini span.pill{background:rgba(201,162,39,.18);border:1px solid rgba(201,162,39,.45);padding:4px 8px;border-radius:999px}
+.flow-mini span.arr{color:var(--gold);font-weight:700}
+.callout-offset{
+  margin-top:8px;padding:10px 12px;border-left:3px solid var(--gold);background:rgba(201,162,39,.08);
+  font-size:.8rem;color:var(--navy);line-height:1.5;border-radius:0 8px 8px 0;
+}
+#chartOffset{max-height:360px}
+@media (max-width:900px){
+  .design-grid{grid-template-columns:1fr}
+  body{min-width:0}
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">MPF SYSTEM ACCOUNT · 30Y PROJECTION</div>
+    <h1>强积金制度总账户 · 30年演化仪表盘</h1>
+    <p class="sub">整合人口层、缴费层、领取层与资产演化（2026–2056）。拖动参数滑块将即时重算资产路径与图表；单位：金额亿港元、人数万人。</p>
+    <details class="note">
+      <summary>模型说明（假设、恒等式与数据来源）</summary>
+      <div class="body">
+        <p><strong>核心恒等式</strong>：<code>A<sub>t+1</sub> = A<sub>t</sub>×(1+r) + C<sub>t</sub> − W<sub>t</sub> − Offset<sub>t</sub></code>（期初资产先计息，再加减当年流量）。</p>
+        <ul>
+          <li>缴费人数 ≈ 劳动年龄人口 × LFPR × 就业率 × 覆盖率；强制含有关入息 7,100–30,000 规则（现行）。</li>
+          <li>达龄提取人数 ≈ (60–64)/5，并按退休年龄滑块平移；一笔过主导，默认提取比例 100%[假设]。</li>
+          <li>其他提取 ≈ 总提取的 12%[假设]；自愿约占总额 25.5%。</li>
+          <li>初值 A<sub>2026</sub>=16,700 亿；账户约 1,100 万。滑块为敏感性覆写，非蒙特卡洛。</li>
+          <li>入息上下限调整尚未最终确定，模型默认 2028 年起上调至 $10,500 / $40,000 为<strong>基准情景假设</strong>（非已确定法定值）。敏感性分析中保留「维持旧值」对照。</li>
+        </ul>
+        <p>数据来源：积金局公开量级锚点；政府统计处人口/死亡率/劳动参与率相关表；本仓库 Prompt 1-1～1-3 模型产出。</p>
+      </div>
+    </details>
+  </header>
+
+  <!-- 模块9 · 模型设计思路（默认折叠） -->
+  <details class="design-panel" id="designPanel">
+    <summary>
+      <span class="badge">面试速览</span>
+      模块9 · 模型设计思路
+      <span class="chev" aria-hidden="true"></span>
+    </summary>
+    <div class="design-body">
+      <p style="margin:10px 0 0;font-size:.84rem;color:var(--muted);line-height:1.55">
+        队列化人口、对冲分层、上下限过渡、全自由行边界、eMPF 降费与四层反馈——面试时按卡片扫一遍即可。
+      </p>
+      <div class="design-grid">
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">👥</div>
+          <h4>1. 为何用队列成分法，而非线性外推</h4>
+          <ul>
+            <li>养老金压力来自<strong>年龄结构</strong>，不是总人口一条直线。</li>
+            <li>每年新领取 ≈ 准退休队列推进，不是「总量×固定增速」。</li>
+            <li>婴儿潮集中达龄 → 领取<strong>非线性</strong>抬升。</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">⚖️</div>
+          <h4>2. 为何取消对冲要按入职年份分层</h4>
+          <ul>
+            <li>取消对冲<strong>不具追溯力</strong>（转制日 2025-05-01）。</li>
+            <li>转制前在职：转制前部分仍可被雇主强制供款对冲。</li>
+            <li>转制后入职：雇主强制完全不可对冲；自愿仍可。</li>
+            <li>流出<strong>渐进归零</strong>，不是一刀切。</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">📏</div>
+          <h4>3. 为什么供款上下限要分阶段处理</h4>
+          <ul>
+            <li>现行仍为 <strong>$7,100 / $30,000</strong>（约 12–13 年未调）。</li>
+            <li>截至约 2026-09：积金局仍在进行 2022–2026 周期检讨，目标 <strong>2026 年中</strong>向政府提交报告及建议；<strong>最终幅度与时间表尚未公布</strong>。</li>
+            <li>模型：<strong>2026–2027 用旧值</strong>；<strong>2028 起</strong>上调至 $10,500 / $40,000 为【基准情景假设】，非法定值。</li>
+            <li>敏感性保留「维持旧上限 / 现行 $30,000」对照情景。</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">🔄</div>
+          <h4>4. 全自由行对模型的影响</h4>
+          <ul>
+            <li><strong>首阶段</strong>：2025年9月完成修例，预计<strong>2026年Q4</strong>实际实施。允许2025年5月1日或之后入职的雇员，将雇主强制性供款转移至自选计划。</li>
+            <li><strong>次阶段</strong>：2027年上半年提交修订条例草案，覆盖其余雇员。</li>
+            <li><strong>对模型的影响</strong>：不改变制度总资产，但影响账户分布和市场竞争。本次建模未纳入受托人层面，在「模型局限」中说明。</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">📉</div>
+          <h4>5. eMPF 费率的动态下降路径</h4>
+          <ul>
+            <li><strong>0.37% → 0.29%</strong>（2026-04-01）→ 线性降至 <strong>0.22%</strong>（2030），其后持平。</li>
+            <li>费率下降直接抬升净投资回报（相对 0.29% 口径逐年代入）。</li>
+          </ul>
+        </div>
+        <div class="design-card">
+          <div class="ico" aria-hidden="true">🔗</div>
+          <h4>6. 四层架构与反馈回路</h4>
+          <div class="flow-mini">
+            <span class="pill">人口</span><span class="arr">→</span>
+            <span class="pill">缴费</span><span class="arr">→</span>
+            <span class="pill">领取</span><span class="arr">→</span>
+            <span class="pill">资产</span>
+          </div>
+          <p style="margin-top:8px">反馈：回报抬高 A → 余额↑ → 提取↑。恒等式含对冲：<code style="color:var(--navy)">A(t+1)=A(t)(1+r)+C−W−Offset</code></p>
+        </div>
+        <div class="design-card wide">
+          <div class="ico" aria-hidden="true">⚠️</div>
+          <h4>7. 关键假设与局限（摘要）</h4>
+          <ul>
+            <li>长期回报用制度以来中枢（约 4.9%），不用近年单年高回报外推。</li>
+            <li>提取比例默认 100%（一笔过约 94%+）；永久离港独立建模（2025=58.86 亿，年减 10% 至 2035 趋稳）。</li>
+            <li>全自由行首阶段预计 2026 Q4 落地、次阶段 2027 立法；受托人/账户迁移未纳入资产方程。</li>
+            <li>上下限 2028 新值 $10,500 / $40,000 为基准情景假设（未生效）；对照可维持现行 $7,100 / $30,000。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </details>
+
+
+  <section class="controls">
+    <div class="card">
+      <h2>情景切换</h2>
+      <div class="btns gold" id="presetBtns">
+        <button type="button" data-p="保守">保守</button>
+        <button type="button" data-p="基准" class="active">基准</button>
+        <button type="button" data-p="乐观">乐观</button>
+      </div>
+      <div class="year-row">
+        <label for="yearSlider">时间轴（桑基/瀑布）</label>
+        <input type="range" id="yearSlider" min="2026" max="2056" value="2026"/>
+        <div class="year-val" id="yearLab">2026</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>参数滑块（实时重算）</h2>
+      <div class="sliders">
+        <div class="slider-row"><label>投资回报率</label><input type="range" id="rSlider" min="2" max="8" step="0.1" value="4.9"/><output id="rOut">4.9%</output></div>
+        <div class="slider-row"><label>退休年龄</label><input type="range" id="ageSlider" min="60" max="70" step="1" value="65"/><output id="ageOut">65岁</output></div>
+        <div class="slider-row"><label>提取比例</label><input type="range" id="wdSlider" min="50" max="100" step="5" value="100"/><output id="wdOut">100%</output></div>
+        <div class="slider-row"><label>强积金覆盖率</label><input type="range" id="covSlider" min="75" max="95" step="1" value="85"/><output id="covOut">85%</output></div>
+        <div class="slider-row"><label>入息增长率</label><input type="range" id="wgSlider" min="1" max="5" step="0.5" value="3"/><output id="wgOut">3.0%</output></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="kpis">
+    <div class="kpi"><div class="l">当前总资产（选中年末）</div><div class="v gold" id="kA">—</div><div class="h" id="kAh">—</div></div>
+    <div class="kpi"><div class="l">资产峰值年份 / 金额</div><div class="v" id="kPeak">—</div><div class="h">期末&lt;期初的首年</div></div>
+    <div class="kpi"><div class="l">净流出拐点（提取&gt;供款）</div><div class="v" id="kCf">—</div><div class="h">不含投资回报</div></div>
+    <div class="kpi"><div class="l">30年累计供款 / 提取</div><div class="v" id="kCum">—</div><div class="h">当前滑块路径</div></div>
+    <div class="kpi"><div class="l">资产耗尽年份</div><div class="v" id="kDep">—</div><div class="h">期末资产≤0</div></div>
+  </section>
+
+  <section class="grid">
+    <div class="mod">
+      <h3>模块1 · 资金流向桑基图</h3>
+      <p class="desc">这张图在说什么：选定年份里，强制/自愿供款与投资收益如何流入总资产池，再流向退休提取、其他提取与年末留存。</p>
+      <div class="chart" id="sankey"></div>
+    </div>
+    <div class="mod">
+      <h3>模块5旁挂 · 当年收支瀑布</h3>
+      <p class="desc">这张图在说什么：从期初资产出发，依次叠加投资损益、总供款，扣除总提取，得到期末资产。</p>
+      <div class="chart" id="waterfall"></div>
+    </div>
+
+    <div class="mod wide">
+      <h3>模块2 · 总资产演化（三情景对照 + 当前覆写）</h3>
+      <p class="desc">这张图在说什么：保守/基准/乐观预设路径（虚线）与当前滑块重算路径（实线）；标注峰值与净流出拐点。</p>
+      <div class="chart"><canvas id="chartAsset"></canvas></div>
+    </div>
+
+    <div class="mod wide">
+      <h3>模块3 · 年度收支构成（正负堆叠）</h3>
+      <p class="desc">这张图在说什么：上方为钱进（强制、自愿、投资回报），下方为钱出（退休提取、其他提取），看每年进出是否平衡。</p>
+      <div class="chart"><canvas id="chartStack"></canvas></div>
+    </div>
+
+    <div class="mod wide">
+      <h3>模块4 · 领取人数趋势</h3>
+      <p class="desc">这张图在说什么：每年新进入领取的人数（万人）；可切换男/女/混合。受退休年龄滑块影响。</p>
+      <div class="btns" id="sexBtns" style="margin-bottom:8px">
+        <button type="button" data-s="混合" class="active">混合</button>
+        <button type="button" data-s="男">男</button>
+        <button type="button" data-s="女">女</button>
+      </div>
+      <div class="chart"><canvas id="chartRetire"></canvas></div>
+    </div>
+
+    <div class="mod wide">
+      <h3>模块8 · 对冲流出趋势（2020–2056）</h3>
+      <p class="desc">堆叠柱：底层＝转制日前入职（含 hybrid 转制前服务仍可对冲）；上层＝转制日后入职（仅雇主自愿可对冲，长期趋近残差）。竖虚线＝转制日。</p>
+      <div class="callout-offset">取消对冲不具追溯力，转制前部分仍可对冲，流出逐步归零。</div>
+      <div class="chart" style="min-height:340px;margin-top:10px"><canvas id="chartOffset"></canvas></div>
+    </div>
+  </section>
+
+  <footer>
+    <strong>数据来源</strong>：强制性公积金计划管理局（积金局）公开资产/供款/提取量级；
+    政府统计处人口推算、年龄性别死亡率、劳动参与率相关统计；
+    本页计算基于项目内人口/缴费/领取/资产层及对冲模块（转制日 2025-05-01）CSV。
+    研究/教学用途，非官方精算结论。有关入息上下限 <code>7,100 / 30,000</code> 可在源码 META 中替换。
+  </footer>
+</div>
+
+<script>
+window.MPF_OFFSET = {"years":[2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050,2051,2052,2053,2054,2055,2056],"pre_hire":[26.5588,32.0246,33.2115,30.7163,34.9098,31.7691,28.2979,22.5725,18.0016,14.3648,10.1316,6.6009,4.0731,2.7377,2.1518,1.7059,1.3632,1.0975,0.89,0.7266,0.5971,0.4937,0.4106,0.3434,0.2886,0.2436,0.2065,0.1757,0.15,0.1285,0.1104,0.095,0.0819,0.0707,0.0611,0.0529,0.0459],"post_hire":[0.0,0.0,0.0,0.0,0.0,1.4178,3.0584,4.3777,5.3416,6.0302,6.5095,6.8335,7.0452,7.1773,7.2564,7.3034,7.3345,7.3621,7.3957,7.4422,7.5068,7.5931,7.7037,7.8396,8.002,8.1916,8.4088,8.6537,8.927,9.2289,9.5593,9.9182,10.3036,10.7144,11.1508,11.6128,12.1005],"total":[26.5588,32.0246,33.2115,30.7163,34.9098,33.187,31.3563,26.9502,23.3432,20.395,16.6411,13.4344,11.1183,9.9149,9.4082,9.0094,8.6978,8.4596,8.2857,8.1688,8.1039,8.0868,8.1143,8.183,8.2906,8.4352,8.6153,8.8294,9.0771,9.3574,9.6697,10.0131,10.3854,10.7851,11.2119,11.6657,12.1464],"transition_year":2025,"transition_label":"2025-05-01 转制日"};
+window.MPF = {"meta":{"A0":16700,"accounts0":1100,"accounts_g":0.005,"other_share":0.12,"kappa_vol":0.255,"y_min":7100,"y_max":30000,"coverage_default":0.85,"wage_g_default":0.03,"retire_age_default":65,"withdraw_ratio_default":1.0,"r_default":0.049,"retiree_bal_factor":1.05},"presets":{"保守":{"sc":"低","r":3.0,"retireAge":65,"withdraw":100,"coverage":83,"wageG":2.0},"基准":{"sc":"中","r":4.9,"retireAge":65,"withdraw":100,"coverage":85,"wageG":3.0},"乐观":{"sc":"高","r":7.0,"retireAge":65,"withdraw":100,"coverage":87,"wageG":4.0}},"years":[2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050,2051,2052,2053,2054,2055,2056],"scenarios":{"低":{"label":"保守","r_default":0.03,"forced":[656.6042,664.0194,671.9084,680.295,689.2046,698.6635,709.9874,721.8499,734.2718,747.2751,760.8818,773.4158,785.7208,797.7642,809.5118,820.9274,830.5319,836.703,828.7273,820.1723,811.0355,801.146,790.8224,780.0681,768.8863,757.2807,747.2351,736.7875,725.9399,714.6943,703.0526],"vol":[224.7437,227.2818,229.9821,232.8526,235.9022,239.1399,243.0158,247.0761,251.3279,255.7787,260.4361,264.7262,268.938,273.0602,277.0812,280.9886,284.276,286.3883,283.6583,280.7301,277.6028,274.2178,270.6842,267.0032,263.1758,259.2035,255.765,252.189,248.4761,244.6269,240.6422],"contrib_n":[268.5498,266.2997,264.2211,262.3136,260.5773,259.0121,258.0863,257.2896,256.621,256.0794,255.6636,254.8128,253.8235,252.6925,251.4168,249.9931,247.9881,245.8144,243.4712,240.9579,238.2736,235.3681,232.3352,229.1756,225.8906,222.481,219.5297,216.4603,213.2734,209.9695,206.5493],"contrib_n_m":[141.6864,140.8229,140.0583,139.3923,138.8247,138.3552,138.323,138.364,138.4775,138.663,138.9198,138.8451,138.7022,138.4896,138.2058,137.8491,137.0821,136.2305,135.2938,134.2716,133.1635,131.7397,130.2519,128.7003,127.0853,125.4073,123.8012,122.1354,120.4098,118.6246,116.7798],"contrib_n_f":[126.8633,125.4768,124.1627,122.9213,121.7526,120.6569,119.7633,118.9256,118.1435,117.4164,116.7439,115.9677,115.1213,114.2029,113.211,112.1441,110.906,109.5839,108.1774,106.6863,105.1101,103.6284,102.0833,100.4753,98.8053,97.0737,95.7284,94.3249,92.8636,91.345,89.7696],"n65_m":[5.63,5.47261,5.32108,5.1753,5.03517,4.90059,4.9202,4.94284,4.96847,4.99707,5.0286,5.02173,5.01479,5.00776,5.00064,4.99342,5.04682,5.10277,5.16141,5.22288,5.28734,5.31575,5.34498,5.37504,5.40592,5.43761,5.43897,5.4406,5.44218,5.44335,5.44377],"n65_f":[6.794,6.70432,6.61855,6.53668,6.45868,6.38452,6.38476,6.38775,6.39346,6.40189,6.41302,6.37642,6.33925,6.30149,6.26313,6.22417,6.19721,6.17324,6.15242,6.13493,6.12092,6.05965,5.99915,5.9394,5.8804,5.82215,5.77751,5.73318,5.68878,5.64394,5.59826],"n65_mix":[12.424,12.17692,11.93963,11.71198,11.49385,11.28511,11.30496,11.33058,11.36193,11.39896,11.44162,11.39816,11.35404,11.30924,11.26377,11.21759,11.24403,11.27601,11.31383,11.35781,11.40826,11.3754,11.34413,11.31444,11.28632,11.25975,11.21648,11.17379,11.13096,11.08728,11.04203],"pop_60_64":[{"男":28.15,"女":33.97},{"男":27.363,"女":33.5216},{"男":26.6054,"女":33.0928},{"男":25.8765,"女":32.6834},{"男":25.1759,"女":32.2934},{"男":24.5029,"女":31.9226},{"男":24.601,"女":31.9238},{"男":24.7142,"女":31.9387},{"男":24.8423,"女":31.9673},{"男":24.9854,"女":32.0095},{"男":25.143,"女":32.0651},{"男":25.1087,"女":31.8821},{"男":25.0739,"女":31.6962},{"男":25.0388,"女":31.5074},{"男":25.0032,"女":31.3156},{"男":24.9671,"女":31.1208},{"男":25.2341,"女":30.986},{"男":25.5138,"女":30.8662},{"男":25.807,"女":30.7621},{"男":26.1144,"女":30.6746},{"男":26.4367,"女":30.6046},{"男":26.5787,"女":30.2982},{"男":26.7249,"女":29.9957},{"男":26.8752,"女":29.697},{"男":27.0296,"女":29.402},{"男":27.188,"女":29.1107},{"男":27.1948,"女":28.8876},{"男":27.203,"女":28.6659},{"男":27.2109,"女":28.4439},{"男":27.2167,"女":28.2197},{"男":27.2188,"女":27.9913}],"inflection_default":{"峰值年份":"不适用","峰值资产":"不适用","净流出拐点":"不适用","经济拐点":"不适用","期末资产":71394.94,"累计供款":31376.35,"累计提取":13912.8}},"中":{"label":"基准","r_default":0.049,"forced":[675.1851,689.4815,704.4903,720.2541,736.8181,754.2299,773.9173,794.5106,816.0546,838.5961,862.1843,884.8741,888.4096,884.3863,879.8573,874.8119,867.8101,860.2178,852.0326,843.2521,833.8736,823.7353,813.1534,802.1314,790.6724,778.78,768.4712,757.7528,746.6266,735.0944,723.1578],"vol":[231.1036,235.997,241.1343,246.5299,252.1995,258.1592,264.8979,271.9466,279.3207,287.0363,295.1101,302.8764,304.0865,302.7094,301.1592,299.4323,297.0357,294.437,291.6353,288.6299,285.4198,281.9497,278.3277,274.555,270.6328,266.5623,263.0338,259.3651,255.5568,251.6095,247.5238],"contrib_n":[276.1493,273.8476,271.7213,269.7701,267.9939,266.3927,265.4387,264.6172,263.927,263.3669,262.9359,262.0417,261.0052,259.8232,258.4927,257.0104,254.9533,252.7228,250.3181,247.7384,244.9831,242.0046,238.8958,235.6576,232.2911,228.7972,225.7686,222.6197,219.3509,215.9629,212.456],"contrib_n_m":[145.2746,144.3938,143.6139,142.9347,142.3559,141.8773,141.8416,141.8807,141.9939,142.1807,142.4404,142.3531,142.1959,141.9671,141.6653,141.2889,140.5038,139.6317,138.6722,137.625,136.4897,135.0342,133.5134,131.9276,130.277,128.5621,126.9188,125.2148,123.4499,121.6243,119.7381],"contrib_n_f":[130.8747,129.4539,128.1074,126.8353,125.638,124.5154,123.5972,122.7366,121.9331,121.1863,120.4956,119.6886,118.8093,117.8561,116.8273,115.7215,114.4495,113.0911,111.6458,110.1134,108.4935,106.9704,105.3824,103.73,102.0141,100.2351,98.8498,97.4049,95.901,94.3385,92.7179],"n65_m":[5.63,5.47261,5.32108,5.1753,5.03517,4.90059,4.9202,4.94284,4.96847,4.99707,5.0286,5.02173,5.01479,5.00776,5.00064,4.99342,5.04682,5.10277,5.16141,5.22288,5.28734,5.31575,5.34498,5.37504,5.40592,5.43761,5.43897,5.4406,5.44218,5.44335,5.44377],"n65_f":[6.794,6.70432,6.61855,6.53668,6.45868,6.38452,6.38476,6.38775,6.39346,6.40189,6.41302,6.37642,6.33925,6.30149,6.26313,6.22417,6.19721,6.17324,6.15242,6.13493,6.12092,6.05965,5.99915,5.9394,5.8804,5.82215,5.77751,5.73318,5.68878,5.64394,5.59826],"n65_mix":[12.424,12.17692,11.93963,11.71198,11.49385,11.28511,11.30496,11.33058,11.36193,11.39896,11.44162,11.39816,11.35404,11.30924,11.26377,11.21759,11.24403,11.27601,11.31383,11.35781,11.40826,11.3754,11.34413,11.31444,11.28632,11.25975,11.21648,11.17379,11.13096,11.08728,11.04203],"pop_60_64":[{"男":28.15,"女":33.97},{"男":27.363,"女":33.5216},{"男":26.6054,"女":33.0928},{"男":25.8765,"女":32.6834},{"男":25.1759,"女":32.2934},{"男":24.5029,"女":31.9226},{"男":24.601,"女":31.9238},{"男":24.7142,"女":31.9387},{"男":24.8423,"女":31.9673},{"男":24.9854,"女":32.0095},{"男":25.143,"女":32.0651},{"男":25.1087,"女":31.8821},{"男":25.0739,"女":31.6962},{"男":25.0388,"女":31.5074},{"男":25.0032,"女":31.3156},{"男":24.9671,"女":31.1208},{"男":25.2341,"女":30.986},{"男":25.5138,"女":30.8662},{"男":25.807,"女":30.7621},{"男":26.1144,"女":30.6746},{"男":26.4367,"女":30.6046},{"男":26.5787,"女":30.2982},{"男":26.7249,"女":29.9957},{"男":26.8752,"女":29.697},{"男":27.0296,"女":29.402},{"男":27.188,"女":29.1107},{"男":27.1948,"女":28.8876},{"男":27.203,"女":28.6659},{"男":27.2109,"女":28.4439},{"男":27.2167,"女":28.2197},{"男":27.2188,"女":27.9913}],"inflection_default":{"峰值年份":"不适用","峰值资产":"不适用","净流出拐点":"2054","经济拐点":"不适用","期末资产":113212.3,"累计供款":33254.8,"累计提取":18606.81}},"高":{"label":"乐观","r_default":0.07,"forced":[693.7661,715.3097,737.9535,761.7687,786.8315,813.2233,842.5024,873.2686,905.6072,921.2538,919.7348,916.5435,912.8547,908.6578,903.9421,898.6972,891.5182,883.7326,875.338,866.3318,856.7118,846.3246,835.4845,824.1947,812.4585,800.2793,789.7074,778.7182,767.3134,755.4945,743.263],"vol":[237.4636,244.8376,252.5881,260.7396,269.3182,278.3516,288.3733,298.904,309.9729,315.3285,314.8086,313.7162,312.4536,311.0171,309.403,307.6078,305.1505,302.4857,299.6123,296.5297,293.2369,289.6816,285.9712,282.1069,278.0898,273.9211,270.3025,266.5411,262.6375,258.5921,254.4055],"contrib_n":[283.7489,281.3955,279.2215,277.2265,275.4105,273.7732,272.7912,271.9448,271.233,270.6545,270.2082,269.2707,268.1869,266.9539,265.5685,264.0276,261.9185,259.6312,257.1649,254.519,251.6927,248.6411,245.4564,242.1396,238.6916,235.1135,232.0076,228.7791,225.4285,221.9562,218.3627],"contrib_n_m":[148.8628,147.9646,147.1695,146.4771,145.8872,145.3993,145.3601,145.3973,145.5103,145.6984,145.961,145.8612,145.6896,145.4447,145.1249,144.7288,143.9255,143.0329,142.0507,140.9785,139.8159,138.3287,136.775,135.1549,133.4687,131.7169,130.0365,128.2941,126.49,124.6241,122.6964],"contrib_n_f":[134.8861,133.4309,132.052,130.7494,129.5233,128.3739,127.4311,126.5475,125.7227,124.9562,124.2473,123.4095,122.4974,121.5093,120.4436,119.2988,117.9931,116.5983,115.1142,113.5405,111.8769,110.3124,108.6814,106.9847,105.2229,103.3966,101.9711,100.4849,98.9384,97.3321,95.6663],"n65_m":[5.63,5.47261,5.32108,5.1753,5.03517,4.90059,4.9202,4.94284,4.96847,4.99707,5.0286,5.02173,5.01479,5.00776,5.00064,4.99342,5.04682,5.10277,5.16141,5.22288,5.28734,5.31575,5.34498,5.37504,5.40592,5.43761,5.43897,5.4406,5.44218,5.44335,5.44377],"n65_f":[6.794,6.70432,6.61855,6.53668,6.45868,6.38452,6.38476,6.38775,6.39346,6.40189,6.41302,6.37642,6.33925,6.30149,6.26313,6.22417,6.19721,6.17324,6.15242,6.13493,6.12092,6.05965,5.99915,5.9394,5.8804,5.82215,5.77751,5.73318,5.68878,5.64394,5.59826],"n65_mix":[12.424,12.17692,11.93963,11.71198,11.49385,11.28511,11.30496,11.33058,11.36193,11.39896,11.44162,11.39816,11.35404,11.30924,11.26377,11.21759,11.24403,11.27601,11.31383,11.35781,11.40826,11.3754,11.34413,11.31444,11.28632,11.25975,11.21648,11.17379,11.13096,11.08728,11.04203],"pop_60_64":[{"男":28.15,"女":33.97},{"男":27.363,"女":33.5216},{"男":26.6054,"女":33.0928},{"男":25.8765,"女":32.6834},{"男":25.1759,"女":32.2934},{"男":24.5029,"女":31.9226},{"男":24.601,"女":31.9238},{"男":24.7142,"女":31.9387},{"男":24.8423,"女":31.9673},{"男":24.9854,"女":32.0095},{"男":25.143,"女":32.0651},{"男":25.1087,"女":31.8821},{"男":25.0739,"女":31.6962},{"男":25.0388,"女":31.5074},{"男":25.0032,"女":31.3156},{"男":24.9671,"女":31.1208},{"男":25.2341,"女":30.986},{"男":25.5138,"女":30.8662},{"男":25.807,"女":30.7621},{"男":26.1144,"女":30.6746},{"男":26.4367,"女":30.6046},{"男":26.5787,"女":30.2982},{"男":26.7249,"女":29.9957},{"男":26.8752,"女":29.697},{"男":27.0296,"女":29.402},{"男":27.188,"女":29.1107},{"男":27.1948,"女":28.8876},{"男":27.203,"女":28.6659},{"男":27.2109,"女":28.4439},{"男":27.2167,"女":28.2197},{"男":27.2188,"女":27.9913}],"inflection_default":{"峰值年份":"不适用","峰值资产":"不适用","净流出拐点":"2048","经济拐点":"不适用","期末资产":189576.61,"累计供款":34682.93,"累计提取":25938.28}}}};
+</script>
+<script>
+(function () {
+  const DATA = window.MPF;
+  const META = DATA.meta;
+  const YEARS = DATA.years;
+
+  const state = {
+    preset: "基准",
+    sc: "中",
+    year: 2026,
+    sex: "混合",
+    r: META.r_default,              // 小数
+    retireAge: META.retire_age_default,
+    withdraw: META.withdraw_ratio_default,
+    coverage: META.coverage_default,
+    wageG: META.wage_g_default,
+  };
+
+  let sim = null;
+  let chartAsset = null, chartStack = null, chartRetire = null;
+  let sankey = null, waterfall = null;
+
+  /** 覆盖率相对默认的倍率 */
+  function covScale() { return state.coverage / META.coverage_default; }
+
+  /**
+   * 入息增长偏离：对第 t 年供款乘以 ((1+g)/(1+g0))^(t-2026)
+   * 同时覆盖率线性缩放人数与供款。
+   */
+  function scaleContrib(baseYi, yearIdx) {
+    const g0 = META.wage_g_default;
+    const ratio = Math.pow((1 + state.wageG) / (1 + g0), yearIdx);
+    return baseYi * covScale() * ratio;
+  }
+
+  /** 退休年龄偏离 65：每提早1岁领取人数 +8%，延后 -6%（近似） */
+  function ageScale() {
+    const d = state.retireAge - 65;
+    if (d <= 0) return 1 - d * 0.08;
+    return Math.max(0.55, 1 - d * 0.06);
+  }
+
+  /**
+   * 核心重算：输入当前 state → 输出全路径数组
+   * 可替换为真实业务引擎，只要返回同样字段。
+   */
+  function computeModel(scCode) {
+    const sc = DATA.scenarios[scCode];
+    const r = state.r;
+    const otherShare = META.other_share;
+    let A = META.A0;
+    const out = {
+      A0: [], A1: [], C: [], Cf: [], Cv: [], W: [], Wr: [], Wo: [],
+      inv: [], net: [], econ: [], n65: [], n65_m: [], n65_f: [],
+    };
+
+    for (let i = 0; i < YEARS.length; i++) {
+      const forced = scaleContrib(sc.forced[i], i);
+      const vol = scaleContrib(sc.vol[i], i);
+      const C = forced + vol;
+
+      const accounts = META.accounts0 * Math.pow(1 + META.accounts_g, i);
+      const balWan = (A / accounts) * META.retiree_bal_factor; // 万港元
+      const n65mix = (sc.n65_mix[i] * ageScale()); // 万人
+      const n65m = sc.n65_m[i] * ageScale();
+      const n65f = sc.n65_f[i] * ageScale();
+      const Wr = n65mix * balWan * state.withdraw; // 万人×万港元=亿
+      const W = Wr / (1 - otherShare);
+      const Wo = W - Wr;
+
+      const inv = A * r;
+      const A1 = Math.max(0, A * (1 + r) + C - W);
+
+      out.A0.push(+A.toFixed(4));
+      out.A1.push(+A1.toFixed(4));
+      out.C.push(+C.toFixed(4));
+      out.Cf.push(+forced.toFixed(4));
+      out.Cv.push(+vol.toFixed(4));
+      out.W.push(+W.toFixed(4));
+      out.Wr.push(+Wr.toFixed(4));
+      out.Wo.push(+Wo.toFixed(4));
+      out.inv.push(+inv.toFixed(4));
+      out.net.push(+(C - W).toFixed(4));
+      out.econ.push(+(C - W + inv).toFixed(4));
+      out.n65.push(+n65mix.toFixed(4));
+      out.n65_m.push(+n65m.toFixed(4));
+      out.n65_f.push(+n65f.toFixed(4));
+
+      A = A1;
+    }
+    return out;
+  }
+
+  function detectInflections(path) {
+    let peakYear = null, peakA = null, cfYear = null, depYear = null;
+    for (let i = 0; i < YEARS.length; i++) {
+      if (path.A1[i] < path.A0[i] && peakYear == null) {
+        peakYear = YEARS[i];
+        peakA = path.A0[i];
+      }
+      if (path.net[i] < 0 && cfYear == null) cfYear = YEARS[i];
+      if (path.A1[i] <= 0 && depYear == null) depYear = YEARS[i];
+    }
+    const cumC = path.C.reduce((a, b) => a + b, 0);
+    const cumW = path.W.reduce((a, b) => a + b, 0);
+    return { peakYear, peakA, cfYear, depYear, cumC, cumW };
+  }
+
+  function fmtYi(n) {
+    if (n == null || isNaN(n)) return "—";
+    if (Math.abs(n) >= 1000) return (n / 1000).toFixed(2) + " 千亿";
+    return (+n).toFixed(1) + " 亿";
+  }
+
+  function yearIndex(y) { return y - 2026; }
+
+  function updateKpis() {
+    const i = yearIndex(state.year);
+    const inf = detectInflections(sim);
+    document.getElementById("kA").textContent = fmtYi(sim.A1[i]);
+    document.getElementById("kAh").textContent = state.year + " 年末 · " + state.preset;
+    document.getElementById("kPeak").textContent =
+      inf.peakYear == null ? "不适用" : (inf.peakYear + " / " + fmtYi(inf.peakA));
+    document.getElementById("kCf").textContent = inf.cfYear == null ? "不适用" : String(inf.cfYear);
+    document.getElementById("kCum").textContent = fmtYi(inf.cumC) + " / " + fmtYi(inf.cumW);
+    document.getElementById("kDep").textContent = inf.depYear == null ? "不适用" : String(inf.depYear);
+  }
+
+  // —— ECharts 桑基 ——
+  function renderSankey() {
+    const i = yearIndex(state.year);
+    const nodes = [
+      { name: "强制性供款" }, { name: "自愿性供款" }, { name: "投资收益" },
+      { name: "强积金总资产池" },
+      { name: "退休提取" }, { name: "其他提取" }, { name: "年末资产留存" },
+    ];
+    const links = [
+      { source: "强制性供款", target: "强积金总资产池", value: Math.max(sim.Cf[i], 0.01) },
+      { source: "自愿性供款", target: "强积金总资产池", value: Math.max(sim.Cv[i], 0.01) },
+      { source: "投资收益", target: "强积金总资产池", value: Math.max(sim.inv[i], 0.01) },
+      // 期初也并入池以便守恒观感：用期初作为隐含，桑基右侧留存=期末
+      { source: "强积金总资产池", target: "退休提取", value: Math.max(sim.Wr[i], 0.01) },
+      { source: "强积金总资产池", target: "其他提取", value: Math.max(sim.Wo[i], 0.01) },
+      { source: "强积金总资产池", target: "年末资产留存", value: Math.max(sim.A1[i], 0.01) },
+    ];
+    // 为守恒：左侧再加期初资产节点
+    nodes.unshift({ name: "期初资产" });
+    links.unshift({ source: "期初资产", target: "强积金总资产池", value: Math.max(sim.A0[i], 0.01) });
+
+    sankey.setOption({
+      tooltip: {
+        trigger: "item",
+        formatter: (p) => {
+          if (p.dataType === "edge") {
+            return p.data.source + " → " + p.data.target + "<br/><b>" + (+p.data.value).toFixed(1) + "</b> 亿港元";
+          }
+          return p.name;
+        },
+      },
+      series: [{
+        type: "sankey",
+        emphasis: { focus: "adjacency" },
+        lineStyle: { color: "gradient", curveness: 0.5, opacity: 0.4 },
+        label: { color: varNavy(), fontSize: 12 },
+        data: nodes,
+        links: links,
+        nodeAlign: "justify",
+      }],
+    }, true);
+  }
+
+  function varNavy() { return "#1a3a5c"; }
+
+  // —— ECharts 瀑布 ——
+  function renderWaterfall() {
+    const i = yearIndex(state.year);
+    const steps = [
+      { name: "期初资产", v: sim.A0[i] },
+      { name: "投资损益", v: sim.inv[i] },
+      { name: "总供款", v: sim.C[i] },
+      { name: "总提取", v: -sim.W[i] },
+      { name: "期末资产", v: sim.A1[i] },
+    ];
+    let run = 0;
+    const help = [], disp = [], colors = [];
+    steps.forEach((s, idx) => {
+      if (idx === 0 || idx === steps.length - 1) {
+        help.push(0); disp.push(s.v);
+        colors.push(idx === 0 ? "#3b82a0" : "#c9a227");
+        run = s.v;
+      } else if (s.v >= 0) {
+        help.push(run); disp.push(s.v); colors.push("#2f9e7a"); run += s.v;
+      } else {
+        help.push(run + s.v); disp.push(-s.v); colors.push("#d4655a"); run += s.v;
+      }
+    });
+    waterfall.setOption({
+      tooltip: {
+        trigger: "axis",
+        formatter: (ps) => {
+          const idx = ps[0].dataIndex;
+          return steps[idx].name + "<br/><b>" + (+steps[idx].v).toFixed(1) + "</b> 亿港元";
+        },
+      },
+      grid: { left: 56, right: 16, top: 24, bottom: 48 },
+      xAxis: { type: "category", data: steps.map((s) => s.name), axisLabel: { color: "#64748b", fontSize: 11, rotate: 15 } },
+      yAxis: { type: "value", axisLabel: { color: "#64748b" }, splitLine: { lineStyle: { color: "#e2e8f0" } } },
+      series: [
+        { type: "bar", stack: "wf", data: help, itemStyle: { color: "transparent" }, silent: true },
+        {
+          type: "bar", stack: "wf", barWidth: "48%",
+          data: disp.map((v, idx) => ({ value: v, itemStyle: { color: colors[idx], borderRadius: [4, 4, 0, 0] } })),
+        },
+      ],
+    }, true);
+  }
+
+  // —— Chart.js 资产折线 ——
+  function buildAssetChart() {
+    const ctx = document.getElementById("chartAsset");
+    const inf = detectInflections(sim);
+    const presetPaths = ["低", "中", "高"].map((code) => {
+      // 用该情景默认参数快速算一条对照（固定默认滑块）
+      return DATA.scenarios[code];
+    });
+
+    // 对照路径：用各情景默认 r 与原始供款（不覆盖率冲击）预计算一次缓存
+    const cache = {};
+    ["低", "中", "高"].forEach((code) => {
+      const saved = { ...state };
+      const p = DATA.presets[{ 低: "保守", 中: "基准", 高: "乐观" }[code]];
+      state.r = p.r / 100; state.coverage = p.coverage / 100; state.wageG = p.wageG / 100;
+      state.retireAge = p.retireAge; state.withdraw = p.withdraw / 100;
+      cache[code] = computeModel(code);
+      Object.assign(state, saved);
+    });
+    window._presetCache = cache;
+
+    chartAsset = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: YEARS,
+        datasets: [
+          { label: "保守（预设）", data: cache["低"].A1, borderColor: "#d4655a", borderDash: [6, 4], borderWidth: 1.5, pointRadius: 0, tension: 0.25 },
+          { label: "基准（预设）", data: cache["中"].A1, borderColor: "#3b82a0", borderDash: [6, 4], borderWidth: 1.5, pointRadius: 0, tension: 0.25 },
+          { label: "乐观（预设）", data: cache["高"].A1, borderColor: "#2f9e7a", borderDash: [6, 4], borderWidth: 1.5, pointRadius: 0, tension: 0.25 },
+          { label: "当前覆写", data: sim.A1, borderColor: "#c9a227", borderWidth: 3, pointRadius: 0, tension: 0.25,
+            backgroundColor: "rgba(201,162,39,.12)", fill: true },
+        ],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { labels: { color: "#1a3a5c" } },
+          tooltip: { callbacks: { label: (c) => c.dataset.label + ": " + fmtYi(c.parsed.y) } },
+          annotation: undefined,
+        },
+        scales: {
+          x: { ticks: { color: "#64748b", maxTicksLimit: 12 }, grid: { color: "#eef2f6" } },
+          y: { ticks: { color: "#64748b", callback: (v) => (v >= 1000 ? (v / 1000) + "k" : v) }, grid: { color: "#eef2f6" } },
+        },
+      },
+    });
+  }
+
+  function updateAssetChart() {
+    chartAsset.data.datasets[3].data = sim.A1;
+    // 峰值/拐点用 point 标注在当前线上
+    const inf = detectInflections(sim);
+    chartAsset.data.datasets[3].pointRadius = YEARS.map((y) =>
+      (y === inf.peakYear || y === inf.cfYear) ? 4 : 0
+    );
+    chartAsset.data.datasets[3].pointBackgroundColor = YEARS.map((y) =>
+      y === inf.peakYear ? "#1a3a5c" : (y === inf.cfYear ? "#d4655a" : "#c9a227")
+    );
+    chartAsset.update();
+  }
+
+  // —— Chart.js 堆叠面积（正负） ——
+  function buildStackChart() {
+    const ctx = document.getElementById("chartStack");
+    chartStack = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: YEARS,
+        datasets: [
+          { label: "强制性供款", data: sim.Cf, borderColor: "#c9a227", backgroundColor: "rgba(201,162,39,.55)", fill: true, stack: "in", pointRadius: 0, tension: 0.25, borderWidth: 1 },
+          { label: "自愿性供款", data: sim.Cv, borderColor: "#3b82a0", backgroundColor: "rgba(59,130,160,.45)", fill: true, stack: "in", pointRadius: 0, tension: 0.25, borderWidth: 1 },
+          { label: "投资回报", data: sim.inv, borderColor: "#2f9e7a", backgroundColor: "rgba(47,158,122,.4)", fill: true, stack: "in", pointRadius: 0, tension: 0.25, borderWidth: 1 },
+          { label: "退休提取", data: sim.Wr.map((v) => -v), borderColor: "#d4655a", backgroundColor: "rgba(212,101,90,.45)", fill: true, stack: "out", pointRadius: 0, tension: 0.25, borderWidth: 1 },
+          { label: "其他提取", data: sim.Wo.map((v) => -v), borderColor: "#64748b", backgroundColor: "rgba(100,116,139,.35)", fill: true, stack: "out", pointRadius: 0, tension: 0.25, borderWidth: 1 },
+        ],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { labels: { color: "#1a3a5c", boxWidth: 12 } },
+          tooltip: { callbacks: { label: (c) => c.dataset.label + ": " + fmtYi(Math.abs(c.parsed.y)) } },
+        },
+        scales: {
+          x: { ticks: { color: "#64748b", maxTicksLimit: 12 }, grid: { display: false } },
+          y: { stacked: true, ticks: { color: "#64748b" },
+            grid: { color: "#eef2f6" }, title: { display: true, text: "亿港元（上进下出）", color: "#64748b" } },
+        },
+      },
+    });
+  }
+
+  function updateStackChart() {
+    chartStack.data.datasets[0].data = sim.Cf;
+    chartStack.data.datasets[1].data = sim.Cv;
+    chartStack.data.datasets[2].data = sim.inv;
+    chartStack.data.datasets[3].data = sim.Wr.map((v) => -v);
+    chartStack.data.datasets[4].data = sim.Wo.map((v) => -v);
+    chartStack.update();
+  }
+
+  // —— 领取人数 ——
+  function n65Series() {
+    if (state.sex === "男") return sim.n65_m;
+    if (state.sex === "女") return sim.n65_f;
+    return sim.n65;
+  }
+
+  function buildRetireChart() {
+    const ctx = document.getElementById("chartRetire");
+    chartRetire = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: YEARS,
+        datasets: [{
+          label: "领取人数（万人）",
+          data: n65Series(),
+          borderColor: "#1a3a5c",
+          backgroundColor: "rgba(26,58,92,.12)",
+          fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2.5,
+        }],
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => (+c.parsed.y).toFixed(2) + " 万人" } },
+        },
+        scales: {
+          x: { ticks: { color: "#64748b", maxTicksLimit: 12 }, grid: { color: "#eef2f6" } },
+          y: { ticks: { color: "#64748b" }, grid: { color: "#eef2f6" }, title: { display: true, text: "万人", color: "#64748b" } },
+        },
+      },
+    });
+  }
+
+  function updateRetireChart() {
+    chartRetire.data.datasets[0].data = n65Series();
+    chartRetire.update();
+  }
+
+  function refreshAll() {
+    sim = computeModel(state.sc);
+    updateKpis();
+    renderSankey();
+    renderWaterfall();
+    if (chartAsset) updateAssetChart();
+    if (chartStack) updateStackChart();
+    if (chartRetire) updateRetireChart();
+  }
+
+  function applyPreset(name) {
+    const p = DATA.presets[name];
+    state.preset = name;
+    state.sc = p.sc;
+    state.r = p.r / 100;
+    state.retireAge = p.retireAge;
+    state.withdraw = p.withdraw / 100;
+    state.coverage = p.coverage / 100;
+    state.wageG = p.wageG / 100;
+
+    document.getElementById("rSlider").value = p.r;
+    document.getElementById("rOut").textContent = p.r.toFixed(1) + "%";
+    document.getElementById("ageSlider").value = p.retireAge;
+    document.getElementById("ageOut").textContent = p.retireAge + "岁";
+    document.getElementById("wdSlider").value = p.withdraw;
+    document.getElementById("wdOut").textContent = p.withdraw + "%";
+    document.getElementById("covSlider").value = p.coverage;
+    document.getElementById("covOut").textContent = p.coverage + "%";
+    document.getElementById("wgSlider").value = p.wageG;
+    document.getElementById("wgOut").textContent = p.wageG.toFixed(1) + "%";
+
+    document.querySelectorAll("#presetBtns button").forEach((b) => {
+      b.classList.toggle("active", b.dataset.p === name);
+    });
+    refreshAll();
+  }
+
+  function bind() {
+    document.querySelectorAll("#presetBtns button").forEach((b) => {
+      b.addEventListener("click", () => applyPreset(b.dataset.p));
+    });
+    document.querySelectorAll("#sexBtns button").forEach((b) => {
+      b.addEventListener("click", () => {
+        document.querySelectorAll("#sexBtns button").forEach((x) => x.classList.remove("active"));
+        b.classList.add("active");
+        state.sex = b.dataset.s;
+        updateRetireChart();
+      });
+    });
+
+    const yearSlider = document.getElementById("yearSlider");
+    yearSlider.addEventListener("input", () => {
+      state.year = +yearSlider.value;
+      document.getElementById("yearLab").textContent = String(state.year);
+      updateKpis();
+      renderSankey();
+      renderWaterfall();
+    });
+
+    const bindSlider = (id, outId, fmt, setter) => {
+      const el = document.getElementById(id);
+      const out = document.getElementById(outId);
+      el.addEventListener("input", () => {
+        out.textContent = fmt(+el.value);
+        setter(+el.value);
+        refreshAll();
+      });
+    };
+    bindSlider("rSlider", "rOut", (v) => v.toFixed(1) + "%", (v) => { state.r = v / 100; });
+    bindSlider("ageSlider", "ageOut", (v) => v + "岁", (v) => { state.retireAge = v; });
+    bindSlider("wdSlider", "wdOut", (v) => v + "%", (v) => { state.withdraw = v / 100; });
+    bindSlider("covSlider", "covOut", (v) => v + "%", (v) => { state.coverage = v / 100; });
+    bindSlider("wgSlider", "wgOut", (v) => v.toFixed(1) + "%", (v) => { state.wageG = v / 100; });
+
+    window.addEventListener("resize", () => {
+      sankey && sankey.resize();
+      waterfall && waterfall.resize();
+      chartOffset && chartOffset.resize();
+    });
+  }
+
+
+  // —— 模块8：对冲流出堆叠图 ——
+  let chartOffset = null;
+  function buildOffsetChart() {
+    const O = window.MPF_OFFSET;
+    if (!O || !document.getElementById("chartOffset")) return;
+    const ctx = document.getElementById("chartOffset").getContext("2d");
+    const years = O.years;
+    const transIdx = years.indexOf(O.transition_year);
+
+    const vertLinePlugin = {
+      id: "transitionLine",
+      afterDraw(chart) {
+        if (transIdx < 0) return;
+        const meta = chart.getDatasetMeta(0);
+        if (!meta.data.length) return;
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        // 柱中心：转制年
+        const x = xScale.getPixelForValue(transIdx);
+        const { top, bottom } = chart.chartArea;
+        const c = chart.ctx;
+        c.save();
+        c.beginPath();
+        c.setLineDash([6, 5]);
+        c.strokeStyle = "#c9a227";
+        c.lineWidth = 2;
+        c.moveTo(x, top);
+        c.lineTo(x, bottom);
+        c.stroke();
+        c.setLineDash([]);
+        c.fillStyle = "#c9a227";
+        c.font = "600 11px system-ui,sans-serif";
+        c.textAlign = "center";
+        c.fillText(O.transition_label, x, top + 14);
+        c.restore();
+      },
+    };
+
+    chartOffset = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: years,
+        datasets: [
+          {
+            label: "转制日前入职（pre+hybrid）",
+            data: O.pre_hire,
+            backgroundColor: "rgba(26,58,92,0.82)",
+            borderWidth: 0,
+            stack: "off",
+            barPercentage: 0.9,
+            categoryPercentage: 0.92,
+          },
+          {
+            label: "转制日后入职（post，自愿残差）",
+            data: O.post_hire,
+            backgroundColor: "rgba(201,162,39,0.85)",
+            borderWidth: 0,
+            stack: "off",
+            barPercentage: 0.9,
+            categoryPercentage: 0.92,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { position: "top", labels: { boxWidth: 12, font: { size: 11 } } },
+          tooltip: {
+            callbacks: {
+              footer(items) {
+                const i = items[0].dataIndex;
+                return "合计 " + O.total[i].toFixed(2) + " 亿";
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: {
+              maxRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 12,
+              font: { size: 10 },
+            },
+            grid: { display: false },
+          },
+          y: {
+            stacked: true,
+            title: { display: true, text: "对冲流出（亿港元）", font: { size: 11 } },
+            grid: { color: "rgba(226,232,240,.9)" },
+            ticks: { font: { size: 10 } },
+          },
+        },
+      },
+      plugins: [vertLinePlugin],
+    });
+  }
+
+  function init() {
+    sankey = echarts.init(document.getElementById("sankey"));
+    waterfall = echarts.init(document.getElementById("waterfall"));
+    sim = computeModel(state.sc);
+    buildAssetChart();
+    buildStackChart();
+    buildRetireChart();
+    buildOffsetChart();
+    bind();
+    applyPreset("基准");
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
