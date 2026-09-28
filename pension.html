@@ -15,6 +15,189 @@
       --theme-color-rgb: 20, 184, 166;
       --theme-gradient: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
     }
+
+    /* ===== 数据建模 · 模型架构概览卡片 ===== */
+    .model-arch-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      margin-bottom: 32px;
+    }
+    .model-arch-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .model-arch-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+    }
+    .model-arch-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+    .model-arch-flow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .model-arch-layer {
+      padding: 7px 13px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 500;
+      background: rgba(var(--theme-color-rgb), 0.1);
+      border: 1px solid rgba(var(--theme-color-rgb), 0.25);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .model-arch-layer.is-base {
+      background: rgba(var(--theme-color-rgb), 0.18);
+      border-color: rgba(var(--theme-color-rgb), 0.4);
+    }
+    .model-arch-arrow {
+      color: var(--text-muted);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .model-arch-feedback {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-left: 4px;
+      font-style: italic;
+    }
+    .model-arch-conclusions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+    }
+    .model-arch-conclusion {
+      padding: 13px 15px;
+      border-radius: 8px;
+      background: var(--glass-highlight);
+      border: 1px solid var(--glass-border);
+    }
+    .model-arch-conclusion-value {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--theme-color);
+      margin: 0 0 4px;
+      line-height: 1.2;
+    }
+    .model-arch-conclusion-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== 数据建模 · 模块导航分组 ===== */
+    .model-nav-group {
+      margin-bottom: 26px;
+    }
+    .model-nav-group:last-child {
+      margin-bottom: 0;
+    }
+    .model-nav-group-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 12px;
+      padding-left: 10px;
+      border-left: 3px solid var(--theme-color);
+    }
+    .model-nav-group-sub {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .model-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .model-nav-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px 17px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .model-nav-card:hover {
+      border-color: rgba(var(--theme-color-rgb), 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    .model-nav-card-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .model-nav-card-icon {
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+    .model-nav-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.4;
+    }
+    .model-nav-card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .model-nav-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+    }
+    .model-nav-card-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(var(--theme-color-rgb), 0.1);
+      color: var(--theme-color);
+    }
+    .model-nav-card-tag.is-doc {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text-muted);
+    }
+    .model-nav-card-tag.is-interview {
+      background: rgba(251, 191, 36, 0.12);
+      color: #fbbf24;
+    }
+    .model-nav-card-arrow {
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+    .model-nav-card:hover .model-nav-card-arrow {
+      transform: translateX(3px);
+      color: var(--theme-color);
+    }
   </style>
 </head>
 <body data-industry="pension">
@@ -488,6 +671,213 @@
       </div>
     </section>
 
+    <section class="section" id="mpf-projection-lab">
+      <div class="section-header">
+        <h2 class="section-title"><span class="section-icon">📐</span> 养老金数据建模 · 强积金 30 年系统投影</h2>
+        <span class="section-badge">四层架构 · 交互仪表板</span>
+      </div>
+      <p class="section-desc">以队组成分法（CCM）人口模型为基石，自下而上搭建「人口 → 缴费 → 领取 → 资产演化」四层投影，覆盖制度总账户、政府财政、个人账户、年金化产品四个视角，共享同一套人口底座。所有仪表板支持情景切换与参数滑块实时重算。</p>
+
+      <!-- 模型架构概览 -->
+      <div class="model-arch-card">
+        <div class="model-arch-head">
+          <h3 class="model-arch-title">四层架构 · 自下而上不可倒装</h3>
+          <p class="model-arch-note">投影期 2026–2056 · 年度步进 · 三情景（保守/基准/乐观）</p>
+        </div>
+        <div class="model-arch-flow">
+          <span class="model-arch-layer is-base">L1 人口与劳动力（CCM）</span>
+          <span class="model-arch-arrow">→</span>
+          <span class="model-arch-layer">L2 缴费层</span>
+          <span class="model-arch-arrow">→</span>
+          <span class="model-arch-layer">L3 领取层</span>
+          <span class="model-arch-arrow">→</span>
+          <span class="model-arch-layer">L4 资产演化 Aₜ₊₁=Aₜ(1+r)+Cₜ−Wₜ</span>
+          <span class="model-arch-feedback">↻ L4 余额反馈回 L3 提取金额</span>
+        </div>
+        <div class="model-arch-conclusions">
+          <div class="model-arch-conclusion">
+            <p class="model-arch-conclusion-value">16,700 亿</p>
+            <p class="model-arch-conclusion-label">2026 起始总资产（积金局量级锚点）</p>
+          </div>
+          <div class="model-arch-conclusion">
+            <p class="model-arch-conclusion-value">≈12.04 万亿</p>
+            <p class="model-arch-conclusion-label">2056 基准期末总资产，投影期内未见顶</p>
+          </div>
+          <div class="model-arch-conclusion">
+            <p class="model-arch-conclusion-value">W/C≈0.96</p>
+            <p class="model-arch-conclusion-label">2056 提取/供款比，30 年内未出现净流出拐点</p>
+          </div>
+          <div class="model-arch-conclusion">
+            <p class="model-arch-conclusion-value">−2.6 万亿</p>
+            <p class="model-arch-conclusion-label">回报每降 1%，期末资产减少量级</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 模块导航：第一层 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">第一层 · 人口与劳动力 <span class="model-nav-group-sub">整座模型的基石，队列成分法捕捉婴儿潮退休洪峰</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/population_ccm_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">👥</span>
+              <h4 class="model-nav-card-title">人口预估 CCM 仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">队列成分法逐年推进，分年龄×性别，含存活/生育/迁移，输出劳动年龄池与达 65 岁队列</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">L1 · 基石</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 模块导航：第二层 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">第二层 · 缴费层 <span class="model-nav-group-sub">缴费人数 ← 劳动年龄人口 × LFPR × 就业率 × 覆盖率</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/contribution_layer_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">💰</span>
+              <h4 class="model-nav-card-title">供款层仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">逐年供款流入、缴费人数、平均有关入息（经上下限截断），强制+自愿分开统计</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">L2 · 流入端</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 模块导航：第三层 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">第三层 · 领取与资产 <span class="model-nav-group-sub">退休提取 ← 达龄队列 × 提取比例 × 人均余额，含余额反馈回路</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/withdrawal_asset_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">📤</span>
+              <h4 class="model-nav-card-title">提取与资产路径仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">退休提取流量、永久离港漏损、人均账户余额反馈、资产演化路径与拐点识别</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">L3 · 流出端</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 模块导航：第四层 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">第四层 · 综合演化（主入口） <span class="model-nav-group-sub">四层整合，6 个滑块实时重算，三情景对比</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/mpf_integrated_30y_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">📊</span>
+              <h4 class="model-nav-card-title">综合 30 年演化仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">制度总账户四层整合，桑基图+折线+滑块（回报/覆盖率/入息增速/提取比例等），三情景对比</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">L4 · 主入口</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 模块导航：延伸专题模型 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">延伸专题模型 <span class="model-nav-group-sub">在制度总账户之外，从财政、个人、产品三个视角做纵深</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/mpf_individual_model/mpf_individual_adequacy_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">👤</span>
+              <h4 class="model-nav-card-title">个人账户充足率仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">个体层面退休充足率测算：入职年龄/入息分位/投资回报，耗尽年龄与 4% 规则蒙特卡洛</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">对象三 · 个人</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+          <a class="model-nav-card" href="data/mpf-system-projection/mpf_annuity_model/mpf_annuity_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">🛡️</span>
+              <h4 class="model-nav-card-title">年金化长寿对冲仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">终身收入地板测算：年金化比例 0%–100%，男/女年金费率（官方示例表），收入归零风险降幅</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">对象四 · 产品</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+          <a class="model-nav-card" href="data/mpf-system-projection/three_pillar_adequacy/three_pillar_dashboard.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">🏛️</span>
+              <h4 class="model-nav-card-title">三层退休收入仪表板</h4>
+            </div>
+            <p class="model-nav-card-desc">三支柱（社会保障+强积金+自愿储蓄）合并测算，可勾选各层成品，输出综合替代率与缺口</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag">综合 · 三支柱</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 模块导航：面试材料与设计文档 -->
+      <div class="model-nav-group">
+        <h3 class="model-nav-group-title">面试材料与设计文档 <span class="model-nav-group-sub">一页纸可打印、15 分钟逐字稿、设计逻辑与数据字典</span></h3>
+        <div class="model-nav-grid">
+          <a class="model-nav-card" href="data/mpf-system-projection/14_four_layer_one_pager.html" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">📄</span>
+              <h4 class="model-nav-card-title">四层模型一页纸（可打印）</h4>
+            </div>
+            <p class="model-nav-card-desc">A4 可打印：一句话定位 + 3 条核心结论 + 5 个关键数字 + 模型亮点，对象一～四整合</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag is-interview">面试 · 一页纸</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+          <a class="model-nav-card" href="data/mpf-system-projection/14_four_layer_interview_pack.md" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">🎤</span>
+              <h4 class="model-nav-card-title">四层面试讲稿（15 分钟）</h4>
+            </div>
+            <p class="model-nav-card-desc">完整逐字稿：时间表总览 + 每段讲什么/怎么讲 + 可能追问与应答，对象一～四整合版</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag is-interview">面试 · 讲稿</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+          <a class="model-nav-card" href="data/mpf-system-projection/12_model_design_concept.md" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">🧮</span>
+              <h4 class="model-nav-card-title">模型设计构想文档</h4>
+            </div>
+            <p class="model-nav-card-desc">四层架构设计逻辑、层间依赖与数据流、关键变量清单（真实锚点 vs 假设）、已知局限与风险排序</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag is-doc">设计 · 文档</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+          <a class="model-nav-card" href="data/mpf-system-projection/00_data_dictionary.md" target="_blank" rel="noopener">
+            <div class="model-nav-card-head">
+              <span class="model-nav-card-icon">📋</span>
+              <h4 class="model-nav-card-title">数据字典</h4>
+            </div>
+            <p class="model-nav-card-desc">五表（核心参数/人口预测/缴费人口/投资回报/提取行为）字段定义、情景定义、闭合恒等式与自洽校验</p>
+            <div class="model-nav-card-foot">
+              <span class="model-nav-card-tag is-doc">数据 · 字典</span>
+              <span class="model-nav-card-arrow">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <h2 class="section-title"><span class="section-icon">🧓</span> 强积金 MPF 核心指标</h2>
       <p class="section-desc">参与、供款与账户管理的核心口径</p>
@@ -872,23 +1262,6 @@
           <h3 class="method-name">⑥ 知识与运维移交</h3>
           <p class="method-desc">文档、培训、支持期与责任边界，避免上线后无人会用、无人能维护。</p>
         </div>
-      </div>
-    </section>
-
-    <section class="content-section" id="mpf-projection-lab" aria-label="养老金数据建模与人口预估">
-      <h2 class="section-title"><span class="section-icon">📐</span> 养老金数据建模 · 人口预估</h2>
-      <p class="section-lead" style="max-width:52rem;line-height:1.65;color:var(--text-muted, #8892a4);">
-        强积金（MPF）系统投影实验：人口 CCM、供款层、提取与资产路径、综合 30 年情景，以及面试 one-pager / 四层 briefing。
-      </p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:14px;">
-        <a class="card" href="data/mpf-system-projection/population_ccm_dashboard.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">人口预估 CCM →</a>
-        <a class="card" href="data/mpf-system-projection/contribution_layer_dashboard.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">供款层仪表板 →</a>
-        <a class="card" href="data/mpf-system-projection/withdrawal_asset_dashboard.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">提取与资产路径 →</a>
-        <a class="card" href="data/mpf-system-projection/mpf_integrated_30y_dashboard.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">综合 30 年仪表板 →</a>
-        <a class="card" href="data/mpf-system-projection/mpf_30y_cashflow_dashboard.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">现金流建模 →</a>
-        <a class="card" href="data/mpf-system-projection/13_interview_one_pager.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">面试 one-pager</a>
-        <a class="card" href="data/mpf-system-projection/14_four_layer_one_pager.html" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">四层 one-pager</a>
-        <a class="card" href="data/mpf-system-projection/11_interview_briefing_pack.md" style="display:inline-flex;padding:0.65rem 1rem;text-decoration:none;">面试 briefing</a>
       </div>
     </section>
 
