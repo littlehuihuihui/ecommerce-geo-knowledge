@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>强积金制度总账户 · 30年预测基础数据字典</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    max-width: 190mm;
+    padding: 6mm 8mm;
+    font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    font-size: 10pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+  .no-print {
+    font-size: 8.5pt;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 14pt;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 12pt;
+    margin: 14px 0 6px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 11pt;
+    margin: 12px 0 4px;
+    font-weight: 700;
+  }
+  h4 {
+    font-size: 10.5pt;
+    margin: 10px 0 4px;
+    font-weight: 600;
+  }
+  p { margin: 4px 0; }
+  ul, ol { margin: 4px 0 6px 1.4em; padding: 0; }
+  li { margin: 2px 0; }
+  li > ul, li > ol { margin: 2px 0 2px 1.2em; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin: 6px 0;
+  }
+  th, td {
+    border: 1px solid #bbb;
+    padding: 4px 7px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #eee; font-weight: 600; }
+  blockquote {
+    margin: 6px 0;
+    padding: 6px 12px;
+    background: #f7f7f7;
+    border-left: 3px solid #999;
+    color: #444;
+    font-size: 9.5pt;
+  }
+  blockquote p { margin: 2px 0; }
+  code {
+    background: #f0f0f0;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 9pt;
+  }
+  pre {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 10px;
+    overflow-x: auto;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    margin: 6px 0;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 8.5pt;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 12px 0;
+  }
+  strong { font-weight: 700; }
+  a { color: #1a6fb5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 14px;
+    font-size: 8pt;
+    color: #888;
+    border-top: 1px solid #ccc;
+    padding-top: 6px;
+  }
+  @media print {
+    body { padding: 0; max-width: none; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+  <p class="no-print">此为 Markdown 文档的 HTML 浏览版，Ctrl+P 可打印为 A4。源文件：00_data_dictionary.md</p>
+<h1>强积金制度总账户 · 30年预测基础数据字典（2026–2056）</h1>
+<blockquote><p><strong>P0 五表交付面（推荐）</strong>：<code>p0_foundation/</code>（见该目录 <code>00_data_dictionary.md</code>） 用途：为「强积金制度总账户」系统动力学 / 精算投影提供<strong>年度颗粒度</strong>输入。 金额口径：除入息为「港元/月」或「万港元」外，<strong>系统级流量与存量统一为亿港元</strong>。 情景：低 / 中 / 高（悲观 / 基准 / 乐观）。 说明：根目录 <code>01</code>–<code>05</code> CSV 为早期 Prompt 1-1 版本；<strong>P0 设计文档对应数据集以 <code>p0_foundation/T01</code>–<code>T05</code> 为准</strong>（默认有关入息上下限采用拟调整值 \$10,500/\$40,000）。</p></blockquote>
+<h2>0. 设计原则</h2>
+<ol><li><strong>真实锚点优先</strong>：总资产、账户数、供款率、有关入息上下限、预期寿命等采用公开制度/统计锚点。</li><li><strong>缺失则标注 [假设]</strong>：给出依据，并与其他表自洽（缴费人口 < 劳动人口；入息落在有关入息带内等）。</li><li><strong>不替代官方精算</strong>：本数据集用于研究与教学建模，非 MPFA / 政府官方预测。</li></ol>
+<h2>1. 表清单</h2>
+<table>
+<thead><tr>
+<th>文件</th>
+<th>表名</th>
+<th>主键</th>
+<th>行量级</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>01_core_parameters.csv</code></td>
+<td>核心参数表</td>
+<td>参数名 + 情景</td>
+<td>含中枢及假设参数的低/高档</td>
+</tr>
+<tr>
+<td><code>02_population_projection.csv</code></td>
+<td>人口预测表</td>
+<td>年份×年龄组×情景</td>
+<td>31年×6年龄组×3情景</td>
+</tr>
+<tr>
+<td><code>03_contributing_population.csv</code></td>
+<td>缴费人口表</td>
+<td>年份×情景</td>
+<td>31×3</td>
+</tr>
+<tr>
+<td><code>04_investment_return_assumptions.csv</code></td>
+<td>投资回报假设表</td>
+<td>年份×基金类型×情景</td>
+<td>31×4×3</td>
+</tr>
+<tr>
+<td><code>05_withdrawal_behavior.csv</code></td>
+<td>提取行为表</td>
+<td>年份×情景</td>
+<td>31×3</td>
+</tr>
+</tbody></table>
+<h2>2. 字段字典</h2>
+<h3>表1 <code>01_core_parameters.csv</code></h3>
+<table>
+<thead><tr>
+<th>字段</th>
+<th>类型</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>参数名</td>
+<td>string</td>
+<td>英文蛇形命名，便于建模引用</td>
+</tr>
+<tr>
+<td>数值</td>
+<td>number</td>
+<td>见单位</td>
+</tr>
+<tr>
+<td>单位</td>
+<td>string</td>
+<td>亿港元 / 万个 / % / 港元/月 / 岁 等</td>
+</tr>
+<tr>
+<td>来源或假设</td>
+<td>string</td>
+<td>真实锚点说明，或 <code>[假设]</code> + 依据</td>
+</tr>
+<tr>
+<td>年份</td>
+<td>int</td>
+<td>参数锚定年份（多为2026）</td>
+</tr>
+<tr>
+<td>情景</td>
+<td>string</td>
+<td>低 / 中 / 高</td>
+</tr>
+<tr>
+<td>真实或假设</td>
+<td>string</td>
+<td><code>真实</code> / <code>真实锚点</code> / <code>[假设]</code> / <code>[假设]推算</code></td>
+</tr>
+</tbody></table>
+<p><strong>关键参数</strong></p>
+<table>
+<thead><tr>
+<th>参数名</th>
+<th>中枢值</th>
+<th>单位</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>mpf_aum_total</td>
+<td>16700</td>
+<td>亿港元</td>
+<td>2026总资产约1.67万亿港元</td>
+</tr>
+<tr>
+<td>mpf_account_count</td>
+<td>1100</td>
+<td>万个</td>
+<td>账户约1100万</td>
+</tr>
+<tr>
+<td>employer_contrib_rate / employee_contrib_rate</td>
+<td>5 / 5</td>
+<td>%</td>
+<td>强制性供款</td>
+</tr>
+<tr>
+<td>relevant_income_min_monthly / max</td>
+<td>7100 / 30000</td>
+<td>港元/月</td>
+<td>有关入息上下限</td>
+</tr>
+<tr>
+<td>life_expectancy_male / female</td>
+<td>83.3 / 88.7</td>
+<td>岁</td>
+<td>预期寿命锚点</td>
+</tr>
+<tr>
+<td>labour_force</td>
+<td>400</td>
+<td>万人</td>
+<td><code>[假设]</code></td>
+</tr>
+<tr>
+<td>contributing_members</td>
+<td>280</td>
+<td>万人</td>
+<td><code>[假设]</code>，且 < 劳动人口</td>
+</tr>
+<tr>
+<td>avg_relevant_income_active</td>
+<td>18500</td>
+<td>港元/月</td>
+<td><code>[假设]</code>，落在上下限内</td>
+</tr>
+<tr>
+<td>system_net_return_mid</td>
+<td>4.6</td>
+<td>%</td>
+<td><code>[假设]</code> 系统配置加权净回报中枢</td>
+</tr>
+</tbody></table>
+<h3>表2 <code>02_population_projection.csv</code></h3>
+<table>
+<thead><tr>
+<th>字段</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2026–2056</td>
+</tr>
+<tr>
+<td>年龄组</td>
+<td>15-24 / 25-34 / 35-44 / 45-54 / 55-64 / 65+</td>
+</tr>
+<tr>
+<td>人数_万人</td>
+<td>该年龄组人口</td>
+</tr>
+<tr>
+<td>情景</td>
+<td>低/中/高（老龄化速度不同）</td>
+</tr>
+<tr>
+<td>备注</td>
+<td>结构漂移假设说明</td>
+</tr>
+</tbody></table>
+<h3>表3 <code>03_contributing_population.csv</code></h3>
+<table>
+<thead><tr>
+<th>字段</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2026–2056</td>
+</tr>
+<tr>
+<td>缴费人数_万人</td>
+<td>当年有强制性供款的人数</td>
+</tr>
+<tr>
+<td>劳动人口_万人</td>
+<td>同情景劳动人口路径</td>
+</tr>
+<tr>
+<td>就业率</td>
+<td>就业/劳动人口</td>
+</tr>
+<tr>
+<td>平均有关入息_港元每月</td>
+<td>截断至 [7100, 30000]</td>
+</tr>
+<tr>
+<td>年强制性供款流入_亿港元</td>
+<td>缴费人数×入息×12×10%</td>
+</tr>
+<tr>
+<td>情景</td>
+<td>低/中/高</td>
+</tr>
+<tr>
+<td>自洽校验</td>
+<td>缴费人数≤劳动人口×就业率×0.85</td>
+</tr>
+<tr>
+<td>备注</td>
+<td>假设说明</td>
+</tr>
+</tbody></table>
+<h3>表4 <code>04_investment_return_assumptions.csv</code></h3>
+<table>
+<thead><tr>
+<th>字段</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2026–2056</td>
+</tr>
+<tr>
+<td>基金类型</td>
+<td>股票基金 / 混合资产基金 / DIS核心累积基金 / 保守基金</td>
+</tr>
+<tr>
+<td>年率化净回报率</td>
+<td>小数（如 0.065）</td>
+</tr>
+<tr>
+<td>年率化净回报率_百分比</td>
+<td>百分数便于阅读</td>
+</tr>
+<tr>
+<td>情景</td>
+<td>低/中/高对应历史带的悲观/中枢/乐观</td>
+</tr>
+<tr>
+<td>配置权重_中枢</td>
+<td><code>[假设]</code> 系统资产配置，用于加权</td>
+</tr>
+<tr>
+<td>来源或假设</td>
+<td>回报中枢依据</td>
+</tr>
+</tbody></table>
+<p>含轻微周期项 <code>sin(2πt/8)</code> 与缓慢下行趋势（估值/成熟市场）<code>[假设]</code>。</p>
+<h3>表5 <code>05_withdrawal_behavior.csv</code></h3>
+<table>
+<thead><tr>
+<th>字段</th>
+<th>说明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>年份</td>
+<td>2026–2056</td>
+</tr>
+<tr>
+<td>退休人数_万人</td>
+<td><code>[假设]</code> 简化为常态65岁队列流量</td>
+</tr>
+<tr>
+<td>平均提取比例</td>
+<td>退休当年提取占个人余额比例</td>
+</tr>
+<tr>
+<td>人均账户余额_万港元</td>
+<td><code>[假设]</code> 退休时点人均余额</td>
+</tr>
+<tr>
+<td>系统提取流出_亿港元</td>
+<td>人数×人均余额×提取比例</td>
+</tr>
+<tr>
+<td>情景</td>
+<td>低/中/高</td>
+</tr>
+<tr>
+<td>备注</td>
+<td>法定提取条件更广，此处流量口径简化</td>
+</tr>
+</tbody></table>
+<h2>3. 情景定义（低 / 中 / 高）</h2>
+<table>
+<thead><tr>
+<th>维度</th>
+<th>低</th>
+<th>中</th>
+<th>高</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>缴费人数增长</td>
+<td>缓降/停滞</td>
+<td>微增后平台</td>
+<td>温和扩张</td>
+</tr>
+<tr>
+<td>入息增长</td>
+<td>~1.2%/年</td>
+<td>~2.5%/年</td>
+<td>~3.5%/年</td>
+</tr>
+<tr>
+<td>投资净回报</td>
+<td>历史带下限</td>
+<td>中枢</td>
+<td>历史上限</td>
+</tr>
+<tr>
+<td>老龄化</td>
+<td>65+增长偏慢</td>
+<td>基准</td>
+<td>偏快</td>
+</tr>
+<tr>
+<td>提取比例</td>
+<td>偏高（资金更早流出）</td>
+<td>0.35 起</td>
+<td>偏低（更多保留）</td>
+</tr>
+</tbody></table>
+<h2>4. 建议闭合恒等式（建模时）</h2>
+<pre><code>期末总资产 ≈ 期初总资产 × (1 + 系统净回报)
+            + 年强制性供款流入
+            + 自愿供款/其他流入[本数据集未单列，可扩]
+            − 系统提取流出
+            − 费用与其他[可扩]</code></pre>
+<p>2026 中枢示意：流入约 622 亿港元（见核心参数推算）。</p>
+<h2>5. 文件位置</h2>
+<p><code>data/mpf-system-projection/</code></p>
+  <div class="footer">由行业百科自动生成 · 对应源文件 00_data_dictionary.md · 白底 A4 打印友好</div>
+</body>
+</html>

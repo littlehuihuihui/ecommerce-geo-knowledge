@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>香港退休保障四层模型 · 面试讲解完整材料</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    max-width: 190mm;
+    padding: 6mm 8mm;
+    font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    font-size: 10pt;
+    line-height: 1.6;
+    color: #1a1a1a;
+  }
+  .no-print {
+    font-size: 8.5pt;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  h1 {
+    font-size: 14pt;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  h2 {
+    font-size: 12pt;
+    margin: 14px 0 6px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+    font-weight: 700;
+  }
+  h3 {
+    font-size: 11pt;
+    margin: 12px 0 4px;
+    font-weight: 700;
+  }
+  h4 {
+    font-size: 10.5pt;
+    margin: 10px 0 4px;
+    font-weight: 600;
+  }
+  p { margin: 4px 0; }
+  ul, ol { margin: 4px 0 6px 1.4em; padding: 0; }
+  li { margin: 2px 0; }
+  li > ul, li > ol { margin: 2px 0 2px 1.2em; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    margin: 6px 0;
+  }
+  th, td {
+    border: 1px solid #bbb;
+    padding: 4px 7px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #eee; font-weight: 600; }
+  blockquote {
+    margin: 6px 0;
+    padding: 6px 12px;
+    background: #f7f7f7;
+    border-left: 3px solid #999;
+    color: #444;
+    font-size: 9.5pt;
+  }
+  blockquote p { margin: 2px 0; }
+  code {
+    background: #f0f0f0;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 9pt;
+  }
+  pre {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px 10px;
+    overflow-x: auto;
+    font-size: 8.5pt;
+    line-height: 1.4;
+    margin: 6px 0;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    font-size: 8.5pt;
+  }
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 12px 0;
+  }
+  strong { font-weight: 700; }
+  a { color: #1a6fb5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 14px;
+    font-size: 8pt;
+    color: #888;
+    border-top: 1px solid #ccc;
+    padding-top: 6px;
+  }
+  @media print {
+    body { padding: 0; max-width: none; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+  <p class="no-print">此为 Markdown 文档的 HTML 浏览版，Ctrl+P 可打印为 A4。源文件：14_four_layer_interview_pack.md</p>
+<h1>香港退休保障 · 四层模型</h1>
+<h2>面试讲解完整材料（对象一～四整合版）</h2>
+<blockquote><p><strong>演示入口</strong></p>
+<ul><li>对象一：<code>mpf_integrated_30y_dashboard.html</code></li><li>对象二：<code>cssa_elderly_model/</code>（CSV + 数据字典）</li><li>对象三：<code>mpf_individual_model/mpf_individual_adequacy_dashboard.html</code></li><li>对象四：<code>mpf_annuity_model/mpf_annuity_dashboard.html</code></li><li>可打印一页纸：<code>14_four_layer_one_pager.html</code></li></ul>
+<p><strong>数字口径</strong>：各对象基准情景；金额除注明外为亿港元或港元 <strong>性质</strong>：研究/教学投影，非官方精算 <strong>版本</strong>：v1.0｜对齐对象一～四最新跑数</p></blockquote>
+<hr />
+<h1>产出物一：一页纸摘要（Executive Summary）</h1>
+<blockquote><p>打印：打开 <code>14_four_layer_one_pager.html</code> → Ctrl+P → A4；或复制下方「可打印区」。</p></blockquote>
+<hr />
+<h3>【可打印区开始】香港退休保障四层模型｜一页纸</h3>
+<p><strong>一句话定位</strong> 我构建了香港退休保障的四层模型：制度总账户看可持续性，政府财政看综援压力，个人账户看退休充足率，年金化看长寿风险对冲。四层共享同一套人口预测，保证逻辑一致。</p>
+<p><strong>核心结论（3 条｜每条 ≤20 字）</strong></p>
+<ol><li><strong>强积金30年内资产持续上升</strong></li><li><strong>综援长者支出30年约增至3.5倍</strong></li><li><strong>年金化50%可将收入归零风险降九成</strong></li></ol>
+<p><strong>关键数字（5 个｜基准）</strong></p>
+<table>
+<thead><tr>
+<th>指标</th>
+<th>数值</th>
+<th>来源</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>2026 强积金总资产</td>
+<td><strong>16,700 亿</strong></td>
+<td>积金局量级（约 2026 年中）</td>
+</tr>
+<tr>
+<td>30 年累计供款 / 提取</td>
+<td><strong>约 3.69 / 1.85 万亿</strong></td>
+<td>对象一缴费·领取层</td>
+</tr>
+<tr>
+<td>综援长者支出 2056</td>
+<td><strong>约 414 亿/年</strong>（2026≈117 亿）</td>
+<td>对象二；社署锚点校准</td>
+</tr>
+<tr>
+<td>个人账户 65 岁余额</td>
+<td><strong>约 424 万港元</strong>（≈前年薪 5.3 倍）</td>
+<td>对象三；入职25/中位数入息/4.9%</td>
+</tr>
+<tr>
+<td>年金化 50% 终身地板</td>
+<td><strong>男约 14.8 万 / 女约 13.5 万/年</strong>；收入归零风险 <strong>约 −88pp（男）/−99pp（女）</strong></td>
+<td>对象四；香港年金示例表男5800/女5300</td>
+</tr>
+</tbody></table>
+<p><strong>模型亮点（3 个）</strong></p>
+<ol><li><strong>队列成分法</strong>：捕捉婴儿潮退休洪峰（非线性，非总人口×增长率）。</li><li><strong>四层视角</strong>：制度 → 财政 → 个人 → 产品，同一人口底座。</li><li><strong>交互可调</strong>：制度仪表盘约 6 个滑块；个人/年金比例可情景切换。</li></ol>
+<p><strong>数据来源</strong> 积金局《统计摘要》与年报｜政府统计处人口/生命表｜社署综援个案与开支｜香港年金计划公开定价量级｜假设项均在各对象数据字典标注。</p>
+<p><strong>演示</strong>：制度总账户 HTML｜个人充足率 HTML｜年金化 HTML</p>
+<h3>【可打印区结束】</h3>
+<hr />
+<h1>产出物二：15 分钟讲解脚本（含逐字稿）</h1>
+<h3>时间表总览</h3>
+<table>
+<thead><tr>
+<th>时间段</th>
+<th>内容</th>
+<th>要点</th>
+<th>时间控制点</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>0:00–1:00</td>
+<td>开场：为什么做四层</td>
+<td>岗位关联、业务理解</td>
+<td>45 秒内说完定位句</td>
+</tr>
+<tr>
+<td>1:00–3:00</td>
+<td>制度背景：三支柱</td>
+<td>强积金、综援、年金</td>
+<td>别展开投资产品细节</td>
+</tr>
+<tr>
+<td>3:00–5:00</td>
+<td>模型框架：四层架构</td>
+<td>共享人口 + 各层恒等式</td>
+<td>白板画四框</td>
+</tr>
+<tr>
+<td>5:00–7:00</td>
+<td>数据与假设</td>
+<td>真实锚点 vs 假设</td>
+<td>点出「来源标注」</td>
+</tr>
+<tr>
+<td>7:00–10:00</td>
+<td>演示：制度总账户</td>
+<td>桑基→折线→滑块</td>
+<td>最长段之一</td>
+</tr>
+<tr>
+<td>10:00–12:00</td>
+<td>演示：综援财政</td>
+<td>长者支出趋势</td>
+<td>对照 117→414 亿</td>
+</tr>
+<tr>
+<td>12:00–14:00</td>
+<td>演示：个人+年金</td>
+<td>耗尽年龄、50%对冲</td>
+<td>强调权衡</td>
+</tr>
+<tr>
+<td>14:00–15:00</td>
+<td>局限与延伸</td>
+<td>边界、入职怎么用</td>
+<td>准时停</td>
+</tr>
+</tbody></table>
+<hr />
+<h3>【0:00–1:00】开场｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：选题动机 + 一句话定位 + 和岗位的关系。 <strong>怎么讲</strong>：短句、口语；先给「地图」再进细节。</p>
+<p><strong>逐字稿</strong></p>
+<p>面试官您好。我想用一套完整闭环，说明我怎么理解香港退休保障——不只从一个账户看，而是从<strong>制度、财政、个人、产品</strong>四个视角一起看。</p>
+<p>一句话定位是： 「我构建了香港退休保障的四层模型：制度总账户看可持续性，政府财政看综援压力，个人账户看退休充足率，年金化看长寿风险对冲。四层共享同一套人口预测，保证逻辑一致。」</p>
+<p>选这个题目，是因为退休保障天然跨精算、财政和产品定价；面试里既能展示建模，也能展示<strong>业务边界和权衡</strong>——比如年金化能对冲长寿，但会牺牲流动性。</p>
+<p>⏱ <strong>控制点</strong>：说到「权衡」就停，进入制度背景；本段 ≤1 分钟。</p>
+<hr />
+<h3>【1:00–3:00】制度背景｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：三支柱关系——强积金（强制储蓄）、综援（底层安全网）、年金（长寿风险产品）。 <strong>怎么讲</strong>：用「谁交钱、谁担风险」三条线讲清楚。</p>
+<p><strong>逐字稿</strong></p>
+<p>香港退休保障可以粗分三块，和我的四个对象正好对应。</p>
+<p>第一块是<strong>强积金</strong>：完全积累、个人账户，雇员雇主通常各缴有关入息 <strong>5%</strong>，有上下限。风险主要在投资回报和提取行为——实务里退休提取<strong>一笔过占大约九成五</strong>。这是对象一、三、四的主战场。</p>
+<p>第二块是<strong>综援</strong>：政府财政支出，有资产和入息审查，不是个人账户。老龄化会推高长者个案和开支——这是对象二。</p>
+<p>第三块是<strong>年金</strong>：例如香港年金计划，把一笔钱换成终身月付，用来对冲「活得太久钱不够」。近年销售大约从 2024 年 <strong>44 亿</strong>升到 2025 年约 <strong>90 亿</strong>量级，说明需求在起来——这是对象四要回答的。</p>
+<p>三块不是互相替代，而是<strong>互补</strong>：强积金负责积累，综援托底，年金处理长寿尾巴。</p>
+<p>⏱ <strong>控制点</strong>：2 分钟到；提到销售数字点到为止。</p>
+<hr />
+<h3>【3:00–5:00】模型框架｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：四层对象 + 共享人口层；各层核心公式不同。 <strong>怎么讲</strong>：最好白板画四个框，中间写「人口 CCM」。</p>
+<p><strong>逐字稿</strong></p>
+<p>框架上，<strong>人口层只做一次</strong>：队列成分法，分性别、五岁组，从大约 2026 推到 2056。对象一用来算缴费和领取人数，对象二直接取 <strong>65 岁以上人口</strong>，对象三、四用同一套寿命/余命锚点，这样不会出现「制度模型一套老龄化、综援又一套」的逻辑分裂。</p>
+<p>四层的公式不一样，这是关键：</p>
+<ul><li><strong>对象一制度账户</strong>：\(A_{t+1}=A_t(1+r)+C-W-\mathrm{Offset}\)</li><li><strong>对象二综援</strong>：支出 = 合资格长者 × 月津贴 × 12——<strong>没有个人余额滚存</strong></li><li><strong>对象三个人账户</strong>：同一条积累式，但是<strong>一条职业生涯</strong></li><li><strong>对象四年金</strong>：余额 × 年金化比例 × 转换率 = 终身地板收入；剩余再按对象三方式提取</li></ul>
+<p>所以四层不是四个无关 Excel，而是<strong>同一人口底座上的四个问题</strong>。</p>
+<p>⏱ <strong>控制点</strong>：公式写完就进数据；勿展开代码文件名超过 10 秒。</p>
+<hr />
+<h3>【5:00–7:00】数据与假设｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：每层各举 1–2 个真实锚点；强调假设有标注。 <strong>怎么讲</strong>：对照一页纸念，显示「可防守」。</p>
+<p><strong>逐字稿</strong></p>
+<p>数据上我刻意分两类。</p>
+<p><strong>真实锚点</strong>：强积金总资产起点约 <strong>16,700 亿</strong>；2026 总供款校准约 <strong>912 亿</strong>；回报中枢约 <strong>4.9%</strong>；综援 2025 年 3 月个案约 <strong>19.6 万</strong>、年老约占 <strong>56.7%</strong>、约 <strong>11.1 万宗</strong>；单身长者月津贴约 <strong>8,600 港元</strong>；入息中位数约 <strong>20,500</strong>；香港年金 65 岁大约 <strong>百万保费月付男 5,800 / 女 5,300</strong>（官方示例表）。</p>
+<p><strong>明确假设</strong>：覆盖率、入息增速、综援申请率与审查通过率的<strong>拆分</strong>、2028 年起供款上限上调等——都在数据字典标了「假设」，并且上下限我诚实写了：<strong>尚未立法，模型默认是基准情景假设</strong>。</p>
+<p>原则就一句：<strong>能锚公开数的就锚；锚不上的就写清楚，再用情景和滑块做压力。</strong></p>
+<p>⏱ <strong>控制点</strong>：7 分钟前打开制度仪表盘。</p>
+<hr />
+<h3>【7:00–10:00】结果展示：制度总账户｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：打开 <code>mpf_integrated_30y_dashboard.html</code>，桑基→折线→滑块。 <strong>怎么讲</strong>：每个图只留一个结论。</p>
+<p><strong>逐字稿</strong></p>
+<p>先看对象一。桑基图说明某一年钱怎么进、怎么出。折线图三条情景：基准下，三十年末资产大约到 <strong>12 万亿</strong>量级，路径仍在上升——所以结论是<strong>投影期内未见资产峰值，也未见「提取大于供款加投资收益」的净流出</strong>；但到 2056，提取与供款比已经接近 <strong>0.96</strong>，压力在积累。</p>
+<p>累计上看，大约 <strong>3.69 万亿供款、1.85 万亿提取</strong>。敏感性里，投资回报最敏感：回报上下大约 1 个百分点，期末资产差大约 <strong>2.6 万亿</strong>量级。</p>
+<p>我拧一下回报滑块，路径整体下移——证明模型是活的，不是一张静态图。取消对冲、eMPF 降费、上下限过渡，都在设计面板里写了边界。</p>
+<p>⏱ <strong>控制点</strong>：10:00 必须切到综援；超时砍掉第四张图。</p>
+<hr />
+<h3>【10:00–12:00】结果展示：综援财政｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：长者综援支出路径；强调是财政支出不是账户。 <strong>怎么讲</strong>：报 2026 与 2056 两个数 + 校准逻辑。</p>
+<p><strong>逐字稿</strong></p>
+<p>对象二换财政视角。公式很简单：65 岁以上人口，乘综合有效领取率，再乘月津贴和 12。</p>
+<p>用 2025 年约 <strong>11.1 万</strong>年老个案，去除以模型里大约 <strong>183 万</strong>的 65 岁以上人口，反推综合领取率大约 <strong>6.05%</strong>。这样 2026 年长者综援支出大约 <strong>117 亿</strong>；到 2056，基准大约 <strong>414 亿</strong>——大约增到 <strong>3.5 倍</strong>，主要驱动是老龄人口从约 183 万增到约 309 万，再加上津贴按假设通胀上调。</p>
+<p>注意：社署总开支 2024–25 约 <strong>224 亿</strong>含非长者，不能和我的长者模块直接划等号；我只回答「长者这一块的财政压力」。</p>
+<p>⏱ <strong>控制点</strong>：12:00 切个人与年金。</p>
+<hr />
+<h3>【12:00–14:00】结果展示：个人账户与年金化｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：对象三余额与耗尽；对象四 50% 年金化对冲。 <strong>怎么讲</strong>：先「够不够」，再「怎么对冲」，最后「权衡」。</p>
+<p><strong>逐字稿</strong></p>
+<p>对象三问的是个人：入职 25 岁、退休 65、起薪按中位数，基准回报 4.9%。退休时账户大约 <strong>424 万港元</strong>，大约是前年薪的 <strong>5.3 倍</strong>；其中投资收益大概占六成，供款占四成。</p>
+<p>如果一笔过之后按前年薪 <strong>50%</strong> 花，账户大概在 <strong>75–78 岁</strong>耗尽——男预期余命锚点大约到 <strong>83</strong>，女到 <strong>89</strong>，所以<strong>长寿缺口很明显</strong>。强积金<strong>不提供长寿风险保障</strong>，这点我会主动说。</p>
+<p>对象四就是接这句话：如果把余额的 <strong>50%</strong> 按香港年金量级转换，男性能拿到大约 <strong>14.8 万一年</strong>的终身地板，女大约 <strong>13.5 万</strong>（官方表示例女月付略低）；收入归零这类长寿缺口发生率可以降大约 <strong>88 个百分点（男）/ 约 99 个百分点（女）</strong>。</p>
+<p>代价也很清楚：<strong>年金化对冲长寿，但降低流动性和遗产弹性</strong>——所以我做的是比例网格，不是鼓吹 100% 年金化。</p>
+<p>⏱ <strong>控制点</strong>：14:00 收尾。</p>
+<hr />
+<h3>【14:00–15:00】局限与延伸｜讲什么 / 怎么讲</h3>
+<p><strong>讲什么</strong>：三点局限 + 入职怎么用。 <strong>怎么讲</strong>：坦诚、短；把话筒留给提问。</p>
+<p><strong>逐字稿</strong></p>
+<p>局限我说三点：第一，上下限 2028 新值仍是假设、综援年龄口径需再核；第二，综援申请率与审查通过率只校准了<strong>乘积</strong>，拆分是假设；第三，未做受托人竞争、跨境养老行为、疾病护理等细分。</p>
+<p>如果入职后要用：人口层直接复用；对象一换真实供款提取表；对象二换社署个案与津贴；对象三、四接真实账户与年金费率表——接口都留了 <code>load_real_data</code> / <code>load_real_individual</code> / <code>load_annuity_pricer</code>。</p>
+<p>谢谢，我可以回答提问。</p>
+<p>⏱ <strong>控制点</strong>：停在「可以回答提问」。</p>
+<hr />
+<h3>30 秒电梯稿（备用）</h3>
+<p>我做了香港退休保障四层模型，共享同一套人口预测：制度总账户看池子可持续，综援看财政长者压力，个人账户看 65 岁够不够花，年金化看长寿怎么对冲。基准下强积金起点 1.67 万亿、个人退休余额约 424 万；年金化一半大约能把收入归零风险降九成，但会牺牲流动性。重点是可复现的压力测试闭环，不是一个神秘点预测。</p>
+<hr />
+<h1>产出物三：面试问答预案（15 题）</h1>
+<blockquote><p>每题 <strong>3–5 句</strong>；先结论后机制；数字与一页纸一致。</p></blockquote>
+<h2>关于模型设计</h2>
+<h3>1. 「为什么用队列成分法而不是线性外推？」</h3>
+<p>养老金压力来自<strong>年龄结构</strong>，不是总人口一条直线。队列成分法用「今年 59 岁 × 存活率 ≈ 明年 60 岁」，明年新领取主要来自今年准退休队列，才能捕捉婴儿潮集中退休的非线性洪峰。线性外推会把缴费萎缩和领取抬升抹平，制度和综援两边都会估错。</p>
+<h3>2. 「四层模型之间怎么衔接？人口层怎么复用？」</h3>
+<p>人口层只在 <code>mpf_model.population</code> 跑一次；对象一取劳动年龄与达龄队列，对象二经 <code>population_bridge</code> 取 65+，对象三、四用同一套寿命/余命锚点。衔接靠<strong>共享人口路径 + 各自恒等式</strong>，不是把制度总资产除以人数当个人余额——那会概念错位。</p>
+<h3>3. 「为什么做四个对象，而不是只做强积金？」</h3>
+<p>只做制度账户回答不了「政府托底贵不贵」和「个人会不会花光」。四个对象对应可持续性、财政压力、充足率、长寿对冲四个面试高频问题，也对应强积金、综援、个人、年金四类业务语言。共享人口是为了证明我懂<strong>一致性</strong>，不是堆四个无关模型。</p>
+<h2>关于强积金制度</h2>
+<h3>4. 「取消对冲在模型中怎么处理？」</h3>
+<p>取消对冲<strong>不具追溯力</strong>（转制日约 2025-05-01）。我按入职cohort 分层：转制前部分仍可能被对冲，转制后雇主强制不可对冲；流出渐进下降，不是一刀切。资产公式显式扣 <code>Offset</code>；对照情景可关掉对冲项看差异。</p>
+<h3>5. 「供款上下限调整的假设依据是什么？」</h3>
+<p>现行仍是 <strong>7,100 / 30,000</strong>。积金局在做 2022–2026 检讨，目标约 2026 年中向政府交建议，<strong>幅度与生效日尚未公布</strong>。模型 2026–27 用旧值，2028 起用假设 <strong>10,500 / 40,000</strong>，并在敏感性和「维持旧上限」对照里诚实标注——这是情景，不是法定事实。</p>
+<h3>6. 「94% 一笔过提取，这个数据可靠吗？」</h3>
+<p>来自积金局统计摘要一类披露的退休提取结构，近期季度一笔过可到约 <strong>94.7%</strong>。所以个人与制度模型基准都按「接近全额提取」简化；分期占比小，但对长寿风险讨论很关键——正因为一笔过主导，才更需要对象四的年金化选项。</p>
+<h3>7. 「全自由行对模型有什么影响？」</h3>
+<p>首阶段大约 <strong>2025-09 修例、预计 2026 Q4 实施</strong>；次阶段约 2027 立法。它<strong>不改变制度总资产</strong>，但改变账户分布和受托人竞争。我在设计思路里写了时间线，<strong>未做受托人层建模</strong>——这是有意边界，不是疏漏。</p>
+<h2>关于综援</h2>
+<h3>8. 「综援的审查通过率怎么估算？」</h3>
+<p>我先算<strong>综合有效领取率</strong> = 年老个案 / 65+ 人口 ≈ <strong>6.05%</strong>（反推）。再拆成申请率 × 审查通过率时，乘积锁死、拆分是假设（例如通过率约 55%）。面试里我会强调：能防守的是乘积，拆分待社署更细数据替换。</p>
+<h3>9. 「综援支出和强积金资产的关系是什么？」</h3>
+<p>短期不是简单此消彼长：强积金是个人账户，综援是财政审查福利。长期上，强积金积累更厚，可能降低综援申请率——我没把这条反馈做硬耦合，避免伪精确；对象二领取率可做情景下调，用来讲「第二支柱做厚 → 第三层托底压力减轻」的方向。</p>
+<h2>关于个人账户与年金</h2>
+<h3>10. 「账户耗尽年龄怎么计算？」</h3>
+<p>退休余额按规则每年提取（一笔过不再投资，或账户内保留回报），直到余额≤0；耗尽年龄 = 65 + 可支撑年数。对象三里若按前年薪 50% 花，基准大约 <strong>75–78 岁</strong>耗尽；对照男/女余命锚点就能看见长寿缺口。</p>
+<h3>11. 「年金化比例 50% 的依据是什么？」</h3>
+<p>50% 不是法定最优，而是<strong>讲解用的中间情景</strong>：保留一半流动性/遗产弹性，一半换终身地板。网格里有 0/25/50/75/100%，敏感性能看权衡曲线。真正落地应按风险偏好、房屋、家庭储蓄再定。</p>
+<h3>12. 「香港年金计划的定价参数从哪来？」</h3>
+<p>男性 65 岁大约 <strong>投保 100 万、月付约 5,800</strong>，女性同额约 <strong>5,300</strong>（香港年金官方示例表），年化转换率约 <strong>6.96% / 6.36%</strong>；保证领取至少 <strong>105%</strong> 保费。接口 <code>load_annuity_pricer</code> 可换成完整年龄费率表。销售约 90 亿是市场背景，不进定价方程。</p>
+<h2>关于模型应用</h2>
+<h3>13. 「这个模型如何应用到实际工作？入职后怎么用？」</h3>
+<p>三步：换数据（<code>load_real_data</code> / 个案表 / 个人 CSV / 年金费率表）；保留四层问题框架做管理层沟通；用滑块和情景快速回答「如果上限/回报/年金化比例变了会怎样」。交付物是「路径 + 前提」，不是黑箱一个点。</p>
+<h3>14. 「模型的最大不确定性在哪里？」</h3>
+<p>我认为最大不确定性在<strong>长期净回报 × 提取/年金行为</strong>的组合：回报决定余额，提取和年金化决定耗尽与地板。其次是上限立法时点、综援领取率、移民与离港。所以各对象都把回报和关键行为做成情景，而不是单点预测。</p>
+<h3>15. 「如果让你继续完善，你会加什么？」</h3>
+<p>优先三件事：一是入息分布与真实年金费率表；二是综援与长者生活津贴的替代关系；三是强积金积累对综援申请率的反馈。再往后才是受托人竞争、跨境支付通对领取行为的影响。</p>
+<hr />
+<h1>产出物四：模型迁移指南</h1>
+<h3>一句话</h3>
+<p><strong>留下「共享人口 + 分视角恒等式 + 情景可视化」；换掉规则表与产品定价，即可迁到其他退休保障场景。</strong></p>
+<h3>映射表</h3>
+<table>
+<thead><tr>
+<th>对象</th>
+<th>本项目</th>
+<th>可迁移场景</th>
+<th>复用什么</th>
+<th>重写什么</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>强积金制度总账户</td>
+<td>其他 DC / ORSO 计划加总</td>
+<td>人口、资产恒等式、仪表盘</td>
+<td>供款规则、提取规则、费用</td>
+</tr>
+<tr>
+<td>二</td>
+<td>综援长者支出</td>
+<td>长者生活津贴等资产审查福利</td>
+<td>65+ 人口、支出=人数×单价</td>
+<td>资格、审查、津贴标准</td>
+</tr>
+<tr>
+<td>三</td>
+<td>个人账户充足率</td>
+<td>其他个人储蓄/职业退休计划</td>
+<td>积累公式、耗尽年龄</td>
+<td>起薪、费率、中断假设</td>
+</tr>
+<tr>
+<td>四</td>
+<td>年金化</td>
+<td>其他终身年金/养老险产品</td>
+<td>比例网格、地板与缺口指标</td>
+<td>费率表、保证条款</td>
+</tr>
+<tr>
+<td>人口层</td>
+<td>队列成分法</td>
+<td><strong>所有对象</strong></td>
+<td><strong>直接复用</strong></td>
+<td>仅更新生命表/迁移</td>
+</tr>
+</tbody></table>
+<h3>迁移时注意</h3>
+<ol><li><strong>不要</strong>把制度总资产直接除以人数当「代表性个人」——对象三必须单独跑职业生涯。</li><li>财政类对象（综援/津贴）<strong>没有</strong>投资回报滚存，切勿套用资产恒等式。</li><li>产品类对象（年金）先换<strong>定价接口</strong>，再谈行为；销售额是背景不是费率。</li></ol>
+<h3>面试收束句</h3>
+<p>这套材料证明两件事：一是我能把公开制度做成可运行、可校验、可演示的闭环；二是我清楚强积金、综援、个人账户、年金<strong>各自回答什么问题、共享什么、不能混用什么</strong>——入职后换数据源就能迁移，而不是推倒重来。</p>
+<hr />
+<h1>附录：讲解道具清单</h1>
+<table>
+<thead><tr>
+<th>顺序</th>
+<th>材料</th>
+<th>用途</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>14_four_layer_one_pager.html</code></td>
+<td>开场递给面试官</td>
+</tr>
+<tr>
+<td>2</td>
+<td>白板</td>
+<td>画四层 + 人口共享</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>mpf_integrated_30y_dashboard.html</code></td>
+<td>7–10 分钟</td>
+</tr>
+<tr>
+<td>4</td>
+<td>对象二 <code>summary_comparison.csv</code> 或口述 117→414</td>
+<td>10–12 分钟</td>
+</tr>
+<tr>
+<td>5</td>
+<td>个人 / 年金 HTML</td>
+<td>12–14 分钟</td>
+</tr>
+<tr>
+<td>6</td>
+<td>各对象 <code>00_data_dictionary.md</code></td>
+<td>追问来源</td>
+</tr>
+</tbody></table>
+<h3>背诵速查卡</h3>
+<table>
+<thead><tr>
+<th>项</th>
+<th>数</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>MPF A0</td>
+<td>16,700 亿</td>
+</tr>
+<tr>
+<td>累计 C / W</td>
+<td>3.69 / 1.85 万亿</td>
+</tr>
+<tr>
+<td>2056 末资产</td>
+<td>≈12.04 万亿；峰值/净流出窗口内未见</td>
+</tr>
+<tr>
+<td>综援长者 2026→2056</td>
+<td>≈117 → 414 亿</td>
+</tr>
+<tr>
+<td>个人 65 岁余额</td>
+<td>≈424 万（5.3×前年薪）</td>
+</tr>
+<tr>
+<td>年金化 50% 地板</td>
+<td>男≈14.8 万 / 女≈13.5 万/年；收入归零风险约 −88pp（男）/−99pp（女）</td>
+</tr>
+<tr>
+<td>权衡句</td>
+<td>年金化对冲长寿，但降低流动性</td>
+</tr>
+</tbody></table>
+<hr />
+<p>*文档版本：v1.0｜对象一～四整合｜配套一页纸 <code>14_four_layer_one_pager.html</code>*</p>
+  <div class="footer">由行业百科自动生成 · 对应源文件 14_four_layer_interview_pack.md · 白底 A4 打印友好</div>
+</body>
+</html>

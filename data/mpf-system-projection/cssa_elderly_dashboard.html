@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>综援长者财政支出 · 30年预测（2026–2056）</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+<style>
+:root{--bg:#0b1524;--panel:#122236;--line:rgba(148,178,210,.22);--text:#e8eef6;--muted:#8fa6c0;--gold:#d4b45a;--cyan:#5eb3d4;--coral:#e07a6a;--green:#5cba8f;--font:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+*{box-sizing:border-box}body{margin:0;font-family:var(--font);background:linear-gradient(180deg,#08111d,#0b1524 45%,#101c2e);color:var(--text);min-height:100vh}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 16px 40px}
+header{padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,rgba(18,34,54,.95),rgba(11,21,36,.9))}
+.eyebrow{color:var(--gold);font-size:12px;letter-spacing:.12em;font-weight:600}
+h1{margin:6px 0 0;font-size:clamp(1.2rem,2.2vw,1.65rem)}
+.sub{margin:8px 0 0;color:var(--muted);font-size:.9rem;line-height:1.55;max-width:80ch}
+.controls{margin-top:14px;display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+@media(max-width:900px){.controls{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.panel h2{margin:0 0 10px;font-size:.88rem;color:var(--gold)}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btns button{border:1px solid rgba(143,166,192,.35);background:transparent;color:var(--text);padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit}
+.btns button.active{background:linear-gradient(135deg,var(--gold),#b8943a);color:#1a1408;border:none;font-weight:700}
+.year-row{display:grid;grid-template-columns:72px 1fr 64px;gap:10px;align-items:center;margin-top:12px}
+.year-row input{width:100%;accent-color:var(--gold)}
+.year-val{font-size:1.35rem;font-weight:700;color:var(--gold);text-align:right}
+label{font-size:.86rem;color:var(--muted)}
+.kpis{margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:linear-gradient(160deg,rgba(30,58,90,.55),rgba(11,21,36,.85));border:1px solid rgba(212,180,90,.22);border-radius:12px;padding:12px 14px}
+.kpi .l{font-size:.72rem;color:var(--muted)}.kpi .v{margin-top:4px;font-size:1.15rem;font-weight:700}.kpi .v.gold{color:var(--gold)}
+.grid{margin-top:14px;display:grid;grid-template-columns:1.1fr .9fr;gap:12px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;min-height:340px;display:flex;flex-direction:column}
+.card.wide{grid-column:1/-1}
+.card h3{margin:0;font-size:.95rem}.card p{margin:6px 0 8px;font-size:.78rem;color:var(--muted);line-height:1.45}
+.chart{flex:1;min-height:280px;width:100%}.chart.tall{min-height:320px}
+footer{margin-top:18px;padding:14px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem;line-height:1.6}
+code{color:var(--gold)}
+.warn{color:var(--coral);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">CSSA ELDERLY EXPENDITURE · OBJECT 2</div>
+  <h1>综援长者财政支出 · 30年预测（2026–2056）</h1>
+  <p class="sub">对象二：政府财政视角。年度支出 = 65+人口 × 综合有效领取率 × 平均月津贴 × 12。与强积金模型共用同一套人口投影（队列成分法），保证四层逻辑一致。<span class="warn">注意：这是财政支出，不是个人账户，没有投资回报滚存。</span></p>
+</header>
+
+<section class="controls">
+  <div class="panel">
+    <h2>情景 · 年份</h2>
+    <div class="btns" id="scBtns">
+      <button type="button" data-v="保守" >保守（支出偏低）</button>
+      <button type="button" data-v="基准" class="active">基准</button>
+      <button type="button" data-v="高支出压力">高支出压力</button>
+    </div>
+    <div class="year-row">
+      <label for="year">时间轴</label>
+      <input type="range" id="year" min="2026" max="2056" value="2026"/>
+      <div class="year-val" id="yearLab">2026</div>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>校准锚点</h2>
+    <p style="margin:0;color:var(--muted);font-size:.85rem;line-height:1.65">
+      2025 年 3 月综援年老个案约 <b style="color:var(--text)">11.1 万</b>；模型 2026 基准合资格长者约 <b style="color:var(--gold)">11.08 万</b>（同量级校准）。<br/>
+      综合有效领取率 ≈ <b style="color:var(--gold)">6.05%</b>（年老个案 ÷ 65+ 人口反推）。<br/>
+      2026 基准长者支出约 <b style="color:var(--gold)">117 亿</b>，占社署 2024–25 总开支（约 224 亿，含非长者）约 <b style="color:var(--gold)">52%</b>。
+    </p>
+  </div>
+</section>
+
+<section class="kpis">
+  <div class="kpi"><div class="l">65+ 人口（万人）</div><div class="v gold" id="kPop">—</div></div>
+  <div class="kpi"><div class="l">合资格长者（万人）</div><div class="v" id="kElig">—</div></div>
+  <div class="kpi"><div class="l">平均月津贴（港元）</div><div class="v" id="kAllow">—</div></div>
+  <div class="kpi"><div class="l">年度支出（亿港元）</div><div class="v gold" id="kExp">—</div></div>
+  <div class="kpi"><div class="l">累计支出（亿港元）</div><div class="v" id="kCum">—</div></div>
+</section>
+
+<section class="grid">
+  <div class="card wide">
+    <h3>年度财政支出趋势（三情景对比）</h3>
+    <p>老龄化推动 65+ 人口从约 183 万增至约 309 万，叠加津贴通胀，长者综援支出 30 年约增至 3.5 倍（基准）。</p>
+    <div class="chart tall" id="cExp"></div>
+  </div>
+  <div class="card">
+    <h3>65+ 人口与合资格长者</h3>
+    <p>人口是支出的核心驱动；合资格长者 = 65+ 人口 × 综合有效领取率。</p>
+    <div class="chart" id="cPop"></div>
+  </div>
+  <div class="card">
+    <h3>平均月津贴走势</h3>
+    <p>2025 单身长者约 8,600 港元/月为真实锚点；其后按情景通胀率上调（保守 1.5% / 基准 2.5% / 高 3.5%）。</p>
+    <div class="chart" id="cAllow"></div>
+  </div>
+  <div class="card wide">
+    <h3>三情景关键指标对比（2026 vs 2056）</h3>
+    <p>支出峰值年均出现在 2056（投影期内持续上升，未见顶）。高支出压力情景下 2056 年支出可达约 659 亿。</p>
+    <div class="chart" id="cCompare"></div>
+  </div>
+</section>
+
+<footer>
+  <p><b>数据来源</b>：社署综援统计（2025年3月年老个案约11.1万、单身长者月津贴约8,600港元）｜政府统计处人口推算（65+人口路径）｜模型假设均在数据字典标注「真实 / 假设」。</p>
+  <p><b>核心公式</b>：年度支出 = 65+人口 × 综合有效领取率 × 平均月津贴 × 12；综合有效领取率 = 申请率 × 资产审查通过率。</p>
+  <p><b>已知局限</b>：① 社署「年老」个案历史上可含 60–64 岁，模型用 65+ 人口作分母，领取率可能偏高；② 用 2025-03 个案 ÷ 2026 模型人口，错年对齐、量级校准；③ 申请率与审查通过率只校准了乘积，拆分是假设；④ 未建模综援与长者生活津贴的替代关系，也未耦合强积金积累对综援申请率的反馈。</p>
+  <p><b>性质</b>：研究/教学投影，非政府官方预测。对应源文件：cssa_elderly_model/output/</p>
+</footer>
+</div>
+
+<script>
+// 内嵌数据
+const YEARS = [2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050, 2051, 2052, 2053, 2054, 2055, 2056];
+const DATA = {"保守": {"population_65plus": [183.21, 191.4244, 199.39, 207.1352, 214.6858, 222.0648, 228.0882, 233.8126, 239.2757, 244.5111, 249.5494, 254.279, 258.7135, 262.8841, 266.8188, 270.5424, 273.5534, 276.3312, 278.9011, 281.2856, 283.5044, 285.419, 287.2473, 289.0034, 290.7, 292.3483, 293.3612, 294.3888, 295.4338, 296.4989, 297.5867], "eligibility": [9.9761, 10.4234, 10.8572, 11.2789, 11.6901, 12.0919, 12.4198, 12.7316, 13.029, 13.3141, 13.5884, 13.846, 14.0875, 14.3146, 14.5288, 14.7316, 14.8955, 15.0468, 15.1867, 15.3165, 15.4374, 15.5416, 15.6412, 15.7368, 15.8292, 15.9189, 15.9741, 16.03, 16.0869, 16.1449, 16.2042], "monthly_allowance": [8729.0, 8859.93, 8992.83, 9127.73, 9264.64, 9403.61, 9544.67, 9687.84, 9833.15, 9980.65, 10130.36, 10282.32, 10436.55, 10593.1, 10752.0, 10913.28, 11076.97, 11243.13, 11411.78, 11582.95, 11756.7, 11933.05, 12112.04, 12293.72, 12478.13, 12665.3, 12855.28, 13048.11, 13243.83, 13442.49, 13644.13], "annual_expenditure": [104.4981, 110.8211, 117.1641, 123.5411, 129.9651, 136.4486, 142.2519, 148.0094, 153.7397, 159.4601, 165.1871, 170.8425, 176.4293, 181.9625, 187.4563, 192.9235, 197.9966, 203.0073, 207.9688, 212.8931, 217.791, 222.5507, 227.336, 232.1567, 237.0223, 241.9417, 246.4217, 250.9941, 255.6633, 260.4338, 265.3101], "effective_rate": [0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452, 0.054452]}, "基准": {"population_65plus": [183.21, 191.5652, 199.6923, 207.6203, 215.375, 222.98, 229.2517, 235.2472, 241.0045, 246.5577, 251.9378, 257.02, 261.8168, 266.3585, 270.672, 274.7814, 278.1842, 281.3589, 284.3298, 287.1183, 289.7434, 292.0652, 294.3159, 296.509, 298.6567, 300.7701, 302.2617, 303.7811, 305.3311, 306.9139, 308.5319], "eligibility": [11.0846, 11.5901, 12.0818, 12.5615, 13.0307, 13.4908, 13.8702, 14.233, 14.5813, 14.9173, 15.2428, 15.5503, 15.8405, 16.1153, 16.3762, 16.6249, 16.8307, 17.0228, 17.2026, 17.3713, 17.5301, 17.6706, 17.8067, 17.9394, 18.0694, 18.1972, 18.2875, 18.3794, 18.4732, 18.569, 18.6668], "monthly_allowance": [8815.0, 9035.38, 9261.26, 9492.79, 9730.11, 9973.36, 10222.7, 10478.26, 10740.22, 11008.73, 11283.95, 11566.04, 11855.19, 12151.57, 12455.36, 12766.75, 13085.92, 13413.06, 13748.39, 14092.1, 14444.4, 14805.51, 15175.65, 15555.04, 15943.92, 16342.52, 16751.08, 17169.86, 17599.1, 18039.08, 18490.06], "annual_expenditure": [117.2529, 125.6652, 134.2714, 143.0921, 152.1476, 161.458, 170.1493, 178.9641, 187.9275, 197.0643, 206.3984, 215.826, 225.3504, 234.9909, 244.7664, 254.6946, 264.2948, 273.9938, 283.8092, 293.7574, 303.8542, 313.9464, 324.2748, 334.8583, 345.7161, 356.8664, 367.6023, 378.6862, 390.1339, 401.9602, 414.1814], "effective_rate": [0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502, 0.060502]}, "高支出压力": {"population_65plus": [183.21, 191.6591, 199.8939, 207.9436, 215.8344, 223.5901, 230.0274, 236.2036, 242.157, 247.9222, 253.5302, 258.8473, 263.8856, 268.6747, 273.2408, 277.6074, 281.2713, 284.7107, 287.949, 291.0068, 293.9027, 296.4961, 299.0283, 301.5127, 303.9612, 306.3847, 308.1954, 310.0427, 311.9293, 313.8572, 315.8288], "eligibility": [12.7473, 13.3352, 13.9081, 14.4682, 15.0172, 15.5568, 16.0047, 16.4345, 16.8487, 17.2498, 17.64, 18.0099, 18.3605, 18.6937, 19.0114, 19.3152, 19.5701, 19.8095, 20.0348, 20.2475, 20.449, 20.6294, 20.8056, 20.9785, 21.1489, 21.3175, 21.4435, 21.572, 21.7033, 21.8374, 21.9746], "monthly_allowance": [8901.0, 9212.53, 9534.97, 9868.7, 10214.1, 10571.6, 10941.6, 11324.56, 11720.92, 12131.15, 12555.74, 12995.19, 13450.02, 13920.77, 14408.0, 14912.28, 15434.21, 15974.41, 16533.51, 17112.18, 17711.11, 18331.0, 18972.58, 19636.62, 20323.91, 21035.24, 21771.48, 22533.48, 23322.15, 24138.43, 24983.27], "annual_expenditure": [136.1564, 147.4206, 159.1362, 171.3386, 184.0648, 197.3527, 210.1409, 223.3355, 236.9784, 251.1119, 265.7797, 280.8511, 296.339, 312.2771, 328.6995, 345.6408, 362.4598, 379.7331, 397.4939, 415.7752, 434.6096, 453.7901, 473.6839, 494.3361, 515.7927, 538.1018, 560.227, 583.3104, 607.3998, 632.5443, 658.796], "effective_rate": [0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577, 0.069577]}};
+const SUMMARY = {"保守（支出偏低）": {"effective_rate": 0.054452, "pop_2026": 183.21, "elig_2026": 9.9761, "exp_2026": 104.4981, "pop_2056": 297.5867, "elig_2056": 16.2042, "exp_2056": 265.3101, "cumulative": 5880.19, "peak_year": 2056, "peak_exp": 265.3101}, "基准": {"effective_rate": 0.060502, "pop_2026": 183.21, "elig_2026": 11.0846, "exp_2026": 117.2529, "pop_2056": 308.5319, "elig_2056": 18.6668, "exp_2056": 414.1814, "cumulative": 7997.95, "peak_year": 2056, "peak_exp": 414.1814}, "高支出压力": {"effective_rate": 0.069577, "pop_2026": 183.21, "elig_2026": 12.7473, "exp_2026": 136.1564, "pop_2056": 315.8288, "elig_2056": 21.9746, "exp_2056": 658.796, "cumulative": 11254.68, "peak_year": 2056, "peak_exp": 658.796}};
+
+const SCENARIOS = ['保守', '基准', '高支出压力'];
+const COLORS = {'保守': '#5eb3d4', '基准': '#d4b45a', '高支出压力': '#e07a6a'};
+
+let currentSc = '基准';
+let currentYear = 2026;
+
+// 初始化图表
+const cExp = echarts.init(document.getElementById('cExp'));
+const cPop = echarts.init(document.getElementById('cPop'));
+const cAllow = echarts.init(document.getElementById('cAllow'));
+const cCompare = echarts.init(document.getElementById('cCompare'));
+
+function fmt(v, d=1) { return v.toLocaleString('zh-CN', {minimumFractionDigits:d, maximumFractionDigits:d}); }
+
+function updateKPIs() {
+  const idx = YEARS.indexOf(currentYear);
+  const d = DATA[currentSc];
+  const s = SUMMARY[currentSc];
+  document.getElementById('kPop').textContent = fmt(d.population_65plus[idx], 1);
+  document.getElementById('kElig').textContent = fmt(d.eligibility[idx], 2);
+  document.getElementById('kAllow').textContent = fmt(d.monthly_allowance[idx], 0);
+  document.getElementById('kExp').textContent = fmt(d.annual_expenditure[idx], 1);
+  document.getElementById('kCum').textContent = fmt(s.cumulative, 0);
+  document.getElementById('yearLab').textContent = currentYear;
+}
+
+function renderExp() {
+  const series = SCENARIOS.map(sc => ({
+    name: sc,
+    type: 'line',
+    data: DATA[sc].annual_expenditure,
+    smooth: true,
+    lineStyle: {width: sc === currentSc ? 3 : 1.5},
+    itemStyle: {color: COLORS[sc]},
+    emphasis: {focus: 'series'},
+  }));
+  cExp.setOption({
+    tooltip: {trigger: 'axis', valueFormatter: v => fmt(v,1) + ' 亿港元'},
+    legend: {data: SCENARIOS, textStyle: {color: '#8fa6c0'}, top: 0},
+    grid: {left: 50, right: 20, top: 36, bottom: 30},
+    xAxis: {type: 'category', data: YEARS, axisLabel: {color: '#8fa6c0'}},
+    yAxis: {type: 'value', name: '亿港元', nameTextStyle: {color: '#8fa6c0'}, axisLabel: {color: '#8fa6c0'}, splitLine: {lineStyle: {color: 'rgba(148,178,210,.1)'}}},
+    series: series,
+  });
+}
+
+function renderPop() {
+  const d = DATA[currentSc];
+  cPop.setOption({
+    tooltip: {trigger: 'axis'},
+    legend: {data: ['65+人口', '合资格长者'], textStyle: {color: '#8fa6c0'}, top: 0},
+    grid: {left: 50, right: 20, top: 36, bottom: 30},
+    xAxis: {type: 'category', data: YEARS, axisLabel: {color: '#8fa6c0'}},
+    yAxis: [
+      {type: 'value', name: '万人', nameTextStyle: {color: '#8fa6c0'}, axisLabel: {color: '#8fa6c0'}, splitLine: {lineStyle: {color: 'rgba(148,178,210,.1)'}}},
+    ],
+    series: [
+      {name: '65+人口', type: 'line', data: d.population_65plus, smooth: true, itemStyle: {color: '#5eb3d4'}, areaStyle: {opacity: 0.15}},
+      {name: '合资格长者', type: 'line', data: d.eligibility, smooth: true, itemStyle: {color: '#d4b45a'}, areaStyle: {opacity: 0.15}},
+    ],
+  });
+}
+
+function renderAllow() {
+  const series = SCENARIOS.map(sc => ({
+    name: sc,
+    type: 'line',
+    data: DATA[sc].monthly_allowance,
+    smooth: true,
+    lineStyle: {width: sc === currentSc ? 3 : 1.5},
+    itemStyle: {color: COLORS[sc]},
+  }));
+  cAllow.setOption({
+    tooltip: {trigger: 'axis', valueFormatter: v => fmt(v,0) + ' 港元/月'},
+    legend: {data: SCENARIOS, textStyle: {color: '#8fa6c0'}, top: 0},
+    grid: {left: 50, right: 20, top: 36, bottom: 30},
+    xAxis: {type: 'category', data: YEARS, axisLabel: {color: '#8fa6c0'}},
+    yAxis: {type: 'value', name: '港元/月', nameTextStyle: {color: '#8fa6c0'}, axisLabel: {color: '#8fa6c0'}, splitLine: {lineStyle: {color: 'rgba(148,178,210,.1)'}}},
+    series: series,
+  });
+}
+
+function renderCompare() {
+  const cats = ['2026 支出', '2056 支出', '累计支出', '2056 合资格长者'];
+  const series = SCENARIOS.map(sc => ({
+    name: sc,
+    type: 'bar',
+    data: [
+      SUMMARY[sc].exp_2026,
+      SUMMARY[sc].exp_2056,
+      SUMMARY[sc].cumulative / 10,  // 累计支出缩小10倍以便同图展示
+      SUMMARY[sc].elig_2056 * 10,   // 万人转十万人以便同图
+    ],
+    itemStyle: {color: COLORS[sc]},
+    barMaxWidth: 40,
+  }));
+  cCompare.setOption({
+    tooltip: {
+      trigger: 'axis',
+      formatter: function(params) {
+        let s = params[0].axisValue + '<br/>';
+        params.forEach(p => {
+          let v = p.value;
+          if (p.axisValue === '累计支出') v = v * 10;
+          if (p.axisValue === '2056 合资格长者') v = v / 10;
+          const unit = p.axisValue.includes('长者') ? ' 万人' : ' 亿港元';
+          s += p.marker + p.seriesName + ': ' + fmt(v,1) + unit + '<br/>';
+        });
+        return s;
+      }
+    },
+    legend: {data: SCENARIOS, textStyle: {color: '#8fa6c0'}, top: 0},
+    grid: {left: 50, right: 20, top: 36, bottom: 30},
+    xAxis: {type: 'category', data: cats, axisLabel: {color: '#8fa6c0', fontSize: 11}},
+    yAxis: {type: 'value', axisLabel: {color: '#8fa6c0'}, splitLine: {lineStyle: {color: 'rgba(148,178,210,.1)'}}},
+    series: series,
+  });
+}
+
+function renderAll() {
+  updateKPIs();
+  renderExp();
+  renderPop();
+  renderAllow();
+  renderCompare();
+}
+
+// 事件绑定
+document.querySelectorAll('#scBtns button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#scBtns button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSc = btn.dataset.v;
+    renderAll();
+  });
+});
+
+document.getElementById('year').addEventListener('input', e => {
+  currentYear = parseInt(e.target.value);
+  updateKPIs();
+});
+
+window.addEventListener('resize', () => {
+  cExp.resize(); cPop.resize(); cAllow.resize(); cCompare.resize();
+});
+
+renderAll();
+</script>
+</body>
+</html>
