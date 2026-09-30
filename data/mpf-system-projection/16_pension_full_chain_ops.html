@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<title>养老金全链路业务 · 四角色教学/面试模块</title>
+<style>
+  @page { size: A4; margin: 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    max-width: 190mm;
+    padding: 6mm 8mm;
+    font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
+    font-size: 10pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+  }
+  .no-print { font-size: 8.5pt; color: #666; margin-bottom: 8px; }
+  h1 { font-size: 14pt; margin: 0 0 4px; font-weight: 700; }
+  h2 {
+    font-size: 12pt;
+    margin: 14px 0 6px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 2px;
+    font-weight: 700;
+  }
+  h3 { font-size: 11pt; margin: 12px 0 4px; font-weight: 700; }
+  p { margin: 4px 0; }
+  ul, ol { margin: 4px 0 6px 1.4em; padding: 0; }
+  li { margin: 2px 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.8pt;
+    margin: 6px 0;
+  }
+  th, td {
+    border: 1px solid #bbb;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: #eee; font-weight: 600; }
+  blockquote {
+    margin: 6px 0;
+    padding: 6px 12px;
+    background: #f7f7f7;
+    border-left: 3px solid #999;
+    color: #444;
+    font-size: 9.5pt;
+  }
+  .one-liner {
+    background: #f2f2f2;
+    padding: 6px 8px;
+    font-size: 9.5pt;
+    margin: 4px 0 8px;
+  }
+  code {
+    background: #f0f0f0;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 9pt;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 8pt;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #eee;
+    margin-right: 4px;
+  }
+  .footer {
+    margin-top: 10px;
+    font-size: 8pt;
+    color: #555;
+    border-top: 1px solid #ccc;
+    padding-top: 4px;
+  }
+  a { color: #1a6fb5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  @media print {
+    body { padding: 0; max-width: none; }
+    .no-print { display: none; }
+  }
+</style>
+</head>
+<body>
+  <p class="no-print">源目录：<code>pension_full_chain_ops/</code> · Ctrl+P 可打印 · 搭配 <a href="14_four_layer_interview_pack.html">四层面试讲稿</a> · <strong>交互诉求台</strong>：<a href="pension_business_chain/business_chain_dashboard.html">pension_business_chain/business_chain_dashboard.html</a>（20 条可筛选）</p>
+
+  <h1>养老金全链路业务｜四角色教学 / 面试模块</h1>
+  <p class="sub" style="font-size:8.5pt;color:#555;margin:0 0 6px;">研究/教学向 · 锚定香港强积金 MPF · 非官方操作手册 · 非新精算引擎</p>
+
+  <h2>1. 一句话定位</h2>
+  <p class="one-liner">现有对象一～四与三层替代率回答「钱与充足率」；本模块按<strong>雇主、参保人、受托人、平台（eMPF）</strong>串六阶段全流程，并把各方业务诉求翻译到流程节点与模型旋钮。</p>
+
+  <h2>2. 覆盖判断（相对岗位要求）</h2>
+  <table>
+    <tr><th>能力点</th><th>补模块前</th><th>补模块后</th></tr>
+    <tr><td>制度资金流 / 替代率建模</td><td>已有（对象一～四 + 三层）</td><td>不变</td></tr>
+    <tr><td>百科指标（覆盖 / 运营）</td><td>已有（分散在 pension.html）</td><td>映射到阶段 ①⑥</td></tr>
+    <tr><td>四角色全流程叙事</td><td><strong>缺口</strong></td><td>本页 + md</td></tr>
+    <tr><td>业务诉求精准解读</td><td>仅零散追问</td><td>矩阵 + 10 情景 CSV</td></tr>
+    <tr><td>受托人竞争定量</td><td>有意不做</td><td>仍不做（诚实边界）</td></tr>
+  </table>
+  <p><span class="tag">总判</span><strong>部分覆盖</strong>：建模层已齐；业务链原为缺口，现已补到可讲可练。</p>
+
+  <h2>3. 四角色 × 六阶段</h2>
+  <blockquote>① 准入登记 → ② 供款汇缴 → ③ 投资积累 → ④ 转职/转移 → ⑤ 提取/产品化 → ⑥ 合规与服务</blockquote>
+  <table>
+    <tr><th>角色</th><th>主责</th><th>典型诉求</th></tr>
+    <tr><td>雇主</td><td>登记、扣款汇款、对冲后 HR 现金流</td><td>「要不要登记？供多少？取消对冲怎么办？」</td></tr>
+    <tr><td>参保人</td><td>选基、整合、提取/年金、福利衔接</td><td>「够不够？一笔过还是年金？还能申长津吗？」</td></tr>
+    <tr><td>受托人</td><td>入账、转移、披露、TER/投诉</td><td>「投诉为何升？全自由行会丢多少 AUM？」</td></tr>
+    <tr><td>平台 eMPF</td><td>流程标准化、降费、批次汇缴体验</td><td>「KPI 怎么定？降费 8bp 意味什么？」</td></tr>
+  </table>
+
+  <h2>4. 与对象一～四 / 三层替代率的衔接</h2>
+  <table>
+    <tr><th>业务侧</th><th>接到</th></tr>
+    <tr><td>雇主+雇员+自雇供款合规</td><td>对象一供款层 \(C\)</td></tr>
+    <tr><td>成员职业生涯与选基</td><td>对象三个人账户</td></tr>
+    <tr><td>eMPF / TER 降费</td><td>对象一/三净回报 \(r_{\mathrm{net}}\)</td></tr>
+    <tr><td>达龄 / 离港提取</td><td>对象一 \(W\)；对象三耗尽</td></tr>
+    <tr><td>提取后年金化</td><td>对象四终身地板</td></tr>
+    <tr><td>提取 + 第一支柱福利</td><td><code>three_pillar_adequacy</code> 初期/地板替代率</td></tr>
+    <tr><td>积累不足落综援</td><td>对象二财政加总</td></tr>
+    <tr><td>受托人份额竞争</td><td><strong>业务必讲｜资产方程有意不建</strong></td></tr>
+  </table>
+
+  <h2>5. 制度锚点（节选）</h2>
+  <table>
+    <tr><th>项目</th><th>取值</th><th>边界</th></tr>
+    <tr><td>强制费率</td><td>雇主、雇员通常各 5%</td><td>自雇多为己方 5%</td></tr>
+    <tr><td>有关入息上下限</td><td>现行约 7,100–30,000 港元/月</td><td>模型 2028 上限 4 万为 [假设]</td></tr>
+    <tr><td>取消对冲</td><td>2025-05-01 起转制后年资</td><td>不具追溯力；hybrid cohort</td></tr>
+    <tr><td>eMPF 平台费</td><td>约 0.37%→0.29%（2026-04-01）</td><td>接净回报，非毛回报</td></tr>
+    <tr><td>全自由行</td><td>预计 2026 Q4 首阶段实施</td><td>不改变制度总资产</td></tr>
+    <tr><td>总资产起点</td><td>约 16,700 亿（2026 年中量级）</td><td>积金局统计摘要量级</td></tr>
+  </table>
+
+  <h2>6. 诉求解读口诀</h2>
+  <ol>
+    <li>谁说的？（四角色）</li>
+    <li>卡在哪一阶段？（①–⑥）</li>
+    <li>要合规、钱、体验，还是政策影响？</li>
+    <li>落到哪张表 / 哪个模型旋钮？</li>
+  </ol>
+  <p>反例：用改对象一总资产「模拟全自由行流失」。正例：把 eMPF 降费接到净回报敏感性。</p>
+
+  <h2>7. 3 分钟口述结构</h2>
+  <ul>
+    <li>0:00 双层材料：建模层 + 业务层</li>
+    <li>0:40 四角色各一句串完六阶段</li>
+    <li>1:50 示范 2 条诉求（取消对冲 / 退休够不够）</li>
+    <li>2:40 收束：问题类型不同，不混着吹；受托人竞争为诚实边界</li>
+  </ul>
+
+  <h2>8. 情景表入口</h2>
+  <p>10 条典型诉求见 <code>pension_full_chain_ops/S01_scenario_request_map.csv</code>（雇主/成员/受托人/平台/面试官）。完整矩阵见 <code>01_role_process_demand.md</code>。</p>
+
+  <div class="footer">
+    阅读顺序：README → 00_concepts → 01_role_process_demand → S01 CSV → 02_interview_pack。
+    金额与时点请以积金局、劳工处、社署最新公布为准。
+  </div>
+</body>
+</html>

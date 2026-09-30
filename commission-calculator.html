@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>通信设备销售佣金计算器 | Commission Calculator Demo</title>
+<style>
+/* ============================================================
+   视觉系统：深蓝 + 白 + 浅灰，商务风，适合作品集截图与手机扫码
+   ============================================================ */
+:root {
+  --navy: #0b2a4a;
+  --navy-2: #143d66;
+  --navy-3: #1e4f7a;
+  --accent: #2563a8;
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --border: #d8e0ea;
+  --text: #1a2332;
+  --muted: #5a6b7d;
+  --danger: #c0392b;
+  --danger-bg: #fdf0ee;
+  --danger-border: #f0c4be;
+  --ok: #1e7a4a;
+  --ok-bg: #eef8f2;
+  --warn: #b8860b;
+  --shadow: 0 2px 10px rgba(11, 42, 74, 0.06);
+  --radius: 10px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- 顶部标题 ---------- */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 55%, var(--navy-3) 100%);
+  color: #fff;
+  padding: 28px 20px 32px;
+}
+.hero-inner { max-width: 1180px; margin: 0 auto; }
+.hero h1 {
+  margin: 0 0 6px;
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.hero .sub {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+  opacity: 0.92;
+  font-weight: 500;
+}
+.hero .desc {
+  margin: 0;
+  font-size: 0.82rem;
+  opacity: 0.78;
+  max-width: 640px;
+}
+.hero-badge {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+/* ---------- 布局容器 ---------- */
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px 14px 48px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.card-head h2 {
+  margin: 0;
+  font-size: 0.98rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+.card-head .hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+.card-head .chev {
+  color: var(--muted);
+  font-size: 0.85rem;
+  transition: transform 0.2s;
+}
+.card.collapsed .card-body { display: none; }
+.card.collapsed .chev { transform: rotate(-90deg); }
+.card-body { padding: 14px 16px 16px; }
+
+/* ---------- 表单控件 ---------- */
+label.field-label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+input[type="text"],
+input[type="number"],
+input[type="month"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--text);
+  background: #fff;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37, 99, 168, 0.12);
+}
+textarea {
+  min-height: 120px;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.78rem;
+  resize: vertical;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.row > .col { flex: 1 1 160px; min-width: 140px; }
+.row > .col-sm { flex: 0 1 140px; }
+
+/* ---------- 规则表 ---------- */
+.rule-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 8px; }
+table.rule-edit {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+  font-size: 0.85rem;
+}
+table.rule-edit th {
+  text-align: left;
+  padding: 8px 8px;
+  background: #eef3f8;
+  color: var(--navy);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+table.rule-edit td {
+  padding: 6px 6px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+table.rule-edit input {
+  padding: 6px 8px;
+  font-size: 0.84rem;
+}
+.btn-icon {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--danger);
+  border-radius: 5px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+.btn-icon:hover { background: var(--danger-bg); }
+
+.rule-block { margin-bottom: 18px; }
+.rule-block:last-child { margin-bottom: 0; }
+.rule-block h3 {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  color: var(--navy-2);
+}
+.rule-note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.toggle-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.toggle-row input[type="checkbox"] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+.toggle-row .t-title { font-weight: 600; font-size: 0.88rem; }
+.toggle-row .t-desc { font-size: 0.76rem; color: var(--muted); margin-top: 2px; }
+
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.radio-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.84rem;
+}
+.radio-pill:has(input:checked) {
+  border-color: var(--accent);
+  background: #eef4fb;
+  color: var(--navy);
+  font-weight: 600;
+}
+.radio-pill input { accent-color: var(--accent); }
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--navy);
+  color: #fff;
+}
+.btn-primary:hover:not(:disabled) { background: var(--navy-2); }
+.btn-secondary {
+  background: #fff;
+  color: var(--navy);
+  border-color: var(--border);
+}
+.btn-secondary:hover:not(:disabled) { background: #f0f4f8; }
+.btn-danger-outline {
+  background: #fff;
+  color: var(--danger);
+  border-color: var(--danger-border);
+}
+.btn-sm { padding: 6px 11px; font-size: 0.8rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.calc-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: linear-gradient(90deg, #eef3f9, #f8fafc);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+}
+.calc-status {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.calc-status.loading { color: var(--accent); font-weight: 600; }
+.calc-status.error { color: var(--danger); font-weight: 600; }
+.calc-status.ok { color: var(--ok); font-weight: 600; }
+
+/* ---------- 汇总卡片 ---------- */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+.stat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 14px 12px;
+  text-align: center;
+}
+.stat .label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.stat .value {
+  font-size: clamp(1.15rem, 3.2vw, 1.45rem);
+  font-weight: 750;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+}
+.stat.danger .value { color: var(--danger); }
+.stat.ok .value { color: var(--ok); }
+
+/* ---------- 筛选 ---------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  align-items: flex-end;
+}
+.filters .col { flex: 1 1 120px; min-width: 110px; max-width: 200px; }
+
+/* ---------- 数据表 ---------- */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+table.data {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  min-width: 1100px;
+}
+table.data th {
+  position: sticky;
+  top: 0;
+  background: #e8eef5;
+  color: var(--navy);
+  font-weight: 700;
+  text-align: left;
+  padding: 9px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  z-index: 1;
+}
+table.data td {
+  padding: 8px 8px;
+  border-bottom: 1px solid #eef1f5;
+  vertical-align: top;
+  white-space: nowrap;
+}
+table.data tbody tr {
+  cursor: pointer;
+  transition: background 0.12s;
+}
+table.data tbody tr:hover { background: #f5f8fb; }
+table.data tbody tr.anomaly { background: var(--danger-bg); }
+table.data tbody tr.anomaly:hover { background: #fce8e5; }
+table.data tbody tr.expanded { background: #eef4fb; }
+table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.badge-danger { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
+.badge-warn { background: #fff7e8; color: #9a6700; border: 1px solid #f0d9a0; }
+.badge-ok { background: var(--ok-bg); color: var(--ok); border: 1px solid #b8e0c8; }
+.badge-info { background: #eef4fb; color: var(--accent); border: 1px solid #c5d7ee; }
+.badge-muted { background: #f0f2f5; color: var(--muted); border: 1px solid #d8dde3; }
+
+/* 展开计算链路 */
+.trace-row td {
+  background: #f7fafc !important;
+  padding: 0 !important;
+  border-bottom: 1px solid var(--border);
+  white-space: normal !important;
+  cursor: default;
+}
+.trace-box {
+  padding: 12px 14px 14px;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+.trace-box h4 {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  color: var(--navy);
+}
+.trace-steps {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.trace-steps li {
+  padding: 7px 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+}
+.trace-steps li.skip { border-left-color: var(--muted); color: var(--muted); }
+.trace-steps li.deduct { border-left-color: var(--danger); }
+.trace-steps li.warn { border-left-color: #c98900; }
+.trace-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 10px;
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+/* ---------- 空态 / 引导 ---------- */
+.empty {
+  text-align: center;
+  padding: 28px 16px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.empty strong { color: var(--navy); }
+
+/* ---------- Toast ---------- */
+.toast-wrap {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  pointer-events: none;
+}
+.toast {
+  background: var(--navy);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: opacity 0.2s;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.show { opacity: 1; }
+
+/* ---------- 底部说明 ---------- */
+.footer-section h3 {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  color: var(--navy);
+}
+.footer-section ol, .footer-section ul {
+  margin: 0 0 14px;
+  padding-left: 1.2em;
+}
+.footer-section li {
+  margin-bottom: 6px;
+  font-size: 0.84rem;
+  color: #334155;
+}
+.en-box {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+.page-foot {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 8px 0 20px;
+}
+
+/* ---------- 数据预览条数 ---------- */
+.data-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.pill-count {
+  background: #eef4fb;
+  color: var(--navy);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+}
+
+/* ---------- 英文标签 / 勾稽校验 / 流程条 / 销售员汇总与图表 ---------- */
+.en { font-weight: 500; font-size: 0.78em; color: var(--muted); margin-left: 6px; }
+.recon-box { margin-top: 12px; padding: 10px 12px; background: var(--ok-bg); border: 1px solid #b8e0c8; border-radius: 8px; font-size: 0.84rem; }
+.recon-title { font-weight: 700; color: var(--ok); margin-bottom: 4px; }
+.recon-msg { margin-bottom: 2px; }
+.recon-detail { color: var(--muted); font-size: 0.78rem; }
+.flow-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 2px; margin: 4px 0 12px; font-size: 0.82rem; }
+.flow-steps span { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; color: var(--navy); font-weight: 600; }
+.flow-steps i { color: var(--accent); font-style: normal; padding: 0 2px; }
+.chart-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.chart-card { flex: 1 1 300px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.chart-title { font-weight: 700; color: var(--navy); font-size: 0.86rem; margin-bottom: 8px; }
+.bar-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.8rem; }
+.bar-label { flex: 0 0 88px; color: #334155; }
+.bar-track { flex: 1 1 auto; background: #eef1f5; border-radius: 4px; height: 14px; overflow: hidden; }
+.bar { height: 100%; border-radius: 4px; min-width: 2px; transition: width .3s; }
+.bar-navy { background: var(--navy-2); }
+.bar-danger { background: var(--danger); }
+.bar-ok { background: var(--ok); }
+.bar-warn { background: #c98900; }
+.bar-val { flex: 0 0 74px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .hero { padding: 22px 14px 26px; }
+  .wrap { padding: 12px 10px 36px; }
+  .card-body { padding: 12px; }
+  .stat .value { font-size: 1.1rem; }
+  .calc-bar { flex-direction: column; align-items: stretch; }
+  .btn { width: 100%; }
+  .btn-row .btn { width: auto; flex: 1 1 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== 顶部标题区 ======================== -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>通信设备销售佣金计算器</h1>
+    <p class="sub">可配置规则 · 异常检测 · 明细可追溯 · 勾稽校验</p>
+    <p class="desc">用于通信设备销售数据分析岗位作品集演示 — 覆盖退货冲销、回款归属、SKU 系数、阶梯提成与四类异常稽查。</p>
+    <span class="hero-badge">HK Telecom Equipment · Sales Analytics Demo</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ======================== 规则配置区 ======================== -->
+  <section class="card" id="rulesCard">
+    <div class="card-head" onclick="toggleCard('rulesCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>规则配置 <span class="en">Rules Configuration</span></h2>
+        <span class="hint">阶梯 · SKU 系数 · 退货扣减 · 回款归属 · 计算周期</span>
+      </div>
+      <span class="chev" aria-hidden="true">▼</span>
+    </div>
+    <div class="card-body">
+
+      <!-- 计算周期 + 归属规则 -->
+      <div class="row">
+        <div class="col col-sm">
+          <label class="field-label" for="periodMonth">计算周期（年月）</label>
+          <input type="month" id="periodMonth" value="2025-03" />
+        </div>
+        <div class="col">
+          <label class="field-label">回款归属规则</label>
+          <div class="radio-group" role="radiogroup" aria-label="回款归属规则">
+            <label class="radio-pill">
+              <input type="radio" name="attrRule" value="payment" checked />
+              按回款月归属（默认）
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="attrRule" value="order" />
+              按订单月归属
+            </label>
+          </div>
+          <p class="rule-note">默认按回款月：佣金以客户实际回款为确认条件，避免“开单未回款先发佣”。</p>
+        </div>
+      </div>
+
+      <!-- 阶梯提成表 -->
+      <div class="rule-block">
+        <h3>阶梯提成表</h3>
+        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按单笔销售额落入区间匹配提成比例。区间左闭右闭；最高档可留空上限表示无上限。</p>
+        <div class="rule-table-wrap">
+          <table class="rule-edit" id="tierTable">
+            <thead>
+              <tr>
+                <th>档位</th>
+                <th>销售额下限 (≥)</th>
+                <th>销售额上限 (≤，空=无上限)</th>
+                <th>提成比例 (%)</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tierBody"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addTierRow()">＋ 新增档位</button>
+      </div>
+
+      <!-- SKU 系数表 -->
+      <div class="rule-block">
+        <h3>SKU 分类系数表</h3>
+        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按产品线匹配系数；未命中则标记「规则未匹配」，该单基础佣金为 0，但仍进入异常稽查。</p>
+        <div class="rule-table-wrap">
+          <table class="rule-edit" id="skuTable">
+            <thead>
+              <tr>
+                <th>产品线</th>
+                <th>SKU 前缀（可选）</th>
+                <th>系数</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="skuBody"></tbody>
+          </table>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addSkuRow()">＋ 新增产品线</button>
+      </div>
+
+      <!-- 退货扣减规则 -->
+      <div class="rule-block">
+        <h3>退货扣减规则</h3>
+        <div class="toggle-row">
+          <input type="checkbox" id="deductReturn" checked />
+          <div>
+            <div class="t-title">扣减当月佣金</div>
+            <div class="t-desc">return_flag = Y 的订单：不进入正常提成计算；若开启本开关，则按「销售额 × 阶梯比例 × SKU 系数」的绝对值从归属月佣金中扣减（冲销）。</div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="traceOrigMonth" />
+          <div>
+            <div class="t-title">追溯原订单月份（可选）</div>
+            <div class="t-desc">开启后：退货冲销的归属月取原订单月（order_date）；关闭时：跟随当前回款归属规则（默认回款月）。用于财务要求“冲销回到原计提月”的场景。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 数据导入区 ======================== -->
+  <section class="card" id="dataCard">
+    <div class="card-head" onclick="toggleCard('dataCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>数据导入 <span class="en">Data Import</span></h2>
+        <span class="hint">粘贴 CSV 或加载内置虚拟数据</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <label class="field-label" for="csvInput">CSV 内容（首行为表头）</label>
+      <textarea id="csvInput" spellcheck="false" placeholder="order_id,sales_rep,sales_rep_cn,sku,product_line,order_date,payment_date,amount,return_flag,region"></textarea>
+      <p class="rule-note">必需列：order_id, sales_rep, sales_rep_cn, sku, product_line, order_date, payment_date, amount, return_flag, region</p>
+      <div class="btn-row" style="margin-top:10px;">
+        <button type="button" class="btn btn-secondary" onclick="loadSampleData()">加载内置虚拟数据</button>
+        <button type="button" class="btn btn-secondary" onclick="parseCsvFromTextarea()">解析粘贴的 CSV</button>
+        <button type="button" class="btn btn-danger-outline btn-sm" onclick="clearData()">清空数据</button>
+      </div>
+      <div class="data-meta">
+        <span>当前数据条数：</span>
+        <span class="pill-count" id="dataCount">0</span>
+        <span id="dataSourceLabel">未加载 — 请先加载虚拟数据或粘贴 CSV</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 计算按钮区 ======================== -->
+  <div class="calc-bar">
+    <div>
+      <button type="button" class="btn btn-primary" id="btnCalc" onclick="runCalculation()">执行佣金计算</button>
+    </div>
+    <div class="calc-status" id="calcStatus">等待计算 — 请先加载数据并确认规则完整</div>
+  </div>
+
+  <!-- ======================== 结果汇总区 ======================== -->
+  <section class="card" id="summaryCard">
+    <div class="card-head" onclick="toggleCard('summaryCard')">
+      <div>
+        <h2>结果汇总 <span class="en">Summary</span></h2>
+        <span class="hint">本期口径下的关键指标</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div id="summaryEmpty" class="empty">尚未计算。加载数据后点击「执行佣金计算」。</div>
+      <div id="summaryGrid" class="summary-grid" style="display:none;">
+        <div class="stat"><div class="label">计算周期</div><div class="value" id="sPeriod">—</div></div>
+        <div class="stat"><div class="label">总销售额</div><div class="value" id="sSales">—</div></div>
+        <div class="stat"><div class="label">总基础佣金</div><div class="value" id="sBase">—</div></div>
+        <div class="stat danger"><div class="label">总退货扣减</div><div class="value" id="sDeduct">—</div></div>
+        <div class="stat ok"><div class="label">总最终佣金</div><div class="value" id="sFinal">—</div></div>
+        <div class="stat danger"><div class="label">异常单数</div><div class="value" id="sAnomaly">—</div></div>
+        <div class="stat"><div class="label">涉及销售员数</div><div class="value" id="sReps">—</div></div>
+      </div>
+      <div id="reconBox" class="recon-box" style="display:none;">
+        <div class="recon-title">勾稽校验 <span class="en">Reconciliation Check</span></div>
+        <div class="recon-msg" id="reconMsg"></div>
+        <div class="recon-detail" id="reconDetail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 明细表 ======================== -->
+  <section class="card" id="detailCard">
+    <div class="card-head" onclick="toggleCard('detailCard')">
+      <div>
+        <h2>佣金明细 <span class="en">Commission Details</span></h2>
+        <span class="hint">点击行展开完整计算链路 · 支持筛选 · 横向滑动</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="filters" id="detailFilters" style="display:none;">
+        <div class="col">
+          <label class="field-label" for="fRep">销售员</label>
+          <select id="fRep" onchange="renderDetails()"></select>
+        </div>
+        <div class="col">
+          <label class="field-label" for="fLine">产品线</label>
+          <select id="fLine" onchange="renderDetails()"></select>
+        </div>
+        <div class="col">
+          <label class="field-label" for="fAnomalyType">异常类型</label>
+          <select id="fAnomalyType" onchange="renderDetails()">
+            <option value="">全部</option>
+            <option value="退货冲销">退货冲销</option>
+            <option value="跨期归属">跨期归属</option>
+            <option value="重复计算">重复计算</option>
+            <option value="规则未匹配">规则未匹配</option>
+            <option value="__HAS__">仅异常行</option>
+            <option value="__NONE__">仅正常行</option>
+          </select>
+        </div>
+        <div class="col" style="max-width:none;flex:0 0 auto;">
+          <label class="field-label">&nbsp;</label>
+          <div class="btn-row">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="exportDetailsCsv()">导出明细 CSV</button>
+          </div>
+        </div>
+      </div>
+      <div id="detailEmpty" class="empty">无明细。请先执行计算。</div>
+      <div id="detailTableWrap" class="table-scroll" style="display:none;">
+        <table class="data" id="detailTable">
+          <thead>
+            <tr>
+              <th></th>
+              <th>订单号</th>
+              <th>销售员</th>
+              <th>SKU</th>
+              <th>产品线</th>
+              <th>订单日期</th>
+              <th>回款日期</th>
+              <th class="num">销售额</th>
+              <th>适用阶梯</th>
+              <th class="num">SKU系数</th>
+              <th class="num">基础佣金</th>
+              <th class="num">退货扣减</th>
+              <th class="num">最终佣金</th>
+              <th>归属月份</th>
+              <th>异常标记</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 异常表 ======================== -->
+  <section class="card" id="anomalyCard">
+    <div class="card-head" onclick="toggleCard('anomalyCard')">
+      <div>
+        <h2>异常稽查表 <span class="en">Anomaly Review</span></h2>
+        <span class="hint">四类异常独立汇总 · 可筛选 · 可导出</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div class="filters" id="anomalyFilters" style="display:none;">
+        <div class="col">
+          <label class="field-label" for="afType">异常类型</label>
+          <select id="afType" onchange="renderAnomalies()">
+            <option value="">全部四类</option>
+            <option value="退货冲销">退货冲销</option>
+            <option value="跨期归属">跨期归属</option>
+            <option value="重复计算">重复计算</option>
+            <option value="规则未匹配">规则未匹配</option>
+          </select>
+        </div>
+        <div class="col" style="max-width:none;flex:0 0 auto;">
+          <label class="field-label">&nbsp;</label>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="exportAnomaliesCsv()">导出异常 CSV</button>
+        </div>
+      </div>
+      <div id="anomalyEmpty" class="empty">无异常记录，或尚未计算。</div>
+      <div id="anomalyTableWrap" class="table-scroll" style="display:none;">
+        <table class="data" id="anomalyTable" style="min-width:780px;">
+          <thead>
+            <tr>
+              <th>异常类型</th>
+              <th>订单号</th>
+              <th>销售员</th>
+              <th>异常说明</th>
+              <th class="num">涉及金额</th>
+              <th>建议处理方式</th>
+            </tr>
+          </thead>
+          <tbody id="anomalyBody"></tbody>
+        </table>
+      </div>
+      <div class="btn-row" style="margin-top:10px;" id="exportSummaryRow">
+        <button type="button" class="btn btn-secondary btn-sm" id="btnExportSummary" onclick="exportSummaryCsv()" style="display:none;">导出汇总 CSV</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 销售员维度汇总 ======================== -->
+  <section class="card" id="repCard">
+    <div class="card-head" onclick="toggleCard('repCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>销售员维度汇总 <span class="en">Sales Rep Summary</span></h2>
+        <span class="hint">本期佣金表现 · 支撑绩效分析</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div id="repEmpty" class="empty">尚未计算。加载数据后点击「执行佣金计算」。</div>
+      <div id="repWrap" class="table-scroll" style="display:none;">
+        <table class="data" id="repTable" style="min-width:680px;">
+          <thead>
+            <tr>
+              <th>排名</th><th>销售员</th><th class="num">本期销售额</th>
+              <th class="num">基础佣金</th><th class="num">退货扣减</th>
+              <th class="num">最终佣金</th><th class="num">异常单数</th>
+            </tr>
+          </thead>
+          <tbody id="repBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 本期可视化 ======================== -->
+  <section class="card" id="chartCard">
+    <div class="card-head" onclick="toggleCard('chartCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>本期可视化 <span class="en">Visualization</span></h2>
+        <span class="hint">佣金构成 · 异常类型分布</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div id="chartEmpty" class="empty">尚未计算。加载数据后点击「执行佣金计算」。</div>
+      <div id="chartWrap" class="chart-row" style="display:none;">
+        <div class="chart-card">
+          <div class="chart-title">本期佣金构成 <span class="en">Commission Breakdown</span></div>
+          <div class="bar-item"><span class="bar-label">基础佣金</span><div class="bar-track"><div class="bar bar-navy" id="barBase"></div></div><span class="bar-val" id="barBaseVal">—</span></div>
+          <div class="bar-item"><span class="bar-label">退货扣减</span><div class="bar-track"><div class="bar bar-danger" id="barDeduct"></div></div><span class="bar-val" id="barDeductVal">—</span></div>
+          <div class="bar-item"><span class="bar-label">最终佣金</span><div class="bar-track"><div class="bar bar-ok" id="barFinal"></div></div><span class="bar-val" id="barFinalVal">—</span></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">异常类型分布 <span class="en">Anomaly Distribution</span></div>
+          <div id="anomalyBars"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 数据模型与 ETL 映射 ======================== -->
+  <section class="card" id="modelCard">
+    <div class="card-head" onclick="toggleCard('modelCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>数据模型与 ETL 映射 <span class="en">Data Model &amp; ETL Mapping</span></h2>
+        <span class="hint">源表 → 规则维度 → 加工 → 结果事实表 / 异常表 · 命中 JD 的 ETL / BPM 要求</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body footer-section">
+      <h3>业务过程模型（BPM）</h3>
+      <div class="flow-steps">
+        <span>销售开单</span><i>→</i><span>回款确认</span><i>→</i><span>归属计提（回款/订单月）</span><i>→</i><span>系数×阶梯</span><i>→</i><span>退货冲销</span><i>→</i><span>异常稽查</span><i>→</i><span>结算发放</span>
+      </div>
+      <h3>表结构设计（生产化）</h3>
+      <div class="table-scroll">
+      <table class="data" style="min-width:760px;">
+        <thead>
+          <tr><th>层次</th><th>表名</th><th>关键字段</th><th>来源 / 说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>源表</td><td>dim_order 订单主档</td><td>order_id, sales_rep, sku, product_line, order_date, amount, return_flag</td><td>CRM 同步</td></tr>
+          <tr><td>源表</td><td>fact_payment 回款表</td><td>order_id, payment_date, payment_amount</td><td>财务系统</td></tr>
+          <tr><td>源表</td><td>dim_product 产品主数据</td><td>sku, product_line</td><td>产品目录</td></tr>
+          <tr><td>维度</td><td>dim_tier 阶梯维度</td><td>min_amount, max_amount, rate_pct, valid_from/to</td><td>规则可配置（本 Demo 阶梯表）</td></tr>
+          <tr><td>维度</td><td>dim_sku_coeff 系数维度</td><td>product_line, sku_prefix, coeff</td><td>规则可配置（本 Demo 系数表）</td></tr>
+          <tr><td>事实</td><td>fact_commission 佣金明细</td><td>order_id, attr_ym, coeff, tier_rate, base_amount, deduct_amount, final_amount, batch_no</td><td>ETL 按月批处理写入；主键 order_id + batch_no</td></tr>
+          <tr><td>稽查</td><td>fact_anomaly 异常稽查表</td><td>anomaly_type, order_id, amount, suggestion, status</td><td>本 Demo 异常表</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h3>CSV → 模型字段映射（ETL 步骤）</h3>
+      <p>粘贴 CSV 即模拟 ETL 输入：字段校验（必需列齐全 / 日期格式 / 金额数字 / return_flag 枚举）→ 清洗（trim、去千分位、统一大小写）→ 关联产品线与规则维度 → 计算派生字段（归属月、系数、阶梯、佣金、冲销）→ 装载事实表与异常表。与生产 ETL（SQL / Spark）规则一致，仅执行载体不同。</p>
+    </div>
+  </section>
+
+  <!-- ======================== Power Apps 落地路径 ======================== -->
+  <section class="card" id="powerappsCard">
+    <div class="card-head" onclick="toggleCard('powerappsCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>Power Apps 落地路径 <span class="en">Power Platform Roadmap</span></h2>
+        <span class="hint">从 Demo 到 Dataverse + Canvas + Power Automate + Power BI 的低代码实现</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body footer-section">
+      <h3>Demo 功能 → Power Platform 组件映射</h3>
+      <div class="table-scroll">
+      <table class="data" style="min-width:760px;">
+        <thead>
+          <tr><th>本 Demo 功能</th><th>Power Platform 落地</th><th>低代码要点</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>规则配置（阶梯/系数/开关）</td><td>Dataverse 表 dim_tier / dim_sku_coeff + Canvas 维护页</td><td>规则存数据表，改规则不改代码</td></tr>
+          <tr><td>CSV 导入与校验</td><td>SharePoint / OneDrive 上传 + Power Query 清洗</td><td>接入即用，列校验用数据验证</td></tr>
+          <tr><td>计算引擎</td><td>Power Automate 按月触发 + SQL 视图 / 存储过程</td><td>计算逻辑沉淀为 SQL，可审计</td></tr>
+          <tr><td>明细追溯</td><td>Canvas 明细页 + 计算链路字段</td><td>销售 / 财务自助查询</td></tr>
+          <tr><td>异常稽查</td><td>Power Automate 异常通知 + 审批中心</td><td>异常自动派单给对应主管</td></tr>
+          <tr><td>导出 / 看板</td><td>Excel Online 导出 + Power BI 看板</td><td>管理层自助查看</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <h3>结算流程（含审批）</h3>
+      <div class="flow-steps">
+        <span>销售提交（Canvas）</span><i>→</i><span>主管审批（Approvals）</span><i>→</i><span>财务确认</span><i>→</i><span>Power Automate 月结计算</span><i>→</i><span>异常通知与处理</span><i>→</i><span>发放 + Power BI 看板</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== 底部分析说明 ======================== -->
+  <section class="card" id="notesCard">
+    <div class="card-head" onclick="toggleCard('notesCard')">
+      <div>
+        <h2>设计逻辑与面试讲解要点</h2>
+        <span class="hint">业务思考 · English note · Interview talking points</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body footer-section">
+      <h3>设计逻辑（业务思考）</h3>
+      <ol>
+        <li><strong>为什么按回款归属：</strong>开单不等于收入确认。通信设备项目常有账期，按回款月计提佣金可对齐财务现金流，避免“未回款先发佣、退货再追回”的混乱。</li>
+        <li><strong>为什么退货要单独扣减：</strong>退货不是普通负销售额混算。单独冲销可保留原单计算痕迹，支持审计追溯：扣的是哪一单、扣多少、扣到哪个月。</li>
+        <li><strong>为什么异常要单独稽查：</strong>跨期、重复、规则未匹配会直接扭曲提成结果。单独异常表让运营/财务可按类型分工处理，而不是在明细海里肉眼找红字。</li>
+        <li><strong>为什么规则要可配置：</strong>产品线系数与阶梯比例会随季度促销、渠道政策变化。把规则做成可编辑表，避免把业务常量写死在代码里。</li>
+        <li><strong>为什么明细要可追溯：</strong>面试与上线后最常被问“这一笔是怎么算出来的”。展开计算链路（过滤→归属→系数→阶梯→冲销）是建立信任的关键。</li>
+        <li><strong>SKU 系数与阶梯分离：</strong>阶梯反映规模激励，系数反映产品毛利/战略权重；两者解耦后，改政策时只需改对应表，不必重写公式。</li>
+        <li><strong>跨期必须显式标记：</strong>订单月≠回款月时，无论采用哪种归属规则，都应提示“是否纳入本期”，防止报表口径争议。</li>
+        <li><strong>为什么要有勾稽校验：</strong>结算金额错一分钱都会被追责。计算后自动做「最终佣金 = 基础佣金 − 退货扣减」的逐行勾稽，差异为零才输出「通过」，把准确性变成可验证的结论。</li>
+        <li><strong>部分退货怎么处理（扩展点）：</strong>当前 Demo 按整单退货冲销；生产可扩展退货数量/金额字段，按比例冲销（退货占比 × 原单佣金），并在异常表中标注「部分冲销」，避免多冲或少冲。</li>
+      </ol>
+
+      <h3>English Note</h3>
+      <div class="en-box">
+        This is a demo commission calculator for telecom equipment sales. It supports configurable tiered rates, SKU-based coefficients, return deductions, and payment-based attribution. It flags four types of anomalies: return reversals, cross-period attribution, duplicates, and unmatched rules. A reconciliation check verifies that final commission equals base commission minus return deductions (zero variance). A production roadmap maps each feature to the Power Platform (Dataverse, Canvas, Power Automate, Power BI) and to a BPM/ETL data model.
+      </div>
+
+      <h3>面试讲解要点</h3>
+      <ol>
+        <li><strong>这个工具解决了什么问题：</strong>把“销售开单 → 回款确认 → 产品线加权 → 阶梯提成 → 退货冲销 → 异常稽查”串成可演示、可追问的闭环，证明候选人懂佣金业务而不只是会写公式。</li>
+        <li><strong>佣金计算最容易错在哪里：</strong>①把退货混进净销售额；②按订单月发佣导致未回款也发钱；③SKU/阶梯漏配却静默按 0 或错误默认；④同一 order_id 重复计入。</li>
+        <li><strong>异常检测为什么重要：</strong>异常是“钱算错”的前置信号。单独汇总四类异常，可量化风险金额，并给出建议处理方式，方便与财务/销售主管对齐。</li>
+        <li><strong>如果规则变化，这个工具怎么应对：</strong>阶梯、SKU 系数、退货开关、归属口径全部可配置；改规则后重算即时生效，无需改代码发版。</li>
+        <li><strong>如果数据量变大，这个工具怎么扩展：</strong>前端 Demo 适合百千级校验；生产可迁到 Power Query / SQL 视图 / Spark，把同一套规则表做成维度表，明细写入事实表，异常写入稽查队列表。</li>
+        <li><strong>如果要做成 Power Apps：</strong>入口可用 SharePoint/Dataverse 存订单与规则；画布应用做录入与审批（销售提交 → 主管审批 → 财务确认）；Power Automate 触发按月计算与异常通知；结果导出到 Excel/Power BI 看板。</li>
+        <li><strong>月结 SLA 与时效：</strong>规则固定后一键重算、即时返回；明细 + 异常表导出直接替代人工对账，月结对账从小时级压到分钟级；生产可迁 SQL / Spark 批处理，百万级数据满足月结截止时间。</li>
+        <li><strong>部分退货（扩展点）：</strong>当前按整单退货冲销；生产可扩展 return_qty / return_amount 按比例冲销，公式 = 退货数量占比 × 原单佣金，并在异常表标注「部分冲销」。</li>
+        <li><strong>面试时可现场演示：</strong>加载虚拟数据 → 计算 → 改阶梯/系数 → 再算对比 → 切换回款归属看归属月变化 → 点开异常行讲解判定条件 → 查看勾稽校验与销售员汇总。</li>
+      </ol>
+    </div>
+  </section>
+
+  <p class="page-foot">Portfolio Demo · 港资通信设备公司 · 销售数据分析师岗位 · 单文件离线可用 · 无外部依赖 · 含勾稽校验 / 数据模型 / Power Apps 落地设计</p>
+</main>
+
+<div class="toast-wrap"><div class="toast" id="toast"></div></div>
+
+<script>
+/* =============================================================================
+   通信设备销售佣金计算器 — 全部业务逻辑在前端完成
+   计算顺序（严格）：
+   ① 过滤退货单 → ② 按归属规则定月 → ③ SKU 系数 → ④ 阶梯比例
+   → ⑤ 基础佣金 → ⑥ 退货冲销扣减 → ⑦ 输出明细 + 四类异常
+   ============================================================================= */
+
+/** 必需 CSV 列 —— 缺任一列必须明确提示列名 */
+var REQUIRED_COLUMNS = [
+  "order_id", "sales_rep", "sales_rep_cn", "sku", "product_line",
+  "order_date", "payment_date", "amount", "return_flag", "region"
+];
+
+/** 运行时状态 */
+var state = {
+  rawRows: [],          // 已解析的订单行
+  details: [],          // 计算结果明细
+  anomalies: [],        // 异常表
+  summary: null,        // 汇总
+  expandedId: null,     // 当前展开的明细行 key
+  dataSource: "",       // 数据来源说明
+  calculating: false
+};
+
+/* ---------- 默认规则：阶梯（至少 3 档，可编辑） ---------- */
+var defaultTiers = [
+  { min: 0, max: 50000, ratePct: 2 },
+  { min: 50001, max: 150000, ratePct: 3 },
+  { min: 150001, max: null, ratePct: 5 }
+];
+
+/* ---------- 默认规则：SKU / 产品线系数 ---------- */
+var defaultSkuCoeffs = [
+  { productLine: "Router", skuPrefix: "RTR-", coeff: 1.0 },
+  { productLine: "Switch", skuPrefix: "SW-", coeff: 1.2 },
+  { productLine: "SIM Plan", skuPrefix: "SIM-", coeff: 0.8 },
+  { productLine: "Enterprise Line", skuPrefix: "ENT-", coeff: 1.5 }
+];
+
+/* =============================================================================
+   内置虚拟数据（48 条）：覆盖 3 个月、退货、跨期、重复、规则未匹配
+   销售员：Andy Chan / Bowie Lee / Carmen Wong / Derek Ho / Fiona Lam
+   ============================================================================= */
+function buildSampleData() {
+  /* 真实感字段：订单号按区域+月份流水；金额按产品线常见客单价分布 */
+  var rows = [
+    /* —— 2025-01 订单，多数当月回款 —— */
+    { order_id:"HK-2501-001", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-06", payment_date:"2025-01-28", amount:18600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2501-002", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-01-08", payment_date:"2025-01-30", amount:42800, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2501-003", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-01-10", payment_date:"2025-01-25", amount:9600, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2501-004", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-01-12", payment_date:"2025-01-31", amount:168000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2501-005", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-01-14", payment_date:"2025-01-29", amount:32500, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-006", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-01-15", payment_date:"2025-01-30", amount:75600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2501-007", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-01-28", amount:14200, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2501-008", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-01-20", payment_date:"2025-01-31", amount:215000, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-009", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-01-22", payment_date:"2025-01-30", amount:27800, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2501-010", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-01-24", payment_date:"2025-01-31", amount:18900, return_flag:"N", region:"New Territories" },
+
+    /* —— 跨期：1 月开单、2 月回款 —— */
+    { order_id:"HK-2501-011", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-01-26", payment_date:"2025-02-18", amount:98000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2501-012", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-01-28", payment_date:"2025-02-12", amount:22400, return_flag:"N", region:"Kowloon" },
+
+    /* —— 2025-02 —— */
+    { order_id:"HK-2502-013", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-02-03", payment_date:"2025-02-25", amount:18800, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-014", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-02-05", payment_date:"2025-02-27", amount:51200, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2502-015", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-02-07", payment_date:"2025-02-28", amount:186500, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2502-016", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-02-26", amount:15200, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-017", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-02-10", payment_date:"2025-02-24", amount:35600, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2502-018", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-12", payment_date:"2025-02-28", amount:89200, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2502-019", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-02-14", payment_date:"2025-02-27", amount:248000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-020", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-02-16", payment_date:"2025-02-28", amount:41000, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2502-021", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-02-18", payment_date:"2025-02-28", amount:12600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2502-022", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-02-19", payment_date:"2025-02-26", amount:7800, return_flag:"N", region:"Kowloon" },
+
+    /* —— 跨期：2 月开单、3 月回款 —— */
+    { order_id:"HK-2502-023", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-SDWAN-100", product_line:"Enterprise Line", order_date:"2025-02-21", payment_date:"2025-03-15", amount:132000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-024", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-02-25", payment_date:"2025-03-10", amount:29800, return_flag:"N", region:"New Territories" },
+
+    /* —— 2025-03（计算周期默认月）—— */
+    { order_id:"HK-2503-025", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-03", payment_date:"2025-03-28", amount:46800, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-026", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-04", payment_date:"2025-03-29", amount:155000, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2503-027", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-03-05", payment_date:"2025-03-25", amount:21400, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-028", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-03-06", payment_date:"2025-03-27", amount:26700, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-029", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-30", amount:93400, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2503-030", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-08", payment_date:"2025-03-31", amount:198000, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-031", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-03-10", payment_date:"2025-03-26", amount:11900, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-032", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-11", payment_date:"2025-03-28", amount:35600, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2503-033", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-03-12", payment_date:"2025-03-29", amount:16200, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-034", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-03-13", payment_date:"2025-03-30", amount:112500, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-035", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-03-14", payment_date:"2025-03-27", amount:6400, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2503-036", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-03-15", payment_date:"2025-03-31", amount:38900, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2503-037", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-17", payment_date:"2025-03-30", amount:54500, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2503-038", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-03-18", payment_date:"2025-03-31", amount:172000, return_flag:"N", region:"Kowloon" },
+
+    /* —— 退货单（至少 3 条）：冲销当月或追溯原月 —— */
+    { order_id:"HK-2502-016R", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-03-08", amount:15200, return_flag:"Y", region:"Hong Kong" },
+    { order_id:"KL-2503-029R", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-22", amount:93400, return_flag:"Y", region:"Kowloon" },
+    { order_id:"NT-2501-007R", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-03-05", amount:14200, return_flag:"Y", region:"New Territories" },
+    { order_id:"HK-2503-039R", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-20", payment_date:"2025-03-28", amount:45000, return_flag:"Y", region:"Hong Kong" },
+
+    /* —— 跨期：3 月开单、预计下月回款（演示归属差异）—— */
+    { order_id:"HK-2503-040", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-03-22", payment_date:"2025-04-08", amount:226000, return_flag:"N", region:"Hong Kong" },
+
+    /* —— 重复计算：同一 order_id 出现两次（CRM 重复推送）—— */
+    { order_id:"KL-2503-041", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-29", amount:19800, return_flag:"N", region:"Kowloon" },
+    { order_id:"KL-2503-041", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-29", amount:19800, return_flag:"N", region:"Kowloon" },
+
+    /* —— 规则未匹配：SKU / 产品线不在系数表 —— */
+    { order_id:"NT-2503-042", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ACC-CABLE-10M", product_line:"Accessory", order_date:"2025-03-21", payment_date:"2025-03-30", amount:3200, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-043", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SVC-Install-Half", product_line:"Service", order_date:"2025-03-23", payment_date:"2025-03-31", amount:8800, return_flag:"N", region:"Hong Kong" },
+
+    /* —— 补充正常单，补足 48 条量级，覆盖低/中/高额 —— */
+    { order_id:"KL-2503-044", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-03-24", payment_date:"2025-03-31", amount:41200, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-045", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-30", payment_date:"2025-02-20", amount:17500, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-046", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-27", payment_date:"2025-03-12", amount:67800, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2503-047", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-25", payment_date:"2025-03-31", amount:142000, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2503-048", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-26", payment_date:"2025-03-31", amount:48200, return_flag:"N", region:"Hong Kong" }
+  ];
+  return rows;
+}
+
+/* =============================================================================
+   工具函数
+   ============================================================================= */
+function ymFromDate(dateStr) {
+  if (!dateStr || dateStr.length < 7) return "";
+  return dateStr.slice(0, 7); // YYYY-MM
+}
+
+function formatMoney(n) {
+  var num = Number(n) || 0;
+  var fixed = num.toFixed(2);
+  var parts = fixed.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
+
+function formatMoneySigned(n) {
+  var num = Number(n) || 0;
+  var sign = num < 0 ? "-" : "";
+  return sign + formatMoney(Math.abs(num));
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function toast(msg) {
+  var el = document.getElementById("toast");
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function () { el.classList.remove("show"); }, 2200);
+}
+
+function toggleCard(id) {
+  var card = document.getElementById(id);
+  card.classList.toggle("collapsed");
+  var head = card.querySelector(".card-head");
+  if (head) head.setAttribute("aria-expanded", card.classList.contains("collapsed") ? "false" : "true");
+}
+
+/* =============================================================================
+   规则 UI：阶梯 / SKU 系数表的渲染与读取
+   ============================================================================= */
+function renderTierEditor(tiers) {
+  var tb = document.getElementById("tierBody");
+  tb.innerHTML = "";
+  tiers.forEach(function (t, i) {
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>第 " + (i + 1) + " 档</td>" +
+      "<td><input type='number' min='0' step='1' data-k='min' value='" + (t.min != null ? t.min : "") + "' /></td>" +
+      "<td><input type='number' min='0' step='1' data-k='max' value='" + (t.max != null && t.max !== "" ? t.max : "") + "' placeholder='无上限' /></td>" +
+      "<td><input type='number' min='0' step='0.01' data-k='ratePct' value='" + t.ratePct + "' /></td>" +
+      "<td><button type='button' class='btn-icon' onclick='removeTierRow(this)' title='删除档位'>删除</button></td>";
+    tb.appendChild(tr);
+  });
+}
+
+function renderSkuEditor(list) {
+  var tb = document.getElementById("skuBody");
+  tb.innerHTML = "";
+  list.forEach(function (s) {
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td><input type='text' data-k='productLine' value='" + escapeHtml(s.productLine) + "' /></td>" +
+      "<td><input type='text' data-k='skuPrefix' value='" + escapeHtml(s.skuPrefix || "") + "' /></td>" +
+      "<td><input type='number' min='0' step='0.01' data-k='coeff' value='" + s.coeff + "' /></td>" +
+      "<td><button type='button' class='btn-icon' onclick='removeSkuRow(this)' title='删除'>删除</button></td>";
+    tb.appendChild(tr);
+  });
+}
+
+function addTierRow() {
+  var tiers = readTiersFromUI();
+  var lastMax = tiers.length ? tiers[tiers.length - 1].max : 0;
+  var nextMin = lastMax != null ? Number(lastMax) + 1 : 0;
+  tiers.push({ min: nextMin, max: null, ratePct: 5 });
+  renderTierEditor(tiers);
+}
+
+function removeTierRow(btn) {
+  var tr = btn.closest("tr");
+  tr.parentNode.removeChild(tr);
+  /* 重新编号档位标签 */
+  renderTierEditor(readTiersFromUI());
+}
+
+function addSkuRow() {
+  var list = readSkuFromUI();
+  list.push({ productLine: "", skuPrefix: "", coeff: 1.0 });
+  renderSkuEditor(list);
+}
+
+function removeSkuRow(btn) {
+  var tr = btn.closest("tr");
+  tr.parentNode.removeChild(tr);
+}
+
+/** 从编辑表读取阶梯；空上限视为 null（无上限） */
+function readTiersFromUI() {
+  var rows = document.querySelectorAll("#tierBody tr");
+  var out = [];
+  rows.forEach(function (tr) {
+    var minEl = tr.querySelector("[data-k='min']");
+    var maxEl = tr.querySelector("[data-k='max']");
+    var rateEl = tr.querySelector("[data-k='ratePct']");
+    var min = minEl.value === "" ? null : Number(minEl.value);
+    var max = maxEl.value === "" ? null : Number(maxEl.value);
+    var ratePct = rateEl.value === "" ? null : Number(rateEl.value);
+    out.push({ min: min, max: max, ratePct: ratePct });
+  });
+  return out;
+}
+
+function readSkuFromUI() {
+  var rows = document.querySelectorAll("#skuBody tr");
+  var out = [];
+  rows.forEach(function (tr) {
+    out.push({
+      productLine: (tr.querySelector("[data-k='productLine']").value || "").trim(),
+      skuPrefix: (tr.querySelector("[data-k='skuPrefix']").value || "").trim(),
+      coeff: Number(tr.querySelector("[data-k='coeff']").value)
+    });
+  });
+  return out;
+}
+
+/** 规则完整性校验：禁止空规则表或无效数值 */
+function validateRules(tiers, skus) {
+  var errors = [];
+  if (!tiers.length) errors.push("阶梯提成表为空，请至少配置 1 档。");
+  tiers.forEach(function (t, i) {
+    if (t.min == null || isNaN(t.min)) errors.push("第 " + (i + 1) + " 档：销售额下限无效。");
+    if (t.ratePct == null || isNaN(t.ratePct) || t.ratePct < 0) errors.push("第 " + (i + 1) + " 档：提成比例无效。");
+    if (t.max != null && !isNaN(t.max) && t.max < t.min) errors.push("第 " + (i + 1) + " 档：上限小于下限。");
+  });
+  var validSkus = skus.filter(function (s) { return s.productLine; });
+  if (!validSkus.length) errors.push("SKU 分类系数表为空，请至少配置 1 条产品线。");
+  skus.forEach(function (s, i) {
+    if (!s.productLine) errors.push("SKU 系数第 " + (i + 1) + " 行：产品线不能为空。");
+    if (s.coeff == null || isNaN(s.coeff) || s.coeff < 0) errors.push("SKU 系数第 " + (i + 1) + " 行：系数无效。");
+  });
+  var period = document.getElementById("periodMonth").value;
+  if (!period) errors.push("请选择计算周期（年月）。");
+  return errors;
+}
+
+/* =============================================================================
+   CSV 解析：严格校验列名，缺列报具体列名
+   ============================================================================= */
+function parseCsv(text) {
+  var lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter(function (l) {
+    return l.trim().length > 0;
+  });
+  if (!lines.length) throw new Error("CSV 为空。");
+
+  var headers = splitCsvLine(lines[0]).map(function (h) { return h.trim(); });
+  var missing = REQUIRED_COLUMNS.filter(function (c) { return headers.indexOf(c) === -1; });
+  if (missing.length) {
+    throw new Error("CSV 缺少必需列：" + missing.join(", ") + "。请补齐后再解析。");
+  }
+
+  var rows = [];
+  for (var i = 1; i < lines.length; i++) {
+    var cols = splitCsvLine(lines[i]);
+    if (cols.length === 1 && cols[0].trim() === "") continue;
+    var obj = {};
+    headers.forEach(function (h, idx) {
+      obj[h] = (cols[idx] != null ? cols[idx] : "").trim();
+    });
+    /* 金额转数值；return_flag 统一大写 */
+    obj.amount = Number(String(obj.amount).replace(/,/g, ""));
+    if (isNaN(obj.amount)) {
+      throw new Error("第 " + (i + 1) + " 行 amount 不是有效数字（order_id=" + obj.order_id + "）。");
+    }
+    obj.return_flag = String(obj.return_flag || "N").toUpperCase();
+    if (obj.return_flag !== "Y" && obj.return_flag !== "N") {
+      throw new Error("第 " + (i + 1) + " 行 return_flag 只能是 Y 或 N（order_id=" + obj.order_id + "）。");
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.order_date)) {
+      throw new Error("第 " + (i + 1) + " 行 order_date 格式须为 YYYY-MM-DD（order_id=" + obj.order_id + "）。");
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.payment_date)) {
+      throw new Error("第 " + (i + 1) + " 行 payment_date 格式须为 YYYY-MM-DD（order_id=" + obj.order_id + "）。");
+    }
+    rows.push(obj);
+  }
+  if (!rows.length) throw new Error("CSV 没有数据行。");
+  return rows;
+}
+
+/** 简易 CSV 分割：支持双引号包裹字段 */
+function splitCsvLine(line) {
+  var result = [];
+  var cur = "";
+  var inQ = false;
+  for (var i = 0; i < line.length; i++) {
+    var ch = line[i];
+    if (inQ) {
+      if (ch === '"') {
+        if (line[i + 1] === '"') { cur += '"'; i++; }
+        else inQ = false;
+      } else cur += ch;
+    } else {
+      if (ch === '"') inQ = true;
+      else if (ch === ",") { result.push(cur); cur = ""; }
+      else cur += ch;
+    }
+  }
+  result.push(cur);
+  return result;
+}
+
+function rowsToCsvText(rows) {
+  var lines = [REQUIRED_COLUMNS.join(",")];
+  rows.forEach(function (r) {
+    lines.push(REQUIRED_COLUMNS.map(function (c) {
+      var v = r[c] == null ? "" : String(r[c]);
+      if (/[",\n]/.test(v)) v = '"' + v.replace(/"/g, '""') + '"';
+      return v;
+    }).join(","));
+  });
+  return lines.join("\n");
+}
+
+function loadSampleData() {
+  var rows = buildSampleData();
+  state.rawRows = rows;
+  state.dataSource = "内置虚拟数据（港资通信设备 CRM + 财务回款模拟）";
+  document.getElementById("csvInput").value = rowsToCsvText(rows);
+  document.getElementById("dataCount").textContent = String(rows.length);
+  document.getElementById("dataSourceLabel").textContent = state.dataSource;
+  toast("已加载 " + rows.length + " 条虚拟销售记录");
+  setCalcStatus("数据已就绪，可执行计算", "ok");
+}
+
+function parseCsvFromTextarea() {
+  try {
+    var rows = parseCsv(document.getElementById("csvInput").value);
+    state.rawRows = rows;
+    state.dataSource = "用户粘贴 CSV";
+    document.getElementById("dataCount").textContent = String(rows.length);
+    document.getElementById("dataSourceLabel").textContent = state.dataSource;
+    toast("CSV 解析成功：" + rows.length + " 条");
+    setCalcStatus("数据已就绪，可执行计算", "ok");
+  } catch (e) {
+    toast(e.message);
+    setCalcStatus(e.message, "error");
+  }
+}
+
+function clearData() {
+  state.rawRows = [];
+  state.details = [];
+  state.anomalies = [];
+  state.summary = null;
+  state.expandedId = null;
+  state.dataSource = "";
+  document.getElementById("csvInput").value = "";
+  document.getElementById("dataCount").textContent = "0";
+  document.getElementById("dataSourceLabel").textContent = "未加载 — 请先加载虚拟数据或粘贴 CSV";
+  document.getElementById("summaryEmpty").style.display = "";
+  document.getElementById("summaryGrid").style.display = "none";
+  document.getElementById("detailEmpty").style.display = "";
+  document.getElementById("detailEmpty").textContent = "无明细。请先执行计算。";
+  document.getElementById("detailTableWrap").style.display = "none";
+  document.getElementById("detailFilters").style.display = "none";
+  document.getElementById("anomalyEmpty").style.display = "";
+  document.getElementById("anomalyTableWrap").style.display = "none";
+  document.getElementById("anomalyFilters").style.display = "none";
+  document.getElementById("btnExportSummary").style.display = "none";
+  var reconBox = document.getElementById("reconBox"); if (reconBox) reconBox.style.display = "none";
+  var repWrap = document.getElementById("repWrap"); if (repWrap) repWrap.style.display = "none";
+  var repEmpty = document.getElementById("repEmpty"); if (repEmpty) repEmpty.style.display = "";
+  var chartWrap = document.getElementById("chartWrap"); if (chartWrap) chartWrap.style.display = "none";
+  var chartEmpty = document.getElementById("chartEmpty"); if (chartEmpty) chartEmpty.style.display = "";
+  setCalcStatus("数据已清空", "");
+  toast("已清空数据");
+}
+
+function setCalcStatus(msg, type) {
+  var el = document.getElementById("calcStatus");
+  el.textContent = msg;
+  el.className = "calc-status" + (type ? " " + type : "");
+}
+
+/* =============================================================================
+   核心计算引擎
+   ============================================================================= */
+
+/** 匹配 SKU / 产品线系数；未命中返回 null */
+function matchSkuCoeff(row, skuRules) {
+  for (var i = 0; i < skuRules.length; i++) {
+    var rule = skuRules[i];
+    if (!rule.productLine) continue;
+    if (rule.productLine === row.product_line) {
+      return { coeff: rule.coeff, matchedBy: "product_line=" + rule.productLine, rule: rule };
+    }
+  }
+  /* 次级：SKU 前缀匹配（产品线别名场景） */
+  for (var j = 0; j < skuRules.length; j++) {
+    var r2 = skuRules[j];
+    if (r2.skuPrefix && row.sku && row.sku.indexOf(r2.skuPrefix) === 0) {
+      return { coeff: r2.coeff, matchedBy: "sku_prefix=" + r2.skuPrefix, rule: r2 };
+    }
+  }
+  return null;
+}
+
+/** 匹配阶梯区间：左闭右闭；max=null 表示无上限 */
+function matchTier(amount, tiers) {
+  for (var i = 0; i < tiers.length; i++) {
+    var t = tiers[i];
+    if (t.min == null || isNaN(t.min)) continue;
+    var geMin = amount >= t.min;
+    var leMax = t.max == null || isNaN(t.max) ? true : amount <= t.max;
+    if (geMin && leMax) {
+      return {
+        index: i,
+        label: formatTierLabel(t, i),
+        rate: (Number(t.ratePct) || 0) / 100,
+        ratePct: Number(t.ratePct) || 0,
+        tier: t
+      };
+    }
+  }
+  return null;
+}
+
+function formatTierLabel(t, i) {
+  var hi = t.max == null || t.max === "" ? "∞" : formatMoney(t.max).replace(/\.00$/, "");
+  var lo = formatMoney(t.min).replace(/\.00$/, "");
+  return "第" + (i + 1) + "档 " + lo + "–" + hi + " @ " + t.ratePct + "%";
+}
+
+/**
+ * 对单行执行计算链路，产出明细对象（含完整 trace）
+ * 注意：退货单不进入“正常基础佣金”，扣减金额单独字段
+ */
+function computeRow(row, idx, ctx) {
+  var period = ctx.period;
+  var attrMode = ctx.attrMode; // payment | order
+  var tiers = ctx.tiers;
+  var skuRules = ctx.skuRules;
+  var deductReturn = ctx.deductReturn;
+  var traceOrigMonth = ctx.traceOrigMonth;
+  var dupMap = ctx.dupMap;
+
+  var orderYm = ymFromDate(row.order_date);
+  var payYm = ymFromDate(row.payment_date);
+  var isReturn = row.return_flag === "Y";
+  var isCross = orderYm !== payYm;
+  var isDup = (dupMap[row.order_id] || 0) >= 2;
+
+  /* ② 归属月：默认回款月；退货可追溯原订单月 */
+  var attrYm;
+  if (isReturn && traceOrigMonth) {
+    attrYm = orderYm;
+  } else {
+    attrYm = attrMode === "order" ? orderYm : payYm;
+  }
+
+  var includedInPeriod = attrYm === period;
+
+  var anomalies = [];
+  var trace = [];
+
+  /* ① 过滤退货单 */
+  if (isReturn) {
+    trace.push({
+      step: "① 过滤退货单",
+      cls: "deduct",
+      text: "return_flag = Y。本单不进入正常佣金计算，转入退货冲销逻辑。原关联线索：订单 " + row.order_id + "，退货金额 " + formatMoney(row.amount) + "。"
+    });
+  } else {
+    trace.push({
+      step: "① 过滤退货单",
+      cls: "",
+      text: "return_flag = N。本单进入正常佣金计算链路。"
+    });
+  }
+
+  /* ② 按回款/订单月归属 */
+  trace.push({
+    step: "② 归属月份判定",
+    cls: isCross ? "warn" : "",
+    text: "订单月=" + orderYm + "，回款月=" + payYm +
+      "，归属规则=" + (attrMode === "order" ? "按订单月" : "按回款月") +
+      (isReturn && traceOrigMonth ? "（退货开启追溯原订单月）" : "") +
+      " → 归属月=" + attrYm +
+      "；当前计算周期=" + period +
+      "；" + (includedInPeriod ? "纳入本期" : "不纳入本期（跨周期或他月）") +
+      (isCross ? "。【跨期】订单月≠回款月" : "") + "。"
+  });
+
+  /* ③ SKU 系数 */
+  var skuMatch = matchSkuCoeff(row, skuRules);
+  var skuMissing = !skuMatch;
+  var coeff = skuMatch ? skuMatch.coeff : null;
+  if (skuMissing) {
+    trace.push({
+      step: "③ 匹配 SKU 系数",
+      cls: "warn",
+      text: "产品线「" + row.product_line + "」/ SKU「" + row.sku + "」未出现在系数表 → 规则未匹配（SKU缺失）。系数按空处理，基础佣金记 0。"
+    });
+    anomalies.push("规则未匹配");
+  } else {
+    trace.push({
+      step: "③ 匹配 SKU 系数",
+      cls: "",
+      text: "命中 " + skuMatch.matchedBy + "，系数 = " + coeff + "。"
+    });
+  }
+
+  /* ④ 阶梯区间 */
+  var tierMatch = matchTier(row.amount, tiers);
+  var tierMissing = !tierMatch;
+  if (tierMissing) {
+    trace.push({
+      step: "④ 匹配阶梯区间",
+      cls: "warn",
+      text: "销售额 " + formatMoney(row.amount) + " 未落入任何阶梯区间 → 规则未匹配（阶梯缺失）。比例按空处理，基础佣金记 0。"
+    });
+    if (anomalies.indexOf("规则未匹配") === -1) anomalies.push("规则未匹配");
+  } else {
+    trace.push({
+      step: "④ 匹配阶梯区间",
+      cls: "",
+      text: "销售额 " + formatMoney(row.amount) + " 落入 " + tierMatch.label + "，提成比例 = " + tierMatch.ratePct + "%。"
+    });
+  }
+
+  /* ⑤ 基础佣金（仅非退货且规则完整时） */
+  var baseCommission = 0;
+  var tierLabel = tierMatch ? tierMatch.label : "—";
+  var coeffDisplay = coeff != null ? coeff : null;
+
+  if (!isReturn) {
+    if (!skuMissing && !tierMissing) {
+      baseCommission = row.amount * tierMatch.rate * coeff;
+      baseCommission = Math.round(baseCommission * 100) / 100;
+      trace.push({
+        step: "⑤ 基础佣金计算",
+        cls: "",
+        text: "基础佣金 = 销售额 × 阶梯比例 × SKU系数 = " +
+          formatMoney(row.amount) + " × " + tierMatch.ratePct + "% × " + coeff +
+          " = " + formatMoney(baseCommission) + "。"
+      });
+    } else {
+      baseCommission = 0;
+      trace.push({
+        step: "⑤ 基础佣金计算",
+        cls: "warn",
+        text: "因规则未匹配，基础佣金 = 0。该单仍保留在明细中供稽查。"
+      });
+    }
+  } else {
+    trace.push({
+      step: "⑤ 基础佣金计算",
+      cls: "skip",
+      text: "退货单跳过正常基础佣金（记 0），进入步骤⑥冲销。"
+    });
+  }
+
+  /* ⑥ 退货冲销扣减 */
+  var returnDeduct = 0;
+  var deductYm = attrYm;
+  if (isReturn) {
+    anomalies.push("退货冲销");
+    if (deductReturn) {
+      if (!skuMissing && !tierMissing) {
+        returnDeduct = Math.round(row.amount * tierMatch.rate * coeff * 100) / 100;
+      } else {
+        /* 规则缺失时仍记录退货异常，但扣减金额无法按公式计算 → 记 0 并说明 */
+        returnDeduct = 0;
+      }
+      trace.push({
+        step: "⑥ 退货冲销扣减",
+        cls: "deduct",
+        text: "开启「扣减当月佣金」。扣减金额 = " + formatMoney(row.amount) + " × " +
+          (tierMatch ? tierMatch.ratePct + "%" : "（阶梯缺失）") + " × " +
+          (coeff != null ? coeff : "（系数缺失）") + " = " + formatMoney(returnDeduct) +
+          "；扣减归属月 = " + deductYm +
+          "；原订单号/退货单号 = " + row.order_id + "；退货金额 = " + formatMoney(row.amount) + "。"
+      });
+    } else {
+      trace.push({
+        step: "⑥ 退货冲销扣减",
+        cls: "skip",
+        text: "未开启「扣减当月佣金」。退货单仅标记异常，不产生扣减金额。建议财务另行线下冲销。"
+      });
+    }
+  } else {
+    trace.push({
+      step: "⑥ 退货冲销扣减",
+      cls: "skip",
+      text: "非退货单，无冲销扣减。"
+    });
+  }
+
+  /* 跨期 / 重复 标记（无论是否退货） */
+  if (isCross) anomalies.push("跨期归属");
+  if (isDup) anomalies.push("重复计算");
+
+  /* 最终佣金：纳入本期时 = 基础 − 扣减；否则对汇总记 0，但明细仍展示计算值供追溯 */
+  var finalCommission;
+  if (!includedInPeriod) {
+    finalCommission = 0;
+    trace.push({
+      step: "⑦ 输出与本期口径",
+      cls: "skip",
+      text: "归属月 " + attrYm + " ≠ 计算周期 " + period + "，本期最终佣金按 0 计入汇总；明细保留完整中间值以便追溯。"
+    });
+  } else if (isReturn) {
+    finalCommission = -returnDeduct;
+    trace.push({
+      step: "⑦ 输出与本期口径",
+      cls: "deduct",
+      text: "本期最终佣金 = −退货扣减 = −" + formatMoney(returnDeduct) + "。"
+    });
+  } else {
+    finalCommission = baseCommission;
+    trace.push({
+      step: "⑦ 输出与本期口径",
+      cls: "",
+      text: "本期最终佣金 = 基础佣金 = " + formatMoney(baseCommission) + "。"
+    });
+  }
+
+  return {
+    rowKey: row.order_id + "#" + idx,
+    order_id: row.order_id,
+    sales_rep: row.sales_rep,
+    sales_rep_cn: row.sales_rep_cn,
+    sales_rep_full: row.sales_rep + " " + row.sales_rep_cn,
+    sku: row.sku,
+    product_line: row.product_line,
+    order_date: row.order_date,
+    payment_date: row.payment_date,
+    amount: row.amount,
+    return_flag: row.return_flag,
+    region: row.region,
+    orderYm: orderYm,
+    payYm: payYm,
+    attrYm: attrYm,
+    includedInPeriod: includedInPeriod,
+    tierLabel: tierLabel,
+    coeff: coeffDisplay,
+    baseCommission: isReturn ? 0 : baseCommission,
+    returnDeduct: returnDeduct,
+    finalCommission: finalCommission,
+    /* 用于汇总：仅本期 */
+    periodSales: includedInPeriod && !isReturn ? row.amount : 0,
+    periodBase: includedInPeriod && !isReturn ? baseCommission : 0,
+    periodDeduct: includedInPeriod && isReturn ? returnDeduct : 0,
+    periodFinal: includedInPeriod ? finalCommission : 0,
+    anomalies: anomalies,
+    isReturn: isReturn,
+    isCross: isCross,
+    isDup: isDup,
+    skuMissing: skuMissing,
+    tierMissing: tierMissing,
+    trace: trace,
+    /* 退货追溯字段 */
+    returnMeta: isReturn ? {
+      origOrderId: row.order_id,
+      returnAmount: row.amount,
+      deductAmount: returnDeduct,
+      deductYm: deductYm
+    } : null
+  };
+}
+
+/** 主入口：严格按顺序跑完全量数据 */
+function executeEngine(rawRows, ctx) {
+  /* 预扫描重复 order_id */
+  var dupMap = {};
+  rawRows.forEach(function (r) {
+    dupMap[r.order_id] = (dupMap[r.order_id] || 0) + 1;
+  });
+  ctx.dupMap = dupMap;
+
+  var details = rawRows.map(function (r, idx) {
+    return computeRow(r, idx, ctx);
+  });
+
+  /* —— 异常表：四类独立汇总 —— */
+  var anomalies = [];
+
+  /* 1) 退货冲销 */
+  details.forEach(function (d) {
+    if (!d.isReturn) return;
+    var tip = "原订单/退货单 " + d.order_id +
+      "；退货金额 " + formatMoney(d.amount) +
+      "；扣减金额 " + formatMoney(d.returnDeduct) +
+      "；扣减归属月 " + d.attrYm +
+      "；订单月 " + d.orderYm + " / 回款月 " + d.payYm +
+      "；" + (d.includedInPeriod ? "已纳入本期冲销" : "未纳入本期（归属他月）") + "。";
+    anomalies.push({
+      type: "退货冲销",
+      order_id: d.order_id,
+      sales_rep: d.sales_rep_full,
+      desc: tip,
+      amount: d.amount,
+      suggestion: "核对 CRM 退货单与原销售单；确认冲销月是否应追溯原计提月；与财务对账后关闭。"
+    });
+  });
+
+  /* 2) 跨期归属 */
+  details.forEach(function (d) {
+    if (!d.isCross) return;
+    anomalies.push({
+      type: "跨期归属",
+      order_id: d.order_id,
+      sales_rep: d.sales_rep_full,
+      desc: "订单月=" + d.orderYm + "，回款月=" + d.payYm +
+        "，当前计算周期=" + ctx.period +
+        "，归属规则=" + (ctx.attrMode === "order" ? "订单月" : "回款月") +
+        " → 归属月=" + d.attrYm +
+        "；" + (d.includedInPeriod ? "已纳入本期" : "未纳入本期") + "。",
+      amount: d.amount,
+      suggestion: "与销售确认账期原因；在月结说明中披露跨期影响；避免同一笔在两个月重复计提。"
+    });
+  });
+
+  /* 3) 重复计算 */
+  var seenDup = {};
+  details.forEach(function (d) {
+    if (!d.isDup) return;
+    if (seenDup[d.order_id]) return; /* 同一 order_id 在异常表合并一条说明 */
+    seenDup[d.order_id] = true;
+    var cnt = dupMap[d.order_id];
+    var related = details.filter(function (x) { return x.order_id === d.order_id; });
+    var reps = [];
+    var totalAmt = 0;
+    related.forEach(function (x) {
+      if (reps.indexOf(x.sales_rep_full) === -1) reps.push(x.sales_rep_full);
+      totalAmt += x.amount;
+    });
+    anomalies.push({
+      type: "重复计算",
+      order_id: d.order_id,
+      sales_rep: reps.join(" / "),
+      desc: "order_id「" + d.order_id + "」出现 " + cnt + " 次；涉及销售员：" + reps.join("、") +
+        "；涉及金额合计（含重复行）" + formatMoney(totalAmt) + "。疑似 CRM 重复推送或手工导入重复。",
+      amount: totalAmt,
+      suggestion: "保留一笔有效记录，删除或作废重复行后重算；排查接口幂等与导入去重键。"
+    });
+  });
+
+  /* 4) 规则未匹配 */
+  details.forEach(function (d) {
+    if (!d.skuMissing && !d.tierMissing) return;
+    var reasons = [];
+    if (d.skuMissing) reasons.push("SKU缺失（产品线「" + d.product_line + "」/ SKU「" + d.sku + "」不在系数表）");
+    if (d.tierMissing) reasons.push("阶梯缺失（销售额 " + formatMoney(d.amount) + " 未落入任何区间）");
+    anomalies.push({
+      type: "规则未匹配",
+      order_id: d.order_id,
+      sales_rep: d.sales_rep_full,
+      desc: reasons.join("；") + "。涉及订单 " + d.order_id + "，涉及金额 " + formatMoney(d.amount) + "。",
+      amount: d.amount,
+      suggestion: d.skuMissing
+        ? "在 SKU 系数表补录该产品线，或将订单产品线纠正为已有分类后重算。"
+        : "扩展阶梯区间覆盖该金额，或检查金额是否录入错误。"
+    });
+  });
+
+  /* —— 汇总：仅统计纳入本期的口径 —— */
+  var totalSales = 0, totalBase = 0, totalDeduct = 0, totalFinal = 0;
+  var repSet = {};
+  var anomalyOrderSet = {};
+  details.forEach(function (d) {
+    if (d.includedInPeriod) {
+      totalSales += d.periodSales;
+      totalBase += d.periodBase;
+      totalDeduct += d.periodDeduct;
+      totalFinal += d.periodFinal;
+      repSet[d.sales_rep] = true;
+    }
+    if (d.anomalies.length) anomalyOrderSet[d.rowKey] = true;
+  });
+
+  var summary = {
+    period: ctx.period,
+    attrMode: ctx.attrMode,
+    totalSales: Math.round(totalSales * 100) / 100,
+    totalBase: Math.round(totalBase * 100) / 100,
+    totalDeduct: Math.round(totalDeduct * 100) / 100,
+    totalFinal: Math.round(totalFinal * 100) / 100,
+    anomalyCount: Object.keys(anomalyOrderSet).length,
+    repCount: Object.keys(repSet).length,
+    detailCount: details.length,
+    anomalyRowCount: anomalies.length
+  };
+
+  return { details: details, anomalies: anomalies, summary: summary };
+}
+
+/* =============================================================================
+   计算按钮：loading → 校验 → 引擎 → 渲染
+   ============================================================================= */
+function runCalculation() {
+  if (state.calculating) return;
+
+  if (!state.rawRows.length) {
+    setCalcStatus("未加载数据：请先「加载内置虚拟数据」或粘贴并解析 CSV。", "error");
+    toast("请先加载数据");
+    return;
+  }
+
+  var tiers = readTiersFromUI();
+  var skus = readSkuFromUI();
+  var errs = validateRules(tiers, skus);
+  if (errs.length) {
+    setCalcStatus("规则不完整，禁止计算：" + errs[0], "error");
+    toast(errs[0]);
+    return;
+  }
+
+  var period = document.getElementById("periodMonth").value;
+  var attrMode = (document.querySelector("input[name='attrRule']:checked") || {}).value || "payment";
+  var deductReturn = document.getElementById("deductReturn").checked;
+  var traceOrigMonth = document.getElementById("traceOrigMonth").checked;
+
+  state.calculating = true;
+  document.getElementById("btnCalc").disabled = true;
+  setCalcStatus("计算中… 正在执行：过滤退货 → 归属 → SKU → 阶梯 → 基础佣金 → 冲销 → 异常稽查", "loading");
+
+  /* 短延迟以便 UI 展示 loading（数据量虽小，满足交互要求） */
+  setTimeout(function () {
+    try {
+      var result = executeEngine(state.rawRows, {
+        period: period,
+        attrMode: attrMode,
+        tiers: tiers,
+        skuRules: skus,
+        deductReturn: deductReturn,
+        traceOrigMonth: traceOrigMonth
+      });
+      state.details = result.details;
+      state.anomalies = result.anomalies;
+      state.summary = result.summary;
+      state.expandedId = null;
+
+      renderSummary();
+      renderRepSummary();
+      renderCharts();
+      populateDetailFilters();
+      renderDetails();
+      renderAnomalies();
+      document.getElementById("btnExportSummary").style.display = "";
+
+      setCalcStatus(
+        "计算完成：本期最终佣金 " + formatMoney(result.summary.totalFinal) +
+        " · 明细 " + result.summary.detailCount +
+        " 条 · 异常 " + result.summary.anomalyCount + " 单",
+        "ok"
+      );
+      toast("计算完成");
+    } catch (e) {
+      setCalcStatus("计算失败：" + e.message, "error");
+      toast("计算失败：" + e.message);
+    } finally {
+      state.calculating = false;
+      document.getElementById("btnCalc").disabled = false;
+    }
+  }, 280);
+}
+
+/* =============================================================================
+   渲染：汇总 / 明细 / 异常
+   ============================================================================= */
+function renderSummary() {
+  var s = state.summary;
+  if (!s) {
+    document.getElementById("summaryEmpty").style.display = "";
+    document.getElementById("summaryGrid").style.display = "none";
+    return;
+  }
+  document.getElementById("summaryEmpty").style.display = "none";
+  document.getElementById("summaryGrid").style.display = "grid";
+  document.getElementById("sPeriod").textContent = s.period;
+  document.getElementById("sSales").textContent = formatMoney(s.totalSales);
+  document.getElementById("sBase").textContent = formatMoney(s.totalBase);
+  document.getElementById("sDeduct").textContent = formatMoney(s.totalDeduct);
+  document.getElementById("sFinal").textContent = formatMoney(s.totalFinal);
+  document.getElementById("sAnomaly").textContent = String(s.anomalyCount);
+  document.getElementById("sReps").textContent = String(s.repCount);
+
+  /* 勾稽校验：逐行合计 vs 汇总，最终佣金 = 基础佣金 − 退货扣减 */
+  var rBase = 0, rDeduct = 0, rFinal = 0, rRows = 0;
+  state.details.forEach(function (d) {
+    if (!d.includedInPeriod) return;
+    rBase += d.periodBase; rDeduct += d.periodDeduct; rFinal += d.periodFinal; rRows++;
+  });
+  rBase = Math.round(rBase * 100) / 100;
+  rDeduct = Math.round(rDeduct * 100) / 100;
+  rFinal = Math.round(rFinal * 100) / 100;
+  var diff = Math.abs(rFinal - (rBase - rDeduct));
+  var reconBox = document.getElementById("reconBox");
+  if (reconBox) {
+    reconBox.style.display = "block";
+    var ok = diff < 0.005 &&
+      Math.abs(rBase - s.totalBase) < 0.005 &&
+      Math.abs(rDeduct - s.totalDeduct) < 0.005 &&
+      Math.abs(rFinal - s.totalFinal) < 0.005;
+    document.getElementById("reconMsg").innerHTML = ok
+      ? "<span class='badge badge-ok'>勾稽通过</span> 最终佣金 = 基础佣金 − 退货扣减，差异 <strong>0.00</strong>；逐行合计与汇总卡片完全一致。"
+      : "<span class='badge badge-danger'>勾稽差异</span> 发现差异 " + diff.toFixed(2) + "，请检查规则或数据。";
+    document.getElementById("reconDetail").textContent =
+      "明细计入本期 " + rRows + " 行（输入 " + state.rawRows.length + " 行，退货/跨期单独标记）· 基础佣金合计 " + formatMoney(rBase) +
+      " · 退货扣减合计 " + formatMoney(rDeduct) + " · 最终佣金合计 " + formatMoney(rFinal);
+  }
+}
+
+function populateDetailFilters() {
+  var reps = {};
+  var lines = {};
+  state.details.forEach(function (d) {
+    reps[d.sales_rep_full] = true;
+    lines[d.product_line] = true;
+  });
+  var fRep = document.getElementById("fRep");
+  var fLine = document.getElementById("fLine");
+  fRep.innerHTML = "<option value=''>全部销售员</option>";
+  Object.keys(reps).sort().forEach(function (r) {
+    fRep.innerHTML += "<option value='" + escapeHtml(r) + "'>" + escapeHtml(r) + "</option>";
+  });
+  fLine.innerHTML = "<option value=''>全部产品线</option>";
+  Object.keys(lines).sort().forEach(function (l) {
+    fLine.innerHTML += "<option value='" + escapeHtml(l) + "'>" + escapeHtml(l) + "</option>";
+  });
+  document.getElementById("detailFilters").style.display = "flex";
+}
+
+function getFilteredDetails() {
+  var rep = document.getElementById("fRep").value;
+  var line = document.getElementById("fLine").value;
+  var at = document.getElementById("fAnomalyType").value;
+  return state.details.filter(function (d) {
+    if (rep && d.sales_rep_full !== rep) return false;
+    if (line && d.product_line !== line) return false;
+    if (at === "__HAS__" && !d.anomalies.length) return false;
+    if (at === "__NONE__" && d.anomalies.length) return false;
+    if (at && at !== "__HAS__" && at !== "__NONE__" && d.anomalies.indexOf(at) === -1) return false;
+    return true;
+  });
+}
+
+function renderDetails() {
+  var list = getFilteredDetails();
+  var empty = document.getElementById("detailEmpty");
+  var wrap = document.getElementById("detailTableWrap");
+  var body = document.getElementById("detailBody");
+
+  if (!state.details.length) {
+    empty.style.display = "";
+    empty.textContent = "无明细。请先执行计算。";
+    wrap.style.display = "none";
+    return;
+  }
+  if (!list.length) {
+    empty.style.display = "";
+    empty.textContent = "当前筛选条件下无明细行。";
+    wrap.style.display = "none";
+    return;
+  }
+
+  empty.style.display = "none";
+  wrap.style.display = "block";
+  body.innerHTML = "";
+
+  list.forEach(function (d) {
+    var tr = document.createElement("tr");
+    if (d.anomalies.length) tr.className = "anomaly";
+    if (state.expandedId === d.rowKey) tr.classList.add("expanded");
+    tr.setAttribute("data-key", d.rowKey);
+    tr.onclick = function () { toggleExpand(d.rowKey); };
+
+    var anomalyHtml = d.anomalies.length
+      ? d.anomalies.map(function (a) {
+          return "<span class='badge badge-danger' style='margin-right:3px;'>" + escapeHtml(a) + "</span>";
+        }).join("")
+      : "<span class='badge badge-ok'>正常</span>";
+
+    var includeBadge = d.includedInPeriod
+      ? ""
+      : " <span class='badge badge-muted'>非本期</span>";
+
+    tr.innerHTML =
+      "<td>" + (state.expandedId === d.rowKey ? "▼" : "▶") + "</td>" +
+      "<td>" + escapeHtml(d.order_id) + includeBadge + "</td>" +
+      "<td>" + escapeHtml(d.sales_rep_full) + "</td>" +
+      "<td>" + escapeHtml(d.sku) + "</td>" +
+      "<td>" + escapeHtml(d.product_line) + "</td>" +
+      "<td>" + escapeHtml(d.order_date) + "</td>" +
+      "<td>" + escapeHtml(d.payment_date) + "</td>" +
+      "<td class='num'>" + formatMoney(d.amount) + "</td>" +
+      "<td>" + escapeHtml(d.tierLabel) + "</td>" +
+      "<td class='num'>" + (d.coeff != null ? d.coeff.toFixed(2) : "—") + "</td>" +
+      "<td class='num'>" + formatMoney(d.baseCommission) + "</td>" +
+      "<td class='num'>" + (d.returnDeduct ? formatMoney(d.returnDeduct) : "0.00") + "</td>" +
+      "<td class='num'>" + formatMoneySigned(d.finalCommission) + "</td>" +
+      "<td>" + escapeHtml(d.attrYm) + "</td>" +
+      "<td>" + anomalyHtml + "</td>";
+    body.appendChild(tr);
+
+    if (state.expandedId === d.rowKey) {
+      var tr2 = document.createElement("tr");
+      tr2.className = "trace-row";
+      var td = document.createElement("td");
+      td.colSpan = 15;
+      td.innerHTML = buildTraceHtml(d);
+      td.onclick = function (e) { e.stopPropagation(); };
+      tr2.appendChild(td);
+      body.appendChild(tr2);
+    }
+  });
+}
+
+function buildTraceHtml(d) {
+  var steps = d.trace.map(function (t) {
+    return "<li class='" + (t.cls || "") + "'><strong>" + escapeHtml(t.step) + "</strong> — " + escapeHtml(t.text) + "</li>";
+  }).join("");
+
+  var extra = "";
+  if (d.returnMeta) {
+    extra += "<div class='trace-meta'>" +
+      "<span>原订单号：" + escapeHtml(d.returnMeta.origOrderId) + "</span>" +
+      "<span>退货金额：" + formatMoney(d.returnMeta.returnAmount) + "</span>" +
+      "<span>扣减金额：" + formatMoney(d.returnMeta.deductAmount) + "</span>" +
+      "<span>扣减归属月：" + escapeHtml(d.returnMeta.deductYm) + "</span>" +
+      "</div>";
+  }
+  if (d.isCross) {
+    extra += "<div class='trace-meta'>" +
+      "<span>订单月：" + d.orderYm + "</span>" +
+      "<span>回款月：" + d.payYm + "</span>" +
+      "<span>计算周期：" + (state.summary ? state.summary.period : "") + "</span>" +
+      "<span>是否纳入本期：" + (d.includedInPeriod ? "是" : "否") + "</span>" +
+      "</div>";
+  }
+
+  return "<div class='trace-box'>" +
+    "<h4>计算链路（可追溯）· " + escapeHtml(d.order_id) + "</h4>" +
+    "<ul class='trace-steps'>" + steps + "</ul>" +
+    extra +
+    "</div>";
+}
+
+function toggleExpand(key) {
+  state.expandedId = state.expandedId === key ? null : key;
+  renderDetails();
+}
+
+function renderAnomalies() {
+  var type = document.getElementById("afType").value;
+  var list = state.anomalies.filter(function (a) {
+    return !type || a.type === type;
+  });
+  var empty = document.getElementById("anomalyEmpty");
+  var wrap = document.getElementById("anomalyTableWrap");
+  var body = document.getElementById("anomalyBody");
+
+  document.getElementById("anomalyFilters").style.display = state.anomalies.length ? "flex" : "none";
+
+  if (!list.length) {
+    empty.style.display = "";
+    empty.textContent = state.anomalies.length ? "当前类型下无异常。" : "无异常记录，或尚未计算。";
+    wrap.style.display = "none";
+    return;
+  }
+  empty.style.display = "none";
+  wrap.style.display = "block";
+  body.innerHTML = "";
+
+  list.forEach(function (a) {
+    var tr = document.createElement("tr");
+    tr.className = "anomaly";
+    tr.style.cursor = "default";
+    tr.innerHTML =
+      "<td><span class='badge badge-danger'>" + escapeHtml(a.type) + "</span></td>" +
+      "<td>" + escapeHtml(a.order_id) + "</td>" +
+      "<td>" + escapeHtml(a.sales_rep) + "</td>" +
+      "<td style='white-space:normal;min-width:280px;'>" + escapeHtml(a.desc) + "</td>" +
+      "<td class='num'>" + formatMoney(a.amount) + "</td>" +
+      "<td style='white-space:normal;min-width:200px;'>" + escapeHtml(a.suggestion) + "</td>";
+    body.appendChild(tr);
+  });
+}
+
+/* =============================================================================
+   导出 CSV（明细 / 异常 / 汇总）+ 下载反馈
+   ============================================================================= */
+function downloadCsv(filename, content) {
+  var blob = new Blob(["\uFEFF" + content], { type: "text/csv;charset=utf-8;" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast("已导出：" + filename);
+}
+
+function exportDetailsCsv() {
+  if (!state.details.length) { toast("无明细可导出"); return; }
+  var headers = [
+    "order_id","sales_rep","sales_rep_cn","sku","product_line","order_date","payment_date",
+    "amount","tier","sku_coeff","base_commission","return_deduct","final_commission",
+    "attr_month","included_in_period","anomaly_flags","region"
+  ];
+  var lines = [headers.join(",")];
+  getFilteredDetails().forEach(function (d) {
+    var vals = [
+      d.order_id, d.sales_rep, d.sales_rep_cn, d.sku, d.product_line,
+      d.order_date, d.payment_date, d.amount.toFixed(2),
+      d.tierLabel, d.coeff != null ? d.coeff : "",
+      d.baseCommission.toFixed(2), d.returnDeduct.toFixed(2), d.finalCommission.toFixed(2),
+      d.attrYm, d.includedInPeriod ? "Y" : "N",
+      d.anomalies.join("|"), d.region
+    ];
+    lines.push(vals.map(csvEscape).join(","));
+  });
+  var period = state.summary ? state.summary.period : "na";
+  downloadCsv("commission_details_" + period + ".csv", lines.join("\n"));
+}
+
+function exportAnomaliesCsv() {
+  if (!state.anomalies.length) { toast("无异常可导出"); return; }
+  var type = document.getElementById("afType").value;
+  var list = state.anomalies.filter(function (a) { return !type || a.type === type; });
+  var headers = ["anomaly_type","order_id","sales_rep","description","amount","suggestion"];
+  var lines = [headers.join(",")];
+  list.forEach(function (a) {
+    lines.push([a.type, a.order_id, a.sales_rep, a.desc, a.amount.toFixed(2), a.suggestion].map(csvEscape).join(","));
+  });
+  var period = state.summary ? state.summary.period : "na";
+  downloadCsv("commission_anomalies_" + period + ".csv", lines.join("\n"));
+}
+
+function exportSummaryCsv() {
+  if (!state.summary) { toast("无汇总可导出"); return; }
+  var s = state.summary;
+  var lines = [
+    "metric,value",
+    "period," + s.period,
+    "attribution_mode," + (s.attrMode === "order" ? "order_month" : "payment_month"),
+    "total_sales," + s.totalSales.toFixed(2),
+    "total_base_commission," + s.totalBase.toFixed(2),
+    "total_return_deduct," + s.totalDeduct.toFixed(2),
+    "total_final_commission," + s.totalFinal.toFixed(2),
+    "anomaly_order_count," + s.anomalyCount,
+    "sales_rep_count," + s.repCount,
+    "detail_row_count," + s.detailCount
+  ];
+  downloadCsv("commission_summary_" + s.period + ".csv", lines.join("\n"));
+}
+
+function csvEscape(v) {
+  var s = v == null ? "" : String(v);
+  if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+  return s;
+}
+
+/* =============================================================================
+   初始化
+   ============================================================================= */
+/* =============================================================================
+   销售员维度汇总 + 本期可视化
+   ============================================================================ */
+function renderRepSummary() {
+  var wrap = document.getElementById("repWrap");
+  var empty = document.getElementById("repEmpty");
+  if (!state.details.length) { if (wrap) wrap.style.display = "none"; if (empty) empty.style.display = ""; return; }
+  var map = {};
+  state.details.forEach(function (d) {
+    if (!d.includedInPeriod) return;
+    var k = d.sales_rep_full;
+    if (!map[k]) map[k] = { rep: k, sales: 0, base: 0, deduct: 0, final: 0, anom: 0 };
+    map[k].sales += d.periodSales;
+    map[k].base += d.periodBase;
+    map[k].deduct += d.periodDeduct;
+    map[k].final += d.periodFinal;
+    if (d.anomalies.length) map[k].anom++;
+  });
+  var list = Object.keys(map).map(function (k) { return map[k]; });
+  list.sort(function (a, b) { return b.final - a.final; });
+  empty.style.display = "none";
+  wrap.style.display = "block";
+  var body = document.getElementById("repBody");
+  body.innerHTML = "";
+  list.forEach(function (r, i) {
+    var tr = document.createElement("tr");
+    if (i === 0) tr.className = "expanded";
+    var rank = i < 3 ? "<span class='badge badge-info'>TOP " + (i + 1) + "</span>" : String(i + 1);
+    tr.innerHTML =
+      "<td>" + rank + "</td>" +
+      "<td>" + escapeHtml(r.rep) + "</td>" +
+      "<td class='num'>" + formatMoney(r.sales) + "</td>" +
+      "<td class='num'>" + formatMoney(r.base) + "</td>" +
+      "<td class='num'>" + formatMoney(r.deduct) + "</td>" +
+      "<td class='num'>" + formatMoney(r.final) + "</td>" +
+      "<td class='num'>" + r.anom + "</td>";
+    body.appendChild(tr);
+  });
+}
+
+function setBar(id, w, valId, val) {
+  var el = document.getElementById(id);
+  if (el) el.style.width = w.toFixed(1) + "%";
+  var v = document.getElementById(valId);
+  if (v) v.textContent = val;
+}
+
+function renderCharts() {
+  var empty = document.getElementById("chartEmpty");
+  var wrap = document.getElementById("chartWrap");
+  if (!state.summary) { if (wrap) wrap.style.display = "none"; if (empty) empty.style.display = ""; return; }
+  empty.style.display = "none";
+  wrap.style.display = "flex";
+  var s = state.summary;
+  var base = s.totalBase, deduct = s.totalDeduct, fin = s.totalFinal;
+  var m = Math.max(base, deduct, fin, 1);
+  setBar("barBase", base / m * 100, "barBaseVal", formatMoney(base));
+  setBar("barDeduct", deduct / m * 100, "barDeductVal", formatMoney(deduct));
+  setBar("barFinal", fin / m * 100, "barFinalVal", formatMoney(fin));
+  var types = ["退货冲销", "跨期归属", "重复计算", "规则未匹配"];
+  var counts = {};
+  types.forEach(function (t) { counts[t] = 0; });
+  state.anomalies.forEach(function (a) { if (counts[a.type] != null) counts[a.type]++; });
+  var maxC = 1;
+  types.forEach(function (t) { maxC = Math.max(maxC, counts[t]); });
+  var box = document.getElementById("anomalyBars");
+  if (!box) return;
+  box.innerHTML = "";
+  types.forEach(function (t) {
+    var item = document.createElement("div");
+    item.className = "bar-item";
+    item.innerHTML =
+      "<span class='bar-label'>" + t + "</span>" +
+      "<div class='bar-track'><div class='bar bar-warn' style='width:" + (counts[t] / maxC * 100).toFixed(1) + "%'></div></div>" +
+      "<span class='bar-val'>" + counts[t] + " 单</span>";
+    box.appendChild(item);
+  });
+}
+
+function init() {
+  renderTierEditor(defaultTiers.slice());
+  renderSkuEditor(defaultSkuCoeffs.map(function (x) {
+    return { productLine: x.productLine, skuPrefix: x.skuPrefix, coeff: x.coeff };
+  }));
+  setCalcStatus("等待计算 — 请先加载数据并确认规则完整", "");
+  /* 默认展开规则卡；引导用户先看清规则再加载数据 */
+}
+
+init();
+</script>
+</body>
+</html>

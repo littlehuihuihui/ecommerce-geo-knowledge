@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>养老金全链路 · 四角色业务诉求</title>
+<style>
+:root{
+  --navy:#1a3a5c; --navy-2:#244a73; --gold:#c9a227; --bg:#f4f5f7; --card:#fff;
+  --text:#1e293b; --muted:#64748b; --line:#e2e8f0;
+  --er:#3b82a0; --mb:#2f9e7a; --tr:#d4655a; --pf:#8b6bb5;
+  --font:-apple-system,"PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);background:var(--bg);color:var(--text)}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+.hero{
+  background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;
+  border-radius:14px;padding:20px 22px;box-shadow:0 8px 24px rgba(26,58,92,.16);
+}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;color:#e8d48a;font-weight:600}
+h1{margin:6px 0 0;font-size:1.4rem}
+.hero p{margin:8px 0 0;opacity:.92;font-size:.88rem;line-height:1.55;max-width:78ch}
+.verdict{
+  margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+}
+@media(max-width:800px){.verdict{grid-template-columns:1fr 1fr}}
+.verdict .v{
+  background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;font-size:.78rem;line-height:1.45;
+}
+.verdict strong{display:block;color:#e8d48a;margin-bottom:4px;font-size:.72rem;letter-spacing:.06em}
+details.how{
+  margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+details.how>summary{
+  cursor:pointer;list-style:none;padding:14px 16px;font-weight:700;color:var(--navy);
+  display:flex;align-items:center;gap:10px;
+}
+details.how>summary::-webkit-details-marker{display:none}
+.badge{font-size:.68rem;background:var(--gold);color:#1a1405;padding:3px 8px;border-radius:999px}
+.how-body{padding:0 16px 16px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted);line-height:1.6}
+.how-body h3{color:var(--navy);font-size:.9rem;margin:14px 0 6px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.pill{background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.4);padding:4px 9px;border-radius:999px;font-size:.76rem;font-weight:600;color:var(--navy)}
+.arr{color:var(--gold);font-weight:700}
+.panel{margin-top:14px;display:grid;grid-template-columns:1fr 1.2fr;gap:12px}
+@media(max-width:900px){.panel{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card h2{margin:0 0 8px;font-size:.95rem;color:var(--navy)}
+.hint{font-size:.78rem;color:var(--muted);margin:0 0 10px;line-height:1.45}
+.roles{display:flex;flex-wrap:wrap;gap:6px}
+.roles button{
+  border:1px solid var(--line);background:#fff;color:var(--navy);padding:7px 12px;border-radius:999px;
+  cursor:pointer;font:inherit;font-size:.8rem;
+}
+.roles button.active{color:#fff;border-color:transparent}
+.roles button[data-role="all"].active{background:var(--navy)}
+.roles button[data-role="雇主"].active{background:var(--er)}
+.roles button[data-role="参保人"].active{background:var(--mb)}
+.roles button[data-role="受托人"].active{background:var(--tr)}
+.roles button[data-role="平台"].active{background:var(--pf)}
+.stages{display:grid;gap:8px;max-height:520px;overflow:auto}
+.stage{
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fafbfc;font-size:.78rem;line-height:1.45;
+}
+.stage h3{margin:0 0 4px;font-size:.86rem;color:var(--navy)}
+.stage .meta{color:var(--muted);margin-bottom:6px}
+.stage .cell{margin-top:4px}
+.stage .cell b{color:var(--navy)}
+.stage.dim{opacity:.35}
+.tickets{display:grid;gap:8px;max-height:620px;overflow:auto}
+.ticket{
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;font-size:.78rem;line-height:1.45;
+}
+.ticket.hidden{display:none}
+.ticket .q{font-weight:700;color:var(--navy);margin:0 0 6px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
+.tag{font-size:.68rem;padding:2px 7px;border-radius:999px;background:#eef2f5;color:var(--muted)}
+.tag.er{background:rgba(59,130,160,.15);color:var(--er)}
+.tag.mb{background:rgba(47,158,122,.15);color:var(--mb)}
+.tag.tr{background:rgba(212,101,90,.15);color:var(--tr)}
+.tag.pf{background:rgba(139,107,181,.15);color:var(--pf)}
+.ticket dl{margin:0;display:grid;gap:4px}
+.ticket dt{font-size:.68rem;color:var(--muted)}
+.ticket dd{margin:0}
+.search{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;margin-bottom:10px}
+.kpis{margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:800px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .l{font-size:.72rem;color:var(--muted)}
+.kpi .v{margin-top:4px;font-size:1.15rem;font-weight:700;color:var(--navy)}
+footer{margin-top:18px;padding-top:12px;border-top:1px solid var(--line);font-size:.76rem;color:var(--muted);line-height:1.55}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">JD 对齐补充 · 对象一～四之外</div>
+    <h1>养老金全链路业务流程 · 四角色诉求解读</h1>
+    <p>对照岗位要求「受托人、雇主、参保人、平台全流程，精准解读业务诉求」。现成宏观/充足度建模<strong>未覆盖</strong>此条；本页补流程地图 + 20 条诉求拆解。</p>
+    <div class="verdict">
+      <div class="v"><strong>覆盖判定</strong>部分覆盖：钱与替代率强；角色流程弱</div>
+      <div class="v"><strong>雇主</strong>规则参数有；开户→月供→催收链此前缺</div>
+      <div class="v"><strong>受托人/平台</strong>面试包写明未建模；此处补业务叙事</div>
+      <div class="v"><strong>参保人</strong>充足度有；办业务/工单解读此前缺</div>
+    </div>
+  </div>
+
+  <details class="how" open>
+    <summary><span class="badge">思路</span>这个补充模块怎么用、和对象一～四什么关系</summary>
+    <div class="how-body">
+      <h3>岗位要什么 vs 仓库原有什么</h3>
+      <p>原有对象一～四回答「池子多大、综援多少、个人够不够、年金怎么对冲长寿」。岗位这句话要的是<strong>运营与业务理解</strong>：谁发起、谁审批、卡在哪、原话怎么翻译成可查指标。</p>
+      <h3>主链路</h3>
+      <div class="flow">
+        <span class="pill">雇主登记</span><span class="arr">→</span>
+        <span class="pill">成员开户</span><span class="arr">→</span>
+        <span class="pill">供款入账</span><span class="arr">→</span>
+        <span class="pill">投资服务</span><span class="arr">→</span>
+        <span class="pill">转移整合</span><span class="arr">→</span>
+        <span class="pill">提取支付</span><span class="arr">→</span>
+        <span class="pill">投诉合规</span>
+      </div>
+      <p>每一环都有四角色分工；平台（eMPF）横贯标准化。宏观模型把 eMPF 当费率，本页把平台当<strong>流程角色</strong>。</p>
+      <h3>解读四步（背这个）</h3>
+      <p>① 定角色 → ② 定阶段 → ③ 定对象（账户/款项/时效/资格/系统）→ ④ 定证据（指标或模型表）。下方工单卡按此结构写好。</p>
+    </div>
+  </details>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>① 按角色看生命周期职责</h2>
+      <p class="hint">点角色高亮其主责阶段；「成功标准 / 失败诉求」用于面试举例。</p>
+      <div class="roles" id="role-btns">
+        <button type="button" data-role="all" class="active">全部</button>
+        <button type="button" data-role="雇主">雇主</button>
+        <button type="button" data-role="参保人">参保人</button>
+        <button type="button" data-role="受托人">受托人</button>
+        <button type="button" data-role="平台">平台</button>
+      </div>
+      <div class="stages" id="stages" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h2>② 业务诉求解读台</h2>
+      <p class="hint">搜索原话或按角色筛选；每张卡含解读要点、先查什么、建议动作、挂到哪张指标/模型。</p>
+      <input class="search" id="q" type="search" placeholder="搜索：到账、对冲、合并账户、eMPF…"/>
+      <div class="roles" id="ticket-roles" style="margin-bottom:10px">
+        <button type="button" data-trole="all" class="active">全部诉求</button>
+        <button type="button" data-trole="雇主">雇主</button>
+        <button type="button" data-trole="参保人">参保人</button>
+        <button type="button" data-trole="受托人">受托人</button>
+        <button type="button" data-trole="平台">平台</button>
+      </div>
+      <div class="tickets" id="tickets"></div>
+    </div>
+  </div>
+
+  <footer>
+    文档：<code>00_coverage_vs_jd.md</code> · <code>01_full_chain_concepts.md</code> ·
+    数据：<code>role_stage_matrix.csv</code> · <code>ticket_interpretation.csv</code> ·
+    再生：<code>python build_dashboard.py</code> · 教学向，非正式合规意见
+  </footer>
+</div>
+<script>
+const DATA = {"stages": [{"阶段ID": "S1", "阶段名称": "计划与雇主登记", "排序": "1", "雇主_职责": "开业后登记强积金计划并选定受托人/计划", "参保人_职责": "—（尚未入职）", "受托人_职责": "承接雇主参与协议与计划文件", "平台_职责": "提供标准化登记通道与状态查询", "成功标准": "雇主在时限内完成登记且计划生效", "失败时典型诉求": "「开业超过期限还没登记会怎样」「系统显示登记失败」", "衔接现有建模": "百科：雇主登记合规率；对象一：覆盖率参数上游"}, {"阶段ID": "S2", "阶段名称": "成员登记与开户", "排序": "2", "雇主_职责": "为合资格雇员办理登记并报送入息资料", "参保人_职责": "确认身份资料、知悉已开户", "受托人_职责": "开立成员账户并建立权益记录", "平台_职责": "统一成员身份与账户索引、减少重复开户", "成功标准": "入职后时限内账户可见可查", "失败时典型诉求": "「入职两周账户还查不到」「自雇要不要开」", "衔接现有建模": "百科：新增参与成员数；对象三职业路径起点"}, {"阶段ID": "S3", "阶段名称": "月度供款与入账", "排序": "3", "雇主_职责": "按上下限规则扣缴雇员+雇主强制供款并汇付", "参保人_职责": "核对工资单扣款是否合理", "受托人_职责": "接收汇付、分配至基金、更新结余", "平台_职责": "供款指令标准化、对账与异常回传", "成功标准": "按期足额+入账时效达标", "失败时典型诉求": "「扣了款但未到账」「低于下限还要不要扣」", "衔接现有建模": "对象一贡献层；contribution 上下限规则"}, {"阶段ID": "S4", "阶段名称": "投资选择与账户服务", "排序": "4", "雇主_职责": "可选安排教育/默认计划沟通（非投顾）", "参保人_职责": "选基金或DIS、自愿供款、查结余", "受托人_职责": "基金行政、单位价格、报表与TER披露", "平台_职责": "统一查询与基金转换指令", "成功标准": "成员可自助完成查询与转换且记录准确", "失败时典型诉求": "「回报差是不是被坑了」「DIS能不能换」", "衔接现有建模": "百科：DIS使用率/TER；对象三净回报假设"}, {"阶段ID": "S5", "阶段名称": "转职·转移·账户整合", "排序": "5", "雇主_职责": "停供/离职通知、配合转移文件", "参保人_职责": "申请整合或转入自选计划（含全自由行阶段政策）", "受托人_职责": "处理转移指示、结清单位", "平台_职责": "跨受托人转移状态机与进度可见", "成功标准": "账户碎片下降、转移在SLA内完成", "失败时典型诉求": "「换了三份工有四个账户怎么办」", "衔接现有建模": "百科：多账户占比；面试包：全自由行未建模受托人竞争—本阶段补业务叙事"}, {"阶段ID": "S6", "阶段名称": "权益支付（提取）", "排序": "6", "雇主_职责": "配合离职证明/长服金与对冲政策边界说明", "参保人_职责": "提交提取申请（退休/提早/离港等）", "受托人_职责": "审核条件、变现、付款", "平台_职责": "提取申请统一入口与进度", "成功标准": "付款准确且时效达标", "失败时典型诉求": "「已满65为什么还没到账」「离港提取要什么文件」", "衔接现有建模": "对象一提取层；对象三/四一笔过与年金；三层替代率"}, {"阶段ID": "S7", "阶段名称": "投诉·稽查与合规", "排序": "7", "雇主_职责": "响应催缴与调查、整改供款", "参保人_职责": "投诉服务/入账/提取问题", "受托人_职责": "投诉处理、监管报送、内控", "平台_职责": "平台侧工单与审计轨迹", "成功标准": "投诉闭环、违规率可控", "失败时典型诉求": "「一直投诉没人回」「会不会被检控」", "衔接现有建模": "百科：投诉率/违规雇主数；对象一不含执法"}], "tickets": [{"诉求ID": "T01", "原话诉求": "开业快两个月了强积金还没登记会怎样", "主角色": "雇主", "涉及角色": "受托人|平台", "所处阶段": "S1", "解读要点": "雇主合规时限问题非成员自愿；先确认是否已选计划", "根因假设_优先查": "开业日与登记截止日|登记工单状态", "建议动作": "立即完成计划登记并保留回执；评估逾期风险沟通", "关联指标或模型": "百科·雇主登记合规率", "难度": "基础"}, {"诉求ID": "T02", "原话诉求": "新同事入职两周登录还是查不到账户", "主角色": "雇主", "涉及角色": "参保人|受托人|平台", "所处阶段": "S2", "解读要点": "卡在成员登记/开户链路；可能雇主未报送或受托人未开立", "根因假设_优先查": "雇员入职日|登记批次|平台账户索引", "建议动作": "核对是否合资格雇员→补登记→查开户确认", "关联指标或模型": "百科·新增参与成员数", "难度": "基础"}, {"诉求ID": "T03", "原话诉求": "这个月工资扣了强积金但账户余额没变", "主角色": "参保人", "涉及角色": "雇主|受托人|平台", "所处阶段": "S3", "解读要点": "区分「已扣未汇」「已汇未入账」「入账未分配」三截", "根因假设_优先查": "供款日|汇付批次|入账SLA|对账差异", "建议动作": "按截段找责任方；给成员可预期时效", "关联指标或模型": "百科·供款入账天数；对象一贡献层", "难度": "进阶"}, {"诉求ID": "T04", "原话诉求": "我月薪很低为什么还要交强积金", "主角色": "参保人", "涉及角色": "雇主", "所处阶段": "S3", "解读要点": "上下限规则：雇员低于下限可不供、雇主仍可能有义务；勿与「完全不用交」混谈", "根因假设_优先查": "有关入息是否低于下限|工资单拆分", "建议动作": "用规则表解释雇员/雇主不对称义务", "关联指标或模型": "contribution 上下限；设计思路文档", "难度": "基础"}, {"诉求ID": "T05", "原话诉求": "公司说用我的强积金对冲遣散费合理吗", "主角色": "参保人", "涉及角色": "雇主|受托人", "所处阶段": "S6", "解读要点": "需按转制日分层：2025-05-01后服务年资雇主强制一般不可对冲", "根因假设_优先查": "入职日|转制日|强制vs自愿部分", "建议动作": "核对服务年资分段与累算权益类别后再答复", "关联指标或模型": "对象一对冲项；面试包取消对冲", "难度": "进阶"}, {"诉求ID": "T06", "原话诉求": "换了几份工账户好多想合并", "主角色": "参保人", "涉及角色": "受托人|平台", "所处阶段": "S5", "解读要点": "账户碎片是行业痛点；平台价值在统一转移/整合", "根因假设_优先查": "账户数量|所属受托人|转移进行中工单", "建议动作": "引导整合路径与全自由行/雇员自选政策阶段", "关联指标或模型": "百科·持有3个以上账户占比", "难度": "基础"}, {"诉求ID": "T07", "原话诉求": "我想把雇主强制供款转到自己选的计划", "主角色": "参保人", "涉及角色": "雇主|受托人|平台", "所处阶段": "S5", "解读要点": "属可携带性/雇员选择权政策（全自由行分阶段）；不是改制度总资产", "根因假设_优先查": "政策生效阶段|入职是否符合|转移指示状态", "建议动作": "按立法/实施时间线解释能否办、怎么办", "关联指标或模型": "面试包·全自由行边界", "难度": "进阶"}, {"诉求ID": "T08", "原话诉求": "为什么同样供款我朋友的余额更高", "主角色": "参保人", "涉及角色": "受托人", "所处阶段": "S4", "解读要点": "可能是基金配置、TER、入账时点、自愿供款差异；避免直接指控", "根因假设_优先查": "基金选择|DIS|费用率|供款完整率", "建议动作": "用「配置+费用+时间」三因素解释并引导查询报表", "关联指标或模型": "百科·TER/DIS；对象三回报情景", "难度": "进阶"}, {"诉求ID": "T09", "原话诉求": "提取申请交了十天钱还没到", "主角色": "参保人", "涉及角色": "受托人|平台", "所处阶段": "S6", "解读要点": "领取链路SLA；查审核中卡件（文件/身份/税务）还是付款渠道", "根因假设_优先查": "申请状态机|缺件原因|付款批次", "建议动作": "缺件补齐或升级受托人服务时效", "关联指标或模型": "百科·服务时效；对象一提取", "难度": "基础"}, {"诉求ID": "T10", "原话诉求": "雇主端显示已供款但我们批处理对不上", "主角色": "受托人", "涉及角色": "雇主|平台", "所处阶段": "S3", "解读要点": "受托人运营对账异常；平台标准化后更易定位批次", "根因假设_优先查": "汇付金额vs指示明细|异常码", "建议动作": "开对账工单→回传雇主修正→重跑入账", "关联指标或模型": "百科·对账差异/入账天数", "难度": "进阶"}, {"诉求ID": "T11", "原话诉求": "成员投诉我们处理慢被监管问询", "主角色": "受托人", "涉及角色": "平台|参保人", "所处阶段": "S7", "解读要点": "运营质量与投诉闭环；NPS/投诉率是护栏指标", "根因假设_优先查": "投诉年龄|超时单|根因分类", "建议动作": "先清超时单再做根因分层（入账/转移/提取）", "关联指标或模型": "百科·投诉率·NPS·受托人服务质量", "难度": "进阶"}, {"诉求ID": "T12", "原话诉求": "eMPF上线后为什么还有人要登多个门户", "主角色": "平台", "涉及角色": "受托人|参保人|雇主", "所处阶段": "S4", "解读要点": "迁移并行期常见；平台目标是集中行政非立刻消灭所有旧入口", "根因假设_优先查": "计划是否已接eMPF|并行服务清单", "建议动作": "按计划迁移进度解释过渡安排", "关联指标或模型": "面试包eMPF费率；本模块平台叙事", "难度": "基础"}, {"诉求ID": "T13", "原话诉求": "有强积金几百万还能不能申长者生活津贴", "主角色": "参保人", "涉及角色": "—", "所处阶段": "S6", "解读要点": "第一支柱资格：未提取权益通常计入资产→中产易超长津资产上限", "根因假设_优先查": "计入资产|入息含年金|年龄", "建议动作": "转三层替代率模块做示意；非正式批核", "关联指标或模型": "three_pillar_adequacy", "难度": "进阶"}, {"诉求ID": "T14", "原话诉求": "建筑/餐饮行业覆盖率为什么总上不去", "主角色": "雇主", "涉及角色": "参保人|平台", "所处阶段": "S1", "解读要点": "覆盖靠雇主合规稽查而非成员自愿（百科北极星逻辑）", "根因假设_优先查": "行业参与率|违规雇主|临时工合资格判定", "建议动作": "稽查名单+简化登记路径", "关联指标或模型": "百科·参与率按行业拆分", "难度": "进阶"}, {"诉求ID": "T15", "原话诉求": "自雇人士说不知道要不要强制参与", "主角色": "参保人", "涉及角色": "平台|雇主", "所处阶段": "S2", "解读要点": "自雇有独立供款规则；常与「雇员」混淆", "根因假设_优先查": "是否自雇身份|收入档", "建议动作": "解释自雇纳管路径与登记入口", "关联指标或模型": "百科·自雇纳管场景", "难度": "基础"}, {"诉求ID": "T16", "原话诉求": "取消对冲后我们财务系统还在按旧逻辑冲账", "主角色": "雇主", "涉及角色": "受托人", "所处阶段": "S3", "解读要点": "制度断点未落到雇主系统=合规与账务双风险", "根因假设_优先查": "转制日参数|强制权益标记", "建议动作": "改薪资/总账规则并抽样审计历史凭证", "关联指标或模型": "对象一对冲衰减参数", "难度": "进阶"}, {"诉求ID": "T17", "原话诉求": "平台要我们按新接口重报供款明细成本很高", "主角色": "雇主", "涉及角色": "平台|受托人", "所处阶段": "S3", "解读要点": "平台标准化诉求 vs 雇主改造成本；需分阶段与例外清单", "根因假设_优先查": "接口版本|豁免期|错误率", "建议动作": "排期迁移+并行校验+失败回滚", "关联指标或模型": "本模块平台职责", "难度": "进阶"}, {"诉求ID": "T18", "原话诉求": "成员频繁择时转换基金要不要干预", "主角色": "受托人", "涉及角色": "参保人|平台", "所处阶段": "S4", "解读要点": "过高转换率是行为风险；DIS与投资者教育是对策", "根因假设_优先查": "转换率|年龄风险错配", "建议动作": "行为提示+默认DIS引导而非禁止", "关联指标或模型": "百科·基金转换率·投资知识", "难度": "进阶"}, {"诉求ID": "T19", "原话诉求": "离港提取要哪些证明会不会被拒", "主角色": "参保人", "涉及角色": "受托人|平台", "所处阶段": "S6", "解读要点": "提早/离港提取条件严于退休；文件不全是主因", "根因假设_优先查": "居留/签证证明|计划规则", "建议动作": "清单化文件+预审", "关联指标或模型": "对象一离港提取锚点", "难度": "基础"}, {"诉求ID": "T20", "原话诉求": "监管要看我们供款时效与TER对标同业", "主角色": "受托人", "涉及角色": "平台", "所处阶段": "S7", "解读要点": "受托人绩效评估场景；数据要可复现可对比", "根因假设_优先查": "入账天数|TER|投诉闭环时长", "建议动作": "做对标仪表盘而非只报资产规模", "关联指标或模型": "百科·受托人运营质量北极星", "难度": "进阶"}]};
+const roleKey = {
+  "雇主": "雇主_职责",
+  "参保人": "参保人_职责",
+  "受托人": "受托人_职责",
+  "平台": "平台_职责",
+};
+const tagClass = { "雇主":"er", "参保人":"mb", "受托人":"tr", "平台":"pf" };
+let role = "all";
+let trole = "all";
+let q = "";
+
+function renderKpis(){
+  document.getElementById("kpis").innerHTML = `
+    <div class="kpi"><div class="l">生命周期阶段</div><div class="v">${DATA.stages.length}</div></div>
+    <div class="kpi"><div class="l">诉求解读样本</div><div class="v">${DATA.tickets.length}</div></div>
+    <div class="kpi"><div class="l">覆盖角色</div><div class="v">4</div></div>
+    <div class="kpi"><div class="l">与宏观模型</div><div class="v">衔接表</div></div>`;
+}
+
+function renderStages(){
+  const box = document.getElementById("stages");
+  const sorted = [...DATA.stages].sort((a,b)=>Number(a.排序)-Number(b.排序));
+  box.innerHTML = sorted.map(s => {
+    const focus = role === "all" ? null : s[roleKey[role]];
+    const dim = role !== "all" && (!focus || focus === "—" || focus.startsWith("—"));
+    const duty = role === "all"
+      ? `<div class="cell"><b>雇主</b> ${s.雇主_职责}</div>
+         <div class="cell"><b>参保人</b> ${s.参保人_职责}</div>
+         <div class="cell"><b>受托人</b> ${s.受托人_职责}</div>
+         <div class="cell"><b>平台</b> ${s.平台_职责}</div>`
+      : `<div class="cell"><b>${role}主责</b> ${focus || "—"}</div>`;
+    return `<div class="stage ${dim?"dim":""}">
+      <h3>${s.阶段ID} · ${s.阶段名称}</h3>
+      <div class="meta">成功：${s.成功标准}</div>
+      ${duty}
+      <div class="cell"><b>失败诉求</b> ${s.失败时典型诉求}</div>
+      <div class="cell"><b>衔接</b> ${s.衔接现有建模}</div>
+    </div>`;
+  }).join("");
+}
+
+function matchTicket(t){
+  if (trole !== "all" && t.主角色 !== trole && !(t.涉及角色||"").includes(trole)) return false;
+  if (!q) return true;
+  const blob = [t.原话诉求,t.解读要点,t.根因假设_优先查,t.建议动作,t.关联指标或模型,t.所处阶段].join(" ");
+  return blob.toLowerCase().includes(q.toLowerCase());
+}
+
+function renderTickets(){
+  const box = document.getElementById("tickets");
+  const list = DATA.tickets.filter(matchTicket);
+  box.innerHTML = list.map(t => {
+    const roles = [t.主角色].concat((t.涉及角色||"").split("|").filter(Boolean));
+    const tags = [...new Set(roles)].map(r => `<span class="tag ${tagClass[r]||""}">${r}</span>`).join("");
+    return `<div class="ticket">
+      <div class="q">${t.诉求ID} · 「${t.原话诉求}」</div>
+      <div class="tags">${tags}<span class="tag">${t.所处阶段}</span><span class="tag">${t.难度}</span></div>
+      <dl>
+        <dt>解读要点</dt><dd>${t.解读要点}</dd>
+        <dt>优先查</dt><dd>${t.根因假设_优先查}</dd>
+        <dt>建议动作</dt><dd>${t.建议动作}</dd>
+        <dt>挂到</dt><dd>${t.关联指标或模型}</dd>
+      </dl>
+    </div>`;
+  }).join("") || '<div class="hint">无匹配诉求，试试换角色或清空搜索。</div>';
+}
+
+document.getElementById("role-btns").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-role]");
+  if (!btn) return;
+  role = btn.dataset.role;
+  document.querySelectorAll("#role-btns button").forEach(b => b.classList.toggle("active", b===btn));
+  renderStages();
+});
+document.getElementById("ticket-roles").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-trole]");
+  if (!btn) return;
+  trole = btn.dataset.trole;
+  document.querySelectorAll("#ticket-roles button").forEach(b => b.classList.toggle("active", b===btn));
+  renderTickets();
+});
+document.getElementById("q").addEventListener("input", e => { q = e.target.value.trim(); renderTickets(); });
+
+renderKpis();
+renderStages();
+renderTickets();
+</script>
+</body>
+</html>

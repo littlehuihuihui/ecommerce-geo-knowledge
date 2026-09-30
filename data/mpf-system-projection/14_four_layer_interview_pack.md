@@ -6,11 +6,13 @@
 > - 对象二：`cssa_elderly_model/`（CSV + 数据字典）  
 > - 对象三：`mpf_individual_model/mpf_individual_adequacy_dashboard.html`  
 > - 对象四：`mpf_annuity_model/mpf_annuity_dashboard.html`  
+> - 三层替代率 / 长津概念：`three_pillar_adequacy/three_pillar_dashboard.html`  
+> - **全链路业务（受托人·雇主·参保人·平台）**：交互台 `pension_business_chain/business_chain_dashboard.html`；口述一页 `16_pension_full_chain_ops.html`  
 > - 可打印一页纸：`14_four_layer_one_pager.html`  
 >
 > **数字口径**：各对象基准情景；金额除注明外为亿港元或港元  
 > **性质**：研究/教学投影，非官方精算  
-> **版本**：v1.0｜对齐对象一～四最新跑数
+> **版本**：v1.1｜对象一～四 + 三层 + 全链路业务补充
 
 ---
 
