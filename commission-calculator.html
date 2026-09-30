@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -249,7 +249,8 @@ table.rule-edit input {
   cursor: pointer;
   font-size: 0.84rem;
 }
-.radio-pill:has(input:checked) {
+/* 不用 :has()，改由 JS 给 .is-on，兼容旧版浏览器 */
+.radio-pill.is-on {
   border-color: var(--accent);
   background: #eef4fb;
   color: var(--navy);
@@ -336,7 +337,7 @@ table.rule-edit input {
 }
 .stat .value {
   font-size: clamp(1.15rem, 3.2vw, 1.45rem);
-  font-weight: 750;
+  font-weight: 700;
   color: var(--navy);
   font-variant-numeric: tabular-nums;
   word-break: break-all;
@@ -547,6 +548,7 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
 .chart-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .chart-card { flex: 1 1 300px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
 .chart-title { font-weight: 700; color: var(--navy); font-size: 0.86rem; margin-bottom: 8px; }
+.chart-note { font-size: 0.72rem; color: var(--muted); margin: -4px 0 8px; }
 .bar-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.8rem; }
 .bar-label { flex: 0 0 88px; color: #334155; }
 .bar-track { flex: 1 1 auto; background: #eef1f5; border-radius: 4px; height: 14px; overflow: hidden; }
@@ -556,6 +558,72 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
 .bar-ok { background: var(--ok); }
 .bar-warn { background: #c98900; }
 .bar-val { flex: 0 0 74px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+
+/* ---------- 概念 / 逻辑说明 ---------- */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+.concept-item {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.concept-item h4 {
+  margin: 0 0 4px;
+  font-size: 0.86rem;
+  color: var(--navy);
+}
+.concept-item p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #334155;
+  line-height: 1.55;
+}
+.formula-box {
+  background: #0b2a4a;
+  color: #e8eef5;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  margin: 8px 0 14px;
+  font-variant-numeric: tabular-nums;
+}
+.formula-box strong { color: #fff; }
+.formula-box .f-sub { display: block; margin-top: 6px; font-size: 0.76rem; opacity: 0.82; }
+.logic-ol {
+  margin: 0 0 14px;
+  padding-left: 1.25em;
+}
+.logic-ol li {
+  margin-bottom: 8px;
+  font-size: 0.84rem;
+  color: #334155;
+}
+.logic-ol li strong { color: var(--navy); }
+.gloss-table { min-width: 640px; }
+.gloss-table td:first-child {
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.78rem;
+}
+.callout {
+  background: #eef4fb;
+  border: 1px solid #c5d7ee;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+  color: #334155;
+  margin: 8px 0 0;
+}
+.callout strong { color: var(--navy); }
 
 @media (max-width: 640px) {
   .hero { padding: 22px 14px 26px; }
@@ -574,13 +642,159 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
 <header class="hero">
   <div class="hero-inner">
     <h1>通信设备销售佣金计算器</h1>
-    <p class="sub">可配置规则 · 异常检测 · 明细可追溯 · 勾稽校验</p>
-    <p class="desc">用于通信设备销售数据分析岗位作品集演示 — 覆盖退货冲销、回款归属、SKU 系数、阶梯提成与四类异常稽查。</p>
+    <p class="sub">可配置规则 · 异常检测 · 明细可追溯 · 勾稽校验 · 概念可讲解</p>
+    <p class="desc">用于通信设备销售数据分析岗位作品集演示 — 覆盖退货冲销、回款归属、SKU 系数、阶梯提成与四类异常稽查；页内含概念词典与七步计算逻辑说明。</p>
     <span class="hero-badge">HK Telecom Equipment · Sales Analytics Demo</span>
   </div>
 </header>
 
 <main class="wrap">
+
+  <!-- ======================== 概念与计算逻辑（作品集讲解核心） ======================== -->
+  <section class="card" id="conceptCard">
+    <div class="card-head" onclick="toggleCard('conceptCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>概念与计算逻辑 <span class="en">Concepts &amp; Logic</span></h2>
+        <span class="hint">先读懂再操作 · 面试可直接照此讲解</span>
+      </div>
+      <span class="chev" aria-hidden="true">▼</span>
+    </div>
+    <div class="card-body footer-section">
+
+      <h3>一、这个工具在算什么？</h3>
+      <p style="font-size:0.84rem;color:#334155;margin:0 0 10px;">
+        面向港资通信设备销售场景：销售员卖出 Router / Switch / SIM Plan / Enterprise Line 后，公司按月结算佣金。
+        核心问题不是「把金额乘个比例」，而是：<strong>哪些单能进本期、按什么规则加权、退货怎么冲、哪里算错了要单独揪出来</strong>。
+      </p>
+
+      <h3>二、核心业务概念</h3>
+      <div class="concept-grid">
+        <div class="concept-item">
+          <h4>计算周期 Period</h4>
+          <p>本次要结算的月份（如 2025-03）。只有「归属月 = 计算周期」的订单，才会计入汇总卡片的销售额与佣金。</p>
+        </div>
+        <div class="concept-item">
+          <h4>归属 Attribution</h4>
+          <p>决定一笔单记入哪个月。默认按<strong>回款月</strong>（钱到账才发佣）；也可切到按<strong>订单月</strong>（开单即计提，演示口径差异）。</p>
+        </div>
+        <div class="concept-item">
+          <h4>阶梯提成 Tier Rate</h4>
+          <p>按单笔销售额落入的金额区间匹配提成比例。低额单低比例、高额单高比例，用于激励做大单。</p>
+        </div>
+        <div class="concept-item">
+          <h4>SKU / 产品线系数 Coefficient</h4>
+          <p>不同产品线毛利与战略权重不同。例如 Enterprise Line 系数 1.5、SIM Plan 0.8，用来调节「同样销售额下的佣金含金量」。</p>
+        </div>
+        <div class="concept-item">
+          <h4>基础佣金 Base</h4>
+          <p>正常销售单（非退货）按公式算出的应发提成，尚未扣减退货。规则未匹配时记 0，并打异常。</p>
+        </div>
+        <div class="concept-item">
+          <h4>退货冲销 Return Clawback</h4>
+          <p>return_flag = Y 的单据不进正常提成；若开启扣减，则按同等公式算出扣减额，从归属月佣金中冲回，避免「货退了佣金还留着」。</p>
+        </div>
+        <div class="concept-item">
+          <h4>跨期 Cross-period</h4>
+          <p>订单月 ≠ 回款月。常见于账期客户。无论用哪种归属规则，都必须标记，防止同一笔在两个月争议。</p>
+        </div>
+        <div class="concept-item">
+          <h4>异常稽查 Anomaly</h4>
+          <p>不是简单标红，而是按判定条件产出可处理清单：退货冲销、跨期归属、重复计算、规则未匹配，并给出建议动作。</p>
+        </div>
+      </div>
+
+      <h3>三、核心公式</h3>
+      <div class="formula-box">
+        <strong>基础佣金</strong> = 销售额 × 阶梯提成比例 × SKU 系数<br />
+        <strong>退货扣减</strong> = 退货金额 × 阶梯提成比例 × SKU 系数　（仅 return_flag = Y 且开启「扣减当月佣金」）<br />
+        <strong>最终佣金（本期）</strong> = 基础佣金 − 退货扣减<br />
+        <span class="f-sub">例：销售额 93,400 · 落入 3% 档 · Switch 系数 1.2 → 基础佣金 = 93,400 × 3% × 1.2 = 3,362.40</span>
+      </div>
+
+      <h3>四、严格计算顺序（七步，不可调换）</h3>
+      <ol class="logic-ol">
+        <li><strong>① 过滤退货单：</strong>return_flag = Y 不进入正常提成链路，转入冲销逻辑；N 继续往下走。</li>
+        <li><strong>② 判定归属月：</strong>按「回款月 / 订单月」规则（退货可选手动追溯原订单月）得到归属月，并判断是否纳入当前计算周期。</li>
+        <li><strong>③ 匹配 SKU 系数：</strong>优先按 product_line，其次按 SKU 前缀；未命中 →「规则未匹配（SKU缺失）」，系数空、佣金记 0。</li>
+        <li><strong>④ 匹配阶梯区间：</strong>销售额落入哪一档用哪一档比例；未落入任何档 →「规则未匹配（阶梯缺失）」。</li>
+        <li><strong>⑤ 计算基础佣金：</strong>仅非退货且规则齐全时：金额 × 比例 × 系数；中间值可在明细行展开查看。</li>
+        <li><strong>⑥ 退货冲销扣减：</strong>扣减金额单独字段，不与基础佣金混算；记录扣哪一单、扣多少、扣到哪个月。</li>
+        <li><strong>⑦ 输出明细 + 异常表：</strong>本期汇总只加「归属月 = 计算周期」的行；全量明细保留他月行（标「非本期」）便于追溯。</li>
+      </ol>
+      <div class="callout">
+        <strong>口径提醒：</strong>汇总卡片 / 勾稽 / 销售员汇总 = <em>本期口径</em>；佣金明细默认展示全部输入行。
+        对账时请看明细上的「非本期」标记，或按异常/销售员筛选后再加总，避免把他月基础佣金误加进本期。
+      </div>
+
+      <h3>五、四类异常判定（面试必讲）</h3>
+      <div class="table-scroll" style="margin-bottom:12px;">
+        <table class="data gloss-table">
+          <thead>
+            <tr>
+              <th>异常类型</th>
+              <th>判定条件</th>
+              <th>必须说清的信息</th>
+              <th>常见处理</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>退货冲销</td>
+              <td>return_flag = Y</td>
+              <td>原订单号、退货金额、扣减金额、扣减归属月</td>
+              <td>核对 CRM 退货与原单；确认冲销月是否追溯原计提月</td>
+            </tr>
+            <tr>
+              <td>跨期归属</td>
+              <td>订单月 ≠ 回款月</td>
+              <td>订单月、回款月、计算周期、是否纳入本期</td>
+              <td>披露账期影响；避免两月重复计提</td>
+            </tr>
+            <tr>
+              <td>重复计算</td>
+              <td>同一 order_id 出现 ≥ 2 次</td>
+              <td>重复单号、次数、涉及销售员与金额</td>
+              <td>去重后重算；排查接口幂等 / 导入键</td>
+            </tr>
+            <tr>
+              <td>规则未匹配</td>
+              <td>产品线/SKU 不在系数表，或金额未落入阶梯</td>
+              <td>具体原因（SKU缺失 / 阶梯缺失）、订单、金额</td>
+              <td>补规则或纠正主数据后重算</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>六、字段词典（CSV / 明细）</h3>
+      <div class="table-scroll" style="margin-bottom:8px;">
+        <table class="data gloss-table">
+          <thead>
+            <tr><th>字段</th><th>含义</th><th>业务注意点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>order_id</td><td>订单号（主键候选）</td><td>重复出现即触发「重复计算」异常</td></tr>
+            <tr><td>sales_rep / sales_rep_cn</td><td>销售员英文名 / 中文名</td><td>港资场景常见双语姓名展示</td></tr>
+            <tr><td>sku / product_line</td><td>物料编码 / 产品线</td><td>系数表按产品线（或 SKU 前缀）匹配</td></tr>
+            <tr><td>order_date</td><td>开单日期 YYYY-MM-DD</td><td>按订单月归属时取此月</td></tr>
+            <tr><td>payment_date</td><td>回款日期 YYYY-MM-DD</td><td>默认归属取此月；与订单月不同则跨期</td></tr>
+            <tr><td>amount</td><td>销售额 / 退货金额</td><td>正数；退货用 return_flag 区分，不用负金额混算</td></tr>
+            <tr><td>return_flag</td><td>Y = 退货，N = 正常</td><td>Y 单不进基础佣金，走冲销</td></tr>
+            <tr><td>region</td><td>Hong Kong / Kowloon / New Territories</td><td>区域维度，便于切片分析</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>七、怎么演示（建议 90 秒）</h3>
+      <ol class="logic-ol">
+        <li>点「加载内置虚拟数据」→ 看条约 50 条，含退货 / 跨期 / 重复 / 未匹配。</li>
+        <li>确认计算周期为 2025-03、归属为「按回款月」→ 点「执行佣金计算」。</li>
+        <li>看汇总与勾稽 → 点开一条退货行讲冲销 → 再点一条跨期讲归属。</li>
+        <li>改一档阶梯比例或 SKU 系数 → 再算，数字必须变化。</li>
+        <li>切到「按订单月」→ 再算，跨期单的归属月与是否纳入本期会变。</li>
+      </ol>
+    </div>
+  </section>
 
   <!-- ======================== 规则配置区 ======================== -->
   <section class="card" id="rulesCard">
@@ -618,14 +832,14 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
       <!-- 阶梯提成表 -->
       <div class="rule-block">
         <h3>阶梯提成表</h3>
-        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按单笔销售额落入区间匹配提成比例。区间左闭右闭；最高档可留空上限表示无上限。</p>
+        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按单笔销售额落入区间匹配提成比例。区间<strong>左闭右开</strong>[下限, 上限)；最高档上限留空表示 [下限, +∞)。金额按港币元设计，档位连续无缝隙。</p>
         <div class="rule-table-wrap">
           <table class="rule-edit" id="tierTable">
             <thead>
               <tr>
                 <th>档位</th>
                 <th>销售额下限 (≥)</th>
-                <th>销售额上限 (≤，空=无上限)</th>
+                <th>销售额上限（不含；空=无上限）</th>
                 <th>提成比例 (%)</th>
                 <th></th>
               </tr>
@@ -750,6 +964,13 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
     </div>
     <div class="card-body">
       <div class="filters" id="detailFilters" style="display:none;">
+        <div class="col">
+          <label class="field-label" for="fPeriod">归属口径</label>
+          <select id="fPeriod" onchange="renderDetails()">
+            <option value="period" selected>仅本期（与汇总一致）</option>
+            <option value="all">全部月份</option>
+          </select>
+        </div>
         <div class="col">
           <label class="field-label" for="fRep">销售员</label>
           <select id="fRep" onchange="renderDetails()"></select>
@@ -899,6 +1120,7 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
         </div>
         <div class="chart-card">
           <div class="chart-title">异常类型分布 <span class="en">Anomaly Distribution</span></div>
+          <div class="chart-note">同一订单命中多类时分别计入；订单去重后共 <span id="anomalyOrderNote">—</span> 单（与汇总「异常单数」一致）</div>
           <div id="anomalyBars"></div>
         </div>
       </div>
@@ -927,7 +1149,7 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
         </thead>
         <tbody>
           <tr><td>源表</td><td>dim_order 订单主档</td><td>order_id, sales_rep, sku, product_line, order_date, amount, return_flag</td><td>CRM 同步</td></tr>
-          <tr><td>源表</td><td>fact_payment 回款表</td><td>order_id, payment_date, payment_amount</td><td>财务系统</td></tr>
+          <tr><td>源表</td><td>fact_payment 回款表</td><td>order_id, payment_date, payment_amount</td><td>财务系统（生产拆表；本 Demo 宽表内嵌 payment_date）</td></tr>
           <tr><td>源表</td><td>dim_product 产品主数据</td><td>sku, product_line</td><td>产品目录</td></tr>
           <tr><td>维度</td><td>dim_tier 阶梯维度</td><td>min_amount, max_amount, rate_pct, valid_from/to</td><td>规则可配置（本 Demo 阶梯表）</td></tr>
           <tr><td>维度</td><td>dim_sku_coeff 系数维度</td><td>product_line, sku_prefix, coeff</td><td>规则可配置（本 Demo 系数表）</td></tr>
@@ -937,7 +1159,7 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
       </table>
       </div>
       <h3>CSV → 模型字段映射（ETL 步骤）</h3>
-      <p>粘贴 CSV 即模拟 ETL 输入：字段校验（必需列齐全 / 日期格式 / 金额数字 / return_flag 枚举）→ 清洗（trim、去千分位、统一大小写）→ 关联产品线与规则维度 → 计算派生字段（归属月、系数、阶梯、佣金、冲销）→ 装载事实表与异常表。与生产 ETL（SQL / Spark）规则一致，仅执行载体不同。</p>
+      <p>粘贴 CSV 即模拟「宽表入湖」：字段校验 → 清洗 → 关联规则维度 → 计算派生字段 → 输出明细/异常。生产环境通常会拆成订单主档 + 回款事实表再关联；本 Demo 用一张宽表降低演示成本，<strong>计算规则可迁移</strong>，表结构不必与生产一一等同。</p>
     </div>
   </section>
 
@@ -1035,6 +1257,10 @@ var REQUIRED_COLUMNS = [
   "order_id", "sales_rep", "sales_rep_cn", "sku", "product_line",
   "order_date", "payment_date", "amount", "return_flag", "region"
 ];
+/** 可选列：退货单建议填写，用于精确追溯原销售单 */
+var OPTIONAL_COLUMNS = ["orig_order_id"];
+/** 导出/内置样例使用的完整列顺序 */
+var SAMPLE_COLUMNS = REQUIRED_COLUMNS.concat(OPTIONAL_COLUMNS);
 
 /** 运行时状态 */
 var state = {
@@ -1049,9 +1275,9 @@ var state = {
 
 /* ---------- 默认规则：阶梯（至少 3 档，可编辑） ---------- */
 var defaultTiers = [
-  { min: 0, max: 50000, ratePct: 2 },
-  { min: 50001, max: 150000, ratePct: 3 },
-  { min: 150001, max: null, ratePct: 5 }
+  { min: 0, max: 50001, ratePct: 2 },       /* [0, 50001) → 含 0～50000 */
+  { min: 50001, max: 150001, ratePct: 3 },  /* [50001, 150001) */
+  { min: 150001, max: null, ratePct: 5 }    /* [150001, +∞) */
 ];
 
 /* ---------- 默认规则：SKU / 产品线系数 ---------- */
@@ -1070,61 +1296,61 @@ function buildSampleData() {
   /* 真实感字段：订单号按区域+月份流水；金额按产品线常见客单价分布 */
   var rows = [
     /* —— 2025-01 订单，多数当月回款 —— */
-    { order_id:"HK-2501-001", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-06", payment_date:"2025-01-28", amount:18600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-002", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-01-08", payment_date:"2025-01-30", amount:42800, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-001", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-06", payment_date:"2025-01-28", amount:18600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2501-002", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-01-08", payment_date:"2025-01-30", amount:42800, return_flag:"N", region:"Kowloon" },
     { order_id:"NT-2501-003", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-01-10", payment_date:"2025-01-25", amount:9600, return_flag:"N", region:"New Territories" },
     { order_id:"HK-2501-004", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-01-12", payment_date:"2025-01-31", amount:168000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-005", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-01-14", payment_date:"2025-01-29", amount:32500, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2501-006", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-01-15", payment_date:"2025-01-30", amount:75600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2501-007", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-01-28", amount:14200, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2501-005", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-01-14", payment_date:"2025-01-29", amount:32500, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-006", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-01-15", payment_date:"2025-01-30", amount:75600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2501-007", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-01-28", amount:14200, return_flag:"N", region:"New Territories" },
     { order_id:"KL-2501-008", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-01-20", payment_date:"2025-01-31", amount:215000, return_flag:"N", region:"Kowloon" },
     { order_id:"HK-2501-009", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-01-22", payment_date:"2025-01-30", amount:27800, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2501-010", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-01-24", payment_date:"2025-01-31", amount:18900, return_flag:"N", region:"New Territories" },
+    { order_id:"NT-2501-010", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-01-24", payment_date:"2025-01-31", amount:18900, return_flag:"N", region:"New Territories" },
 
     /* —— 跨期：1 月开单、2 月回款 —— */
-    { order_id:"HK-2501-011", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-01-26", payment_date:"2025-02-18", amount:98000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-012", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-01-28", payment_date:"2025-02-12", amount:22400, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2501-011", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-01-26", payment_date:"2025-02-18", amount:98000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2501-012", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-01-28", payment_date:"2025-02-12", amount:22400, return_flag:"N", region:"Kowloon" },
 
     /* —— 2025-02 —— */
     { order_id:"HK-2502-013", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-02-03", payment_date:"2025-02-25", amount:18800, return_flag:"N", region:"Hong Kong" },
     { order_id:"NT-2502-014", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-02-05", payment_date:"2025-02-27", amount:51200, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2502-015", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-02-07", payment_date:"2025-02-28", amount:186500, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2502-016", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-02-26", amount:15200, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-017", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-02-10", payment_date:"2025-02-24", amount:35600, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2502-015", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-02-07", payment_date:"2025-02-28", amount:186500, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2502-016", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-02-26", amount:15200, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2502-017", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-02-10", payment_date:"2025-02-24", amount:35600, return_flag:"N", region:"New Territories" },
     { order_id:"KL-2502-018", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-12", payment_date:"2025-02-28", amount:89200, return_flag:"N", region:"Kowloon" },
     { order_id:"HK-2502-019", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-02-14", payment_date:"2025-02-27", amount:248000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-020", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-02-16", payment_date:"2025-02-28", amount:41000, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2502-021", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-02-18", payment_date:"2025-02-28", amount:12600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2502-022", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-02-19", payment_date:"2025-02-26", amount:7800, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2502-020", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-02-16", payment_date:"2025-02-28", amount:41000, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2502-021", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-02-18", payment_date:"2025-02-28", amount:12600, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2502-022", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-02-19", payment_date:"2025-02-26", amount:7800, return_flag:"N", region:"Kowloon" },
 
     /* —— 跨期：2 月开单、3 月回款 —— */
     { order_id:"HK-2502-023", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-SDWAN-100", product_line:"Enterprise Line", order_date:"2025-02-21", payment_date:"2025-03-15", amount:132000, return_flag:"N", region:"Hong Kong" },
     { order_id:"NT-2502-024", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-02-25", payment_date:"2025-03-10", amount:29800, return_flag:"N", region:"New Territories" },
 
     /* —— 2025-03（计算周期默认月）—— */
-    { order_id:"HK-2503-025", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-03", payment_date:"2025-03-28", amount:46800, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-026", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-04", payment_date:"2025-03-29", amount:155000, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2503-027", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-03-05", payment_date:"2025-03-25", amount:21400, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-025", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-03", payment_date:"2025-03-28", amount:46800, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-026", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-04", payment_date:"2025-03-29", amount:155000, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2503-027", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-03-05", payment_date:"2025-03-25", amount:21400, return_flag:"N", region:"New Territories" },
     { order_id:"HK-2503-028", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-03-06", payment_date:"2025-03-27", amount:26700, return_flag:"N", region:"Hong Kong" },
     { order_id:"KL-2503-029", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-30", amount:93400, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2503-030", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-08", payment_date:"2025-03-31", amount:198000, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-031", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-03-10", payment_date:"2025-03-26", amount:11900, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-032", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-11", payment_date:"2025-03-28", amount:35600, return_flag:"N", region:"Kowloon" },
+    { order_id:"NT-2503-030", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-08", payment_date:"2025-03-31", amount:198000, return_flag:"N", region:"New Territories" },
+    { order_id:"HK-2503-031", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-03-10", payment_date:"2025-03-26", amount:11900, return_flag:"N", region:"Hong Kong" },
+    { order_id:"KL-2503-032", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-11", payment_date:"2025-03-28", amount:35600, return_flag:"N", region:"Kowloon" },
     { order_id:"NT-2503-033", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-03-12", payment_date:"2025-03-29", amount:16200, return_flag:"N", region:"New Territories" },
     { order_id:"HK-2503-034", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-03-13", payment_date:"2025-03-30", amount:112500, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-035", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-03-14", payment_date:"2025-03-27", amount:6400, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2503-036", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-03-15", payment_date:"2025-03-31", amount:38900, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2503-037", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-17", payment_date:"2025-03-30", amount:54500, return_flag:"N", region:"New Territories" },
+    { order_id:"KL-2503-035", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-03-14", payment_date:"2025-03-27", amount:6400, return_flag:"N", region:"Kowloon" },
+    { order_id:"HK-2503-036", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-03-15", payment_date:"2025-03-31", amount:38900, return_flag:"N", region:"Hong Kong" },
+    { order_id:"NT-2503-037", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-17", payment_date:"2025-03-30", amount:54500, return_flag:"N", region:"New Territories" },
     { order_id:"KL-2503-038", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-03-18", payment_date:"2025-03-31", amount:172000, return_flag:"N", region:"Kowloon" },
 
     /* —— 退货单（至少 3 条）：冲销当月或追溯原月 —— */
-    { order_id:"HK-2502-016R", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-03-08", amount:15200, return_flag:"Y", region:"Hong Kong" },
+    { order_id:"HK-2502-016R", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-03-08", amount:15200, return_flag:"Y", region:"Hong Kong" },
     { order_id:"KL-2503-029R", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-22", amount:93400, return_flag:"Y", region:"Kowloon" },
-    { order_id:"NT-2501-007R", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-03-05", amount:14200, return_flag:"Y", region:"New Territories" },
-    { order_id:"HK-2503-039R", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-20", payment_date:"2025-03-28", amount:45000, return_flag:"Y", region:"Hong Kong" },
+    { order_id:"NT-2501-007R", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-03-05", amount:14200, return_flag:"Y", region:"New Territories" },
+    { order_id:"HK-2503-039R", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-20", payment_date:"2025-03-28", amount:45000, return_flag:"Y", region:"Hong Kong" },
 
     /* —— 跨期：3 月开单、预计下月回款（演示归属差异）—— */
-    { order_id:"HK-2503-040", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-03-22", payment_date:"2025-04-08", amount:226000, return_flag:"N", region:"Hong Kong" },
+    { order_id:"HK-2503-040", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-03-22", payment_date:"2025-04-08", amount:226000, return_flag:"N", region:"Hong Kong" },
 
     /* —— 重复计算：同一 order_id 出现两次（CRM 重复推送）—— */
     { order_id:"KL-2503-041", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-29", amount:19800, return_flag:"N", region:"Kowloon" },
@@ -1132,14 +1358,14 @@ function buildSampleData() {
 
     /* —— 规则未匹配：SKU / 产品线不在系数表 —— */
     { order_id:"NT-2503-042", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ACC-CABLE-10M", product_line:"Accessory", order_date:"2025-03-21", payment_date:"2025-03-30", amount:3200, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-043", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"SVC-Install-Half", product_line:"Service", order_date:"2025-03-23", payment_date:"2025-03-31", amount:8800, return_flag:"N", region:"Hong Kong" },
+    { order_id:"HK-2503-043", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SVC-Install-Half", product_line:"Service", order_date:"2025-03-23", payment_date:"2025-03-31", amount:8800, return_flag:"N", region:"Hong Kong" },
 
     /* —— 补充正常单，补足 48 条量级，覆盖低/中/高额 —— */
-    { order_id:"KL-2503-044", sales_rep:"Bowie Lee", sales_rep_cn:"李宝仪", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-03-24", payment_date:"2025-03-31", amount:41200, return_flag:"N", region:"Kowloon" },
+    { order_id:"KL-2503-044", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-03-24", payment_date:"2025-03-31", amount:41200, return_flag:"N", region:"Kowloon" },
     { order_id:"HK-2501-045", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-30", payment_date:"2025-02-20", amount:17500, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-046", sales_rep:"Andy Chan", sales_rep_cn:"陈安迪", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-27", payment_date:"2025-03-12", amount:67800, return_flag:"N", region:"New Territories" },
+    { order_id:"NT-2502-046", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-27", payment_date:"2025-03-12", amount:67800, return_flag:"N", region:"New Territories" },
     { order_id:"KL-2503-047", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-25", payment_date:"2025-03-31", amount:142000, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2503-048", sales_rep:"Fiona Lam", sales_rep_cn:"林菲奥娜", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-26", payment_date:"2025-03-31", amount:48200, return_flag:"N", region:"Hong Kong" }
+    { order_id:"HK-2503-048", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-26", payment_date:"2025-03-31", amount:48200, return_flag:"N", region:"Hong Kong" }
   ];
   return rows;
 }
@@ -2281,12 +2507,19 @@ function renderCharts() {
   setBar("barFinal", fin / m * 100, "barFinalVal", formatMoney(fin));
   var types = ["退货冲销", "跨期归属", "重复计算", "规则未匹配"];
   var counts = {};
-  types.forEach(function (t) { counts[t] = 0; });
-  state.anomalies.forEach(function (a) { if (counts[a.type] != null) counts[a.type]++; });
+  var seen = {};
+  types.forEach(function (t) { counts[t] = 0; seen[t] = {}; });
+  state.anomalies.forEach(function (a) {
+    if (counts[a.type] == null) return;
+    seen[a.type][a.order_id] = true;
+  });
+  types.forEach(function (t) { counts[t] = Object.keys(seen[t]).length; });
   var maxC = 1;
   types.forEach(function (t) { maxC = Math.max(maxC, counts[t]); });
   var box = document.getElementById("anomalyBars");
   if (!box) return;
+  var note = document.getElementById("anomalyOrderNote");
+  if (note) note.textContent = String(state.summary.anomalyCount);
   box.innerHTML = "";
   types.forEach(function (t) {
     var item = document.createElement("div");
