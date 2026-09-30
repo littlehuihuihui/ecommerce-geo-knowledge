@@ -76,6 +76,32 @@ body {
   letter-spacing: 0.04em;
   opacity: 0.9;
 }
+.hero-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn-back:hover {
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.65);
+}
 
 /* ---------- 布局容器 ---------- */
 .wrap {
@@ -642,6 +668,9 @@ table.data tbody tr.rep-top { background: #eef4fb; }
 <!-- ======================== 顶部标题区 ======================== -->
 <header class="hero">
   <div class="hero-inner">
+    <div class="hero-top">
+      <a class="btn-back" href="index.html">← 返回行业百科</a>
+    </div>
     <h1>通信设备销售佣金计算器</h1>
     <p class="sub">可配置规则 · 异常检测 · 明细可追溯 · 勾稽校验</p>
     <p class="desc">通信设备销售佣金计算工具 — 覆盖退货冲销、回款归属、SKU 系数、阶梯提成与四类异常稽查。</p>
@@ -1224,7 +1253,11 @@ table.data tbody tr.rep-top { background: #eef4fb; }
     </div>
   </section>
 
-  <p class="page-foot">港资通信设备销售佣金计算 · 单文件离线可用 · 无外部依赖</p>
+  <p class="page-foot">
+    <a href="index.html" style="color:var(--navy);font-weight:600;text-decoration:none;">← 返回行业百科</a>
+    <span style="margin:0 8px;opacity:0.4;">·</span>
+    港资通信设备销售佣金计算 · 单文件离线可用 · 无外部依赖
+  </p>
 </main>
 
 <div class="toast-wrap"><div class="toast" id="toast"></div></div>
