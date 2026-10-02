@@ -618,9 +618,6 @@ table.data tbody tr.rep-row.is-selected { background: #e8f0f8; outline: 2px soli
 .rep-orders-meta { color: var(--muted); font-size: 0.82rem; margin-bottom: 10px; }
 .rep-orders-panel .table-scroll { max-height: 360px; background: #fff; border-radius: 8px; }
 .rep-search-row { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; margin-bottom:10px; }
-#schemeTimelineBody tr.is-active-scheme { background: #e8f0f8; }
-#schemeTimelineBody tr { cursor: pointer; }
-#schemeTimelineBody tr:hover { background: #f5f8fb; }
 table.data tbody tr.rep-blocked { background: var(--danger-bg); }
 #repCard { scroll-margin-top: 12px; }
 
@@ -699,7 +696,17 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
   .btn { width: 100%; }
   .btn-row .btn { width: auto; flex: 1 1 auto; }
 }
-</style>
+
+  .rule-stats { display:flex; flex-wrap:wrap; gap:6px 16px; margin:6px 0 10px; font-size:13px; color:var(--muted); }
+  .rule-stats .stat-item b { color:var(--text); }
+  .rule-filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; align-items:center; }
+  .rule-filters input[type='text'] { flex:1 1 220px; min-width:160px; }
+  .rule-filters select { min-width:132px; }
+  .rule-form { background:#f7fafc; border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-top:10px; }
+  .rule-form h4 { margin:0 0 10px; }
+  .rule-form .row { margin-bottom:8px; }
+  #ruleTable td.num { white-space:nowrap; }
+  </style>
 </head>
 <body>
 
@@ -746,12 +753,8 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
           <p>决定一笔单记入哪个月。默认按<strong>回款月</strong>（钱到账才发佣）；也可切到按<strong>订单月</strong>（开单即计提，用于对比口径差异）。</p>
         </div>
         <div class="concept-item">
-          <h4>阶梯提成 Tier Rate</h4>
-          <p>按单笔销售额落入的金额区间匹配提成比例。低额单低比例、高额单高比例，用于激励做大单。</p>
-        </div>
-        <div class="concept-item">
-          <h4>SKU / 产品线系数 Coefficient</h4>
-          <p>不同产品线毛利与战略权重不同。例如 Enterprise Line 系数 1.5、SIM Plan 0.8，用来调节「同样销售额下的佣金含金量」。</p>
+          <h4>佣金规则表 Rule Table</h4>
+          <p>一套规则 = 一张表，一条细规则 = 一行：计划 / 产品组 / 金额区间 / 比例 / 系数 / 规则类型 / 有效期。低额单低比例、高额单高比例；Router 1.0、Enterprise Line 1.5、SIM Plan 0.8 调节「同样销售额下的佣金含金量」；支持封顶、保底、加速器、SPIFF 一次性奖励。</p>
         </div>
         <div class="concept-item">
           <h4>基础佣金 Base</h4>
@@ -787,8 +790,8 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
       <ol class="logic-ol">
         <li><strong>① 过滤退货单：</strong>return_flag = Y 不进入正常提成链路，转入冲销逻辑；N 继续往下走。</li>
         <li><strong>② 判定归属月：</strong>按「回款月 / 订单月」规则（退货可选手动追溯原订单月）得到归属月，并判断是否纳入当前计算周期。</li>
-        <li><strong>③ 匹配 SKU 系数：</strong>优先按 product_line，其次按 SKU 前缀；未命中 →「规则未匹配（SKU缺失）」，系数空、佣金记 0。</li>
-        <li><strong>④ 匹配阶梯区间：</strong>销售额落入哪一档用哪一档比例；未落入任何档 →「规则未匹配（阶梯缺失）」。</li>
+        <li><strong>③ 匹配佣金规则：</strong>按 判定日 → 计划 → 产品（SKU 前缀优先、产品线次之、All 通配兜底）→ 金额区间 命中一行规则；未命中 →「规则未匹配」，佣金记 0。</li>
+        <li><strong>④ 按规则类型计算：</strong>默认阶梯比例 = 金额 × 比例 × 系数；规则类型还支持封顶、保底、加速器、SPIFF 一次性奖励。</li>
         <li><strong>⑤ 计算基础佣金：</strong>仅非退货且规则齐全时：金额 × 比例 × 系数；中间值可在明细行展开查看。</li>
         <li><strong>⑥ 退货冲销扣减：</strong>扣减金额单独字段，不与基础佣金混算；记录扣哪一单、扣多少、扣到哪个月。</li>
         <li><strong>⑦ 输出明细 + 异常表：</strong>本期汇总只加「归属月 = 计算周期」的行；全量明细保留他月行（标「非本期」）便于追溯。</li>
@@ -866,7 +869,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
     <div class="card-head" onclick="toggleCard('rulesCard')" role="button" aria-expanded="true">
       <div>
         <h2>规则配置 <span class="en">Rules Configuration</span></h2>
-        <span class="hint">政策时间轴 · 阶梯 · SKU 系数 · 退货 · 归属</span>
+        <span class="hint">佣金规则表 · 查询 / 新增 / 编辑 · 退货 · 归属</span>
       </div>
       <span class="chev" aria-hidden="true">▼</span>
     </div>
@@ -894,118 +897,98 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
         </div>
       </div>
 
-      <!-- 政策时间轴（规则链） -->
+      <!-- 佣金规则表（dim_rule）：一套规则=一张表，一条细规则=一行 -->
       <div class="rule-block">
-        <h3>佣金政策时间轴（规则链）</h3>
+        <h3>佣金规则表 <span class="en">Commission Rule Table · dim_rule</span></h3>
         <p class="rule-note" style="margin-top:0;margin-bottom:8px;">
-          政策按<strong>生效区间一条条衔接</strong>：例如 2025-01-01~2025-02-28 方案A，2025-03-01~至今 方案B。
-          今天新增方案C（生效起=今天）时，若勾选「自动截断」，方案B 的止日会自动改为<strong>昨天</strong>。
-          计算时按「规则判定日」落入哪一段，就用哪套阶梯/系数。
+          一套规则 = <strong>一张规则表</strong>，一条细规则 = <strong>一行</strong>（含计划 / 产品组 / 收入类型 / 金额区间 / 比例 / 系数 / 规则类型 / 有效期 / 优先级 / 状态）。
+          计算按 <strong>规则判定日 → 计划 → 产品 → 金额区间</strong> 匹配；下方预置一套可直接演示的默认规则，可在表上<strong>查询 / 新增 / 编辑 / 删除 / 复制</strong>。
+          规则类型支持：阶梯比例（默认）、封顶、保底、加速器、SPIFF 一次性奖励。
         </p>
-        <div class="row">
-          <div class="col">
-            <label class="field-label">规则判定日</label>
-            <div class="radio-group" role="radiogroup" aria-label="规则判定日">
-              <label class="radio-pill is-on"><input type="radio" name="ruleDateMode" value="payment" checked /> 按回款日选政策</label>
-              <label class="radio-pill"><input type="radio" name="ruleDateMode" value="order" /> 按订单日选政策</label>
-            </div>
-          </div>
+        <div class="rule-stats" id="ruleStats"></div>
+        <div class="rule-filters">
+          <input type="text" id="ruleKeyword" placeholder="关键词：产品 / SKU / 计划 / 比例" oninput="renderRuleTable()" />
+          <select id="ruleTypeFilter" onchange="renderRuleTable()">
+            <option value="">全部规则类型</option>
+            <option value="tier_rate">阶梯比例</option>
+            <option value="cap">封顶</option>
+            <option value="floor">保底</option>
+            <option value="accelerator">加速器</option>
+            <option value="spiff">SPIFF 奖励</option>
+          </select>
+          <select id="ruleStatusFilter" onchange="renderRuleTable()">
+            <option value="">全部状态</option>
+            <option value="Active">生效</option>
+            <option value="Inactive">停用</option>
+          </select>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="resetRuleFilters()">重置筛选</button>
         </div>
-
         <div class="table-scroll" style="margin:8px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;">
-          <table class="data" id="schemeTimelineTable" style="min-width:640px;">
+          <table class="data" id="ruleTable" style="min-width:1180px;">
             <thead>
               <tr>
-                <th>序号</th>
-                <th>方案名称</th>
-                <th>生效起（含）</th>
-                <th>生效止（含）</th>
-                <th>状态</th>
-                <th></th>
+                <th>ID</th><th>计划</th><th>产品组</th><th>SKU 前缀</th><th>收入类型</th>
+                <th>金额区间 [下限, 上限)</th><th>比例</th><th>系数</th><th>规则类型</th><th>附加参数</th>
+                <th>生效起</th><th>生效止</th><th>优先级</th><th>状态</th><th>操作</th>
               </tr>
             </thead>
-            <tbody id="schemeTimelineBody"></tbody>
+            <tbody id="ruleBody"></tbody>
           </table>
         </div>
-        <p class="rule-note" id="schemeCoverageNote" style="margin-top:0;"></p>
-
-        <div class="row" style="align-items:flex-end;">
-          <div class="col">
-            <label class="field-label" for="schemeSelect">编辑哪一版（阶梯/系数跟着变）</label>
-            <select id="schemeSelect" onchange="onSchemeSelectChange()"></select>
-          </div>
-          <div class="col" style="max-width:none;flex:0 0 auto;">
-            <div class="btn-row">
-              <button type="button" class="btn btn-primary btn-sm" onclick="addScheme()">＋ 新增方案（接在最后）</button>
-              <button type="button" class="btn btn-secondary btn-sm" onclick="copyScheme()">复制当前版</button>
-              <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteScheme()">删除当前版</button>
+        <div class="btn-row" style="margin-top:4px;">
+          <button type="button" class="btn btn-primary btn-sm" onclick="openRuleForm(null)">＋ 新增规则</button>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="resetDefaultRules()">重置为默认规则</button>
+        </div>
+        <!-- 新增 / 编辑规则表单 -->
+        <div class="rule-form" id="ruleForm" style="display:none;">
+          <h4 id="ruleFormTitle">新增规则</h4>
+          <div class="row">
+            <div class="col col-sm"><label class="field-label" for="rulePlan">佣金计划</label><input type="text" id="rulePlan" placeholder="Default Plan" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleProductGroup">产品组（必填）</label>
+              <select id="ruleProductGroup"><option>Router</option><option>Switch</option><option>SIM Plan</option><option>Enterprise Line</option><option>All</option></select>
+            </div>
+            <div class="col col-sm"><label class="field-label" for="ruleSkuPrefix">SKU 前缀（可选，最具体优先）</label><input type="text" id="ruleSkuPrefix" placeholder="如 RTR-" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleRevenueType">收入类型</label>
+              <select id="ruleRevenueType"><option>All</option><option>New Sale</option><option>Renewal</option><option>Add-on</option></select>
             </div>
           </div>
-        </div>
-        <div class="toggle-row" style="margin-top:8px;">
-          <input type="checkbox" id="autoClosePrevScheme" checked />
-          <div>
-            <div class="t-title">新增方案时自动截断上一版「至今」政策</div>
-            <div class="t-desc">例：B 为 03-01~至今；今天（10-02）点新增 → 新方案默认明天（10-03）起生效，B 自动改为 03-01~10-02。若把新方案生效起改成今天，则 B 止于昨天。</div>
+          <div class="row">
+            <div class="col col-sm"><label class="field-label" for="ruleTierMin">金额下限 ≥（必填）</label><input type="number" id="ruleTierMin" min="0" step="1" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleTierMax">金额上限 ＜（空=无上限）</label><input type="number" id="ruleTierMax" min="0" step="1" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleRatePct">基础比例 %（必填）</label><input type="number" id="ruleRatePct" min="0" step="0.01" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleCoeff">产品系数</label><input type="number" id="ruleCoeff" min="0" step="0.01" value="1" /></div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label class="field-label" for="schemeName">版本名称</label>
-            <input type="text" id="schemeName" onchange="saveCurrentSchemeMeta()" placeholder="如：方案C" />
+          <div class="row">
+            <div class="col col-sm"><label class="field-label" for="ruleRuleType">规则类型</label>
+              <select id="ruleRuleType" onchange="syncRuleTypeHint()">
+                <option value="tier_rate">阶梯比例</option>
+                <option value="cap">封顶（佣金上限）</option>
+                <option value="floor">保底（最低佣金）</option>
+                <option value="accelerator">加速器（超额部分放大）</option>
+                <option value="spiff">SPIFF 一次性奖励</option>
+              </select>
+            </div>
+            <div class="col col-sm"><label class="field-label" for="ruleExtraValue">附加参数（按类型）</label><input type="number" id="ruleExtraValue" step="0.01" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleThresholdValue">触发金额（加速器用）</label><input type="number" id="ruleThresholdValue" min="0" step="1" /></div>
           </div>
-          <div class="col col-sm">
-            <label class="field-label" for="schemeFrom">生效起（含）</label>
-            <input type="date" id="schemeFrom" onchange="saveCurrentSchemeMeta()" />
+          <div class="row">
+            <div class="col col-sm"><label class="field-label" for="ruleValidFrom">生效起（含）</label><input type="date" id="ruleValidFrom" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleValidTo">生效止（含，空=长期）</label><input type="date" id="ruleValidTo" /></div>
+            <div class="col col-sm"><label class="field-label" for="rulePriority">优先级（小=先）</label><input type="number" id="rulePriority" min="1" step="1" value="1" /></div>
+            <div class="col col-sm"><label class="field-label" for="ruleStatus">状态</label>
+              <select id="ruleStatus"><option value="Active">生效</option><option value="Inactive">停用</option></select>
+            </div>
           </div>
-          <div class="col col-sm">
-            <label class="field-label" for="schemeTo">生效止（含，空=至今）</label>
-            <input type="date" id="schemeTo" onchange="saveCurrentSchemeMeta()" />
+          <div class="row">
+            <div class="col"><label class="field-label" for="ruleNote">备注（可选）</label><input type="text" id="ruleNote" placeholder="如：2025 下半年新政 / 新品激励" /></div>
+          </div>
+          <p class="rule-note" id="ruleTypeHint">阶梯比例：基础佣金 = 金额 × 比例 × 系数。</p>
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary btn-sm" onclick="saveRuleFromForm()">保存规则</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="closeRuleForm()">取消</button>
           </div>
         </div>
       </div>
-
-      <!-- 阶梯提成表（当前版本） -->
-      <div class="rule-block">
-        <h3>阶梯提成表（当前版本）</h3>
-        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按单笔销售额落入区间匹配提成比例。区间<strong>左闭右开</strong>[下限, 上限)；最高档上限留空表示 [下限, +∞)。金额按港币元设计，档位连续无缝隙。</p>
-        <div class="rule-table-wrap">
-          <table class="rule-edit" id="tierTable">
-            <thead>
-              <tr>
-                <th>档位</th>
-                <th>销售额下限 (≥)</th>
-                <th>销售额上限（不含；空=无上限）</th>
-                <th>提成比例 (%)</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="tierBody"></tbody>
-          </table>
-        </div>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="addTierRow()">＋ 新增档位</button>
-      </div>
-
-      <!-- SKU 系数表 -->
-      <div class="rule-block">
-        <h3>SKU 分类系数表（当前版本）</h3>
-        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按产品线匹配系数；未命中则标记「规则未匹配」，该单基础佣金为 0，但仍进入异常稽查。</p>
-        <div class="rule-table-wrap">
-          <table class="rule-edit" id="skuTable">
-            <thead>
-              <tr>
-                <th>产品线</th>
-                <th>SKU 前缀（可选）</th>
-                <th>系数</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="skuBody"></tbody>
-          </table>
-        </div>
-        <button type="button" class="btn btn-secondary btn-sm" onclick="addSkuRow()">＋ 新增产品线</button>
-      </div>
-
       <!-- 退货扣减规则 -->
       <div class="rule-block">
         <h3>退货扣减规则</h3>
@@ -1211,7 +1194,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
                 <th class="num">计佣金额</th>
                 <th class="num">提成比例%</th>
                 <th class="num">SKU系数</th>
-                <th>政策版本</th>
+                <th>命中规则</th>
                 <th class="num">基础佣金</th>
                 <th class="num">退货扣减</th>
                 <th class="num">本单佣金</th>
@@ -1302,7 +1285,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
               <th>回款日期</th>
               <th class="num">计佣金额</th>
               <th>回款状态</th>
-              <th>政策版本</th>
+              <th>命中规则</th>
               <th class="num">提成比例%</th>
               <th>适用阶梯</th>
               <th class="num">SKU系数</th>
@@ -1408,7 +1391,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
     <div class="card-body footer-section">
       <h3>业务过程模型（BPM）</h3>
       <div class="flow-steps">
-        <span>销售开单</span><i>→</i><span>回款确认（paid/partial/unpaid）</span><i>→</i><span>归属计提</span><i>→</i><span>系数×阶梯</span><i>→</i><span>退货冲销（锁原单政策）</span><i>→</i><span>异常闸门</span><i>→</i><span>发薪包</span>
+        <span>销售开单</span><i>→</i><span>回款确认（paid/partial/unpaid）</span><i>→</i><span>归属计提</span><i>→</i><span>规则匹配</span><i>→</i><span>退货冲销（锁原单政策）</span><i>→</i><span>异常闸门</span><i>→</i><span>发薪包</span>
       </div>
       <h3>表结构设计（生产化）</h3>
       <div class="table-scroll">
@@ -1420,8 +1403,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
           <tr><td>源表</td><td>dim_order 订单主档</td><td>order_id, sales_rep, sku, product_line, order_date, amount, return_flag</td><td>CRM 同步</td></tr>
           <tr><td>源表</td><td>fact_payment 回款表</td><td>order_id, payment_date, payment_amount</td><td>财务系统（生产拆表；本工具宽表内嵌 payment_date）</td></tr>
           <tr><td>源表</td><td>dim_product 产品主数据</td><td>sku, product_line</td><td>产品目录</td></tr>
-          <tr><td>维度</td><td>dim_tier 阶梯维度</td><td>min_amount, max_amount, rate_pct, valid_from/to</td><td>规则可配置（本工具阶梯表）</td></tr>
-          <tr><td>维度</td><td>dim_sku_coeff 系数维度</td><td>product_line, sku_prefix, coeff</td><td>规则可配置（本工具系数表）</td></tr>
+          <tr><td>维度</td><td>dim_rule 佣金规则表</td><td>plan, product_group, sku_prefix, revenue_type, tier_min/max, rate_pct, coeff, rule_type, extra_value, valid_from/to, priority, status</td><td>规则可配置（本工具规则表：一行一条细规则）</td></tr>
           <tr><td>事实</td><td>fact_commission 佣金明细</td><td>order_id, attr_ym, coeff, tier_rate, base_amount, deduct_amount, final_amount, batch_no</td><td>ETL 按月批处理写入；主键 order_id + batch_no</td></tr>
           <tr><td>稽查</td><td>fact_anomaly 异常稽查表</td><td>anomaly_type, order_id, amount, suggestion, status</td><td>本工具异常表</td></tr>
         </tbody>
@@ -1449,7 +1431,7 @@ table.data tbody tr.rep-blocked { background: var(--danger-bg); }
           <tr><th>本工具功能</th><th>Power Platform 落地</th><th>低代码要点</th></tr>
         </thead>
         <tbody>
-          <tr><td>规则配置（阶梯/系数/开关）</td><td>Dataverse 表 dim_tier / dim_sku_coeff + Canvas 维护页</td><td>规则存数据表，改规则不改代码</td></tr>
+          <tr><td>规则配置（规则表 CRUD）</td><td>Dataverse 表 dim_rule + Canvas 规则维护页（查询/新增/编辑）</td><td>规则存数据表，改规则不改代码</td></tr>
           <tr><td>CSV 导入与校验</td><td>SharePoint / OneDrive 上传 + Power Query 清洗</td><td>接入即用，列校验用数据验证</td></tr>
           <tr><td>计算引擎</td><td>Power Automate 按月触发 + SQL 视图 / 存储过程</td><td>计算逻辑沉淀为 SQL，可审计</td></tr>
           <tr><td>明细追溯</td><td>Canvas 明细页 + 计算链路字段</td><td>销售 / 财务自助查询</td></tr>
@@ -1537,58 +1519,65 @@ var state = {
   dataSource: "",       // 数据来源说明
   calculating: false,
   repList: [],          // 本期销售员月结行（含发薪状态）
-  schemes: [],          // 佣金政策版本列表
-  activeSchemeId: "",   // 当前编辑的政策版本 id
+  rules: [],             // 佣金规则表（dim_rule）：一行一条细规则
   detailPage: 1,        // 明细分页
   selectedRep: ""       // 月结表当前选中的业务员
 };
 
-/* ---------- 默认规则：阶梯（至少 3 档，可编辑） ---------- */
-var defaultTiers = [
-  { min: 0, max: 50001, ratePct: 2 },       /* [0, 50001) → 含 0～50000 */
-  { min: 50001, max: 150001, ratePct: 3 },  /* [50001, 150001) */
-  { min: 150001, max: null, ratePct: 5 }    /* [150001, +∞) */
-];
-
-/* ---------- 默认规则：SKU / 产品线系数 ---------- */
-var defaultSkuCoeffs = [
-  { productLine: "Router", skuPrefix: "RTR-", coeff: 1.0 },
-  { productLine: "Switch", skuPrefix: "SW-", coeff: 1.2 },
-  { productLine: "SIM Plan", skuPrefix: "SIM-", coeff: 0.8 },
-  { productLine: "Enterprise Line", skuPrefix: "ENT-", coeff: 1.5 }
-];
-
-function cloneTiers(t) {
-  return t.map(function (x) { return { min: x.min, max: x.max, ratePct: x.ratePct }; });
-}
-function cloneSkus(s) {
-  return s.map(function (x) { return { productLine: x.productLine, skuPrefix: x.skuPrefix, coeff: x.coeff }; });
-}
-
-/**
- * 默认政策时间轴（前后衔接、不重叠）：
- * 方案A 2025-01-01~02-28 → 方案B 03-01~03-15 → 方案C 03-16~至今
- * 新增方案D 时，可将「至今」的 C 自动截断到生效日前一天。
- */
-function buildDefaultSchemes() {
-  var tiersB = [
-    { min: 0, max: 50001, ratePct: 2.5 },
-    { min: 50001, max: 150001, ratePct: 3.5 },
-    { min: 150001, max: null, ratePct: 5.5 }
+/* ---------- 默认规则：按真实维度预置一套可直接演示的规则 ---------- */
+/* 复刻原「方案A/B/C」时间轴：2025-01-01~03-15 一套比例，03-16 起一套更高比例，保证默认勾稽不变 */
+function buildDefaultRules() {
+  var out = [];
+  var seq = 1;
+  function push(r) {
+    r.id = "R" + String(seq++);
+    r.plan = r.plan || "Default Plan";
+    r.revenue_type = r.revenue_type || "All";
+    r.rule_type = r.rule_type || "tier_rate";
+    r.coeff = r.coeff == null ? 1 : r.coeff;
+    r.priority = r.priority == null ? 1 : r.priority;
+    r.status = r.status || "Active";
+    out.push(r);
+  }
+  var bounds = [[0, 50001], [50001, 150001], [150001, null]];
+  var tiers1 = [2, 3, 5];
+  var coeffs1 = [
+    { group: "Router", prefix: "RTR-", coeff: 1.0 },
+    { group: "Switch", prefix: "SW-", coeff: 1.2 },
+    { group: "SIM Plan", prefix: "SIM-", coeff: 0.8 },
+    { group: "Enterprise Line", prefix: "ENT-", coeff: 1.5 }
   ];
-  var skusB = [
-    { productLine: "Router", skuPrefix: "RTR-", coeff: 1.05 },
-    { productLine: "Switch", skuPrefix: "SW-", coeff: 1.25 },
-    { productLine: "SIM Plan", skuPrefix: "SIM-", coeff: 0.85 },
-    { productLine: "Enterprise Line", skuPrefix: "ENT-", coeff: 1.55 }
+  coeffs1.forEach(function (c) {
+    bounds.forEach(function (b, i) {
+      push({
+        product_group: c.group, sku_prefix: c.prefix,
+        tier_min: b[0], tier_max: b[1], rate_pct: tiers1[i], coeff: c.coeff,
+        valid_from: "2025-01-01", valid_to: "2025-03-15"
+      });
+    });
+  });
+  var tiers2 = [2.5, 3.5, 5.5];
+  var coeffs2 = [
+    { group: "Router", prefix: "RTR-", coeff: 1.05 },
+    { group: "Switch", prefix: "SW-", coeff: 1.25 },
+    { group: "SIM Plan", prefix: "SIM-", coeff: 0.85 },
+    { group: "Enterprise Line", prefix: "ENT-", coeff: 1.55 }
   ];
-  return [
-    { id: "A", name: "方案A", valid_from: "2025-01-01", valid_to: "2025-02-28", tiers: cloneTiers(defaultTiers), skus: cloneSkus(defaultSkuCoeffs) },
-    { id: "B", name: "方案B（3月上半月）", valid_from: "2025-03-01", valid_to: "2025-03-15", tiers: cloneTiers(defaultTiers), skus: cloneSkus(defaultSkuCoeffs) },
-    { id: "C", name: "方案C（3月16日起至今）", valid_from: "2025-03-16", valid_to: "", tiers: tiersB, skus: skusB }
-  ];
+  coeffs2.forEach(function (c) {
+    bounds.forEach(function (b, i) {
+      push({
+        product_group: c.group, sku_prefix: c.prefix,
+        tier_min: b[0], tier_max: b[1], rate_pct: tiers2[i], coeff: c.coeff,
+        valid_from: "2025-03-16", valid_to: ""
+      });
+    });
+  });
+  /* 复杂规则类型示例：默认停用，展示字段能力，不参与计算 */
+  push({ product_group: "Router", sku_prefix: "RTR-", tier_min: 0, tier_max: null, rate_pct: 2, coeff: 1.0, rule_type: "cap", extra_value: 5000, valid_from: "2025-01-01", valid_to: "", priority: 2, status: "Inactive", note: "示例：单笔佣金封顶 5,000" });
+  push({ product_group: "Switch", sku_prefix: "SW-", tier_min: 80001, tier_max: null, rate_pct: 3, coeff: 1.2, rule_type: "accelerator", extra_value: 1.3, threshold_value: 80000, valid_from: "2025-03-16", valid_to: "", priority: 2, status: "Inactive", note: "示例：超过 80,000 部分按 1.3 倍加速" });
+  push({ product_group: "Enterprise Line", sku_prefix: "ENT-", tier_min: 0, tier_max: null, rate_pct: 5, coeff: 1.5, rule_type: "spiff", extra_value: 8000, valid_from: "2025-03-16", valid_to: "", priority: 2, status: "Inactive", note: "示例：新签一次性奖励 8,000" });
+  return out;
 }
-
 function todayISO() {
   var d = new Date();
   var m = d.getMonth() + 1;
@@ -1607,73 +1596,6 @@ function dayBefore(dateStr) {
 }
 
 /** 把所有「覆盖到 newFrom 及之后」的开放/交叉区间截断到 newFrom 前一天 */
-function autoCloseSchemesBefore(newFrom, exceptId) {
-  if (!newFrom) return [];
-  var cut = dayBefore(newFrom);
-  var closed = [];
-  state.schemes.forEach(function (s) {
-    if (exceptId && s.id === exceptId) return;
-    if (!s.valid_from || s.valid_from >= newFrom) return;
-    /* 开放至今，或止日 >= 新方案起日 → 与新区重叠，需截断 */
-    var openEnded = !s.valid_to;
-    var overlaps = openEnded || s.valid_to >= newFrom;
-    if (!overlaps) return;
-    if (!cut || cut < s.valid_from) return;
-    s.valid_to = cut;
-    closed.push(s.name + " → 止于 " + cut);
-  });
-  return closed;
-}
-
-function schemeStatusLabel(s) {
-  var today = todayISO();
-  if (!s.valid_from) return "未生效";
-  if (s.valid_from > today) return "未开始";
-  if (!s.valid_to || s.valid_to >= today) return "生效中";
-  return "已结束";
-}
-
-/**
- * 按判定日落入生效区间选择政策。
- * 若多版重叠，优先 valid_from 最新（更具体的月中政策覆盖底版）。
- */
-function matchSchemeByDate(dateStr, schemes) {
-  if (!dateStr) return null;
-  var hits = [];
-  for (var i = 0; i < schemes.length; i++) {
-    var s = schemes[i];
-    if (!s.valid_from) continue;
-    if (dateStr < s.valid_from) continue;
-    if (s.valid_to && dateStr > s.valid_to) continue;
-    hits.push(s);
-  }
-  if (!hits.length) return null;
-  hits.sort(function (a, b) {
-    if (a.valid_from !== b.valid_from) return a.valid_from < b.valid_from ? 1 : -1;
-    var al = a.valid_to ? a.valid_to : "9999-12-31";
-    var bl = b.valid_to ? b.valid_to : "9999-12-31";
-    return al < bl ? -1 : (al > bl ? 1 : 0);
-  });
-  return hits[0];
-}
-
-
-/** 计算周期内逐日预检政策是否覆盖（按回款日模式用日期本身） */
-function checkSchemeCoverage(periodYm, schemes) {
-  if (!periodYm || periodYm.length < 7) return { ok: false, msg: "计算周期无效" };
-  var y = Number(periodYm.slice(0, 4));
-  var m = Number(periodYm.slice(5, 7));
-  var daysInMonth = new Date(y, m, 0).getDate();
-  var missing = [];
-  for (var d = 1; d <= daysInMonth; d++) {
-    var ds = periodYm + "-" + (d < 10 ? "0" + d : String(d));
-    if (!matchSchemeByDate(ds, schemes)) missing.push(ds);
-  }
-  if (!missing.length) return { ok: true, msg: periodYm + " 共 " + daysInMonth + " 天均有政策覆盖。" };
-  var show = missing.slice(0, 5).join("、") + (missing.length > 5 ? " 等" : "");
-  return { ok: false, msg: periodYm + " 有 " + missing.length + " 天无政策覆盖（如 " + show + "）。建议补版本或扩展有效期后再月结。" };
-}
-
 function normalizePayment(row) {
   var status = String(row.payment_status || "").trim().toLowerCase();
   var payDate = String(row.payment_date || "").trim();
@@ -1695,166 +1617,6 @@ function normalizePayment(row) {
   return { status: "paid", payDate: payDate, commissionBase: amount, paidAmount: amount };
 }
 
-function findSchemeById(id) {
-  for (var i = 0; i < state.schemes.length; i++) {
-    if (state.schemes[i].id === id) return state.schemes[i];
-  }
-  return null;
-}
-
-function validateSchemes(schemes) {
-  if (!schemes || !schemes.length) return "至少需要一个政策版本";
-  for (var i = 0; i < schemes.length; i++) {
-    var s = schemes[i];
-    if (!s.name) return "政策版本缺少名称";
-    if (!s.valid_from) return "「" + (s.name || s.id) + "」缺少生效起日";
-    if (s.valid_to && s.valid_to < s.valid_from) return "「" + s.name + "」生效止日早于起日";
-    var errs = validateRules(s.tiers || [], s.skus || []);
-    if (errs.length) return "「" + s.name + "」：" + errs[0];
-  }
-  return null;
-}
-
-function updateSchemeCoverageNote() {
-  var el = document.getElementById("schemeCoverageNote");
-  if (!el) return;
-  var list = state.schemes.slice().sort(function (a, b) {
-    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
-  });
-  if (!list.length) { el.textContent = "尚未配置政策。"; return; }
-  var gaps = [];
-  for (var i = 0; i < list.length - 1; i++) {
-    var cur = list[i];
-    var next = list[i + 1];
-    if (!cur.valid_to) {
-      gaps.push(cur.name + " 为「至今」，与后续「" + next.name + "」可能重叠");
-      continue;
-    }
-    var expectNext = dayBefore(next.valid_from);
-    /* 允许相邻：cur.to + 1 day == next.from */
-    var curEndNext = (function (d) {
-      if (!d) return "";
-      var p = d.split("-");
-      var dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
-      dt.setDate(dt.getDate() + 1);
-      var m = dt.getMonth() + 1, day = dt.getDate();
-      return dt.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
-    })(cur.valid_to);
-    if (curEndNext !== next.valid_from) {
-      if (cur.valid_to >= next.valid_from) gaps.push(cur.name + " 与 " + next.name + " 区间重叠");
-      else gaps.push(cur.name + " 与 " + next.name + " 之间有空隙（" + curEndNext + " ~ " + dayBefore(next.valid_from) + "）");
-    }
-  }
-  el.textContent = gaps.length
-    ? ("时间轴提示：" + gaps.join("；") + "。建议用「新增方案（接在最后）」自动截断。")
-    : ("时间轴完整：共 " + list.length + " 段，按生效日起止衔接。当前生效：" +
-      (list.filter(function (s) { return schemeStatusLabel(s) === "生效中"; }).map(function (s) { return s.name; }).join("、") || "无") + "。");
-}
-
-function renderSchemeTimeline() {
-  var body = document.getElementById("schemeTimelineBody");
-  if (!body) return;
-  var list = state.schemes.slice().sort(function (a, b) {
-    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
-  });
-  var html = [];
-  list.forEach(function (s, i) {
-    var st = schemeStatusLabel(s);
-    var badge = st === "生效中" ? "badge-ok" : (st === "未开始" ? "badge-info" : "badge-muted");
-    var cls = s.id === state.activeSchemeId ? "is-active-scheme" : "";
-    html.push(
-      "<tr class='" + cls + "' onclick='selectSchemeById(" + JSON.stringify(s.id) + ")'>" +
-      "<td>" + (i + 1) + "</td>" +
-      "<td><strong>" + escapeHtml(s.name) + "</strong></td>" +
-      "<td>" + escapeHtml(s.valid_from || "—") + "</td>" +
-      "<td>" + escapeHtml(s.valid_to || "至今") + "</td>" +
-      "<td><span class='badge " + badge + "'>" + st + "</span></td>" +
-      "<td><button type='button' class='btn-icon' onclick='event.stopPropagation();selectSchemeById(" + JSON.stringify(s.id) + ")'>编辑</button></td>" +
-      "</tr>"
-    );
-  });
-  body.innerHTML = html.length ? html.join("") : "<tr><td colspan='6'>暂无政策，请新增</td></tr>";
-}
-
-function selectSchemeById(id) {
-  syncCurrentSchemeEditorsToState();
-  state.activeSchemeId = id;
-  renderSchemeSelect();
-  loadSchemeToEditors(findSchemeById(id));
-}
-
-function renderSchemeSelect() {
-  var sel = document.getElementById("schemeSelect");
-  if (!sel) return;
-  var cur = state.activeSchemeId;
-  var list = state.schemes.slice().sort(function (a, b) {
-    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
-  });
-  sel.innerHTML = "";
-  list.forEach(function (s) {
-    var opt = document.createElement("option");
-    opt.value = s.id;
-    opt.textContent = s.name + " ｜ " + s.valid_from + " ~ " + (s.valid_to || "至今");
-    sel.appendChild(opt);
-  });
-  if (!cur || !findSchemeById(cur)) {
-    cur = list.length ? list[list.length - 1].id : "";
-    state.activeSchemeId = cur;
-  }
-  sel.value = cur;
-  updateSchemeCoverageNote();
-  renderSchemeTimeline();
-}
-
-function loadSchemeToEditors(scheme) {
-  if (!scheme) return;
-  document.getElementById("schemeName").value = scheme.name || "";
-  document.getElementById("schemeFrom").value = scheme.valid_from || "";
-  document.getElementById("schemeTo").value = scheme.valid_to || "";
-  renderTierEditor(cloneTiers(scheme.tiers || []));
-  renderSkuEditor(cloneSkus(scheme.skus || []));
-}
-
-function syncCurrentSchemeEditorsToState() {
-  var s = findSchemeById(state.activeSchemeId);
-  if (!s) return;
-  s.name = (document.getElementById("schemeName").value || "").trim() || s.name;
-  s.valid_from = document.getElementById("schemeFrom").value || s.valid_from;
-  s.valid_to = document.getElementById("schemeTo").value || "";
-  s.tiers = readTiersFromUI();
-  s.skus = readSkuFromUI();
-}
-
-function saveCurrentSchemeMeta() {
-  var s = findSchemeById(state.activeSchemeId);
-  if (!s) return;
-  s.name = (document.getElementById("schemeName").value || "").trim() || s.name;
-  var newFrom = document.getElementById("schemeFrom").value || s.valid_from;
-  s.valid_from = newFrom;
-  s.valid_to = document.getElementById("schemeTo").value || "";
-  /* 改生效起且勾选自动截断时，同步收口更早的「至今/重叠」方案 */
-  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
-  if (autoClose && newFrom) {
-    var closed = autoCloseSchemesBefore(newFrom, s.id);
-    if (closed.length) toast("已按新生效起截断：" + closed.join("；"));
-  }
-  renderSchemeSelect();
-  document.getElementById("schemeSelect").value = s.id;
-  loadSchemeToEditors(s);
-}
-
-function onSchemeSelectChange() {
-  syncCurrentSchemeEditorsToState();
-  var id = document.getElementById("schemeSelect").value;
-  state.activeSchemeId = id;
-  loadSchemeToEditors(findSchemeById(id));
-}
-
-function nextSchemeLetter() {
-  var n = state.schemes.length;
-  return String.fromCharCode(65 + (n % 26)); /* A,B,C... */
-}
-
 function dayAfter(dateStr) {
   if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return "";
   var p = dateStr.split("-");
@@ -1870,69 +1632,319 @@ function dayAfter(dateStr) {
  * 今天=10-02 新增 C → C=10-03~至今，上一版「至今」自动止于今天 10-02。
  * 若希望今天起立刻切到新方案，把生效起改为今天即可（上一版会止于昨天）。
  */
-function addScheme() {
-  syncCurrentSchemeEditorsToState();
-  var start = dayAfter(todayISO()) || todayISO();
-  var id = "S" + Date.now().toString(36).toUpperCase();
-  var name = "方案" + nextSchemeLetter();
-  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
-  var closed = [];
-  if (autoClose) closed = autoCloseSchemesBefore(start, null);
+/* =============================================================================
+   佣金规则表（dim_rule）：CRUD + 匹配 + 校验
+   ============================================================================= */
+function ruleTypeLabel(t) {
+  var map = { tier_rate: "阶梯比例", cap: "封顶", floor: "保底", accelerator: "加速器", spiff: "SPIFF 奖励" };
+  return map[t] || t || "阶梯比例";
+}
 
-  var cur = findSchemeById(state.activeSchemeId);
-  var s = {
-    id: id,
-    name: name,
-    valid_from: start,
-    valid_to: "", /* 至今 */
-    tiers: cloneTiers(cur && cur.tiers && cur.tiers.length ? cur.tiers : defaultTiers),
-    skus: cloneSkus(cur && cur.skus && cur.skus.length ? cur.skus : defaultSkuCoeffs)
+function ruleStatusLabel(s) { return s === "Active" ? "生效" : "停用"; }
+
+/** 按「时间 → 计划 → 产品 → 金额区间」匹配一条生效规则；返回含 rate/ratePct/coeff/matchedBy */
+function matchRule(dateStr, amount, row, rules) {
+  if (!dateStr) return null;
+  var plan = "Default Plan"; /* 宽表未含 plan 列时默认单计划 */
+  var cands = [];
+  rules.forEach(function (r) {
+    if (r.status !== "Active") return;
+    if (r.plan !== plan) return;
+    if (!r.valid_from || dateStr < r.valid_from) return;
+    if (r.valid_to && dateStr > r.valid_to) return;
+    var score = 0, matchedBy = "";
+    if (r.sku_prefix && row.sku && String(row.sku).toUpperCase().indexOf(String(r.sku_prefix).toUpperCase()) === 0) {
+      score = 3; matchedBy = "sku_prefix=" + r.sku_prefix;
+    } else if (r.product_group && r.product_group !== "All" && row.product_line === r.product_group) {
+      score = 2; matchedBy = "product_line=" + r.product_group;
+    } else if (r.product_group === "All") {
+      score = 1; matchedBy = "product_group=All";
+    }
+    if (score === 0) return;
+    var min = r.tier_min == null || isNaN(r.tier_min) ? null : Number(r.tier_min);
+    var max = r.tier_max == null || r.tier_max === "" || isNaN(r.tier_max) ? null : Number(r.tier_max);
+    var amt = Number(amount) || 0;
+    if (min != null && amt < min) return;
+    if (max != null && amt >= max) return;
+    cands.push({ rule: r, score: score, matchedBy: matchedBy });
+  });
+  if (!cands.length) return null;
+  cands.sort(function (a, b) {
+    if (a.score !== b.score) return b.score - a.score;
+    var pa = a.rule.priority == null ? 1 : Number(a.rule.priority);
+    var pb = b.rule.priority == null ? 1 : Number(b.rule.priority);
+    if (pa !== pb) return pa - pb;
+    return a.rule.id < b.rule.id ? -1 : 1;
+  });
+  var top = cands[0];
+  return {
+    rule: top.rule,
+    matchedBy: top.matchedBy,
+    rate: (Number(top.rule.rate_pct) || 0) / 100,
+    ratePct: Number(top.rule.rate_pct) || 0,
+    coeff: top.rule.coeff == null ? 1 : Number(top.rule.coeff)
   };
-  state.schemes.push(s);
-  state.activeSchemeId = id;
-  renderSchemeSelect();
-  loadSchemeToEditors(s);
-  if (closed.length) {
-    toast("已新增「" + name + "」（" + start + "~至今）；已自动截断：" + closed.join("；"));
-  } else {
-    toast("已新增「" + name + "」（" + start + "~至今）。可改生效起；勾选自动截断可收口上一版。");
+}
+
+/** 未命中时区分原因：time（无生效规则）/ product（产品未命中）/ tier（区间未命中） */
+function matchRuleDetail(dateStr, amount, row, rules) {
+  var m = matchRule(dateStr, amount, row, rules);
+  if (m) return m;
+  if (!dateStr) return { missing: "time" };
+  var timeHit = rules.some(function (r) {
+    return r.status === "Active" && r.plan === "Default Plan" && r.valid_from && dateStr >= r.valid_from && (!r.valid_to || dateStr <= r.valid_to);
+  });
+  if (!timeHit) return { missing: "time" };
+  var prodHit = rules.some(function (r) {
+    return r.status === "Active" && r.plan === "Default Plan" && r.valid_from && dateStr >= r.valid_from && (!r.valid_to || dateStr <= r.valid_to) &&
+      ((r.sku_prefix && row.sku && String(row.sku).toUpperCase().indexOf(String(r.sku_prefix).toUpperCase()) === 0) ||
+       (r.product_group === "All") ||
+       (r.product_group && r.product_group !== "All" && row.product_line === r.product_group));
+  });
+  if (!prodHit) return { missing: "product" };
+  return { missing: "tier" };
+}
+
+function ruleLabel(rule) {
+  if (!rule) return "—";
+  var g = rule.product_group === "All" ? "全产品" : rule.product_group;
+  var hi = rule.tier_max == null || rule.tier_max === "" ? "∞" : formatMoney(rule.tier_max);
+  var lo = formatMoney(rule.tier_min);
+  var typ = rule.rule_type && rule.rule_type !== "tier_rate" ? "·" + ruleTypeLabel(rule.rule_type) : "";
+  return g + " [" + lo + ", " + hi + ") · " + rule.rate_pct + "% · ×" + rule.coeff + typ;
+}
+
+/** 计算周期内逐日预检规则覆盖 */
+function checkRuleCoverage(periodYm, rules) {
+  if (!periodYm || periodYm.length < 7) return { ok: false, msg: "计算周期无效" };
+  var y = Number(periodYm.slice(0, 4));
+  var m = Number(periodYm.slice(5, 7));
+  var daysInMonth = new Date(y, m, 0).getDate();
+  var missing = [];
+  for (var d = 1; d <= daysInMonth; d++) {
+    var ds = periodYm + "-" + (d < 10 ? "0" + d : String(d));
+    var any = rules.some(function (r) {
+      return r.status === "Active" && r.plan === "Default Plan" && r.valid_from && ds >= r.valid_from && (!r.valid_to || ds <= r.valid_to);
+    });
+    if (!any) missing.push(ds);
   }
+  if (!missing.length) return { ok: true, msg: periodYm + " 共 " + daysInMonth + " 天均有生效规则覆盖。" };
+  var show = missing.slice(0, 5).join("、") + (missing.length > 5 ? " 等" : "");
+  return { ok: false, msg: periodYm + " 有 " + missing.length + " 天无生效规则（如 " + show + "）。建议补规则有效期后再月结。" };
 }
 
-function copyScheme() {
-  syncCurrentSchemeEditorsToState();
-  var cur = findSchemeById(state.activeSchemeId);
-  if (!cur) { toast("无当前版本可复制"); return; }
-  var start = dayAfter(todayISO()) || todayISO();
-  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
-  var closed = autoClose ? autoCloseSchemesBefore(start, null) : [];
-  var id = "S" + Date.now().toString(36).toUpperCase();
-  var s = {
-    id: id,
-    name: cur.name + "（新）",
-    valid_from: start,
-    valid_to: "",
-    tiers: cloneTiers(cur.tiers),
-    skus: cloneSkus(cur.skus)
+/** 规则完整性校验 */
+function validateRules(rules) {
+  var errors = [];
+  if (!rules || !rules.length) errors.push("佣金规则表为空，请至少配置 1 条生效规则。");
+  var active = (rules || []).filter(function (r) { return r.status === "Active"; });
+  if (!active.length) errors.push("没有生效规则（status=Active），无法计算。");
+  active.forEach(function (r) {
+    if (r.tier_min == null || isNaN(r.tier_min)) errors.push("规则 " + r.id + "：金额下限无效。");
+    if (r.rate_pct == null || isNaN(r.rate_pct) || r.rate_pct < 0) errors.push("规则 " + r.id + "：比例无效。");
+    if (r.tier_max != null && !isNaN(r.tier_max) && r.tier_max < r.tier_min) errors.push("规则 " + r.id + "：上限小于下限。");
+    if (!r.product_group) errors.push("规则 " + r.id + "：产品组不能为空。");
+  });
+  var period = document.getElementById("periodMonth").value;
+  if (!period) errors.push("请选择计算周期（年月）。");
+  return errors.join("；");
+}
+
+/* —— 规则表 CRUD —— */
+
+function filteredRules() {
+  var kw = (document.getElementById("ruleKeyword").value || "").trim().toLowerCase();
+  var typ = document.getElementById("ruleTypeFilter").value;
+  var st = document.getElementById("ruleStatusFilter").value;
+  return state.rules.filter(function (r) {
+    if (typ && r.rule_type !== typ) return false;
+    if (st && r.status !== st) return false;
+    if (!kw) return true;
+    return [r.id, r.plan, r.product_group, r.sku_prefix || "", r.revenue_type || "", String(r.rate_pct), String(r.coeff), r.note || ""].join("|").toLowerCase().indexOf(kw) !== -1;
+  });
+}
+
+function renderRuleStats() {
+  var el = document.getElementById("ruleStats");
+  if (!el) return;
+  var total = state.rules.length;
+  var active = state.rules.filter(function (r) { return r.status === "Active"; }).length;
+  var plans = {};
+  state.rules.forEach(function (r) { plans[r.plan] = 1; });
+  el.innerHTML =
+    "<span class='stat-item'>规则总数 <b>" + total + "</b></span>" +
+    "<span class='stat-item'>生效规则 <b>" + active + "</b></span>" +
+    "<span class='stat-item'>佣金计划 <b>" + Object.keys(plans).length + "</b></span>" +
+    "<span class='stat-item'>计算口径：时间 → 计划 → 产品 → 金额区间</span>";
+}
+
+function renderRuleTable() {
+  renderRuleStats();
+  var tb = document.getElementById("ruleBody");
+  var list = filteredRules();
+  tb.innerHTML = "";
+  if (!list.length) {
+    tb.innerHTML = "<tr><td colspan='15' style='text-align:center;color:#94a3b8;padding:14px;'>无匹配规则</td></tr>";
+    return;
+  }
+  list.forEach(function (r) {
+    var hi = r.tier_max == null || r.tier_max === "" ? "∞" : formatMoney(r.tier_max);
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>" + escapeHtml(r.id) + "</td>" +
+      "<td>" + escapeHtml(r.plan) + "</td>" +
+      "<td>" + escapeHtml(r.product_group) + "</td>" +
+      "<td>" + escapeHtml(r.sku_prefix || "—") + "</td>" +
+      "<td>" + escapeHtml(r.revenue_type || "All") + "</td>" +
+      "<td class='num'>[" + formatMoney(r.tier_min) + ", " + hi + ")</td>" +
+      "<td class='num'>" + r.rate_pct + "%</td>" +
+      "<td class='num'>×" + r.coeff + "</td>" +
+      "<td>" + ruleTypeLabel(r.rule_type) + "</td>" +
+      "<td>" + (r.extra_value != null ? r.extra_value : "—") + (r.threshold_value != null ? " / 触发 " + formatMoney(r.threshold_value) : "") + "</td>" +
+      "<td>" + escapeHtml(r.valid_from || "—") + "</td>" +
+      "<td>" + escapeHtml(r.valid_to || "长期") + "</td>" +
+      "<td class='num'>" + (r.priority == null ? 1 : r.priority) + "</td>" +
+      "<td><span class='badge " + (r.status === "Active" ? "badge-ok" : "badge-muted") + "'>" + ruleStatusLabel(r.status) + "</span></td>" +
+      "<td><button type='button' class='btn-icon' onclick='openRuleForm(\"" + r.id + "\")'>编辑</button> " +
+      "<button type='button' class='btn-icon' onclick='duplicateRule(\"" + r.id + "\")'>复制</button> " +
+      "<button type='button' class='btn-icon' onclick='deleteRule(\"" + r.id + "\")'>删除</button></td>";
+    tb.appendChild(tr);
+  });
+}
+
+function resetRuleFilters() {
+  document.getElementById("ruleKeyword").value = "";
+  document.getElementById("ruleTypeFilter").value = "";
+  document.getElementById("ruleStatusFilter").value = "";
+  renderRuleTable();
+}
+
+function syncRuleTypeHint() {
+  var t = document.getElementById("ruleRuleType").value;
+  var hints = {
+    tier_rate: "阶梯比例：基础佣金 = 金额 × 比例 × 系数。",
+    cap: "封顶：佣金不超过「附加参数」金额（extra_value = 上限）。",
+    floor: "保底：佣金不低于「附加参数」金额（extra_value = 保底额）。",
+    accelerator: "加速器：超过「触发金额」的部分按「附加参数」（超额比例 %）放大。",
+    spiff: "SPIFF 一次性奖励：基础佣金外再 +「附加参数」固定金额。"
   };
-  state.schemes.push(s);
-  state.activeSchemeId = id;
-  renderSchemeSelect();
-  loadSchemeToEditors(s);
-  toast(closed.length
-    ? ("已复制为新方案并截断上一版：" + closed.join("；"))
-    : "已复制为新方案（" + start + "~至今）");
+  document.getElementById("ruleTypeHint").textContent = hints[t] || "";
 }
 
+function ruleFormValues() {
+  function num(id) {
+    var v = document.getElementById(id).value.trim();
+    return v === "" ? null : Number(v);
+  }
+  return {
+    plan: document.getElementById("rulePlan").value.trim() || "Default Plan",
+    product_group: document.getElementById("ruleProductGroup").value.trim(),
+    sku_prefix: document.getElementById("ruleSkuPrefix").value.trim(),
+    revenue_type: document.getElementById("ruleRevenueType").value,
+    tier_min: num("ruleTierMin"),
+    tier_max: num("ruleTierMax"),
+    rate_pct: num("ruleRatePct"),
+    coeff: num("ruleCoeff") == null ? 1 : num("ruleCoeff"),
+    rule_type: document.getElementById("ruleRuleType").value,
+    extra_value: num("ruleExtraValue"),
+    threshold_value: num("ruleThresholdValue"),
+    valid_from: document.getElementById("ruleValidFrom").value,
+    valid_to: document.getElementById("ruleValidTo").value,
+    priority: num("rulePriority") == null ? 1 : num("rulePriority"),
+    status: document.getElementById("ruleStatus").value,
+    note: document.getElementById("ruleNote").value.trim()
+  };
+}
 
-function deleteScheme() {
-  if (state.schemes.length <= 1) { toast("至少保留一个政策版本"); return; }
-  var id = state.activeSchemeId;
-  state.schemes = state.schemes.filter(function (s) { return s.id !== id; });
-  state.activeSchemeId = state.schemes[0].id;
-  renderSchemeSelect();
-  loadSchemeToEditors(state.schemes[0]);
-  toast("已删除政策版本");
+function openRuleForm(id) {
+  var r = id ? state.rules.filter(function (x) { return x.id === id; })[0] : null;
+  document.getElementById("ruleFormTitle").textContent = r ? "编辑规则 " + r.id : "新增规则";
+  var f = document.getElementById("ruleForm");
+  f.style.display = "block";
+  f.setAttribute("data-edit-id", r ? r.id : "");
+  document.getElementById("rulePlan").value = r ? r.plan : "Default Plan";
+  document.getElementById("ruleProductGroup").value = r ? r.product_group : "Router";
+  document.getElementById("ruleSkuPrefix").value = r ? (r.sku_prefix || "") : "";
+  document.getElementById("ruleRevenueType").value = r ? (r.revenue_type || "All") : "All";
+  document.getElementById("ruleTierMin").value = r && r.tier_min != null ? r.tier_min : "";
+  document.getElementById("ruleTierMax").value = r && r.tier_max != null ? r.tier_max : "";
+  document.getElementById("ruleRatePct").value = r ? r.rate_pct : "";
+  document.getElementById("ruleCoeff").value = r ? r.coeff : 1;
+  document.getElementById("ruleRuleType").value = r ? (r.rule_type || "tier_rate") : "tier_rate";
+  document.getElementById("ruleExtraValue").value = r && r.extra_value != null ? r.extra_value : "";
+  document.getElementById("ruleThresholdValue").value = r && r.threshold_value != null ? r.threshold_value : "";
+  document.getElementById("ruleValidFrom").value = r ? (r.valid_from || "") : "2025-01-01";
+  document.getElementById("ruleValidTo").value = r ? (r.valid_to || "") : "";
+  document.getElementById("rulePriority").value = r && r.priority != null ? r.priority : 1;
+  document.getElementById("ruleStatus").value = r ? (r.status || "Active") : "Active";
+  document.getElementById("ruleNote").value = r ? (r.note || "") : "";
+  syncRuleTypeHint();
+  try { f.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e2) {}
+}
+
+function closeRuleForm() { document.getElementById("ruleForm").style.display = "none"; }
+
+function saveRuleFromForm() {
+  var v = ruleFormValues();
+  var errs = [];
+  if (!v.product_group) errs.push("产品组不能为空。");
+  if (v.tier_min == null || isNaN(v.tier_min)) errs.push("金额下限无效。");
+  if (v.rate_pct == null || isNaN(v.rate_pct) || v.rate_pct < 0) errs.push("比例无效。");
+  if (v.tier_max != null && !isNaN(v.tier_max) && v.tier_max < v.tier_min) errs.push("上限小于下限。");
+  if ((v.rule_type === "cap" || v.rule_type === "floor" || v.rule_type === "spiff") && (v.extra_value == null || isNaN(v.extra_value))) errs.push("该规则类型需要填写「附加参数」。");
+  if (v.rule_type === "accelerator") {
+    if (v.extra_value == null || isNaN(v.extra_value)) errs.push("加速器需要填写「超额比例」。");
+    if (v.threshold_value == null || isNaN(v.threshold_value)) errs.push("加速器需要填写「触发金额」。");
+  }
+  if (errs.length) { toast(errs.join("；")); return; }
+  var editId = document.getElementById("ruleForm").getAttribute("data-edit-id");
+  if (editId) {
+    var r = state.rules.filter(function (x) { return x.id === editId; })[0];
+    if (r) {
+      var keys = ["plan", "product_group", "sku_prefix", "revenue_type", "tier_min", "tier_max", "rate_pct", "coeff", "rule_type", "extra_value", "threshold_value", "valid_from", "valid_to", "priority", "status", "note"];
+      keys.forEach(function (k) { r[k] = v[k]; });
+      toast("规则 " + editId + " 已更新");
+    }
+  } else {
+    var nid = "R" + Date.now().toString(36).toUpperCase();
+    v.id = nid;
+    state.rules.push(v);
+    toast("已新增规则 " + nid);
+  }
+  closeRuleForm();
+  renderRuleTable();
+}
+
+function deleteRule(id) {
+  var idx = -1;
+  state.rules.forEach(function (r, i) { if (r.id === id) idx = i; });
+  if (idx < 0) return;
+  if (state.rules.filter(function (r) { return r.status === "Active"; }).length <= 1 && state.rules[idx].status === "Active") {
+    toast("至少保留一条生效规则"); return;
+  }
+  state.rules.splice(idx, 1);
+  renderRuleTable();
+  toast("已删除规则 " + id);
+}
+
+function duplicateRule(id) {
+  var r = state.rules.filter(function (x) { return x.id === id; })[0];
+  if (!r) return;
+  var c = {};
+  Object.keys(r).forEach(function (k) { c[k] = r[k]; });
+  c.id = "R" + Date.now().toString(36).toUpperCase();
+  c.status = "Inactive"; /* 复制默认停用，避免与原件重复计佣 */
+  c.note = (c.note ? c.note + "；" : "") + "复制自 " + r.id;
+  state.rules.push(c);
+  renderRuleTable();
+  toast("已复制 " + r.id + " → " + c.id + "（默认停用）");
+}
+
+function resetDefaultRules() {
+  if (state.rules.some(function (r) { return r.status === "Active"; }) && !window.confirm("重置为默认规则会丢弃当前修改，确定？")) return;
+  state.rules = buildDefaultRules();
+  renderRuleTable();
+  toast("已重置为默认规则");
 }
 
 /* =============================================================================
@@ -2113,113 +2125,6 @@ function toggleCard(id) {
 }
 
 /* =============================================================================
-   规则 UI：阶梯 / SKU 系数表的渲染与读取
-   ============================================================================= */
-function renderTierEditor(tiers) {
-  var tb = document.getElementById("tierBody");
-  tb.innerHTML = "";
-  tiers.forEach(function (t, i) {
-    var tr = document.createElement("tr");
-    tr.innerHTML =
-      "<td>第 " + (i + 1) + " 档</td>" +
-      "<td><input type='number' min='0' step='1' data-k='min' value='" + (t.min != null ? t.min : "") + "' /></td>" +
-      "<td><input type='number' min='0' step='1' data-k='max' value='" + (t.max != null && t.max !== "" ? t.max : "") + "' placeholder='无上限' /></td>" +
-      "<td><input type='number' min='0' step='0.01' data-k='ratePct' value='" + t.ratePct + "' /></td>" +
-      "<td><button type='button' class='btn-icon' onclick='removeTierRow(this)' title='删除档位'>删除</button></td>";
-    tb.appendChild(tr);
-  });
-}
-
-function renderSkuEditor(list) {
-  var tb = document.getElementById("skuBody");
-  tb.innerHTML = "";
-  list.forEach(function (s) {
-    var tr = document.createElement("tr");
-    tr.innerHTML =
-      "<td><input type='text' data-k='productLine' value='" + escapeHtml(s.productLine) + "' /></td>" +
-      "<td><input type='text' data-k='skuPrefix' value='" + escapeHtml(s.skuPrefix || "") + "' /></td>" +
-      "<td><input type='number' min='0' step='0.01' data-k='coeff' value='" + s.coeff + "' /></td>" +
-      "<td><button type='button' class='btn-icon' onclick='removeSkuRow(this)' title='删除'>删除</button></td>";
-    tb.appendChild(tr);
-  });
-}
-
-function addTierRow() {
-  var tiers = readTiersFromUI();
-  var lastMax = tiers.length ? tiers[tiers.length - 1].max : 0;
-  var nextMin = lastMax != null ? Number(lastMax) + 1 : 0;
-  tiers.push({ min: nextMin, max: null, ratePct: 5 });
-  renderTierEditor(tiers);
-}
-
-function removeTierRow(btn) {
-  var tr = btn.closest("tr");
-  tr.parentNode.removeChild(tr);
-  /* 重新编号档位标签 */
-  renderTierEditor(readTiersFromUI());
-}
-
-function addSkuRow() {
-  var list = readSkuFromUI();
-  list.push({ productLine: "", skuPrefix: "", coeff: 1.0 });
-  renderSkuEditor(list);
-}
-
-function removeSkuRow(btn) {
-  var tr = btn.closest("tr");
-  tr.parentNode.removeChild(tr);
-}
-
-/** 从编辑表读取阶梯；空上限视为 null（无上限） */
-function readTiersFromUI() {
-  var rows = document.querySelectorAll("#tierBody tr");
-  var out = [];
-  rows.forEach(function (tr) {
-    var minEl = tr.querySelector("[data-k='min']");
-    var maxEl = tr.querySelector("[data-k='max']");
-    var rateEl = tr.querySelector("[data-k='ratePct']");
-    var min = minEl.value === "" ? null : Number(minEl.value);
-    var max = maxEl.value === "" ? null : Number(maxEl.value);
-    var ratePct = rateEl.value === "" ? null : Number(rateEl.value);
-    out.push({ min: min, max: max, ratePct: ratePct });
-  });
-  return out;
-}
-
-function readSkuFromUI() {
-  var rows = document.querySelectorAll("#skuBody tr");
-  var out = [];
-  rows.forEach(function (tr) {
-    out.push({
-      productLine: (tr.querySelector("[data-k='productLine']").value || "").trim(),
-      skuPrefix: (tr.querySelector("[data-k='skuPrefix']").value || "").trim(),
-      coeff: Number(tr.querySelector("[data-k='coeff']").value)
-    });
-  });
-  return out;
-}
-
-/** 规则完整性校验：禁止空规则表或无效数值 */
-function validateRules(tiers, skus) {
-  var errors = [];
-  if (!tiers.length) errors.push("阶梯提成表为空，请至少配置 1 档。");
-  tiers.forEach(function (t, i) {
-    if (t.min == null || isNaN(t.min)) errors.push("第 " + (i + 1) + " 档：销售额下限无效。");
-    if (t.ratePct == null || isNaN(t.ratePct) || t.ratePct < 0) errors.push("第 " + (i + 1) + " 档：提成比例无效。");
-    if (t.max != null && !isNaN(t.max) && t.max < t.min) errors.push("第 " + (i + 1) + " 档：上限小于下限。");
-  });
-  var validSkus = skus.filter(function (s) { return s.productLine; });
-  if (!validSkus.length) errors.push("SKU 分类系数表为空，请至少配置 1 条产品线。");
-  skus.forEach(function (s, i) {
-    if (!s.productLine) errors.push("SKU 系数第 " + (i + 1) + " 行：产品线不能为空。");
-    if (s.coeff == null || isNaN(s.coeff) || s.coeff < 0) errors.push("SKU 系数第 " + (i + 1) + " 行：系数无效。");
-  });
-  var period = document.getElementById("periodMonth").value;
-  if (!period) errors.push("请选择计算周期（年月）。");
-  return errors;
-}
-
-/* =============================================================================
    CSV 解析：严格校验列名，缺列报具体列名
    ============================================================================= */
 function parseCsv(text) {
@@ -2392,51 +2297,6 @@ function setCalcStatus(msg, type) {
    核心计算引擎
    ============================================================================= */
 
-/** 匹配 SKU / 产品线系数；未命中返回 null */
-function matchSkuCoeff(row, skuRules) {
-  for (var i = 0; i < skuRules.length; i++) {
-    var rule = skuRules[i];
-    if (!rule.productLine) continue;
-    if (rule.productLine === row.product_line) {
-      return { coeff: rule.coeff, matchedBy: "product_line=" + rule.productLine, rule: rule };
-    }
-  }
-  /* 次级：SKU 前缀匹配（产品线别名场景） */
-  for (var j = 0; j < skuRules.length; j++) {
-    var r2 = skuRules[j];
-    if (r2.skuPrefix && row.sku && row.sku.indexOf(r2.skuPrefix) === 0) {
-      return { coeff: r2.coeff, matchedBy: "sku_prefix=" + r2.skuPrefix, rule: r2 };
-    }
-  }
-  return null;
-}
-
-/** 匹配阶梯区间：左闭右开 [min, max)；max=null 表示无上限 */
-function matchTier(amount, tiers) {
-  for (var i = 0; i < tiers.length; i++) {
-    var t = tiers[i];
-    if (t.min == null || isNaN(t.min)) continue;
-    var geMin = amount >= t.min;
-    var ltMax = t.max == null || isNaN(t.max) ? true : amount < t.max;
-    if (geMin && ltMax) {
-      return {
-        index: i,
-        label: formatTierLabel(t, i),
-        rate: (Number(t.ratePct) || 0) / 100,
-        ratePct: Number(t.ratePct) || 0,
-        tier: t
-      };
-    }
-  }
-  return null;
-}
-
-function formatTierLabel(t, i) {
-  var hi = t.max == null || t.max === "" ? "+∞" : formatMoney(t.max).replace(/\.00$/, "");
-  var lo = formatMoney(t.min).replace(/\.00$/, "");
-  return "第" + (i + 1) + "档 [" + lo + ", " + hi + ") @ " + t.ratePct + "%";
-}
-
 /**
  * 解析退货单对应的原订单号：
  * 1) 优先用 CSV 的 orig_order_id
@@ -2459,7 +2319,7 @@ function computeRow(row, idx, ctx) {
   var period = ctx.period;
   var attrMode = ctx.attrMode;
   var ruleDateMode = ctx.ruleDateMode || "payment";
-  var schemes = ctx.schemes || [];
+  var rules = ctx.rules || [];
   var deductReturn = ctx.deductReturn;
   var traceOrigMonth = ctx.traceOrigMonth;
   var lockOrigScheme = !!ctx.lockOrigScheme;
@@ -2481,22 +2341,28 @@ function computeRow(row, idx, ctx) {
   var origSale = isReturn ? salesIndex[origOrderId] : null;
   var origFound = !!origSale;
 
-  /* 政策：退货可锁定原单政策 */
+  /* 政策：退货可锁定原单规则 → 统一规则表匹配 */
   var ruleDate = ruleDateMode === "order" ? row.order_date : (payInfo.payDate || row.payment_date);
-  var scheme = null;
-  var schemeSource = "";
-  if (isReturn && lockOrigScheme && origSale && origSale.scheme) {
-    scheme = origSale.scheme;
+  var ruleMatch = null;
+  var ruleSource = "";
+  var timeMissing = false, productMissing = false, tierMissing = false;
+  if (isReturn && lockOrigScheme && origSale && origSale.rule) {
+    ruleMatch = origSale.rule;
     ruleDate = origSale.ruleDate || ruleDate;
-    schemeSource = "锁定原单政策";
+    ruleSource = "锁定原单规则";
   } else if (!isUnpaid) {
-    scheme = matchSchemeByDate(ruleDate, schemes);
-    schemeSource = "按判定日匹配";
+    ruleMatch = matchRuleDetail(ruleDate, commissionBase, row, ctx.rules);
+    ruleSource = "按判定日匹配";
   }
-  var schemeMissing = !isUnpaid && !scheme;
-  var tiers = scheme ? scheme.tiers : [];
-  var skuRules = scheme ? scheme.skus : [];
-  var schemeLabel = scheme ? (scheme.name + " [" + scheme.valid_from + "~" + (scheme.valid_to || "∞") + "]") : (isUnpaid ? "—" : "未匹配政策版本");
+  if (ruleMatch && ruleMatch.missing) {
+    timeMissing = ruleMatch.missing === "time";
+    productMissing = ruleMatch.missing === "product";
+    tierMissing = ruleMatch.missing === "tier";
+    ruleMatch = null;
+  }
+  var rule = ruleMatch ? ruleMatch.rule : null;
+  var ruleMissing = !isUnpaid && !rule;
+  var ruleLabelStr = rule ? (ruleLabel(rule) + " [" + rule.valid_from + "~" + (rule.valid_to || "∞") + "]") : (isUnpaid ? "—" : "未匹配生效规则");
 
   /* 归属月 */
   var attrYm = "";
@@ -2540,11 +2406,7 @@ function computeRow(row, idx, ctx) {
 
   /* ② 归属 */
   if (isUnpaid) {
-    trace.push({
-      step: "② 归属月份判定",
-      cls: "skip",
-      text: "待回款无归属月，不纳入任何计算周期。"
-    });
+    trace.push({ step: "② 归属月份判定", cls: "skip", text: "待回款无归属月，不纳入任何计算周期。" });
   } else {
     trace.push({
       step: "② 归属月份判定",
@@ -2558,78 +2420,96 @@ function computeRow(row, idx, ctx) {
     });
   }
 
-  /* ②.5 政策 */
+  /* ②.5 规则表匹配：时间 → 计划 */
   if (isUnpaid) {
-    trace.push({ step: "②.5 匹配政策版本", cls: "skip", text: "待回款跳过政策匹配。" });
-  } else if (schemeMissing) {
+    trace.push({ step: "②.5 匹配佣金规则", cls: "skip", text: "待回款跳过规则匹配。" });
+  } else if (timeMissing) {
     trace.push({
-      step: "②.5 匹配政策版本",
+      step: "②.5 匹配佣金规则",
       cls: "warn",
-      text: "规则判定日=" + ruleDate + " 未落入政策区间 → 规则未匹配（政策缺失）。"
+      text: "规则判定日=" + ruleDate + " 无生效规则（时间未命中任何规则有效期）→ 规则未匹配。"
     });
     anomalies.push("规则未匹配");
   } else {
     trace.push({
-      step: "②.5 匹配政策版本",
+      step: "②.5 匹配佣金规则",
       cls: "",
-      text: schemeSource + "：判定日=" + ruleDate + " →「" + scheme.name + "」（" +
-        scheme.valid_from + " ~ " + (scheme.valid_to || "长期") + "）。"
+      text: ruleSource + "：判定日=" + ruleDate + " →「" + ruleLabelStr + "」。"
     });
   }
 
-  /* ③ SKU */
-  var skuMatch = (schemeMissing || isUnpaid) ? null : matchSkuCoeff(row, skuRules);
-  var skuMissing = !isUnpaid && !skuMatch;
-  var coeff = skuMatch ? skuMatch.coeff : null;
+  /* ③ 规则命中：产品维度 */
+  var coeff = rule ? rule.coeff : null;
+  var ruleType = rule ? (rule.rule_type || "tier_rate") : "tier_rate";
   if (isUnpaid) {
-    trace.push({ step: "③ 匹配 SKU 系数", cls: "skip", text: "待回款跳过。" });
-  } else if (skuMissing) {
+    trace.push({ step: "③ 匹配佣金规则（产品）", cls: "skip", text: "待回款跳过。" });
+  } else if (productMissing) {
     trace.push({
-      step: "③ 匹配 SKU 系数",
+      step: "③ 匹配佣金规则（产品）",
       cls: "warn",
-      text: "产品线「" + row.product_line + "」/ SKU「" + row.sku + "」未命中系数表。"
+      text: "产品线「" + row.product_line + "」/ SKU「" + row.sku + "」未命中规则表（含 All 通配）。"
     });
     if (anomalies.indexOf("规则未匹配") === -1) anomalies.push("规则未匹配");
+  } else if (!rule) {
+    trace.push({ step: "③ 匹配佣金规则（产品）", cls: "skip", text: "无有效规则。" });
   } else {
-    trace.push({ step: "③ 匹配 SKU 系数", cls: "", text: "命中 " + skuMatch.matchedBy + "，系数 = " + coeff + "。" });
+    trace.push({ step: "③ 匹配佣金规则（产品）", cls: "", text: "命中 " + ruleMatch.matchedBy + "，系数 = " + coeff + "。" });
   }
 
-  /* ④ 阶梯：按计佣金额 */
-  var tierMatch = (schemeMissing || isUnpaid) ? null : matchTier(commissionBase, tiers);
-  var tierMissing = !isUnpaid && !tierMatch;
+  /* ④ 规则命中：金额区间 + 类型 */
   if (isUnpaid) {
-    trace.push({ step: "④ 匹配阶梯区间", cls: "skip", text: "待回款跳过。" });
+    trace.push({ step: "④ 匹配佣金规则（区间）", cls: "skip", text: "待回款跳过。" });
   } else if (tierMissing) {
     trace.push({
-      step: "④ 匹配阶梯区间",
+      step: "④ 匹配佣金规则（区间）",
       cls: "warn",
-      text: "计佣金额 " + formatMoney(commissionBase) + " 未落入阶梯 → 规则未匹配。"
+      text: "计佣金额 " + formatMoney(commissionBase) + " 未落入任何生效规则区间 → 规则未匹配。"
     });
     if (anomalies.indexOf("规则未匹配") === -1) anomalies.push("规则未匹配");
+  } else if (!rule) {
+    trace.push({ step: "④ 匹配佣金规则（区间）", cls: "skip", text: "无有效规则。" });
   } else {
     trace.push({
-      step: "④ 匹配阶梯区间",
+      step: "④ 匹配佣金规则（区间）",
       cls: "",
-      text: "计佣金额 " + formatMoney(commissionBase) + " 落入 " + tierMatch.label + "，比例 = " + tierMatch.ratePct + "%。"
+      text: "计佣金额 " + formatMoney(commissionBase) + " 落入规则区间，比例 = " + rule.rate_pct + "%，类型 = " + ruleTypeLabel(ruleType) + "。"
     });
   }
 
-  /* ⑤ 基础佣金 */
+  /* ⑤ 基础佣金（按规则类型） */
+  function calcByRule(amt, r, typ) {
+    var a = Number(amt) || 0;
+    var pct = (Number(r.rate_pct) || 0) / 100;
+    var cf = r.coeff == null ? 1 : Number(r.coeff);
+    var base = a * pct * cf;
+    typ = typ || r.rule_type || "tier_rate";
+    if (typ === "cap") return Math.min(base, Number(r.extra_value) || 0);
+    if (typ === "floor") return Math.max(base, Number(r.extra_value) || 0);
+    if (typ === "spiff") return base + (Number(r.extra_value) || 0);
+    if (typ === "accelerator") {
+      var thr = Number(r.threshold_value) || 0;
+      if (a <= thr) return base;
+      var accel = (Number(r.extra_value) || 0) / 100;
+      return thr * pct * cf + (a - thr) * accel * cf;
+    }
+    return base;
+  }
+
   var baseCommission = 0;
-  var tierLabel = tierMatch ? tierMatch.label : "—";
+  var tierLabel = rule ? ruleLabel(rule) : "—";
   var coeffDisplay = coeff != null ? coeff : null;
 
   if (isUnpaid) {
     trace.push({ step: "⑤ 基础佣金计算", cls: "skip", text: "待回款，基础佣金 = 0。" });
   } else if (!isReturn) {
-    if (!skuMissing && !tierMissing) {
-      baseCommission = Math.round(commissionBase * tierMatch.rate * coeff * 100) / 100;
+    if (!ruleMissing) {
+      baseCommission = Math.round(calcByRule(commissionBase, rule, ruleType) * 100) / 100;
       trace.push({
         step: "⑤ 基础佣金计算",
         cls: "",
-        text: "基础佣金 = 计佣金额 × 比例 × 系数 = " +
-          formatMoney(commissionBase) + " × " + tierMatch.ratePct + "% × " + coeff +
-          " = " + formatMoney(baseCommission) + "。"
+        text: (ruleType === "tier_rate"
+          ? "基础佣金 = 计佣金额 × 比例 × 系数 = " + formatMoney(commissionBase) + " × " + rule.rate_pct + "% × " + coeff + " = " + formatMoney(baseCommission)
+          : "规则类型「" + ruleTypeLabel(ruleType) + "」：计佣金额 " + formatMoney(commissionBase) + " → " + formatMoney(baseCommission)) + "。"
       });
     } else {
       trace.push({ step: "⑤ 基础佣金计算", cls: "warn", text: "规则未匹配，基础佣金 = 0。" });
@@ -2644,17 +2524,17 @@ function computeRow(row, idx, ctx) {
   if (isReturn) {
     anomalies.push("退货冲销");
     if (deductReturn) {
-      if (!skuMissing && !tierMissing) {
-        returnDeduct = Math.round(commissionBase * tierMatch.rate * coeff * 100) / 100;
+      if (!ruleMissing) {
+        returnDeduct = Math.round(calcByRule(commissionBase, rule, ruleType) * 100) / 100;
       }
       trace.push({
         step: "⑥ 退货冲销扣减",
         cls: "deduct",
         text: "扣减 = " + formatMoney(commissionBase) + " × " +
-          (tierMatch ? tierMatch.ratePct + "%" : "（缺阶梯）") + " × " +
+          (rule ? rule.rate_pct + "%" : "（缺规则）") + " × " +
           (coeff != null ? coeff : "（缺系数）") + " = " + formatMoney(returnDeduct) +
           "；归属月=" + deductYm + "；原单=" + origOrderId +
-          (schemeSource ? "；" + schemeSource : "") + "。"
+          (ruleSource ? "；" + ruleSource : "") + "。"
       });
     } else {
       trace.push({ step: "⑥ 退货冲销扣减", cls: "skip", text: "未开启扣减，仅标记退货异常。" });
@@ -2717,9 +2597,9 @@ function computeRow(row, idx, ctx) {
     attrYm: attrYm,
     includedInPeriod: includedInPeriod,
     tierLabel: tierLabel,
-    ratePct: tierMatch ? tierMatch.ratePct : null,
-    schemeLabel: schemeLabel,
-    schemeName: scheme ? scheme.name : "",
+    ratePct: rule ? Number(rule.rate_pct) : null,
+    schemeLabel: ruleLabelStr,
+    schemeName: rule ? rule.id : "",
     ruleDate: ruleDate,
     coeff: coeffDisplay,
     baseCommission: isReturn || isUnpaid ? 0 : baseCommission,
@@ -2734,9 +2614,9 @@ function computeRow(row, idx, ctx) {
     isUnpaid: isUnpaid,
     isCross: isCross,
     isDup: isDup,
-    skuMissing: skuMissing,
+    skuMissing: productMissing,
     tierMissing: tierMissing,
-    schemeMissing: schemeMissing,
+    schemeMissing: timeMissing,
     trace: trace,
     /* 退货追溯字段 */
     returnMeta: isReturn ? {
@@ -2755,7 +2635,7 @@ function executeEngine(rawRows, ctx) {
   var dupMap = {};
   var salesOrderIds = {};
   var salesIndex = {};
-  var schemes = ctx.schemes || [];
+  var rules = ctx.rules || [];
   var ruleDateMode = ctx.ruleDateMode || "payment";
   rawRows.forEach(function (r) {
     dupMap[r.order_id] = (dupMap[r.order_id] || 0) + 1;
@@ -2766,7 +2646,7 @@ function executeEngine(rawRows, ctx) {
       salesIndex[r.order_id] = {
         amount: Number(r.amount) || 0,
         ruleDate: rd,
-        scheme: rd ? matchSchemeByDate(rd, schemes) : null,
+        rule: rd ? matchRule(rd, Number(r.amount) || 0, r, rules) : null,
         payment_status: pi.status
       };
     }
@@ -2873,9 +2753,9 @@ function executeEngine(rawRows, ctx) {
     if (d.isUnpaid) return;
     if (!d.skuMissing && !d.tierMissing && !d.schemeMissing) return;
     var reasons = [];
-    if (d.schemeMissing) reasons.push("政策缺失（规则判定日 " + (d.ruleDate || "") + " 未落入任何生效区间）");
-    if (d.skuMissing && !d.schemeMissing) reasons.push("SKU缺失（产品线「" + d.product_line + "」/ SKU「" + d.sku + "」不在系数表）");
-    if (d.tierMissing && !d.schemeMissing) reasons.push("阶梯缺失（计佣金额 " + formatMoney(d.commissionBase) + " 未落入任何区间）");
+    if (d.schemeMissing) reasons.push("无生效规则（规则判定日 " + (d.ruleDate || "") + " 未落入任何规则有效期）");
+    if (d.skuMissing && !d.schemeMissing) reasons.push("产品未命中（产品线「" + d.product_line + "」/ SKU「" + d.sku + "」不在规则表）");
+    if (d.tierMissing && !d.schemeMissing) reasons.push("区间未命中（计佣金额 " + formatMoney(d.commissionBase) + " 未落入任何规则区间）");
     anomalies.push({
       type: "规则未匹配",
       order_id: d.order_id,
@@ -2883,10 +2763,10 @@ function executeEngine(rawRows, ctx) {
       desc: reasons.join("；") + "。涉及订单 " + d.order_id + "，涉及金额 " + formatMoney(d.amount) + "。",
       amount: d.amount,
       suggestion: d.schemeMissing
-        ? "补全政策版本生效区间，或调整规则判定日模式后重算。"
+        ? "在佣金规则表补录该判定日的生效规则（新增/编辑有效期），或调整规则判定日模式后重算。"
         : (d.skuMissing
-          ? "在当前政策的 SKU 系数表补录该产品线后重算。"
-          : "扩展当前政策阶梯区间覆盖该金额，或检查金额是否录入错误。")
+          ? "在佣金规则表新增该产品线（或 All 通配）的规则后重算。"
+          : "扩展规则表金额区间覆盖该金额，或检查金额是否录入错误。")
     });
   });
 
@@ -2969,11 +2849,10 @@ function runCalculation() {
     return;
   }
 
-  syncCurrentSchemeEditorsToState();
-  var schemeErr = validateSchemes(state.schemes);
-  if (schemeErr) {
-    setCalcStatus("规则不完整，禁止计算：" + schemeErr, "error");
-    toast(schemeErr);
+  var ruleErr = validateRules(state.rules);
+  if (ruleErr) {
+    setCalcStatus("规则不完整，禁止计算：" + ruleErr, "error");
+    toast(ruleErr);
     return;
   }
 
@@ -2985,7 +2864,7 @@ function runCalculation() {
   var lockOrigScheme = document.getElementById("lockOrigScheme").checked;
   var allowNegative = document.getElementById("allowNegative").checked;
 
-  var cov = checkSchemeCoverage(period, state.schemes);
+  var cov = checkRuleCoverage(period, state.rules);
   var covBox = document.getElementById("coverageBox");
   var covMsg = document.getElementById("coverageMsg");
   if (covBox && covMsg) {
@@ -2994,12 +2873,12 @@ function runCalculation() {
     covMsg.textContent = cov.msg;
   }
   if (!cov.ok) {
-    toast("政策覆盖预检有缺口，仍可计算但请关注规则未匹配");
+    toast("规则覆盖预检有缺口，仍可计算但请关注规则未匹配");
   }
 
   state.calculating = true;
   document.getElementById("btnCalc").disabled = true;
-  setCalcStatus("计算中… 回款状态 → 政策 → 归属 → SKU → 阶梯 → 冲销 → 闸门", "loading");
+  setCalcStatus("计算中… 回款状态 → 归属 → 规则匹配 → 冲销 → 闸门", "loading");
 
   setTimeout(function () {
     try {
@@ -3007,7 +2886,7 @@ function runCalculation() {
         period: period,
         attrMode: attrMode,
         ruleDateMode: ruleDateMode,
-        schemes: state.schemes,
+        rules: state.rules,
         deductReturn: deductReturn,
         traceOrigMonth: traceOrigMonth,
         lockOrigScheme: lockOrigScheme,
@@ -3341,7 +3220,7 @@ function buildTraceHtml(d) {
   }
   if (d.schemeLabel) {
     extra += "<div class='trace-meta'>" +
-      "<span>政策版本：" + escapeHtml(d.schemeLabel) + "</span>" +
+      "<span>命中规则：" + escapeHtml(d.schemeLabel) + "</span>" +
       "<span>规则判定日：" + escapeHtml(d.ruleDate || "") + "</span>" +
       "</div>";
   }
@@ -3758,10 +3637,8 @@ function renderCharts() {
 }
 
 function init() {
-  state.schemes = buildDefaultSchemes();
-  state.activeSchemeId = state.schemes[0].id;
-  renderSchemeSelect();
-  loadSchemeToEditors(state.schemes[0]);
+  state.rules = buildDefaultRules();
+  renderRuleTable();
   setCalcStatus("等待计算 — 请先加载数据并确认规则完整", "");
   syncAttrRadios();
   var radios = document.querySelectorAll("input[name='attrRule'], input[name='ruleDateMode']");
