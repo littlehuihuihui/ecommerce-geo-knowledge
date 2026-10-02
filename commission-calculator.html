@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>通信设备销售佣金计算器</title>
+<title>月度佣金处理台 | 销售员月结与质量闸门</title>
 <style>
 /* ============================================================
    视觉系统：深蓝 + 白 + 浅灰，商务风，适配桌面截图与手机浏览
@@ -586,6 +586,44 @@ table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
 .bar-val { flex: 0 0 74px; text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
 table.data tbody tr.rep-top { background: #eef4fb; }
 
+/* ---------- 月结销售员看板 ---------- */
+.payroll-toolbar {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; margin-bottom: 10px;
+}
+.payroll-toolbar .col { flex: 1 1 120px; min-width: 110px; max-width: 220px; }
+.badge-ok-pay { background: var(--ok-bg); color: var(--ok); border: 1px solid #b8e0c8; }
+.badge-block { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger-border); }
+.sla-box {
+  margin-top: 12px; padding: 10px 12px; background: #f8fafc;
+  border: 1px solid var(--border); border-radius: 8px; font-size: 0.84rem;
+}
+.sla-box .sla-title { font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.sla-box.ok { background: var(--ok-bg); border-color: #b8e0c8; }
+.sla-box.warn { background: #fff7e8; border-color: #f0d9a0; }
+table.data tbody tr.rep-row { cursor: pointer; }
+table.data tbody tr.rep-row:hover { background: #f5f8fb; }
+table.data tbody tr.rep-row.is-selected { background: #e8f0f8; outline: 2px solid var(--navy); outline-offset: -2px; }
+.rep-orders-panel {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f7fafc;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.rep-orders-panel h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  color: var(--navy);
+}
+.rep-orders-meta { color: var(--muted); font-size: 0.82rem; margin-bottom: 10px; }
+.rep-orders-panel .table-scroll { max-height: 360px; background: #fff; border-radius: 8px; }
+.rep-search-row { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; margin-bottom:10px; }
+#schemeTimelineBody tr.is-active-scheme { background: #e8f0f8; }
+#schemeTimelineBody tr { cursor: pointer; }
+#schemeTimelineBody tr:hover { background: #f5f8fb; }
+table.data tbody tr.rep-blocked { background: var(--danger-bg); }
+#repCard { scroll-margin-top: 12px; }
+
 /* ---------- 概念 / 逻辑说明 ---------- */
 .concept-grid {
   display: grid;
@@ -671,18 +709,18 @@ table.data tbody tr.rep-top { background: #eef4fb; }
     <div class="hero-top">
       <a class="btn-back" href="index.html">← 返回行业百科</a>
     </div>
-    <h1>通信设备销售佣金计算器</h1>
-    <p class="sub">可配置规则 · 异常检测 · 明细可追溯 · 勾稽校验</p>
-    <p class="desc">通信设备销售佣金计算工具 — 覆盖退货冲销、回款归属、SKU 系数、阶梯提成与四类异常稽查。</p>
-    <span class="hero-badge">HK Telecom Equipment · Sales Commission</span>
+    <h1>月度佣金处理台</h1>
+    <p class="sub">销售员月结产出 · 规则引擎 · 异常质量闸门 · SLA 校验</p>
+    <p class="desc">电信设备销售场景的每月佣金处理工具：先汇总各销售员销售额与应发佣金，再以退货冲销、回款归属、SKU/阶梯规则与异常稽查保障发薪质量。</p>
+    <span class="hero-badge">HK Telecom · Monthly Commission Processing</span>
   </div>
 </header>
 
 <main class="wrap">
 
   <!-- ======================== 概念与计算逻辑 ======================== -->
-  <section class="card" id="conceptCard">
-    <div class="card-head" onclick="toggleCard('conceptCard')" role="button" aria-expanded="true">
+  <section class="card collapsed" id="conceptCard">
+    <div class="card-head" onclick="toggleCard('conceptCard')" role="button" aria-expanded="false">
       <div>
         <h2>概念与计算逻辑 <span class="en">Concepts &amp; Logic</span></h2>
         <span class="hint">业务概念 · 公式 · 计算顺序 · 异常判定 · 字段说明</span>
@@ -693,8 +731,8 @@ table.data tbody tr.rep-top { background: #eef4fb; }
 
       <h3>一、这个工具在算什么？</h3>
       <p style="font-size:0.84rem;color:#334155;margin:0 0 10px;">
-        面向港资通信设备销售场景：销售员卖出 Router / Switch / SIM Plan / Enterprise Line 后，公司按月结算佣金。
-        核心问题不是「把金额乘个比例」，而是：<strong>哪些单能进本期、按什么规则加权、退货怎么冲、哪里算错了要单独揪出来</strong>。
+        面向港资通信设备销售的<strong>每月佣金处理</strong>：先按销售员汇总销售额与应发佣金（月结主交付），
+        再用规则引擎处理退货冲销、回款归属、SKU/阶梯差异，并以异常闸门与勾稽校验保障发薪 SLA 质量。
       </p>
 
       <h3>二、核心业务概念</h3>
@@ -828,7 +866,7 @@ table.data tbody tr.rep-top { background: #eef4fb; }
     <div class="card-head" onclick="toggleCard('rulesCard')" role="button" aria-expanded="true">
       <div>
         <h2>规则配置 <span class="en">Rules Configuration</span></h2>
-        <span class="hint">阶梯 · SKU 系数 · 退货扣减 · 回款归属 · 计算周期</span>
+        <span class="hint">政策时间轴 · 阶梯 · SKU 系数 · 退货 · 归属</span>
       </div>
       <span class="chev" aria-hidden="true">▼</span>
     </div>
@@ -856,9 +894,80 @@ table.data tbody tr.rep-top { background: #eef4fb; }
         </div>
       </div>
 
-      <!-- 阶梯提成表 -->
+      <!-- 政策时间轴（规则链） -->
       <div class="rule-block">
-        <h3>阶梯提成表</h3>
+        <h3>佣金政策时间轴（规则链）</h3>
+        <p class="rule-note" style="margin-top:0;margin-bottom:8px;">
+          政策按<strong>生效区间一条条衔接</strong>：例如 2025-01-01~2025-02-28 方案A，2025-03-01~至今 方案B。
+          今天新增方案C（生效起=今天）时，若勾选「自动截断」，方案B 的止日会自动改为<strong>昨天</strong>。
+          计算时按「规则判定日」落入哪一段，就用哪套阶梯/系数。
+        </p>
+        <div class="row">
+          <div class="col">
+            <label class="field-label">规则判定日</label>
+            <div class="radio-group" role="radiogroup" aria-label="规则判定日">
+              <label class="radio-pill is-on"><input type="radio" name="ruleDateMode" value="payment" checked /> 按回款日选政策</label>
+              <label class="radio-pill"><input type="radio" name="ruleDateMode" value="order" /> 按订单日选政策</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-scroll" style="margin:8px 0 10px;background:#fff;border:1px solid var(--line);border-radius:8px;">
+          <table class="data" id="schemeTimelineTable" style="min-width:640px;">
+            <thead>
+              <tr>
+                <th>序号</th>
+                <th>方案名称</th>
+                <th>生效起（含）</th>
+                <th>生效止（含）</th>
+                <th>状态</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="schemeTimelineBody"></tbody>
+          </table>
+        </div>
+        <p class="rule-note" id="schemeCoverageNote" style="margin-top:0;"></p>
+
+        <div class="row" style="align-items:flex-end;">
+          <div class="col">
+            <label class="field-label" for="schemeSelect">编辑哪一版（阶梯/系数跟着变）</label>
+            <select id="schemeSelect" onchange="onSchemeSelectChange()"></select>
+          </div>
+          <div class="col" style="max-width:none;flex:0 0 auto;">
+            <div class="btn-row">
+              <button type="button" class="btn btn-primary btn-sm" onclick="addScheme()">＋ 新增方案（接在最后）</button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="copyScheme()">复制当前版</button>
+              <button type="button" class="btn btn-danger-outline btn-sm" onclick="deleteScheme()">删除当前版</button>
+            </div>
+          </div>
+        </div>
+        <div class="toggle-row" style="margin-top:8px;">
+          <input type="checkbox" id="autoClosePrevScheme" checked />
+          <div>
+            <div class="t-title">新增方案时自动截断上一版「至今」政策</div>
+            <div class="t-desc">例：B 为 03-01~至今；今天（10-02）点新增 → 新方案默认明天（10-03）起生效，B 自动改为 03-01~10-02。若把新方案生效起改成今天，则 B 止于昨天。</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label class="field-label" for="schemeName">版本名称</label>
+            <input type="text" id="schemeName" onchange="saveCurrentSchemeMeta()" placeholder="如：方案C" />
+          </div>
+          <div class="col col-sm">
+            <label class="field-label" for="schemeFrom">生效起（含）</label>
+            <input type="date" id="schemeFrom" onchange="saveCurrentSchemeMeta()" />
+          </div>
+          <div class="col col-sm">
+            <label class="field-label" for="schemeTo">生效止（含，空=至今）</label>
+            <input type="date" id="schemeTo" onchange="saveCurrentSchemeMeta()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- 阶梯提成表（当前版本） -->
+      <div class="rule-block">
+        <h3>阶梯提成表（当前版本）</h3>
         <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按单笔销售额落入区间匹配提成比例。区间<strong>左闭右开</strong>[下限, 上限)；最高档上限留空表示 [下限, +∞)。金额按港币元设计，档位连续无缝隙。</p>
         <div class="rule-table-wrap">
           <table class="rule-edit" id="tierTable">
@@ -879,7 +988,7 @@ table.data tbody tr.rep-top { background: #eef4fb; }
 
       <!-- SKU 系数表 -->
       <div class="rule-block">
-        <h3>SKU 分类系数表</h3>
+        <h3>SKU 分类系数表（当前版本）</h3>
         <p class="rule-note" style="margin-top:0;margin-bottom:8px;">按产品线匹配系数；未命中则标记「规则未匹配」，该单基础佣金为 0，但仍进入异常稽查。</p>
         <div class="rule-table-wrap">
           <table class="rule-edit" id="skuTable">
@@ -914,6 +1023,28 @@ table.data tbody tr.rep-top { background: #eef4fb; }
             <div class="t-desc">开启后：退货冲销的归属月取原订单月（order_date）；关闭时：跟随当前回款归属规则（默认回款月）。用于财务要求“冲销回到原计提月”的场景。</div>
           </div>
         </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="lockOrigScheme" checked />
+          <div>
+            <div class="t-title">退货锁定原单政策（推荐）</div>
+            <div class="t-desc">开启后：冲销按原销售单回款日命中的政策版本计算扣减，避免月中改政策导致「发 3%、退按 3.5% 扣」。关闭则按退货判定日重新匹配政策。</div>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="allowNegative" checked />
+          <div>
+            <div class="t-title">允许负佣金挂账</div>
+            <div class="t-desc">开启：销售员本期最终佣金可为负（扣减超过应发，挂下月抵扣）。关闭：个人最终佣金截断为 0，差额记入「负佣截断」披露。</div>
+          </div>
+        </div>
+      </div>
+      <div class="rule-block">
+        <h3>回款状态口径</h3>
+        <p class="rule-note" style="margin-top:0;margin-bottom:0;">
+          <code>payment_status</code>：<strong>paid</strong> 全额回款按 amount 计提；
+          <strong>partial</strong> 按 <code>paid_amount</code> 计提（未回部分不进佣金）；
+          <strong>unpaid</strong> 待回款——明细可见、不进任何月结。空 payment_date 且未标明时按 unpaid 推断。
+        </p>
       </div>
     </div>
   </section>
@@ -928,11 +1059,13 @@ table.data tbody tr.rep-top { background: #eef4fb; }
       <span class="chev">▼</span>
     </div>
     <div class="card-body">
-      <label class="field-label" for="csvInput">CSV 内容（首行为表头）</label>
-      <textarea id="csvInput" spellcheck="false" placeholder="order_id,sales_rep,sales_rep_cn,sku,product_line,order_date,payment_date,amount,return_flag,region"></textarea>
-      <p class="rule-note">必需列：order_id, sales_rep, sales_rep_cn, sku, product_line, order_date, payment_date, amount, return_flag, region；可选列：orig_order_id（退货单建议填写，指向原销售单）</p>
+      <p class="rule-note" style="margin-top:0;">内置样例约 <strong>300 名业务员 × ~3 单 ≈ 900+ 行</strong>。为避免文本框卡顿，加载时<strong>不写入下方 CSV 框</strong>（数据在内存中）；需要时可再导出到文本框。</p>
+      <label class="field-label" for="csvInput">CSV 内容（可选：粘贴自定义 / 导出查看）</label>
+      <textarea id="csvInput" spellcheck="false" placeholder="order_id,sales_rep,sales_rep_cn,sku,product_line,order_date,payment_date,amount,return_flag,region" style="min-height:72px;"></textarea>
+      <p class="rule-note">必需列：order_id, sales_rep, sales_rep_cn, sku, product_line, order_date, amount, return_flag, region；可选：payment_date, payment_status, paid_amount, orig_order_id（unpaid 时可空 payment_date）</p>
       <div class="btn-row" style="margin-top:10px;">
-        <button type="button" class="btn btn-secondary" onclick="loadSampleData()">加载内置虚拟数据</button>
+        <button type="button" class="btn btn-secondary" onclick="loadSampleData()">加载 300 业务员虚拟数据</button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="dumpSampleToTextarea()">导出当前数据到文本框</button>
         <button type="button" class="btn btn-secondary" onclick="parseCsvFromTextarea()">解析粘贴的 CSV</button>
         <button type="button" class="btn btn-danger-outline btn-sm" onclick="clearData()">清空数据</button>
       </div>
@@ -947,7 +1080,7 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   <!-- ======================== 计算按钮区 ======================== -->
   <div class="calc-bar">
     <div>
-      <button type="button" class="btn btn-primary" id="btnCalc" onclick="runCalculation()">执行佣金计算</button>
+      <button type="button" class="btn btn-primary" id="btnCalc" onclick="runCalculation()">执行月结计算</button>
     </div>
     <div class="calc-status" id="calcStatus">等待计算 — 请先加载数据并确认规则完整</div>
   </div>
@@ -956,36 +1089,148 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   <section class="card" id="summaryCard">
     <div class="card-head" onclick="toggleCard('summaryCard')">
       <div>
-        <h2>结果汇总 <span class="en">Summary</span></h2>
-        <span class="hint">本期口径下的关键指标</span>
+        <h2>本期处理总览 <span class="en">Period Overview</span></h2>
+        <span class="hint">月结 KPI · SLA 质量状态</span>
       </div>
       <span class="chev">▼</span>
     </div>
     <div class="card-body">
-      <div id="summaryEmpty" class="empty">尚未计算。加载数据后点击「执行佣金计算」。</div>
+      <div id="summaryEmpty" class="empty">尚未计算。加载数据后点击「执行月结计算」。</div>
       <div id="summaryGrid" class="summary-grid" style="display:none;">
         <div class="stat"><div class="label">计算周期</div><div class="value" id="sPeriod">—</div></div>
         <div class="stat"><div class="label">总销售额</div><div class="value" id="sSales">—</div></div>
-        <div class="stat"><div class="label">总基础佣金</div><div class="value" id="sBase">—</div></div>
-        <div class="stat danger"><div class="label">总退货扣减</div><div class="value" id="sDeduct">—</div></div>
         <div class="stat ok"><div class="label">总最终佣金</div><div class="value" id="sFinal">—</div></div>
-        <div class="stat danger"><div class="label">异常单数</div><div class="value" id="sAnomaly">—</div></div>
-        <div class="stat"><div class="label">涉及销售员数</div><div class="value" id="sReps">—</div></div>
+        <div class="stat"><div class="label">涉及销售员</div><div class="value" id="sReps">—</div></div>
+        <div class="stat"><div class="label">可发薪人数</div><div class="value" id="sPayrollOk">—</div></div>
+        <div class="stat danger"><div class="label">需处理人数</div><div class="value" id="sPayrollBlock">—</div></div>
+        <div class="stat danger"><div class="label">异常订单数</div><div class="value" id="sAnomaly">—</div></div>
+        <div class="stat"><div class="label">总退货扣减</div><div class="value" id="sDeduct">—</div></div>
+        <div class="stat"><div class="label">待回款笔数</div><div class="value" id="sUnpaid">—</div></div>
+        <div class="stat"><div class="label">负佣截断</div><div class="value" id="sNegClamp">—</div></div>
+      </div>
+      <div id="coverageBox" class="sla-box" style="display:none;margin-top:10px;">
+        <div class="sla-title">政策覆盖预检</div>
+        <div id="coverageMsg"></div>
+      </div>
+      <div id="slaBox" class="sla-box" style="display:none;">
+        <div class="sla-title">本月处理质量（SLA） <span class="en">Monthly Processing Quality</span></div>
+        <div id="slaMsg"></div>
+        <div class="recon-detail" id="slaDetail" style="margin-top:4px;"></div>
       </div>
       <div id="reconBox" class="recon-box" style="display:none;">
-        <div class="recon-title">勾稽校验 <span class="en">Reconciliation Check</span></div>
+        <div class="recon-title">勾稽校验 <span class="en">Reconciliation</span></div>
         <div class="recon-msg" id="reconMsg"></div>
         <div class="recon-detail" id="reconDetail"></div>
       </div>
     </div>
   </section>
 
+  <!-- ======================== 销售员月结看板（主交付） ======================== -->
+  <section class="card" id="repCard">
+    <div class="card-head" onclick="toggleCard('repCard')" role="button" aria-expanded="true">
+      <div>
+        <h2>销售员佣金月结表 <span class="en">Rep Payroll Summary</span></h2>
+        <span class="hint">主交付物 · 点击行下钻订单明细 · 导出供发薪核对</span>
+      </div>
+      <span class="chev">▼</span>
+    </div>
+    <div class="card-body">
+      <div id="repEmpty" class="empty">尚未计算。加载虚拟数据后点击「执行月结计算」，此处将展示各销售员销售额与应发佣金。</div>
+      <div id="repFilters" class="payroll-toolbar" style="display:none;">
+        <div class="col">
+          <label class="field-label" for="repSearch">查找业务员</label>
+          <input type="text" id="repSearch" placeholder="如：001 或 业务员001" oninput="renderRepSummary()" />
+        </div>
+        <div class="col">
+          <label class="field-label" for="repSort">排序</label>
+          <select id="repSort" onchange="renderRepSummary()">
+            <option value="final_desc">最终佣金 ↓</option>
+            <option value="final_asc">最终佣金 ↑</option>
+            <option value="sales_desc">销售额 ↓</option>
+            <option value="sales_asc">销售额 ↑</option>
+            <option value="name">销售员姓名</option>
+          </select>
+        </div>
+        <div class="col">
+          <label class="field-label" for="repStatus">发薪状态</label>
+          <select id="repStatus" onchange="renderRepSummary()">
+            <option value="">全部</option>
+            <option value="ok">可发薪</option>
+            <option value="block">需处理</option>
+          </select>
+        </div>
+        <div class="col" style="max-width:none;flex:0 0 auto;">
+          <label class="field-label">&nbsp;</label>
+          <div class="btn-row">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="exportPayrollCsv()">导出发薪汇总 CSV</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="exportPayrollOkCsv()">仅导出可发薪人</button>
+          </div>
+        </div>
+      </div>
+      <div id="repWrap" class="table-scroll" style="display:none;max-height:480px;">
+        <table class="data" id="repTable" style="min-width:780px;">
+          <thead>
+            <tr>
+              <th>排名</th>
+              <th>销售员</th>
+              <th class="num">本期销售额</th>
+              <th class="num">基础佣金</th>
+              <th class="num">退货扣减</th>
+              <th class="num">最终佣金</th>
+              <th class="num">异常单数</th>
+              <th>发薪状态</th>
+            </tr>
+          </thead>
+          <tbody id="repBody"></tbody>
+        </table>
+      </div>
+      <p class="rule-note" id="repHint" style="display:none;margin-top:8px;">点击某一业务员行，下方会展开其<strong>每一笔订单</strong>（产品 / 金额 / 比例 / 佣金）。「需处理」= 重复计算 / 规则未匹配 / 超额退货。</p>
+      <div id="repOrdersPanel" class="rep-orders-panel" style="display:none;">
+        <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:flex-start;">
+          <div>
+            <h3 id="repOrdersTitle">业务员订单一览</h3>
+            <div class="rep-orders-meta" id="repOrdersMeta"></div>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="exportRepOrdersCsv()">导出该业务员订单</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="clearRepOrders()">关闭</button>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data" style="min-width:920px;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>订单号</th>
+                <th>SKU / 产品</th>
+                <th>产品线</th>
+                <th>订单日</th>
+                <th>回款日</th>
+                <th>回款状态</th>
+                <th class="num">订单额</th>
+                <th class="num">计佣金额</th>
+                <th class="num">提成比例%</th>
+                <th class="num">SKU系数</th>
+                <th>政策版本</th>
+                <th class="num">基础佣金</th>
+                <th class="num">退货扣减</th>
+                <th class="num">本单佣金</th>
+                <th>状态</th>
+              </tr>
+            </thead>
+            <tbody id="repOrdersBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ======================== 明细表 ======================== -->
-  <section class="card" id="detailCard">
+  <section class="card collapsed" id="detailCard">
     <div class="card-head" onclick="toggleCard('detailCard')">
       <div>
-        <h2>佣金明细 <span class="en">Commission Details</span></h2>
-        <span class="hint">点击行展开完整计算链路 · 支持筛选 · 横向滑动</span>
+        <h2>订单佣金明细（下钻） <span class="en">Order Details</span></h2>
+        <span class="hint">从月结表点击销售员后自动筛选 · 可展开计算链路</span>
       </div>
       <span class="chev">▼</span>
     </div>
@@ -993,37 +1238,55 @@ table.data tbody tr.rep-top { background: #eef4fb; }
       <div class="filters" id="detailFilters" style="display:none;">
         <div class="col">
           <label class="field-label" for="fPeriod">归属口径</label>
-          <select id="fPeriod" onchange="renderDetails()">
+          <select id="fPeriod" onchange="state.detailPage=1;renderDetails()">
             <option value="period" selected>仅本期（与汇总一致）</option>
             <option value="all">全部月份</option>
           </select>
         </div>
         <div class="col">
           <label class="field-label" for="fRep">销售员</label>
-          <select id="fRep" onchange="renderDetails()"></select>
+          <select id="fRep" onchange="state.detailPage=1;renderDetails()"></select>
         </div>
         <div class="col">
           <label class="field-label" for="fLine">产品线</label>
-          <select id="fLine" onchange="renderDetails()"></select>
+          <select id="fLine" onchange="state.detailPage=1;renderDetails()"></select>
         </div>
         <div class="col">
           <label class="field-label" for="fAnomalyType">异常类型</label>
-          <select id="fAnomalyType" onchange="renderDetails()">
+          <select id="fAnomalyType" onchange="state.detailPage=1;renderDetails()">
             <option value="">全部</option>
             <option value="退货冲销">退货冲销</option>
             <option value="跨期归属">跨期归属</option>
             <option value="重复计算">重复计算</option>
             <option value="规则未匹配">规则未匹配</option>
+            <option value="待回款">待回款</option>
+            <option value="超额退货">超额退货</option>
             <option value="__HAS__">仅异常行</option>
             <option value="__NONE__">仅正常行</option>
           </select>
         </div>
         <div class="col" style="max-width:none;flex:0 0 auto;">
           <label class="field-label">&nbsp;</label>
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary btn-sm" onclick="exportDetailsCsv()">导出明细 CSV</button>
+          <div class="col col-sm">
+            <label class="field-label" for="detailPageSize">每页行数</label>
+            <select id="detailPageSize" onchange="state.detailPage=1;renderDetails()">
+              <option value="50" selected>50</option>
+              <option value="100">100</option>
+              <option value="200">200</option>
+            </select>
+          </div>
+          <div class="col" style="max-width:none;flex:0 0 auto;">
+            <label class="field-label">&nbsp;</label>
+            <div class="btn-row">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="exportDetailsCsv()">导出明细 CSV</button>
+            </div>
           </div>
         </div>
+      </div>
+      <div id="detailPager" class="payroll-toolbar" style="display:none;margin-bottom:8px;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="changeDetailPage(-1)">上一页</button>
+        <span id="detailPageInfo" class="rule-note" style="margin:0;align-self:center;"></span>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="changeDetailPage(1)">下一页</button>
       </div>
       <div id="detailEmpty" class="empty">无明细。请先执行计算。</div>
       <div id="detailTableWrap" class="table-scroll" style="display:none;">
@@ -1037,7 +1300,10 @@ table.data tbody tr.rep-top { background: #eef4fb; }
               <th>产品线</th>
               <th>订单日期</th>
               <th>回款日期</th>
-              <th class="num">销售额</th>
+              <th class="num">计佣金额</th>
+              <th>回款状态</th>
+              <th>政策版本</th>
+              <th class="num">提成比例%</th>
               <th>适用阶梯</th>
               <th class="num">SKU系数</th>
               <th class="num">基础佣金</th>
@@ -1054,11 +1320,11 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   </section>
 
   <!-- ======================== 异常表 ======================== -->
-  <section class="card" id="anomalyCard">
+  <section class="card collapsed" id="anomalyCard">
     <div class="card-head" onclick="toggleCard('anomalyCard')">
       <div>
-        <h2>异常稽查表 <span class="en">Anomaly Review</span></h2>
-        <span class="hint">四类异常独立汇总 · 可筛选 · 可导出</span>
+        <h2>异常质量闸门 <span class="en">Anomaly Gate</span></h2>
+        <span class="hint">发薪前处理 · 四类异常 · 可导出</span>
       </div>
       <span class="chev">▼</span>
     </div>
@@ -1068,10 +1334,12 @@ table.data tbody tr.rep-top { background: #eef4fb; }
           <label class="field-label" for="afType">异常类型</label>
           <select id="afType" onchange="renderAnomalies()">
             <option value="">全部四类</option>
+            <option value="重复计算">重复计算（阻塞发薪）</option>
+            <option value="规则未匹配">规则未匹配（阻塞发薪）</option>
+            <option value="超额退货">超额退货（阻塞发薪）</option>
             <option value="退货冲销">退货冲销</option>
             <option value="跨期归属">跨期归属</option>
-            <option value="重复计算">重复计算</option>
-            <option value="规则未匹配">规则未匹配</option>
+            <option value="待回款">待回款</option>
           </select>
         </div>
         <div class="col" style="max-width:none;flex:0 0 auto;">
@@ -1101,35 +1369,9 @@ table.data tbody tr.rep-top { background: #eef4fb; }
     </div>
   </section>
 
-  <!-- ======================== 销售员维度汇总 ======================== -->
-  <section class="card" id="repCard">
-    <div class="card-head" onclick="toggleCard('repCard')" role="button" aria-expanded="true">
-      <div>
-        <h2>销售员维度汇总 <span class="en">Sales Rep Summary</span></h2>
-        <span class="hint">本期佣金表现 · 支撑绩效分析</span>
-      </div>
-      <span class="chev">▼</span>
-    </div>
-    <div class="card-body">
-      <div id="repEmpty" class="empty">尚未计算。加载数据后点击「执行佣金计算」。</div>
-      <div id="repWrap" class="table-scroll" style="display:none;">
-        <table class="data" id="repTable" style="min-width:680px;">
-          <thead>
-            <tr>
-              <th>排名</th><th>销售员</th><th class="num">本期销售额</th>
-              <th class="num">基础佣金</th><th class="num">退货扣减</th>
-              <th class="num">最终佣金</th><th class="num">异常单数</th>
-            </tr>
-          </thead>
-          <tbody id="repBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <!-- ======================== 本期可视化 ======================== -->
-  <section class="card" id="chartCard">
-    <div class="card-head" onclick="toggleCard('chartCard')" role="button" aria-expanded="true">
+  <section class="card collapsed" id="chartCard">
+    <div class="card-head" onclick="toggleCard('chartCard')" role="button" aria-expanded="false">
       <div>
         <h2>本期可视化 <span class="en">Visualization</span></h2>
         <span class="hint">佣金构成 · 异常类型分布</span>
@@ -1155,18 +1397,18 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   </section>
 
   <!-- ======================== 数据模型与 ETL 映射 ======================== -->
-  <section class="card" id="modelCard">
-    <div class="card-head" onclick="toggleCard('modelCard')" role="button" aria-expanded="true">
+  <section class="card collapsed" id="modelCard">
+    <div class="card-head" onclick="toggleCard('modelCard')" role="button" aria-expanded="false">
       <div>
         <h2>数据模型与 ETL 映射 <span class="en">Data Model &amp; ETL Mapping</span></h2>
-        <span class="hint">源表 → 规则维度 → 加工 → 结果事实表 / 异常表</span>
+        <span class="hint">月结流程之后 · 源表 → 规则维度 → 事实 / 异常表</span>
       </div>
       <span class="chev">▼</span>
     </div>
     <div class="card-body footer-section">
       <h3>业务过程模型（BPM）</h3>
       <div class="flow-steps">
-        <span>销售开单</span><i>→</i><span>回款确认</span><i>→</i><span>归属计提（回款/订单月）</span><i>→</i><span>系数×阶梯</span><i>→</i><span>退货冲销</span><i>→</i><span>异常稽查</span><i>→</i><span>结算发放</span>
+        <span>销售开单</span><i>→</i><span>回款确认（paid/partial/unpaid）</span><i>→</i><span>归属计提</span><i>→</i><span>系数×阶梯</span><i>→</i><span>退货冲销（锁原单政策）</span><i>→</i><span>异常闸门</span><i>→</i><span>发薪包</span>
       </div>
       <h3>表结构设计（生产化）</h3>
       <div class="table-scroll">
@@ -1191,11 +1433,11 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   </section>
 
   <!-- ======================== Power Apps 落地路径 ======================== -->
-  <section class="card" id="powerappsCard">
-    <div class="card-head" onclick="toggleCard('powerappsCard')" role="button" aria-expanded="true">
+  <section class="card collapsed" id="powerappsCard">
+    <div class="card-head" onclick="toggleCard('powerappsCard')" role="button" aria-expanded="false">
       <div>
-        <h2>Power Apps 落地路径 <span class="en">Power Platform Roadmap</span></h2>
-        <span class="hint">Dataverse + Canvas + Power Automate + Power BI 低代码落地参考</span>
+        <h2>自动化落地路径 <span class="en">Power Platform Roadmap</span></h2>
+        <span class="hint">人工佣金计算 → Power Apps / Automate / BI</span>
       </div>
       <span class="chev">▼</span>
     </div>
@@ -1224,31 +1466,33 @@ table.data tbody tr.rep-top { background: #eef4fb; }
   </section>
 
   <!-- ======================== 底部分析说明 ======================== -->
-  <section class="card" id="notesCard">
+  <section class="card collapsed" id="notesCard">
     <div class="card-head" onclick="toggleCard('notesCard')">
       <div>
         <h2>设计逻辑说明 <span class="en">Design Rationale</span></h2>
-        <span class="hint">业务取舍 · English note</span>
+        <span class="hint">月结产出 → 质量闸门 → 自动化路径</span>
       </div>
       <span class="chev">▼</span>
     </div>
     <div class="card-body footer-section">
       <h3>设计逻辑</h3>
       <ol>
+        <li><strong>先月结产出、再质量闸门：</strong>销售运营月结的第一交付是「每人销售额与应发佣金」；异常与勾稽用于保证发薪质量，而不是替代主报表。</li>
         <li><strong>为什么按回款归属：</strong>开单不等于收入确认。通信设备项目常有账期，按回款月计提佣金可对齐财务现金流，避免“未回款先发佣、退货再追回”的混乱。</li>
-        <li><strong>为什么退货要单独扣减：</strong>退货不是普通负销售额混算。单独冲销可保留原单计算痕迹，支持审计追溯：扣的是哪一单、扣多少、扣到哪个月。</li>
-        <li><strong>为什么异常要单独稽查：</strong>跨期、重复、规则未匹配会直接扭曲提成结果。单独异常表让运营/财务可按类型分工处理，而不是在明细海里肉眼找红字。</li>
-        <li><strong>为什么规则要可配置：</strong>产品线系数与阶梯比例会随季度促销、渠道政策变化。把规则做成可编辑表，避免把业务常量写死在代码里。</li>
-        <li><strong>为什么明细要可追溯：</strong>结算对账时常被问到“这一笔是怎么算出来的”。展开计算链路（过滤→归属→系数→阶梯→冲销）便于核对与审计。</li>
-        <li><strong>SKU 系数与阶梯分离：</strong>阶梯反映规模激励，系数反映产品毛利/战略权重；两者解耦后，改政策时只需改对应表，不必重写公式。</li>
-        <li><strong>跨期必须显式标记：</strong>订单月≠回款月时，无论采用哪种归属规则，都应提示“是否纳入本期”，防止报表口径争议。</li>
-        <li><strong>为什么要有勾稽校验：</strong>结算错一分钱会被追责。本工具用多口径交叉核对：汇总恒等式、本期明细加总≡汇总、销售员汇总≡总表、逐行最终佣金逻辑；若存在重复单还会提示「虚增金额，发薪前须去重」。</li>
-        <li><strong>部分退货怎么处理：</strong>样例含 HK-2503-039（销售额 90,000）与 HK-2503-039R（退货 45,000，orig_order_id 指向原单）。冲销按退货金额重算扣减，而非简单整单作废；生产还可扩展数量占比冲销。</li>
+        <li><strong>回款状态机：</strong>unpaid 挂起不计提；partial 仅按已回款金额计提；paid 全额计提。待回款进明细披露，不阻塞发薪。</li>
+        <li><strong>为什么退货要单独扣减：</strong>退货不是普通负销售额混算。单独冲销可保留原单计算痕迹；默认锁定原单政策，防止月中改版扯皮；累计退货超额则阻塞发薪。</li>
+        <li><strong>负佣金：</strong>默认允许负余额挂下月；也可截断为 0 并披露截断额，两种政策可切换。</li>
+        <li><strong>为什么异常要单独稽查：</strong>重复计算与规则未匹配会阻塞发薪；跨期与退货需披露。单独异常表让运营/财务按类型处理，满足月结 SLA。</li>
+        <li><strong>为什么规则要可配置：</strong>产品线系数与阶梯比例会随政策变化。规则表可编辑，对应「自动化人工佣金计算、改规则不改代码」。</li>
+        <li><strong>政策时间轴：</strong>方案按生效起止前后衔接（A→B→C）。新增方案默认明天起生效，上一版「至今」自动止于今天；可改生效起。</li>
+        <li><strong>为什么明细要可追溯：</strong>从销售员月结下钻到订单链路，便于核对「这一笔是怎么算出来的」。</li>
+        <li><strong>SKU 系数与阶梯分离：</strong>阶梯反映规模激励，系数反映产品权重；两者解耦后改政策只需改对应表。</li>
+        <li><strong>ETL / Power Apps：</strong>本工具演示计算与质量闸门；生产可用 Power Automate + SQL/Dataverse 承接同一套规则与审批流。</li>
       </ol>
 
       <h3>English Note</h3>
       <div class="en-box">
-        This is a commission calculator for telecom equipment sales. It supports configurable tiered rates, SKU-based coefficients, return deductions, and payment-based attribution. It flags four types of anomalies: return reversals, cross-period attribution, duplicates, and unmatched rules. Reconciliation cross-checks period totals against sales-rep rollups and per-row logic, and warns when duplicates inflate payout. A production roadmap maps each feature to the Power Platform and to a BPM/ETL data model (this tool uses a wide table; production typically splits order and payment facts).
+        This is a monthly commission processing workbench for telecom equipment sales. It first produces a sales-rep payroll summary (sales and commission by person), then applies configurable tiered rates, SKU coefficients, return deductions, and payment-based attribution. Anomaly gates and reconciliation support SLA quality before payout. A production roadmap maps the flow to Power Platform and ETL/BPM models.
       </div>
     </div>
   </section>
@@ -1273,12 +1517,15 @@ table.data tbody tr.rep-top { background: #eef4fb; }
 /** 必需 CSV 列 —— 缺任一列必须明确提示列名 */
 var REQUIRED_COLUMNS = [
   "order_id", "sales_rep", "sales_rep_cn", "sku", "product_line",
-  "order_date", "payment_date", "amount", "return_flag", "region"
+  "order_date", "amount", "return_flag", "region"
 ];
-/** 可选列：退货单建议填写，用于精确追溯原销售单 */
-var OPTIONAL_COLUMNS = ["orig_order_id"];
-/** 导出/内置样例使用的完整列顺序 */
-var SAMPLE_COLUMNS = REQUIRED_COLUMNS.concat(OPTIONAL_COLUMNS);
+/** 可选列 */
+var OPTIONAL_COLUMNS = ["payment_date", "payment_status", "paid_amount", "orig_order_id"];
+var SAMPLE_COLUMNS = [
+  "order_id", "sales_rep", "sales_rep_cn", "sku", "product_line",
+  "order_date", "payment_date", "payment_status", "paid_amount",
+  "amount", "return_flag", "region", "orig_order_id"
+];
 
 /** 运行时状态 */
 var state = {
@@ -1288,7 +1535,12 @@ var state = {
   summary: null,        // 汇总
   expandedId: null,     // 当前展开的明细行 key
   dataSource: "",       // 数据来源说明
-  calculating: false
+  calculating: false,
+  repList: [],          // 本期销售员月结行（含发薪状态）
+  schemes: [],          // 佣金政策版本列表
+  activeSchemeId: "",   // 当前编辑的政策版本 id
+  detailPage: 1,        // 明细分页
+  selectedRep: ""       // 月结表当前选中的业务员
 };
 
 /* ---------- 默认规则：阶梯（至少 3 档，可编辑） ---------- */
@@ -1306,95 +1558,511 @@ var defaultSkuCoeffs = [
   { productLine: "Enterprise Line", skuPrefix: "ENT-", coeff: 1.5 }
 ];
 
+function cloneTiers(t) {
+  return t.map(function (x) { return { min: x.min, max: x.max, ratePct: x.ratePct }; });
+}
+function cloneSkus(s) {
+  return s.map(function (x) { return { productLine: x.productLine, skuPrefix: x.skuPrefix, coeff: x.coeff }; });
+}
+
+/**
+ * 默认政策时间轴（前后衔接、不重叠）：
+ * 方案A 2025-01-01~02-28 → 方案B 03-01~03-15 → 方案C 03-16~至今
+ * 新增方案D 时，可将「至今」的 C 自动截断到生效日前一天。
+ */
+function buildDefaultSchemes() {
+  var tiersB = [
+    { min: 0, max: 50001, ratePct: 2.5 },
+    { min: 50001, max: 150001, ratePct: 3.5 },
+    { min: 150001, max: null, ratePct: 5.5 }
+  ];
+  var skusB = [
+    { productLine: "Router", skuPrefix: "RTR-", coeff: 1.05 },
+    { productLine: "Switch", skuPrefix: "SW-", coeff: 1.25 },
+    { productLine: "SIM Plan", skuPrefix: "SIM-", coeff: 0.85 },
+    { productLine: "Enterprise Line", skuPrefix: "ENT-", coeff: 1.55 }
+  ];
+  return [
+    { id: "A", name: "方案A", valid_from: "2025-01-01", valid_to: "2025-02-28", tiers: cloneTiers(defaultTiers), skus: cloneSkus(defaultSkuCoeffs) },
+    { id: "B", name: "方案B（3月上半月）", valid_from: "2025-03-01", valid_to: "2025-03-15", tiers: cloneTiers(defaultTiers), skus: cloneSkus(defaultSkuCoeffs) },
+    { id: "C", name: "方案C（3月16日起至今）", valid_from: "2025-03-16", valid_to: "", tiers: tiersB, skus: skusB }
+  ];
+}
+
+function todayISO() {
+  var d = new Date();
+  var m = d.getMonth() + 1;
+  var day = d.getDate();
+  return d.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
+}
+
+function dayBefore(dateStr) {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return "";
+  var p = dateStr.split("-");
+  var dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  dt.setDate(dt.getDate() - 1);
+  var m = dt.getMonth() + 1;
+  var day = dt.getDate();
+  return dt.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
+}
+
+/** 把所有「覆盖到 newFrom 及之后」的开放/交叉区间截断到 newFrom 前一天 */
+function autoCloseSchemesBefore(newFrom, exceptId) {
+  if (!newFrom) return [];
+  var cut = dayBefore(newFrom);
+  var closed = [];
+  state.schemes.forEach(function (s) {
+    if (exceptId && s.id === exceptId) return;
+    if (!s.valid_from || s.valid_from >= newFrom) return;
+    /* 开放至今，或止日 >= 新方案起日 → 与新区重叠，需截断 */
+    var openEnded = !s.valid_to;
+    var overlaps = openEnded || s.valid_to >= newFrom;
+    if (!overlaps) return;
+    if (!cut || cut < s.valid_from) return;
+    s.valid_to = cut;
+    closed.push(s.name + " → 止于 " + cut);
+  });
+  return closed;
+}
+
+function schemeStatusLabel(s) {
+  var today = todayISO();
+  if (!s.valid_from) return "未生效";
+  if (s.valid_from > today) return "未开始";
+  if (!s.valid_to || s.valid_to >= today) return "生效中";
+  return "已结束";
+}
+
+/**
+ * 按判定日落入生效区间选择政策。
+ * 若多版重叠，优先 valid_from 最新（更具体的月中政策覆盖底版）。
+ */
+function matchSchemeByDate(dateStr, schemes) {
+  if (!dateStr) return null;
+  var hits = [];
+  for (var i = 0; i < schemes.length; i++) {
+    var s = schemes[i];
+    if (!s.valid_from) continue;
+    if (dateStr < s.valid_from) continue;
+    if (s.valid_to && dateStr > s.valid_to) continue;
+    hits.push(s);
+  }
+  if (!hits.length) return null;
+  hits.sort(function (a, b) {
+    if (a.valid_from !== b.valid_from) return a.valid_from < b.valid_from ? 1 : -1;
+    var al = a.valid_to ? a.valid_to : "9999-12-31";
+    var bl = b.valid_to ? b.valid_to : "9999-12-31";
+    return al < bl ? -1 : (al > bl ? 1 : 0);
+  });
+  return hits[0];
+}
+
+
+/** 计算周期内逐日预检政策是否覆盖（按回款日模式用日期本身） */
+function checkSchemeCoverage(periodYm, schemes) {
+  if (!periodYm || periodYm.length < 7) return { ok: false, msg: "计算周期无效" };
+  var y = Number(periodYm.slice(0, 4));
+  var m = Number(periodYm.slice(5, 7));
+  var daysInMonth = new Date(y, m, 0).getDate();
+  var missing = [];
+  for (var d = 1; d <= daysInMonth; d++) {
+    var ds = periodYm + "-" + (d < 10 ? "0" + d : String(d));
+    if (!matchSchemeByDate(ds, schemes)) missing.push(ds);
+  }
+  if (!missing.length) return { ok: true, msg: periodYm + " 共 " + daysInMonth + " 天均有政策覆盖。" };
+  var show = missing.slice(0, 5).join("、") + (missing.length > 5 ? " 等" : "");
+  return { ok: false, msg: periodYm + " 有 " + missing.length + " 天无政策覆盖（如 " + show + "）。建议补版本或扩展有效期后再月结。" };
+}
+
+function normalizePayment(row) {
+  var status = String(row.payment_status || "").trim().toLowerCase();
+  var payDate = String(row.payment_date || "").trim();
+  var amount = Number(row.amount) || 0;
+  var paidAmount = row.paid_amount === "" || row.paid_amount == null ? null : Number(row.paid_amount);
+  if (!status) {
+    if (!payDate) status = "unpaid";
+    else if (paidAmount != null && !isNaN(paidAmount) && paidAmount < amount - 0.009) status = "partial";
+    else status = "paid";
+  }
+  if (status !== "paid" && status !== "partial" && status !== "unpaid") status = "paid";
+  if (status === "unpaid") {
+    return { status: status, payDate: "", commissionBase: 0, paidAmount: 0 };
+  }
+  if (status === "partial") {
+    var pa = paidAmount != null && !isNaN(paidAmount) ? paidAmount : 0;
+    return { status: status, payDate: payDate, commissionBase: Math.max(0, pa), paidAmount: Math.max(0, pa) };
+  }
+  return { status: "paid", payDate: payDate, commissionBase: amount, paidAmount: amount };
+}
+
+function findSchemeById(id) {
+  for (var i = 0; i < state.schemes.length; i++) {
+    if (state.schemes[i].id === id) return state.schemes[i];
+  }
+  return null;
+}
+
+function validateSchemes(schemes) {
+  if (!schemes || !schemes.length) return "至少需要一个政策版本";
+  for (var i = 0; i < schemes.length; i++) {
+    var s = schemes[i];
+    if (!s.name) return "政策版本缺少名称";
+    if (!s.valid_from) return "「" + (s.name || s.id) + "」缺少生效起日";
+    if (s.valid_to && s.valid_to < s.valid_from) return "「" + s.name + "」生效止日早于起日";
+    var errs = validateRules(s.tiers || [], s.skus || []);
+    if (errs.length) return "「" + s.name + "」：" + errs[0];
+  }
+  return null;
+}
+
+function updateSchemeCoverageNote() {
+  var el = document.getElementById("schemeCoverageNote");
+  if (!el) return;
+  var list = state.schemes.slice().sort(function (a, b) {
+    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
+  });
+  if (!list.length) { el.textContent = "尚未配置政策。"; return; }
+  var gaps = [];
+  for (var i = 0; i < list.length - 1; i++) {
+    var cur = list[i];
+    var next = list[i + 1];
+    if (!cur.valid_to) {
+      gaps.push(cur.name + " 为「至今」，与后续「" + next.name + "」可能重叠");
+      continue;
+    }
+    var expectNext = dayBefore(next.valid_from);
+    /* 允许相邻：cur.to + 1 day == next.from */
+    var curEndNext = (function (d) {
+      if (!d) return "";
+      var p = d.split("-");
+      var dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+      dt.setDate(dt.getDate() + 1);
+      var m = dt.getMonth() + 1, day = dt.getDate();
+      return dt.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
+    })(cur.valid_to);
+    if (curEndNext !== next.valid_from) {
+      if (cur.valid_to >= next.valid_from) gaps.push(cur.name + " 与 " + next.name + " 区间重叠");
+      else gaps.push(cur.name + " 与 " + next.name + " 之间有空隙（" + curEndNext + " ~ " + dayBefore(next.valid_from) + "）");
+    }
+  }
+  el.textContent = gaps.length
+    ? ("时间轴提示：" + gaps.join("；") + "。建议用「新增方案（接在最后）」自动截断。")
+    : ("时间轴完整：共 " + list.length + " 段，按生效日起止衔接。当前生效：" +
+      (list.filter(function (s) { return schemeStatusLabel(s) === "生效中"; }).map(function (s) { return s.name; }).join("、") || "无") + "。");
+}
+
+function renderSchemeTimeline() {
+  var body = document.getElementById("schemeTimelineBody");
+  if (!body) return;
+  var list = state.schemes.slice().sort(function (a, b) {
+    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
+  });
+  var html = [];
+  list.forEach(function (s, i) {
+    var st = schemeStatusLabel(s);
+    var badge = st === "生效中" ? "badge-ok" : (st === "未开始" ? "badge-info" : "badge-muted");
+    var cls = s.id === state.activeSchemeId ? "is-active-scheme" : "";
+    html.push(
+      "<tr class='" + cls + "' onclick='selectSchemeById(" + JSON.stringify(s.id) + ")'>" +
+      "<td>" + (i + 1) + "</td>" +
+      "<td><strong>" + escapeHtml(s.name) + "</strong></td>" +
+      "<td>" + escapeHtml(s.valid_from || "—") + "</td>" +
+      "<td>" + escapeHtml(s.valid_to || "至今") + "</td>" +
+      "<td><span class='badge " + badge + "'>" + st + "</span></td>" +
+      "<td><button type='button' class='btn-icon' onclick='event.stopPropagation();selectSchemeById(" + JSON.stringify(s.id) + ")'>编辑</button></td>" +
+      "</tr>"
+    );
+  });
+  body.innerHTML = html.length ? html.join("") : "<tr><td colspan='6'>暂无政策，请新增</td></tr>";
+}
+
+function selectSchemeById(id) {
+  syncCurrentSchemeEditorsToState();
+  state.activeSchemeId = id;
+  renderSchemeSelect();
+  loadSchemeToEditors(findSchemeById(id));
+}
+
+function renderSchemeSelect() {
+  var sel = document.getElementById("schemeSelect");
+  if (!sel) return;
+  var cur = state.activeSchemeId;
+  var list = state.schemes.slice().sort(function (a, b) {
+    return a.valid_from < b.valid_from ? -1 : (a.valid_from > b.valid_from ? 1 : 0);
+  });
+  sel.innerHTML = "";
+  list.forEach(function (s) {
+    var opt = document.createElement("option");
+    opt.value = s.id;
+    opt.textContent = s.name + " ｜ " + s.valid_from + " ~ " + (s.valid_to || "至今");
+    sel.appendChild(opt);
+  });
+  if (!cur || !findSchemeById(cur)) {
+    cur = list.length ? list[list.length - 1].id : "";
+    state.activeSchemeId = cur;
+  }
+  sel.value = cur;
+  updateSchemeCoverageNote();
+  renderSchemeTimeline();
+}
+
+function loadSchemeToEditors(scheme) {
+  if (!scheme) return;
+  document.getElementById("schemeName").value = scheme.name || "";
+  document.getElementById("schemeFrom").value = scheme.valid_from || "";
+  document.getElementById("schemeTo").value = scheme.valid_to || "";
+  renderTierEditor(cloneTiers(scheme.tiers || []));
+  renderSkuEditor(cloneSkus(scheme.skus || []));
+}
+
+function syncCurrentSchemeEditorsToState() {
+  var s = findSchemeById(state.activeSchemeId);
+  if (!s) return;
+  s.name = (document.getElementById("schemeName").value || "").trim() || s.name;
+  s.valid_from = document.getElementById("schemeFrom").value || s.valid_from;
+  s.valid_to = document.getElementById("schemeTo").value || "";
+  s.tiers = readTiersFromUI();
+  s.skus = readSkuFromUI();
+}
+
+function saveCurrentSchemeMeta() {
+  var s = findSchemeById(state.activeSchemeId);
+  if (!s) return;
+  s.name = (document.getElementById("schemeName").value || "").trim() || s.name;
+  var newFrom = document.getElementById("schemeFrom").value || s.valid_from;
+  s.valid_from = newFrom;
+  s.valid_to = document.getElementById("schemeTo").value || "";
+  /* 改生效起且勾选自动截断时，同步收口更早的「至今/重叠」方案 */
+  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
+  if (autoClose && newFrom) {
+    var closed = autoCloseSchemesBefore(newFrom, s.id);
+    if (closed.length) toast("已按新生效起截断：" + closed.join("；"));
+  }
+  renderSchemeSelect();
+  document.getElementById("schemeSelect").value = s.id;
+  loadSchemeToEditors(s);
+}
+
+function onSchemeSelectChange() {
+  syncCurrentSchemeEditorsToState();
+  var id = document.getElementById("schemeSelect").value;
+  state.activeSchemeId = id;
+  loadSchemeToEditors(findSchemeById(id));
+}
+
+function nextSchemeLetter() {
+  var n = state.schemes.length;
+  return String.fromCharCode(65 + (n % 26)); /* A,B,C... */
+}
+
+function dayAfter(dateStr) {
+  if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return "";
+  var p = dateStr.split("-");
+  var dt = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  dt.setDate(dt.getDate() + 1);
+  var m = dt.getMonth() + 1;
+  var day = dt.getDate();
+  return dt.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
+}
+
+/**
+ * 新增方案默认「明天起生效」：
+ * 今天=10-02 新增 C → C=10-03~至今，上一版「至今」自动止于今天 10-02。
+ * 若希望今天起立刻切到新方案，把生效起改为今天即可（上一版会止于昨天）。
+ */
+function addScheme() {
+  syncCurrentSchemeEditorsToState();
+  var start = dayAfter(todayISO()) || todayISO();
+  var id = "S" + Date.now().toString(36).toUpperCase();
+  var name = "方案" + nextSchemeLetter();
+  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
+  var closed = [];
+  if (autoClose) closed = autoCloseSchemesBefore(start, null);
+
+  var cur = findSchemeById(state.activeSchemeId);
+  var s = {
+    id: id,
+    name: name,
+    valid_from: start,
+    valid_to: "", /* 至今 */
+    tiers: cloneTiers(cur && cur.tiers && cur.tiers.length ? cur.tiers : defaultTiers),
+    skus: cloneSkus(cur && cur.skus && cur.skus.length ? cur.skus : defaultSkuCoeffs)
+  };
+  state.schemes.push(s);
+  state.activeSchemeId = id;
+  renderSchemeSelect();
+  loadSchemeToEditors(s);
+  if (closed.length) {
+    toast("已新增「" + name + "」（" + start + "~至今）；已自动截断：" + closed.join("；"));
+  } else {
+    toast("已新增「" + name + "」（" + start + "~至今）。可改生效起；勾选自动截断可收口上一版。");
+  }
+}
+
+function copyScheme() {
+  syncCurrentSchemeEditorsToState();
+  var cur = findSchemeById(state.activeSchemeId);
+  if (!cur) { toast("无当前版本可复制"); return; }
+  var start = dayAfter(todayISO()) || todayISO();
+  var autoClose = !!(document.getElementById("autoClosePrevScheme") || {}).checked;
+  var closed = autoClose ? autoCloseSchemesBefore(start, null) : [];
+  var id = "S" + Date.now().toString(36).toUpperCase();
+  var s = {
+    id: id,
+    name: cur.name + "（新）",
+    valid_from: start,
+    valid_to: "",
+    tiers: cloneTiers(cur.tiers),
+    skus: cloneSkus(cur.skus)
+  };
+  state.schemes.push(s);
+  state.activeSchemeId = id;
+  renderSchemeSelect();
+  loadSchemeToEditors(s);
+  toast(closed.length
+    ? ("已复制为新方案并截断上一版：" + closed.join("；"))
+    : "已复制为新方案（" + start + "~至今）");
+}
+
+
+function deleteScheme() {
+  if (state.schemes.length <= 1) { toast("至少保留一个政策版本"); return; }
+  var id = state.activeSchemeId;
+  state.schemes = state.schemes.filter(function (s) { return s.id !== id; });
+  state.activeSchemeId = state.schemes[0].id;
+  renderSchemeSelect();
+  loadSchemeToEditors(state.schemes[0]);
+  toast("已删除政策版本");
+}
+
 /* =============================================================================
-   内置虚拟数据（53 条）：覆盖 3 个月、退货、跨期、重复、规则未匹配、部分退货
-   销售员：Andy Chan 陈俊杰 / Bowie Lee 李伟伦 / Carmen Wong 黄嘉敏 /
-           Derek Ho 何德利 / Fiona Lam 林慧欣
+   内置虚拟数据：业务员序号 001–300，约 900+ 订单（含异常样例）
    ============================================================================= */
 function buildSampleData() {
-  /* 真实感字段：订单号按区域+月份流水；金额按产品线常见客单价分布 */
-  var rows = [
-    /* —— 2025-01 订单，多数当月回款 —— */
-    { order_id:"HK-2501-001", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-06", payment_date:"2025-01-28", amount:18600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-002", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-01-08", payment_date:"2025-01-30", amount:42800, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2501-003", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-01-10", payment_date:"2025-01-25", amount:9600, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2501-004", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-01-12", payment_date:"2025-01-31", amount:168000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-005", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-01-14", payment_date:"2025-01-29", amount:32500, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2501-006", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-01-15", payment_date:"2025-01-30", amount:75600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2501-007", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-01-28", amount:14200, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2501-008", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-01-20", payment_date:"2025-01-31", amount:215000, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2501-009", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-01-22", payment_date:"2025-01-30", amount:27800, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2501-010", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-01-24", payment_date:"2025-01-31", amount:18900, return_flag:"N", region:"New Territories" },
-
-    /* —— 跨期：1 月开单、2 月回款 —— */
-    { order_id:"HK-2501-011", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-01-26", payment_date:"2025-02-18", amount:98000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2501-012", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-01-28", payment_date:"2025-02-12", amount:22400, return_flag:"N", region:"Kowloon" },
-
-    /* —— 2025-02 —— */
-    { order_id:"HK-2502-013", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-02-03", payment_date:"2025-02-25", amount:18800, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-014", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-02-05", payment_date:"2025-02-27", amount:51200, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2502-015", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-02-07", payment_date:"2025-02-28", amount:186500, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2502-016", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-02-26", amount:15200, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-017", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-02-10", payment_date:"2025-02-24", amount:35600, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2502-018", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-12", payment_date:"2025-02-28", amount:89200, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2502-019", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-02-14", payment_date:"2025-02-27", amount:248000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-020", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-02-16", payment_date:"2025-02-28", amount:41000, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2502-021", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-02-18", payment_date:"2025-02-28", amount:12600, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2502-022", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-02-19", payment_date:"2025-02-26", amount:7800, return_flag:"N", region:"Kowloon" },
-
-    /* —— 跨期：2 月开单、3 月回款 —— */
-    { order_id:"HK-2502-023", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-SDWAN-100", product_line:"Enterprise Line", order_date:"2025-02-21", payment_date:"2025-03-15", amount:132000, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-024", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-02-25", payment_date:"2025-03-10", amount:29800, return_flag:"N", region:"New Territories" },
-
-    /* —— 2025-03（计算周期默认月）—— */
-    { order_id:"HK-2503-025", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-03", payment_date:"2025-03-28", amount:46800, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-026", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-04", payment_date:"2025-03-29", amount:155000, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2503-027", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-Biz-200", product_line:"SIM Plan", order_date:"2025-03-05", payment_date:"2025-03-25", amount:21400, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-028", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX3000", product_line:"Router", order_date:"2025-03-06", payment_date:"2025-03-27", amount:26700, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-029", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-30", amount:93400, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2503-030", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-08", payment_date:"2025-03-31", amount:198000, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-031", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-03-10", payment_date:"2025-03-26", amount:11900, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-032", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-11", payment_date:"2025-03-28", amount:35600, return_flag:"N", region:"Kowloon" },
-    { order_id:"NT-2503-033", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"SW-16P-Lite", product_line:"Switch", order_date:"2025-03-12", payment_date:"2025-03-29", amount:16200, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-034", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-03-13", payment_date:"2025-03-30", amount:112500, return_flag:"N", region:"Hong Kong" },
-    { order_id:"KL-2503-035", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SIM-Biz-50", product_line:"SIM Plan", order_date:"2025-03-14", payment_date:"2025-03-27", amount:6400, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2503-036", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX5400", product_line:"Router", order_date:"2025-03-15", payment_date:"2025-03-31", amount:38900, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2503-037", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-17", payment_date:"2025-03-30", amount:54500, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2503-038", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"ENT-MPLS-50M", product_line:"Enterprise Line", order_date:"2025-03-18", payment_date:"2025-03-31", amount:172000, return_flag:"N", region:"Kowloon" },
-
-    /* —— 部分退货原单：销售额 90,000，对应退货单退 45,000（50%）—— */
-    { order_id:"HK-2503-039", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-20", payment_date:"2025-03-28", amount:90000, return_flag:"N", region:"Hong Kong" },
-
-    /* —— 退货单：orig_order_id 指向原销售单，冲销可追溯 —— */
-    { order_id:"HK-2502-016R", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-03-08", amount:15200, return_flag:"Y", region:"Hong Kong", orig_order_id:"HK-2502-016" },
-    { order_id:"KL-2503-029R", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-07", payment_date:"2025-03-22", amount:93400, return_flag:"Y", region:"Kowloon", orig_order_id:"KL-2503-029" },
-    { order_id:"NT-2501-007R", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-100", product_line:"SIM Plan", order_date:"2025-01-17", payment_date:"2025-03-05", amount:14200, return_flag:"Y", region:"New Territories", orig_order_id:"NT-2501-007" },
-    { order_id:"HK-2503-039R", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-20", payment_date:"2025-03-28", amount:45000, return_flag:"Y", region:"Hong Kong", orig_order_id:"HK-2503-039" },
-
-    /* —— 跨期：3 月开单、4 月回款 —— */
-    { order_id:"HK-2503-040", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"ENT-DIA-200M", product_line:"Enterprise Line", order_date:"2025-03-22", payment_date:"2025-04-08", amount:226000, return_flag:"N", region:"Hong Kong" },
-
-    /* —— 重复计算：同一 order_id 出现两次（CRM 重复推送）—— */
-    { order_id:"KL-2503-041", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-29", amount:19800, return_flag:"N", region:"Kowloon" },
-    { order_id:"KL-2503-041", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-29", amount:19800, return_flag:"N", region:"Kowloon" },
-
-    /* —— 规则未匹配：SKU / 产品线不在系数表 —— */
-    { order_id:"NT-2503-042", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ACC-CABLE-10M", product_line:"Accessory", order_date:"2025-03-21", payment_date:"2025-03-30", amount:3200, return_flag:"N", region:"New Territories" },
-    { order_id:"HK-2503-043", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"SVC-Install-Half", product_line:"Service", order_date:"2025-03-23", payment_date:"2025-03-31", amount:8800, return_flag:"N", region:"Hong Kong" },
-
-    /* —— 补充正常单 —— */
-    { order_id:"KL-2503-044", sales_rep:"Bowie Lee", sales_rep_cn:"李伟伦", sku:"SIM-IoT-500", product_line:"SIM Plan", order_date:"2025-03-24", payment_date:"2025-03-31", amount:41200, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2501-045", sales_rep:"Carmen Wong", sales_rep_cn:"黄嘉敏", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-01-30", payment_date:"2025-02-20", amount:17500, return_flag:"N", region:"Hong Kong" },
-    { order_id:"NT-2502-046", sales_rep:"Andy Chan", sales_rep_cn:"陈俊杰", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-02-27", payment_date:"2025-03-12", amount:67800, return_flag:"N", region:"New Territories" },
-    { order_id:"KL-2503-047", sales_rep:"Derek Ho", sales_rep_cn:"何德利", sku:"ENT-MPLS-10M", product_line:"Enterprise Line", order_date:"2025-03-25", payment_date:"2025-03-31", amount:142000, return_flag:"N", region:"Kowloon" },
-    { order_id:"HK-2503-048", sales_rep:"Fiona Lam", sales_rep_cn:"林慧欣", sku:"RTR-VPN-Pro", product_line:"Router", order_date:"2025-03-26", payment_date:"2025-03-31", amount:48200, return_flag:"N", region:"Hong Kong" }
+  var catalog = [
+    { sku: "RTR-AX1800", product_line: "Router", base: 18000 },
+    { sku: "RTR-AX5400", product_line: "Router", base: 36000 },
+    { sku: "RTR-VPN-Pro", product_line: "Router", base: 42000 },
+    { sku: "SW-16P-Lite", product_line: "Switch", base: 15000 },
+    { sku: "SW-24P-POE", product_line: "Switch", base: 48000 },
+    { sku: "SW-48P-L3", product_line: "Switch", base: 88000 },
+    { sku: "SIM-Biz-50", product_line: "SIM Plan", base: 8000 },
+    { sku: "SIM-Biz-200", product_line: "SIM Plan", base: 20000 },
+    { sku: "SIM-IoT-100", product_line: "SIM Plan", base: 12000 },
+    { sku: "ENT-MPLS-10M", product_line: "Enterprise Line", base: 150000 },
+    { sku: "ENT-DIA-100M", product_line: "Enterprise Line", base: 190000 },
+    { sku: "ENT-SDWAN-50", product_line: "Enterprise Line", base: 110000 }
   ];
-  /* 统一补全 orig_order_id，避免字段缺失 */
+  var regions = ["Hong Kong", "Kowloon", "New Territories"];
+  var prefix = { "Hong Kong": "HK", "Kowloon": "KL", "New Territories": "NT" };
+  var rows = [];
+  var seq = 1;
+  function rnd(seed) {
+    var x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  }
+  function pad(n, w) {
+    var s = String(n);
+    while (s.length < (w || 3)) s = "0" + s;
+    return s;
+  }
+  function makeDate(ym, day) {
+    var d = Math.min(day, 28);
+    return ym + "-" + pad(d, 2);
+  }
+
+  for (var i = 1; i <= 300; i++) {
+    var repId = pad(i, 3);
+    var repName = "业务员" + repId;
+    var ordersPer = 2 + (i % 3); /* 2–4 单 */
+    for (var j = 0; j < ordersPer; j++) {
+      var seed = i * 19 + j * 41 + 11;
+      var cat = catalog[Math.floor(rnd(seed) * catalog.length)];
+      var region = regions[Math.floor(rnd(seed + 1) * regions.length)];
+      var monthIdx = (i + j) % 3;
+      var ymOrder = ["2025-01", "2025-02", "2025-03"][monthIdx];
+      /* 让约一半 3 月单落在上/下半月，便于方案 A/B 对比 */
+      var day;
+      if (ymOrder === "2025-03") {
+        day = rnd(seed + 2) > 0.5 ? (1 + Math.floor(rnd(seed + 3) * 15)) : (16 + Math.floor(rnd(seed + 4) * 13));
+      } else {
+        day = 3 + Math.floor(rnd(seed + 2) * 24);
+      }
+      var orderDate = makeDate(ymOrder, day);
+      var cross = rnd(seed + 5) > 0.85;
+      var payYm = ymOrder;
+      var payDay = day;
+      if (cross) {
+        if (ymOrder === "2025-01") { payYm = "2025-02"; payDay = 5 + Math.floor(rnd(seed + 6) * 20); }
+        else if (ymOrder === "2025-02") { payYm = "2025-03"; payDay = 1 + Math.floor(rnd(seed + 6) * 27); }
+        else { payYm = "2025-04"; payDay = 5 + Math.floor(rnd(seed + 6) * 15); }
+      } else if (ymOrder === "2025-03") {
+        /* 同月回款，多数落在同半月，强化 A/B 效果 */
+        payDay = Math.min(day + 2, ymOrder === "2025-03" && day <= 15 ? 15 : 28);
+        if (day <= 15) payDay = Math.min(day + 3, 15);
+        else payDay = Math.min(day + 3, 28);
+      } else {
+        payDay = Math.min(day + 8, 28);
+      }
+      var amount = Math.round(cat.base * (0.75 + rnd(seed + 7) * 0.55) / 100) * 100;
+      var oid = prefix[region] + "-" + ymOrder.slice(2, 4) + ymOrder.slice(5) + "-" + pad(seq, 4);
+      seq++;
+      var payStatus = "paid";
+      var paidAmt = amount;
+      var payRoll = rnd(seed + 9);
+      var paymentDateVal = makeDate(payYm, payDay);
+      if (payRoll > 0.92) {
+        payStatus = "unpaid";
+        paidAmt = 0;
+        paymentDateVal = "";
+      } else if (payRoll > 0.85) {
+        payStatus = "partial";
+        paidAmt = Math.round(amount * (0.35 + rnd(seed + 10) * 0.4) / 100) * 100;
+      }
+      rows.push({
+        order_id: oid,
+        sales_rep: repName,
+        sales_rep_cn: String(i),
+        sku: cat.sku,
+        product_line: cat.product_line,
+        order_date: orderDate,
+        payment_date: paymentDateVal,
+        payment_status: payStatus,
+        paid_amount: paidAmt,
+        amount: amount,
+        return_flag: "N",
+        region: region,
+        orig_order_id: ""
+      });
+    }
+  }
+
+  /* 异常样例 */
+  function S(o) {
+    if (o.payment_status == null) o.payment_status = o.payment_date ? "paid" : "unpaid";
+    if (o.paid_amount == null) o.paid_amount = o.payment_status === "unpaid" ? 0 : o.amount;
+    if (o.orig_order_id == null) o.orig_order_id = "";
+    return o;
+  }
+  rows.push(S({ order_id:"HK-2502-RET01", sales_rep:"业务员001", sales_rep_cn:"1", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-02-26", amount:15200, return_flag:"N", region:"Hong Kong" }));
+  rows.push(S({ order_id:"HK-2502-RET01R", sales_rep:"业务员001", sales_rep_cn:"1", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-02-08", payment_date:"2025-03-08", amount:15200, return_flag:"Y", region:"Hong Kong", orig_order_id:"HK-2502-RET01" }));
+  rows.push(S({ order_id:"KL-2503-PART01", sales_rep:"业务员002", sales_rep_cn:"2", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-12", payment_date:"2025-03-14", amount:90000, return_flag:"N", region:"Kowloon" }));
+  rows.push(S({ order_id:"KL-2503-PART01R", sales_rep:"业务员002", sales_rep_cn:"2", sku:"ENT-DIA-100M", product_line:"Enterprise Line", order_date:"2025-03-12", payment_date:"2025-03-20", amount:45000, return_flag:"Y", region:"Kowloon", orig_order_id:"KL-2503-PART01" }));
+  rows.push(S({ order_id:"NT-2503-RET02", sales_rep:"业务员003", sales_rep_cn:"3", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-05", payment_date:"2025-03-10", amount:93400, return_flag:"N", region:"New Territories" }));
+  rows.push(S({ order_id:"NT-2503-RET02R", sales_rep:"业务员003", sales_rep_cn:"3", sku:"SW-48P-L3", product_line:"Switch", order_date:"2025-03-05", payment_date:"2025-03-22", amount:93400, return_flag:"Y", region:"New Territories", orig_order_id:"NT-2503-RET02" }));
+  rows.push(S({ order_id:"HK-2503-EXC01", sales_rep:"业务员007", sales_rep_cn:"7", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-08", payment_date:"2025-03-10", amount:20000, return_flag:"N", region:"Hong Kong" }));
+  rows.push(S({ order_id:"HK-2503-EXC01R1", sales_rep:"业务员007", sales_rep_cn:"7", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-08", payment_date:"2025-03-18", amount:12000, return_flag:"Y", region:"Hong Kong", orig_order_id:"HK-2503-EXC01" }));
+  rows.push(S({ order_id:"HK-2503-EXC01R2", sales_rep:"业务员007", sales_rep_cn:"7", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-08", payment_date:"2025-03-25", amount:18000, return_flag:"Y", region:"Hong Kong", orig_order_id:"HK-2503-EXC01" }));
+  rows.push(S({ order_id:"NT-2503-UNP01", sales_rep:"业务员008", sales_rep_cn:"8", sku:"SW-24P-POE", product_line:"Switch", order_date:"2025-03-11", payment_date:"", payment_status:"unpaid", paid_amount:0, amount:48000, return_flag:"N", region:"New Territories" }));
+  rows.push(S({ order_id:"KL-2503-PARP01", sales_rep:"业务员009", sales_rep_cn:"9", sku:"ENT-SDWAN-50", product_line:"Enterprise Line", order_date:"2025-03-06", payment_date:"2025-03-20", payment_status:"partial", paid_amount:55000, amount:110000, return_flag:"N", region:"Kowloon" }));
+  rows.push(S({ order_id:"KL-2503-DUP01", sales_rep:"业务员004", sales_rep_cn:"4", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-25", amount:19800, return_flag:"N", region:"Kowloon" }));
+  rows.push(S({ order_id:"KL-2503-DUP01", sales_rep:"业务员004", sales_rep_cn:"4", sku:"RTR-AX1800", product_line:"Router", order_date:"2025-03-19", payment_date:"2025-03-25", amount:19800, return_flag:"N", region:"Kowloon" }));
+  rows.push(S({ order_id:"NT-2503-UNK01", sales_rep:"业务员005", sales_rep_cn:"5", sku:"ACC-CABLE-10M", product_line:"Accessory", order_date:"2025-03-21", payment_date:"2025-03-28", amount:3200, return_flag:"N", region:"New Territories" }));
+  rows.push(S({ order_id:"HK-2503-UNK02", sales_rep:"业务员006", sales_rep_cn:"6", sku:"SVC-Install-Half", product_line:"Service", order_date:"2025-03-23", payment_date:"2025-03-30", amount:8800, return_flag:"N", region:"Hong Kong" }));
+
   return rows.map(function (r) {
     var copy = {};
-    SAMPLE_COLUMNS.forEach(function (c) {
-      copy[c] = r[c] != null ? r[c] : "";
-    });
+    SAMPLE_COLUMNS.forEach(function (c) { copy[c] = r[c] != null ? r[c] : ""; });
     return copy;
   });
 }
@@ -1584,11 +2252,29 @@ function parseCsv(text) {
       throw new Error("第 " + (i + 1) + " 行 return_flag 只能是 Y 或 N（order_id=" + obj.order_id + "）。");
     }
     obj.orig_order_id = (obj.orig_order_id != null ? String(obj.orig_order_id) : "").trim();
+    obj.payment_date = (obj.payment_date != null ? String(obj.payment_date) : "").trim();
+    obj.payment_status = (obj.payment_status != null ? String(obj.payment_status) : "").trim().toLowerCase();
+    if (obj.paid_amount !== undefined && obj.paid_amount !== "") {
+      obj.paid_amount = Number(String(obj.paid_amount).replace(/,/g, ""));
+      if (isNaN(obj.paid_amount)) {
+        throw new Error("第 " + (i + 1) + " 行 paid_amount 不是有效数字（order_id=" + obj.order_id + "）。");
+      }
+    } else {
+      obj.paid_amount = "";
+    }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.order_date)) {
       throw new Error("第 " + (i + 1) + " 行 order_date 格式须为 YYYY-MM-DD（order_id=" + obj.order_id + "）。");
     }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.payment_date)) {
-      throw new Error("第 " + (i + 1) + " 行 payment_date 格式须为 YYYY-MM-DD（order_id=" + obj.order_id + "）。");
+    var payNorm = normalizePayment(obj);
+    obj.payment_status = payNorm.status;
+    if (payNorm.status === "unpaid") {
+      obj.payment_date = "";
+      obj.paid_amount = 0;
+    } else {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(obj.payment_date)) {
+        throw new Error("第 " + (i + 1) + " 行已回款/部分回款时 payment_date 须为 YYYY-MM-DD（order_id=" + obj.order_id + "）。");
+      }
+      obj.paid_amount = payNorm.paidAmount;
     }
     rows.push(obj);
   }
@@ -1633,12 +2319,20 @@ function rowsToCsvText(rows) {
 function loadSampleData() {
   var rows = buildSampleData();
   state.rawRows = rows;
-  state.dataSource = "内置虚拟数据（港资通信设备 CRM + 财务回款模拟）";
-  document.getElementById("csvInput").value = rowsToCsvText(rows);
+  var repN = {};
+  rows.forEach(function (r) { repN[r.sales_rep] = true; });
+  state.dataSource = "内置虚拟数据：业务员 001–300 · " + rows.length + " 条订单（未写入文本框，避免卡顿）";
+  document.getElementById("csvInput").value = "";
   document.getElementById("dataCount").textContent = String(rows.length);
-  document.getElementById("dataSourceLabel").textContent = state.dataSource;
-  toast("已加载 " + rows.length + " 条虚拟销售记录");
-  setCalcStatus("数据已就绪，可执行计算", "ok");
+  document.getElementById("dataSourceLabel").textContent = state.dataSource + " · " + Object.keys(repN).length + " 名业务员";
+  toast("已加载 " + rows.length + " 条 / " + Object.keys(repN).length + " 名业务员");
+  setCalcStatus("数据已就绪，可执行月结计算", "ok");
+}
+
+function dumpSampleToTextarea() {
+  if (!state.rawRows.length) { toast("请先加载或解析数据"); return; }
+  document.getElementById("csvInput").value = rowsToCsvText(state.rawRows);
+  toast("已导出 " + state.rawRows.length + " 行到文本框（大文件可能略卡）");
 }
 
 function parseCsvFromTextarea() {
@@ -1672,6 +2366,8 @@ function clearData() {
   document.getElementById("detailEmpty").textContent = "无明细。请先执行计算。";
   document.getElementById("detailTableWrap").style.display = "none";
   document.getElementById("detailFilters").style.display = "none";
+  var dp = document.getElementById("detailPager"); if (dp) dp.style.display = "none";
+  state.detailPage = 1;
   document.getElementById("anomalyEmpty").style.display = "";
   document.getElementById("anomalyTableWrap").style.display = "none";
   document.getElementById("anomalyFilters").style.display = "none";
@@ -1681,6 +2377,7 @@ function clearData() {
   var repEmpty = document.getElementById("repEmpty"); if (repEmpty) repEmpty.style.display = "";
   var chartWrap = document.getElementById("chartWrap"); if (chartWrap) chartWrap.style.display = "none";
   var chartEmpty = document.getElementById("chartEmpty"); if (chartEmpty) chartEmpty.style.display = "";
+  var covBox = document.getElementById("coverageBox"); if (covBox) covBox.style.display = "none";
   setCalcStatus("数据已清空", "");
   toast("已清空数据");
 }
@@ -1760,183 +2457,229 @@ function resolveOrigOrderId(row) {
  */
 function computeRow(row, idx, ctx) {
   var period = ctx.period;
-  var attrMode = ctx.attrMode; // payment | order
-  var tiers = ctx.tiers;
-  var skuRules = ctx.skuRules;
+  var attrMode = ctx.attrMode;
+  var ruleDateMode = ctx.ruleDateMode || "payment";
+  var schemes = ctx.schemes || [];
   var deductReturn = ctx.deductReturn;
   var traceOrigMonth = ctx.traceOrigMonth;
+  var lockOrigScheme = !!ctx.lockOrigScheme;
   var dupMap = ctx.dupMap;
+  var salesIndex = ctx.salesIndex || {};
+
+  var isReturn = row.return_flag === "Y";
+  var payInfo = normalizePayment(row);
+  var paymentStatus = isReturn ? "paid" : payInfo.status;
+  var isUnpaid = !isReturn && paymentStatus === "unpaid";
+  var commissionBase = isReturn ? (Number(row.amount) || 0) : payInfo.commissionBase;
 
   var orderYm = ymFromDate(row.order_date);
-  var payYm = ymFromDate(row.payment_date);
-  var isReturn = row.return_flag === "Y";
-  var isCross = orderYm !== payYm;
+  var payYm = ymFromDate(payInfo.payDate || row.payment_date);
+
+  var isCross = !isUnpaid && payYm && orderYm && orderYm !== payYm;
   var isDup = (dupMap[row.order_id] || 0) >= 2;
   var origOrderId = isReturn ? resolveOrigOrderId(row) : "";
-  var origFound = isReturn ? !!(ctx.salesOrderIds && ctx.salesOrderIds[origOrderId]) : false;
+  var origSale = isReturn ? salesIndex[origOrderId] : null;
+  var origFound = !!origSale;
 
-  /* ② 归属月：默认回款月；退货可追溯原订单月 */
-  var attrYm;
-  if (isReturn && traceOrigMonth) {
+  /* 政策：退货可锁定原单政策 */
+  var ruleDate = ruleDateMode === "order" ? row.order_date : (payInfo.payDate || row.payment_date);
+  var scheme = null;
+  var schemeSource = "";
+  if (isReturn && lockOrigScheme && origSale && origSale.scheme) {
+    scheme = origSale.scheme;
+    ruleDate = origSale.ruleDate || ruleDate;
+    schemeSource = "锁定原单政策";
+  } else if (!isUnpaid) {
+    scheme = matchSchemeByDate(ruleDate, schemes);
+    schemeSource = "按判定日匹配";
+  }
+  var schemeMissing = !isUnpaid && !scheme;
+  var tiers = scheme ? scheme.tiers : [];
+  var skuRules = scheme ? scheme.skus : [];
+  var schemeLabel = scheme ? (scheme.name + " [" + scheme.valid_from + "~" + (scheme.valid_to || "∞") + "]") : (isUnpaid ? "—" : "未匹配政策版本");
+
+  /* 归属月 */
+  var attrYm = "";
+  if (isUnpaid) {
+    attrYm = "";
+  } else if (isReturn && traceOrigMonth) {
     attrYm = orderYm;
   } else {
     attrYm = attrMode === "order" ? orderYm : payYm;
   }
-
-  var includedInPeriod = attrYm === period;
+  var includedInPeriod = !!attrYm && attrYm === period;
 
   var anomalies = [];
   var trace = [];
 
-  /* ① 过滤退货单 */
+  /* ① 过滤退货 / 待回款 */
   if (isReturn) {
     trace.push({
       step: "① 过滤退货单",
       cls: "deduct",
-      text: "return_flag = Y。本单不进入正常佣金计算，转入退货冲销逻辑。退货单号=" + row.order_id +
-        "，原订单号=" + origOrderId +
-        (origFound ? "（已匹配原销售单）" : "（警告：数据集中未找到对应原销售单）") +
-        "，退货金额=" + formatMoney(row.amount) + "。"
+      text: "return_flag = Y。转入冲销。退货单=" + row.order_id + "，原单=" + origOrderId +
+        (origFound ? "（已匹配）" : "（未找到原单）") + "，退货额=" + formatMoney(row.amount) + "。"
     });
+  } else if (isUnpaid) {
+    trace.push({
+      step: "① 回款状态",
+      cls: "warn",
+      text: "payment_status=unpaid。待回款：明细保留，不计提佣金、不进入月结汇总。"
+    });
+    anomalies.push("待回款");
   } else {
     trace.push({
-      step: "① 过滤退货单",
+      step: "① 回款状态",
       cls: "",
-      text: "return_flag = N。本单进入正常佣金计算链路。"
+      text: "payment_status=" + paymentStatus +
+        (paymentStatus === "partial"
+          ? "。计佣金额=已回款 " + formatMoney(commissionBase) + "（订单额 " + formatMoney(row.amount) + "）。"
+          : "。计佣金额=订单额 " + formatMoney(commissionBase) + "。")
     });
   }
 
-  /* ② 按回款/订单月归属 */
-  trace.push({
-    step: "② 归属月份判定",
-    cls: isCross ? "warn" : "",
-    text: "订单月=" + orderYm + "，回款月=" + payYm +
-      "，归属规则=" + (attrMode === "order" ? "按订单月" : "按回款月") +
-      (isReturn && traceOrigMonth ? "（退货开启追溯原订单月）" : "") +
-      " → 归属月=" + attrYm +
-      "；当前计算周期=" + period +
-      "；" + (includedInPeriod ? "纳入本期" : "不纳入本期（跨周期或他月）") +
-      (isCross ? "。【跨期】订单月≠回款月" : "") + "。"
-  });
-
-  /* ③ SKU 系数 */
-  var skuMatch = matchSkuCoeff(row, skuRules);
-  var skuMissing = !skuMatch;
-  var coeff = skuMatch ? skuMatch.coeff : null;
-  if (skuMissing) {
+  /* ② 归属 */
+  if (isUnpaid) {
     trace.push({
-      step: "③ 匹配 SKU 系数",
+      step: "② 归属月份判定",
+      cls: "skip",
+      text: "待回款无归属月，不纳入任何计算周期。"
+    });
+  } else {
+    trace.push({
+      step: "② 归属月份判定",
+      cls: isCross ? "warn" : "",
+      text: "订单月=" + orderYm + "，回款月=" + (payYm || "—") +
+        "，归属规则=" + (attrMode === "order" ? "按订单月" : "按回款月") +
+        (isReturn && traceOrigMonth ? "（退货追溯原订单月）" : "") +
+        " → 归属月=" + attrYm +
+        "；周期=" + period + "；" + (includedInPeriod ? "纳入本期" : "不纳入本期") +
+        (isCross ? "。【跨期】" : "") + "。"
+    });
+  }
+
+  /* ②.5 政策 */
+  if (isUnpaid) {
+    trace.push({ step: "②.5 匹配政策版本", cls: "skip", text: "待回款跳过政策匹配。" });
+  } else if (schemeMissing) {
+    trace.push({
+      step: "②.5 匹配政策版本",
       cls: "warn",
-      text: "产品线「" + row.product_line + "」/ SKU「" + row.sku + "」未出现在系数表 → 规则未匹配（SKU缺失）。系数按空处理，基础佣金记 0。"
+      text: "规则判定日=" + ruleDate + " 未落入政策区间 → 规则未匹配（政策缺失）。"
     });
     anomalies.push("规则未匹配");
   } else {
     trace.push({
-      step: "③ 匹配 SKU 系数",
+      step: "②.5 匹配政策版本",
       cls: "",
-      text: "命中 " + skuMatch.matchedBy + "，系数 = " + coeff + "。"
+      text: schemeSource + "：判定日=" + ruleDate + " →「" + scheme.name + "」（" +
+        scheme.valid_from + " ~ " + (scheme.valid_to || "长期") + "）。"
     });
   }
 
-  /* ④ 阶梯区间 */
-  var tierMatch = matchTier(row.amount, tiers);
-  var tierMissing = !tierMatch;
-  if (tierMissing) {
+  /* ③ SKU */
+  var skuMatch = (schemeMissing || isUnpaid) ? null : matchSkuCoeff(row, skuRules);
+  var skuMissing = !isUnpaid && !skuMatch;
+  var coeff = skuMatch ? skuMatch.coeff : null;
+  if (isUnpaid) {
+    trace.push({ step: "③ 匹配 SKU 系数", cls: "skip", text: "待回款跳过。" });
+  } else if (skuMissing) {
+    trace.push({
+      step: "③ 匹配 SKU 系数",
+      cls: "warn",
+      text: "产品线「" + row.product_line + "」/ SKU「" + row.sku + "」未命中系数表。"
+    });
+    if (anomalies.indexOf("规则未匹配") === -1) anomalies.push("规则未匹配");
+  } else {
+    trace.push({ step: "③ 匹配 SKU 系数", cls: "", text: "命中 " + skuMatch.matchedBy + "，系数 = " + coeff + "。" });
+  }
+
+  /* ④ 阶梯：按计佣金额 */
+  var tierMatch = (schemeMissing || isUnpaid) ? null : matchTier(commissionBase, tiers);
+  var tierMissing = !isUnpaid && !tierMatch;
+  if (isUnpaid) {
+    trace.push({ step: "④ 匹配阶梯区间", cls: "skip", text: "待回款跳过。" });
+  } else if (tierMissing) {
     trace.push({
       step: "④ 匹配阶梯区间",
       cls: "warn",
-      text: "销售额 " + formatMoney(row.amount) + " 未落入任何阶梯区间 → 规则未匹配（阶梯缺失）。比例按空处理，基础佣金记 0。"
+      text: "计佣金额 " + formatMoney(commissionBase) + " 未落入阶梯 → 规则未匹配。"
     });
     if (anomalies.indexOf("规则未匹配") === -1) anomalies.push("规则未匹配");
   } else {
     trace.push({
       step: "④ 匹配阶梯区间",
       cls: "",
-      text: "销售额 " + formatMoney(row.amount) + " 落入 " + tierMatch.label + "，提成比例 = " + tierMatch.ratePct + "%。"
+      text: "计佣金额 " + formatMoney(commissionBase) + " 落入 " + tierMatch.label + "，比例 = " + tierMatch.ratePct + "%。"
     });
   }
 
-  /* ⑤ 基础佣金（仅非退货且规则完整时） */
+  /* ⑤ 基础佣金 */
   var baseCommission = 0;
   var tierLabel = tierMatch ? tierMatch.label : "—";
   var coeffDisplay = coeff != null ? coeff : null;
 
-  if (!isReturn) {
+  if (isUnpaid) {
+    trace.push({ step: "⑤ 基础佣金计算", cls: "skip", text: "待回款，基础佣金 = 0。" });
+  } else if (!isReturn) {
     if (!skuMissing && !tierMissing) {
-      baseCommission = row.amount * tierMatch.rate * coeff;
-      baseCommission = Math.round(baseCommission * 100) / 100;
+      baseCommission = Math.round(commissionBase * tierMatch.rate * coeff * 100) / 100;
       trace.push({
         step: "⑤ 基础佣金计算",
         cls: "",
-        text: "基础佣金 = 销售额 × 阶梯比例 × SKU系数 = " +
-          formatMoney(row.amount) + " × " + tierMatch.ratePct + "% × " + coeff +
+        text: "基础佣金 = 计佣金额 × 比例 × 系数 = " +
+          formatMoney(commissionBase) + " × " + tierMatch.ratePct + "% × " + coeff +
           " = " + formatMoney(baseCommission) + "。"
       });
     } else {
-      baseCommission = 0;
-      trace.push({
-        step: "⑤ 基础佣金计算",
-        cls: "warn",
-        text: "因规则未匹配，基础佣金 = 0。该单仍保留在明细中供稽查。"
-      });
+      trace.push({ step: "⑤ 基础佣金计算", cls: "warn", text: "规则未匹配，基础佣金 = 0。" });
     }
   } else {
-    trace.push({
-      step: "⑤ 基础佣金计算",
-      cls: "skip",
-      text: "退货单跳过正常基础佣金（记 0），进入步骤⑥冲销。"
-    });
+    trace.push({ step: "⑤ 基础佣金计算", cls: "skip", text: "退货单跳过基础佣金，进入冲销。" });
   }
 
-  /* ⑥ 退货冲销扣减 */
+  /* ⑥ 退货冲销 */
   var returnDeduct = 0;
   var deductYm = attrYm;
   if (isReturn) {
     anomalies.push("退货冲销");
     if (deductReturn) {
       if (!skuMissing && !tierMissing) {
-        returnDeduct = Math.round(row.amount * tierMatch.rate * coeff * 100) / 100;
-      } else {
-        /* 规则缺失时仍记录退货异常，但扣减金额无法按公式计算 → 记 0 并说明 */
-        returnDeduct = 0;
+        returnDeduct = Math.round(commissionBase * tierMatch.rate * coeff * 100) / 100;
       }
       trace.push({
         step: "⑥ 退货冲销扣减",
         cls: "deduct",
-        text: "开启「扣减当月佣金」。扣减金额 = " + formatMoney(row.amount) + " × " +
-          (tierMatch ? tierMatch.ratePct + "%" : "（阶梯缺失）") + " × " +
-          (coeff != null ? coeff : "（系数缺失）") + " = " + formatMoney(returnDeduct) +
-          "；扣减归属月 = " + deductYm +
-          "；原订单号 = " + origOrderId + "；退货单号 = " + row.order_id +
-          "；退货金额 = " + formatMoney(row.amount) + "。"
+        text: "扣减 = " + formatMoney(commissionBase) + " × " +
+          (tierMatch ? tierMatch.ratePct + "%" : "（缺阶梯）") + " × " +
+          (coeff != null ? coeff : "（缺系数）") + " = " + formatMoney(returnDeduct) +
+          "；归属月=" + deductYm + "；原单=" + origOrderId +
+          (schemeSource ? "；" + schemeSource : "") + "。"
       });
     } else {
-      trace.push({
-        step: "⑥ 退货冲销扣减",
-        cls: "skip",
-        text: "未开启「扣减当月佣金」。退货单仅标记异常，不产生扣减金额。建议财务另行线下冲销。"
-      });
+      trace.push({ step: "⑥ 退货冲销扣减", cls: "skip", text: "未开启扣减，仅标记退货异常。" });
     }
-  } else {
-    trace.push({
-      step: "⑥ 退货冲销扣减",
-      cls: "skip",
-      text: "非退货单，无冲销扣减。"
-    });
+  } else if (!isUnpaid) {
+    trace.push({ step: "⑥ 退货冲销扣减", cls: "skip", text: "非退货单，无冲销。" });
   }
 
-  /* 跨期 / 重复 标记（无论是否退货） */
   if (isCross) anomalies.push("跨期归属");
   if (isDup) anomalies.push("重复计算");
 
-  /* 最终佣金：纳入本期时 = 基础 − 扣减；否则对汇总记 0，但明细仍展示计算值供追溯 */
   var finalCommission;
-  if (!includedInPeriod) {
+  if (isUnpaid) {
     finalCommission = 0;
     trace.push({
       step: "⑦ 输出与本期口径",
       cls: "skip",
-      text: "归属月 " + attrYm + " ≠ 计算周期 " + period + "，本期最终佣金按 0 计入汇总；明细保留完整中间值以便追溯。"
+      text: "待回款：本期最终佣金 = 0。"
+    });
+  } else if (!includedInPeriod) {
+    finalCommission = 0;
+    trace.push({
+      step: "⑦ 输出与本期口径",
+      cls: "skip",
+      text: "归属月 " + attrYm + " ≠ 周期 " + period + "，本期记 0；明细保留中间值。"
     });
   } else if (isReturn) {
     finalCommission = -returnDeduct;
@@ -1959,12 +2702,14 @@ function computeRow(row, idx, ctx) {
     order_id: row.order_id,
     sales_rep: row.sales_rep,
     sales_rep_cn: row.sales_rep_cn,
-    sales_rep_full: row.sales_rep + " " + row.sales_rep_cn,
+    sales_rep_full: row.sales_rep,
     sku: row.sku,
     product_line: row.product_line,
     order_date: row.order_date,
-    payment_date: row.payment_date,
+    payment_date: row.payment_date || "",
+    payment_status: paymentStatus,
     amount: row.amount,
+    commissionBase: commissionBase,
     return_flag: row.return_flag,
     region: row.region,
     orderYm: orderYm,
@@ -1972,21 +2717,26 @@ function computeRow(row, idx, ctx) {
     attrYm: attrYm,
     includedInPeriod: includedInPeriod,
     tierLabel: tierLabel,
+    ratePct: tierMatch ? tierMatch.ratePct : null,
+    schemeLabel: schemeLabel,
+    schemeName: scheme ? scheme.name : "",
+    ruleDate: ruleDate,
     coeff: coeffDisplay,
-    baseCommission: isReturn ? 0 : baseCommission,
+    baseCommission: isReturn || isUnpaid ? 0 : baseCommission,
     returnDeduct: returnDeduct,
     finalCommission: finalCommission,
-    /* 用于汇总：仅本期 */
-    periodSales: includedInPeriod && !isReturn ? row.amount : 0,
-    periodBase: includedInPeriod && !isReturn ? baseCommission : 0,
+    periodSales: includedInPeriod && !isReturn && !isUnpaid ? commissionBase : 0,
+    periodBase: includedInPeriod && !isReturn && !isUnpaid ? baseCommission : 0,
     periodDeduct: includedInPeriod && isReturn ? returnDeduct : 0,
     periodFinal: includedInPeriod ? finalCommission : 0,
     anomalies: anomalies,
     isReturn: isReturn,
+    isUnpaid: isUnpaid,
     isCross: isCross,
     isDup: isDup,
     skuMissing: skuMissing,
     tierMissing: tierMissing,
+    schemeMissing: schemeMissing,
     trace: trace,
     /* 退货追溯字段 */
     returnMeta: isReturn ? {
@@ -2002,18 +2752,52 @@ function computeRow(row, idx, ctx) {
 
 /** 主入口：严格按顺序跑完全量数据 */
 function executeEngine(rawRows, ctx) {
-  /* 预扫描重复 order_id；预建「正常销售单」索引供退货追溯 */
   var dupMap = {};
   var salesOrderIds = {};
+  var salesIndex = {};
+  var schemes = ctx.schemes || [];
+  var ruleDateMode = ctx.ruleDateMode || "payment";
   rawRows.forEach(function (r) {
     dupMap[r.order_id] = (dupMap[r.order_id] || 0) + 1;
-    if (r.return_flag !== "Y") salesOrderIds[r.order_id] = true;
+    if (r.return_flag !== "Y") {
+      salesOrderIds[r.order_id] = true;
+      var pi = normalizePayment(r);
+      var rd = ruleDateMode === "order" ? r.order_date : (pi.payDate || r.payment_date);
+      salesIndex[r.order_id] = {
+        amount: Number(r.amount) || 0,
+        ruleDate: rd,
+        scheme: rd ? matchSchemeByDate(rd, schemes) : null,
+        payment_status: pi.status
+      };
+    }
   });
   ctx.dupMap = dupMap;
   ctx.salesOrderIds = salesOrderIds;
+  ctx.salesIndex = salesIndex;
 
   var details = rawRows.map(function (r, idx) {
     return computeRow(r, idx, ctx);
+  });
+
+  /* 超额退货：同原单累计退货额 > 原单金额 */
+  var retSum = {};
+  details.forEach(function (d) {
+    if (!d.isReturn || !d.returnMeta) return;
+    var oid = d.returnMeta.origOrderId;
+    retSum[oid] = (retSum[oid] || 0) + (Number(d.amount) || 0);
+  });
+  Object.keys(retSum).forEach(function (oid) {
+    var origAmt = salesIndex[oid] ? salesIndex[oid].amount : null;
+    if (origAmt == null) return;
+    if (retSum[oid] > origAmt + 0.009) {
+      details.forEach(function (d) {
+        if (!d.isReturn || !d.returnMeta || d.returnMeta.origOrderId !== oid) return;
+        if (d.anomalies.indexOf("超额退货") === -1) d.anomalies.push("超额退货");
+        d.returnMeta.excess = true;
+        d.returnMeta.returnTotal = retSum[oid];
+        d.returnMeta.origAmount = origAmt;
+      });
+    }
   });
 
   /* —— 异常表：四类独立汇总 —— */
@@ -2086,19 +2870,54 @@ function executeEngine(rawRows, ctx) {
 
   /* 4) 规则未匹配 */
   details.forEach(function (d) {
-    if (!d.skuMissing && !d.tierMissing) return;
+    if (d.isUnpaid) return;
+    if (!d.skuMissing && !d.tierMissing && !d.schemeMissing) return;
     var reasons = [];
-    if (d.skuMissing) reasons.push("SKU缺失（产品线「" + d.product_line + "」/ SKU「" + d.sku + "」不在系数表）");
-    if (d.tierMissing) reasons.push("阶梯缺失（销售额 " + formatMoney(d.amount) + " 未落入任何区间）");
+    if (d.schemeMissing) reasons.push("政策缺失（规则判定日 " + (d.ruleDate || "") + " 未落入任何生效区间）");
+    if (d.skuMissing && !d.schemeMissing) reasons.push("SKU缺失（产品线「" + d.product_line + "」/ SKU「" + d.sku + "」不在系数表）");
+    if (d.tierMissing && !d.schemeMissing) reasons.push("阶梯缺失（计佣金额 " + formatMoney(d.commissionBase) + " 未落入任何区间）");
     anomalies.push({
       type: "规则未匹配",
       order_id: d.order_id,
       sales_rep: d.sales_rep_full,
       desc: reasons.join("；") + "。涉及订单 " + d.order_id + "，涉及金额 " + formatMoney(d.amount) + "。",
       amount: d.amount,
-      suggestion: d.skuMissing
-        ? "在 SKU 系数表补录该产品线，或将订单产品线纠正为已有分类后重算。"
-        : "扩展阶梯区间覆盖该金额，或检查金额是否录入错误。"
+      suggestion: d.schemeMissing
+        ? "补全政策版本生效区间，或调整规则判定日模式后重算。"
+        : (d.skuMissing
+          ? "在当前政策的 SKU 系数表补录该产品线后重算。"
+          : "扩展当前政策阶梯区间覆盖该金额，或检查金额是否录入错误。")
+    });
+  });
+
+  /* 5) 待回款 */
+  details.forEach(function (d) {
+    if (!d.isUnpaid) return;
+    anomalies.push({
+      type: "待回款",
+      order_id: d.order_id,
+      sales_rep: d.sales_rep_full,
+      desc: "订单 " + d.order_id + " 尚未回款（payment_status=unpaid），订单额 " + formatMoney(d.amount) + "。不计提佣金，待回款后纳入对应回款月。",
+      amount: d.amount,
+      suggestion: "跟踪客户账期；回款录入后再跑月结。不阻塞其他可发薪人员。"
+    });
+  });
+
+  /* 6) 超额退货 */
+  var seenExc = {};
+  details.forEach(function (d) {
+    if (!d.returnMeta || !d.returnMeta.excess) return;
+    var oid = d.returnMeta.origOrderId;
+    if (seenExc[oid]) return;
+    seenExc[oid] = true;
+    anomalies.push({
+      type: "超额退货",
+      order_id: oid,
+      sales_rep: d.sales_rep_full,
+      desc: "原单 " + oid + " 金额 " + formatMoney(d.returnMeta.origAmount) +
+        "，累计退货 " + formatMoney(d.returnMeta.returnTotal) + "，超出原单。",
+      amount: d.returnMeta.returnTotal,
+      suggestion: "核查退货单是否重复录入或金额错误；修正前阻塞相关销售员发薪。"
     });
   });
 
@@ -2117,6 +2936,9 @@ function executeEngine(rawRows, ctx) {
     if (d.anomalies.length) anomalyOrderSet[d.rowKey] = true;
   });
 
+  var unpaidCount = 0;
+  details.forEach(function (d) { if (d.isUnpaid) unpaidCount++; });
+
   var summary = {
     period: ctx.period,
     attrMode: ctx.attrMode,
@@ -2127,7 +2949,9 @@ function executeEngine(rawRows, ctx) {
     anomalyCount: Object.keys(anomalyOrderSet).length,
     repCount: Object.keys(repSet).length,
     detailCount: details.length,
-    anomalyRowCount: anomalies.length
+    anomalyRowCount: anomalies.length,
+    unpaidCount: unpaidCount,
+    negClampTotal: 0
   };
 
   return { details: details, anomalies: anomalies, summary: summary };
@@ -2145,39 +2969,56 @@ function runCalculation() {
     return;
   }
 
-  var tiers = readTiersFromUI();
-  var skus = readSkuFromUI();
-  var errs = validateRules(tiers, skus);
-  if (errs.length) {
-    setCalcStatus("规则不完整，禁止计算：" + errs[0], "error");
-    toast(errs[0]);
+  syncCurrentSchemeEditorsToState();
+  var schemeErr = validateSchemes(state.schemes);
+  if (schemeErr) {
+    setCalcStatus("规则不完整，禁止计算：" + schemeErr, "error");
+    toast(schemeErr);
     return;
   }
 
   var period = document.getElementById("periodMonth").value;
   var attrMode = (document.querySelector("input[name='attrRule']:checked") || {}).value || "payment";
+  var ruleDateMode = (document.querySelector("input[name='ruleDateMode']:checked") || {}).value || "payment";
   var deductReturn = document.getElementById("deductReturn").checked;
   var traceOrigMonth = document.getElementById("traceOrigMonth").checked;
+  var lockOrigScheme = document.getElementById("lockOrigScheme").checked;
+  var allowNegative = document.getElementById("allowNegative").checked;
+
+  var cov = checkSchemeCoverage(period, state.schemes);
+  var covBox = document.getElementById("coverageBox");
+  var covMsg = document.getElementById("coverageMsg");
+  if (covBox && covMsg) {
+    covBox.style.display = "block";
+    covBox.className = "sla-box " + (cov.ok ? "ok" : "warn");
+    covMsg.textContent = cov.msg;
+  }
+  if (!cov.ok) {
+    toast("政策覆盖预检有缺口，仍可计算但请关注规则未匹配");
+  }
 
   state.calculating = true;
   document.getElementById("btnCalc").disabled = true;
-  setCalcStatus("计算中… 正在执行：过滤退货 → 归属 → SKU → 阶梯 → 基础佣金 → 冲销 → 异常稽查", "loading");
+  setCalcStatus("计算中… 回款状态 → 政策 → 归属 → SKU → 阶梯 → 冲销 → 闸门", "loading");
 
-  /* 短延迟以便 UI 展示 loading（数据量虽小，满足交互要求） */
   setTimeout(function () {
     try {
       var result = executeEngine(state.rawRows, {
         period: period,
         attrMode: attrMode,
-        tiers: tiers,
-        skuRules: skus,
+        ruleDateMode: ruleDateMode,
+        schemes: state.schemes,
         deductReturn: deductReturn,
-        traceOrigMonth: traceOrigMonth
+        traceOrigMonth: traceOrigMonth,
+        lockOrigScheme: lockOrigScheme,
+        allowNegative: allowNegative
       });
+      state.allowNegative = allowNegative;
       state.details = result.details;
       state.anomalies = result.anomalies;
       state.summary = result.summary;
       state.expandedId = null;
+      state.detailPage = 1;
 
       renderSummary();
       renderRepSummary();
@@ -2188,12 +3029,17 @@ function runCalculation() {
       document.getElementById("btnExportSummary").style.display = "";
 
       setCalcStatus(
-        "计算完成：本期最终佣金 " + formatMoney(result.summary.totalFinal) +
-        " · 明细 " + result.summary.detailCount +
-        " 条 · 异常 " + result.summary.anomalyCount + " 单",
+        "月结完成：最终佣金 " + formatMoney(result.summary.totalFinal) +
+        " · 销售员 " + result.summary.repCount +
+        " 人 · 异常 " + result.summary.anomalyCount + " 单",
         "ok"
       );
-      toast("计算完成");
+      toast("月结计算完成");
+      var repEl = document.getElementById("repCard");
+      if (repEl) {
+        repEl.classList.remove("collapsed");
+        try { repEl.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e2) {}
+      }
     } catch (e) {
       setCalcStatus("计算失败：" + e.message, "error");
       toast("计算失败：" + e.message);
@@ -2212,26 +3058,91 @@ function renderSummary() {
   if (!s) {
     document.getElementById("summaryEmpty").style.display = "";
     document.getElementById("summaryGrid").style.display = "none";
+    var sla0 = document.getElementById("slaBox");
+    if (sla0) sla0.style.display = "none";
     return;
   }
   document.getElementById("summaryEmpty").style.display = "none";
   document.getElementById("summaryGrid").style.display = "grid";
   document.getElementById("sPeriod").textContent = s.period;
   document.getElementById("sSales").textContent = formatMoney(s.totalSales);
-  document.getElementById("sBase").textContent = formatMoney(s.totalBase);
-  document.getElementById("sDeduct").textContent = formatMoney(s.totalDeduct);
   document.getElementById("sFinal").textContent = formatMoney(s.totalFinal);
+  document.getElementById("sDeduct").textContent = formatMoney(s.totalDeduct);
   document.getElementById("sAnomaly").textContent = String(s.anomalyCount);
   document.getElementById("sReps").textContent = String(s.repCount);
+  var elUnpaid = document.getElementById("sUnpaid");
+  if (elUnpaid) elUnpaid.textContent = String(s.unpaidCount || 0);
 
-  /* 勾稽校验：多口径交叉核对（非同一字段自证） */
+  var map = {};
+  state.details.forEach(function (d) {
+    if (!d.includedInPeriod) return;
+    var k = d.sales_rep_full;
+    if (!map[k]) map[k] = { rep: k, sales: 0, base: 0, deduct: 0, final: 0, anom: 0, block: false };
+    map[k].sales += d.periodSales;
+    map[k].base += d.periodBase;
+    map[k].deduct += d.periodDeduct;
+    map[k].final += d.periodFinal;
+    if (d.anomalies.length) map[k].anom++;
+    if (d.anomalies.indexOf("重复计算") !== -1 ||
+        d.anomalies.indexOf("规则未匹配") !== -1 ||
+        d.anomalies.indexOf("超额退货") !== -1) map[k].block = true;
+  });
+  var negClampTotal = 0;
+  var allowNeg = state.allowNegative !== false;
+  state.repList = Object.keys(map).map(function (k) {
+    var r = map[k];
+    r.sales = Math.round(r.sales * 100) / 100;
+    r.base = Math.round(r.base * 100) / 100;
+    r.deduct = Math.round(r.deduct * 100) / 100;
+    r.final = Math.round(r.final * 100) / 100;
+    if (!allowNeg && r.final < 0) {
+      negClampTotal += -r.final;
+      r.negClamped = -r.final;
+      r.final = 0;
+    }
+    return r;
+  });
+  if (state.summary) {
+    state.summary.negClampTotal = Math.round(negClampTotal * 100) / 100;
+    if (!allowNeg) {
+      var adjFinal = 0;
+      state.repList.forEach(function (r) { adjFinal += r.final; });
+      state.summary.totalFinal = Math.round(adjFinal * 100) / 100;
+      document.getElementById("sFinal").textContent = formatMoney(state.summary.totalFinal);
+    }
+  }
+  var elNeg = document.getElementById("sNegClamp");
+  if (elNeg) elNeg.textContent = formatMoney(state.summary.negClampTotal || 0);
+  var okCnt = 0, blockCnt = 0;
+  state.repList.forEach(function (r) { if (r.block) blockCnt++; else okCnt++; });
+  var elOk = document.getElementById("sPayrollOk");
+  var elBlock = document.getElementById("sPayrollBlock");
+  if (elOk) elOk.textContent = String(okCnt);
+  if (elBlock) elBlock.textContent = String(blockCnt);
+
+  var slaBox = document.getElementById("slaBox");
+  var slaMsg = document.getElementById("slaMsg");
+  var slaDetail = document.getElementById("slaDetail");
+  if (slaBox) {
+    slaBox.style.display = "block";
+    var ready = blockCnt === 0;
+    slaBox.className = "sla-box " + (ready ? "ok" : "warn");
+    if (slaMsg) {
+      slaMsg.innerHTML = ready
+        ? "<span class='badge badge-ok'>可进入发薪核对</span> 本期无阻塞类异常（重复计算 / 规则未匹配），销售员月结表可直接用于发薪核对。"
+        : "<span class='badge badge-danger'>未达发薪就绪</span> 有 <strong>" + blockCnt + "</strong> 名销售员存在重复计算或规则未匹配，须在异常闸门处理后再发薪。";
+    }
+    if (slaDetail) {
+      slaDetail.textContent = "阻塞类 = 重复计算 + 规则未匹配 + 超额退货；待回款/退货/跨期仅披露。负佣金：" +
+        (state.allowNegative !== false ? "允许挂账" : "截断为0") +
+        "。可发薪 " + okCnt + " 人 / 需处理 " + blockCnt + " 人。";
+    }
+  }
+
   var rBase = 0, rDeduct = 0, rFinal = 0, rRows = 0;
   var rowLogicOk = true;
   var dupInflate = 0;
   state.details.forEach(function (d) {
-    if (d.includedInPeriod && d.isDup && !d.isReturn) {
-      /* 重复行除首现外计为虚增（同 order_id 在本期出现多次）——下面用计数更准 */
-    }
     if (!d.includedInPeriod) return;
     rBase += d.periodBase; rDeduct += d.periodDeduct; rFinal += d.periodFinal; rRows++;
     if (d.isReturn) {
@@ -2240,13 +3151,10 @@ function renderSummary() {
       if (Math.abs(d.finalCommission - d.baseCommission) > 0.005) rowLogicOk = false;
     }
   });
-  /* 重复计发虚增估算：每个重复 order_id 在本期多出来的最终佣金 */
   var seenDupPeriod = {};
   state.details.forEach(function (d) {
     if (!d.includedInPeriod || !d.isDup || d.isReturn) return;
-    if (!seenDupPeriod[d.order_id]) {
-      seenDupPeriod[d.order_id] = { n: 0, oneFinal: d.finalCommission };
-    }
+    if (!seenDupPeriod[d.order_id]) seenDupPeriod[d.order_id] = { n: 0, oneFinal: d.finalCommission };
     seenDupPeriod[d.order_id].n += 1;
   });
   Object.keys(seenDupPeriod).forEach(function (oid) {
@@ -2258,53 +3166,33 @@ function renderSummary() {
   rFinal = Math.round(rFinal * 100) / 100;
   dupInflate = Math.round(dupInflate * 100) / 100;
 
-  /* 销售员维度再汇总一次，与总表交叉 */
   var repFinalSum = 0, repBaseSum = 0, repDeductSum = 0;
-  var repMap = {};
-  state.details.forEach(function (d) {
-    if (!d.includedInPeriod) return;
-    var k = d.sales_rep_full;
-    if (!repMap[k]) repMap[k] = { base: 0, deduct: 0, final: 0 };
-    repMap[k].base += d.periodBase;
-    repMap[k].deduct += d.periodDeduct;
-    repMap[k].final += d.periodFinal;
-  });
-  Object.keys(repMap).forEach(function (k) {
-    repBaseSum += repMap[k].base;
-    repDeductSum += repMap[k].deduct;
-    repFinalSum += repMap[k].final;
+  state.repList.forEach(function (r) {
+    repBaseSum += r.base; repDeductSum += r.deduct; repFinalSum += r.final;
   });
   repBaseSum = Math.round(repBaseSum * 100) / 100;
   repDeductSum = Math.round(repDeductSum * 100) / 100;
   repFinalSum = Math.round(repFinalSum * 100) / 100;
 
-  var idOk = Math.abs(s.totalFinal - (s.totalBase - s.totalDeduct)) < 0.005;
-  var detailOk = Math.abs(rFinal - s.totalFinal) < 0.005 &&
-    Math.abs(rBase - s.totalBase) < 0.005 &&
-    Math.abs(rDeduct - s.totalDeduct) < 0.005;
-  var repOk = Math.abs(repFinalSum - s.totalFinal) < 0.005 &&
-    Math.abs(repBaseSum - s.totalBase) < 0.005 &&
-    Math.abs(repDeductSum - s.totalDeduct) < 0.005;
+  var clamp = s.negClampTotal || 0;
+  var idOk = Math.abs((s.totalFinal + clamp) - (s.totalBase - s.totalDeduct)) < 0.005;
+  var detailOk = Math.abs(rFinal - (s.totalFinal + clamp)) < 0.005 && Math.abs(rBase - s.totalBase) < 0.005 && Math.abs(rDeduct - s.totalDeduct) < 0.005;
+  var repOk = Math.abs(repFinalSum - s.totalFinal) < 0.005 && Math.abs(repBaseSum - s.totalBase) < 0.005 && Math.abs(repDeductSum - s.totalDeduct) < 0.005;
   var ok = idOk && detailOk && repOk && rowLogicOk;
 
   var reconBox = document.getElementById("reconBox");
   if (reconBox) {
     reconBox.style.display = "block";
-    var warnDup = dupInflate > 0
-      ? " 注意：检测到重复计发虚增约 " + formatMoney(dupInflate) + "（已计入汇总，发薪前须去重）。"
-      : "";
+    var warnDup = dupInflate > 0 ? " 注意：重复计发虚增约 " + formatMoney(dupInflate) + "（已计入汇总，发薪前须去重）。" : "";
+    var warnClamp = clamp > 0 ? " 负佣截断 " + formatMoney(clamp) + "（明细加总含负值，发薪包已截断为0）。" : "";
     document.getElementById("reconMsg").innerHTML = ok
-      ? "<span class='badge badge-ok'>勾稽通过</span> 交叉核对通过：" +
-        "①汇总恒等式（最终=基础−扣减）；②本期明细加总≡汇总；③销售员汇总加总≡总表；④逐行最终佣金逻辑一致。" +
-        warnDup
-      : "<span class='badge badge-danger'>勾稽差异</span> 交叉核对未全部通过，请检查规则或数据。" + warnDup;
+      ? "<span class='badge badge-ok'>勾稽通过</span> 汇总恒等式 · 明细加总 · 销售员月结加总 · 逐行逻辑 均一致。" + warnDup + warnClamp
+      : "<span class='badge badge-danger'>勾稽差异</span> 交叉核对未全部通过，请检查规则或数据。" + warnDup + warnClamp;
     document.getElementById("reconDetail").textContent =
-      "明细计入本期 " + rRows + " 行 / 输入 " + state.rawRows.length + " 行" +
-      " · 恒等式 " + (idOk ? "✓" : "✗") +
-      " · 明细↔汇总 " + (detailOk ? "✓" : "✗") +
-      " · 销售员↔汇总 " + (repOk ? "✓" : "✗") +
-      " · 逐行逻辑 " + (rowLogicOk ? "✓" : "✗") +
-      " · 基础 " + formatMoney(rBase) + " · 扣减 " + formatMoney(rDeduct) + " · 最终 " + formatMoney(rFinal);
+      "本期明细 " + rRows + " 行 / 输入 " + state.rawRows.length + " 行 · 恒等式 " + (idOk ? "✓" : "✗") +
+      " · 明细↔汇总 " + (detailOk ? "✓" : "✗") + " · 销售员↔汇总 " + (repOk ? "✓" : "✗") +
+      " · 逐行 " + (rowLogicOk ? "✓" : "✗") + " · 最终佣金 " + formatMoney(s.totalFinal) +
+      (clamp ? "（截断前 " + formatMoney(rFinal) + "）" : "");
   }
 }
 
@@ -2317,14 +3205,16 @@ function populateDetailFilters() {
   });
   var fRep = document.getElementById("fRep");
   var fLine = document.getElementById("fLine");
-  fRep.innerHTML = "<option value=''>全部销售员</option>";
+  var repOpts = ["<option value=''>全部销售员</option>"];
   Object.keys(reps).sort().forEach(function (r) {
-    fRep.innerHTML += "<option value='" + escapeHtml(r) + "'>" + escapeHtml(r) + "</option>";
+    repOpts.push("<option value='" + escapeHtml(r) + "'>" + escapeHtml(r) + "</option>");
   });
-  fLine.innerHTML = "<option value=''>全部产品线</option>";
+  fRep.innerHTML = repOpts.join("");
+  var lineOpts = ["<option value=''>全部产品线</option>"];
   Object.keys(lines).sort().forEach(function (l) {
-    fLine.innerHTML += "<option value='" + escapeHtml(l) + "'>" + escapeHtml(l) + "</option>";
+    lineOpts.push("<option value='" + escapeHtml(l) + "'>" + escapeHtml(l) + "</option>");
   });
+  fLine.innerHTML = lineOpts.join("");
   document.getElementById("detailFilters").style.display = "flex";
 }
 
@@ -2333,8 +3223,12 @@ function getFilteredDetails() {
   var rep = document.getElementById("fRep").value;
   var line = document.getElementById("fLine").value;
   var at = document.getElementById("fAnomalyType").value;
+  var period = state.summary ? state.summary.period : "";
   return state.details.filter(function (d) {
-    if (periodMode === "period" && !d.includedInPeriod) return false;
+    if (periodMode === "period") {
+      var inPeriod = d.includedInPeriod || (d.isUnpaid && d.orderYm === period);
+      if (!inPeriod) return false;
+    }
     if (rep && d.sales_rep_full !== rep) return false;
     if (line && d.product_line !== line) return false;
     if (at === "__HAS__" && !d.anomalies.length) return false;
@@ -2344,47 +3238,64 @@ function getFilteredDetails() {
   });
 }
 
+function changeDetailPage(delta) {
+  state.detailPage = Math.max(1, (state.detailPage || 1) + delta);
+  renderDetails();
+}
+
 function renderDetails() {
   var list = getFilteredDetails();
   var empty = document.getElementById("detailEmpty");
   var wrap = document.getElementById("detailTableWrap");
   var body = document.getElementById("detailBody");
+  var pager = document.getElementById("detailPager");
+  var pageInfo = document.getElementById("detailPageInfo");
 
   if (!state.details.length) {
     empty.style.display = "";
     empty.textContent = "无明细。请先执行计算。";
     wrap.style.display = "none";
+    if (pager) pager.style.display = "none";
     return;
   }
   if (!list.length) {
     empty.style.display = "";
     empty.textContent = "当前筛选条件下无明细行。";
     wrap.style.display = "none";
+    if (pager) pager.style.display = "none";
     return;
   }
 
+  var pageSize = Number((document.getElementById("detailPageSize") || {}).value) || 50;
+  var totalPages = Math.max(1, Math.ceil(list.length / pageSize));
+  if (!state.detailPage || state.detailPage < 1) state.detailPage = 1;
+  if (state.detailPage > totalPages) state.detailPage = totalPages;
+  var start = (state.detailPage - 1) * pageSize;
+  var pageRows = list.slice(start, start + pageSize);
+
   empty.style.display = "none";
   wrap.style.display = "block";
+  if (pager) {
+    pager.style.display = "flex";
+    if (pageInfo) {
+      pageInfo.textContent = "第 " + state.detailPage + " / " + totalPages + " 页 · 共 " + list.length + " 行（本页 " + pageRows.length + "）";
+    }
+  }
   body.innerHTML = "";
 
-  list.forEach(function (d) {
-    var tr = document.createElement("tr");
-    if (d.anomalies.length) tr.className = "anomaly";
-    if (state.expandedId === d.rowKey) tr.classList.add("expanded");
-    tr.setAttribute("data-key", d.rowKey);
-    tr.onclick = function () { toggleExpand(d.rowKey); };
-
+  var html = [];
+  pageRows.forEach(function (d) {
+    var cls = [];
+    if (d.anomalies.length) cls.push("anomaly");
+    if (state.expandedId === d.rowKey) cls.push("expanded");
     var anomalyHtml = d.anomalies.length
       ? d.anomalies.map(function (a) {
           return "<span class='badge badge-danger' style='margin-right:3px;'>" + escapeHtml(a) + "</span>";
         }).join("")
       : "<span class='badge badge-ok'>正常</span>";
-
-    var includeBadge = d.includedInPeriod
-      ? ""
-      : " <span class='badge badge-muted'>非本期</span>";
-
-    tr.innerHTML =
+    var includeBadge = d.includedInPeriod ? "" : " <span class='badge badge-muted'>非本期</span>";
+    html.push(
+      "<tr class='" + cls.join(" ") + "' data-key='" + escapeHtml(d.rowKey) + "' onclick='toggleExpand(\"" + escapeHtml(d.rowKey) + "\")'>" +
       "<td>" + (state.expandedId === d.rowKey ? "▼" : "▶") + "</td>" +
       "<td>" + escapeHtml(d.order_id) + includeBadge + "</td>" +
       "<td>" + escapeHtml(d.sales_rep_full) + "</td>" +
@@ -2392,27 +3303,24 @@ function renderDetails() {
       "<td>" + escapeHtml(d.product_line) + "</td>" +
       "<td>" + escapeHtml(d.order_date) + "</td>" +
       "<td>" + escapeHtml(d.payment_date) + "</td>" +
-      "<td class='num'>" + formatMoney(d.amount) + "</td>" +
+      "<td class='num'>" + formatMoney(d.commissionBase != null ? d.commissionBase : d.amount) + "</td>" +
+      "<td>" + escapeHtml(d.payment_status || "—") + (d.isUnpaid ? " <span class='badge badge-muted'>挂起</span>" : "") + "</td>" +
+      "<td>" + escapeHtml(d.schemeName || "—") + "</td>" +
+      "<td class='num'>" + (d.ratePct != null ? d.ratePct.toFixed(2) : "—") + "</td>" +
       "<td>" + escapeHtml(d.tierLabel) + "</td>" +
       "<td class='num'>" + (d.coeff != null ? d.coeff.toFixed(2) : "—") + "</td>" +
       "<td class='num'>" + formatMoney(d.baseCommission) + "</td>" +
       "<td class='num'>" + (d.returnDeduct ? formatMoney(d.returnDeduct) : "0.00") + "</td>" +
       "<td class='num'>" + formatMoneySigned(d.finalCommission) + "</td>" +
       "<td>" + escapeHtml(d.attrYm) + "</td>" +
-      "<td>" + anomalyHtml + "</td>";
-    body.appendChild(tr);
-
+      "<td>" + anomalyHtml + "</td>" +
+      "</tr>"
+    );
     if (state.expandedId === d.rowKey) {
-      var tr2 = document.createElement("tr");
-      tr2.className = "trace-row";
-      var td = document.createElement("td");
-      td.colSpan = 15;
-      td.innerHTML = buildTraceHtml(d);
-      td.onclick = function (e) { e.stopPropagation(); };
-      tr2.appendChild(td);
-      body.appendChild(tr2);
+      html.push("<tr class='trace-row'><td colspan='18' onclick='event.stopPropagation()'>" + buildTraceHtml(d) + "</td></tr>");
     }
   });
+  body.innerHTML = html.join("");
 }
 
 function buildTraceHtml(d) {
@@ -2429,6 +3337,12 @@ function buildTraceHtml(d) {
       "<span>退货金额：" + formatMoney(d.returnMeta.returnAmount) + "</span>" +
       "<span>扣减金额：" + formatMoney(d.returnMeta.deductAmount) + "</span>" +
       "<span>扣减归属月：" + escapeHtml(d.returnMeta.deductYm) + "</span>" +
+      "</div>";
+  }
+  if (d.schemeLabel) {
+    extra += "<div class='trace-meta'>" +
+      "<span>政策版本：" + escapeHtml(d.schemeLabel) + "</span>" +
+      "<span>规则判定日：" + escapeHtml(d.ruleDate || "") + "</span>" +
       "</div>";
   }
   if (d.isCross) {
@@ -2575,38 +3489,226 @@ function csvEscape(v) {
 function renderRepSummary() {
   var wrap = document.getElementById("repWrap");
   var empty = document.getElementById("repEmpty");
-  if (!state.details.length) { if (wrap) wrap.style.display = "none"; if (empty) empty.style.display = ""; return; }
-  var map = {};
-  state.details.forEach(function (d) {
-    if (!d.includedInPeriod) return;
-    var k = d.sales_rep_full;
-    if (!map[k]) map[k] = { rep: k, sales: 0, base: 0, deduct: 0, final: 0, anom: 0 };
-    map[k].sales += d.periodSales;
-    map[k].base += d.periodBase;
-    map[k].deduct += d.periodDeduct;
-    map[k].final += d.periodFinal;
-    if (d.anomalies.length) map[k].anom++;
+  var filters = document.getElementById("repFilters");
+  var hint = document.getElementById("repHint");
+  if (!state.repList || !state.repList.length) {
+    if (wrap) wrap.style.display = "none";
+    if (empty) empty.style.display = "";
+    if (filters) filters.style.display = "none";
+    if (hint) hint.style.display = "none";
+    return;
+  }
+  var sort = (document.getElementById("repSort") || {}).value || "final_desc";
+  var status = (document.getElementById("repStatus") || {}).value || "";
+  var q = ((document.getElementById("repSearch") || {}).value || "").trim().toLowerCase();
+  var list = state.repList.slice().filter(function (r) {
+    if (status === "ok" && r.block) return false;
+    if (status === "block" && !r.block) return false;
+    if (q && String(r.rep).toLowerCase().indexOf(q) === -1) return false;
+    return true;
   });
-  var list = Object.keys(map).map(function (k) { return map[k]; });
-  list.sort(function (a, b) { return b.final - a.final; });
+  list.sort(function (a, b) {
+    if (sort === "final_asc") return a.final - b.final;
+    if (sort === "sales_desc") return b.sales - a.sales;
+    if (sort === "sales_asc") return a.sales - b.sales;
+    if (sort === "name") return a.rep.localeCompare(b.rep, "zh");
+    return b.final - a.final;
+  });
   empty.style.display = "none";
   wrap.style.display = "block";
+  if (filters) filters.style.display = "flex";
+  if (hint) hint.style.display = "block";
   var body = document.getElementById("repBody");
-  body.innerHTML = "";
+  var html = [];
   list.forEach(function (r, i) {
-    var tr = document.createElement("tr");
-    if (i === 0) tr.className = "rep-top";
+    var cls = "rep-row" + (r.block ? " rep-blocked" : (i === 0 ? " rep-top" : ""));
+    if (state.selectedRep === r.rep) cls += " is-selected";
     var rank = i < 3 ? "<span class='badge badge-info'>TOP " + (i + 1) + "</span>" : String(i + 1);
-    tr.innerHTML =
+    var statusHtml = r.block
+      ? "<span class='badge badge-block'>需处理</span>"
+      : "<span class='badge badge-ok-pay'>可发薪</span>";
+    html.push(
+      "<tr class='" + cls + "' onclick='drillToRep(" + JSON.stringify(r.rep) + ")'>" +
       "<td>" + rank + "</td>" +
       "<td>" + escapeHtml(r.rep) + "</td>" +
       "<td class='num'>" + formatMoney(r.sales) + "</td>" +
       "<td class='num'>" + formatMoney(r.base) + "</td>" +
       "<td class='num'>" + formatMoney(r.deduct) + "</td>" +
       "<td class='num'>" + formatMoney(r.final) + "</td>" +
-      "<td class='num'>" + r.anom + "</td>";
-    body.appendChild(tr);
+      "<td class='num'>" + r.anom + "</td>" +
+      "<td>" + statusHtml + "</td></tr>"
+    );
   });
+  body.innerHTML = html.join("");
+  if (state.selectedRep) renderRepOrders(state.selectedRep);
+}
+
+function getOrdersForRep(repFull, scope) {
+  /* scope: period | all */
+  var period = state.summary ? state.summary.period : "";
+  return (state.details || []).filter(function (d) {
+    if (d.sales_rep_full !== repFull) return false;
+    if (scope === "all") return true;
+    return d.includedInPeriod || (d.isUnpaid && d.orderYm === period);
+  });
+}
+
+function renderRepOrders(repFull) {
+  var panel = document.getElementById("repOrdersPanel");
+  var body = document.getElementById("repOrdersBody");
+  var title = document.getElementById("repOrdersTitle");
+  var meta = document.getElementById("repOrdersMeta");
+  if (!panel || !body) return;
+  state.selectedRep = repFull;
+  var periodOrders = getOrdersForRep(repFull, "period");
+  var allOrders = getOrdersForRep(repFull, "all");
+  /* 默认展示全部订单，避免「明明有三单却只看到本期」 */
+  var list = allOrders.slice().sort(function (a, b) {
+    return String(a.order_date).localeCompare(String(b.order_date));
+  });
+  panel.style.display = "block";
+  title.textContent = repFull + " · 订单一览";
+  var sales = 0, commission = 0, unpaidN = 0;
+  list.forEach(function (d) {
+    if (!d.isReturn && !d.isUnpaid) sales += Number(d.commissionBase) || 0;
+    commission += Number(d.finalCommission) || 0;
+    if (d.isUnpaid) unpaidN++;
+  });
+  meta.textContent = "共 " + list.length + " 单（本期归属 " + periodOrders.length +
+    " 单）· 计佣销售额合计 " + formatMoney(sales) +
+    " · 佣金合计 " + formatMoneySigned(commission) +
+    (unpaidN ? " · 待回款 " + unpaidN + " 单" : "") +
+    " · 点击行可看计算链路";
+
+  var html = [];
+  list.forEach(function (d, i) {
+    var st = d.isUnpaid ? "<span class='badge badge-muted'>待回款</span>"
+      : (d.isReturn ? "<span class='badge badge-danger'>退货</span>"
+        : (d.anomalies.length ? "<span class='badge badge-danger'>异常</span>" : "<span class='badge badge-ok'>正常</span>"));
+    if (!d.includedInPeriod && !d.isUnpaid) st += " <span class='badge badge-muted'>非本期</span>";
+    html.push(
+      "<tr class='rep-row' onclick='focusOrderDetail(" + JSON.stringify(d.rowKey) + ")'>" +
+      "<td>" + (i + 1) + "</td>" +
+      "<td>" + escapeHtml(d.order_id) + "</td>" +
+      "<td>" + escapeHtml(d.sku) + "</td>" +
+      "<td>" + escapeHtml(d.product_line) + "</td>" +
+      "<td>" + escapeHtml(d.order_date) + "</td>" +
+      "<td>" + escapeHtml(d.payment_date || "—") + "</td>" +
+      "<td>" + escapeHtml(d.payment_status || "—") + "</td>" +
+      "<td class='num'>" + formatMoney(d.amount) + "</td>" +
+      "<td class='num'>" + formatMoney(d.commissionBase != null ? d.commissionBase : d.amount) + "</td>" +
+      "<td class='num'>" + (d.ratePct != null ? d.ratePct.toFixed(2) : "—") + "</td>" +
+      "<td class='num'>" + (d.coeff != null ? d.coeff.toFixed(2) : "—") + "</td>" +
+      "<td>" + escapeHtml(d.schemeName || "—") + "</td>" +
+      "<td class='num'>" + formatMoney(d.baseCommission) + "</td>" +
+      "<td class='num'>" + formatMoney(d.returnDeduct || 0) + "</td>" +
+      "<td class='num'>" + formatMoneySigned(d.finalCommission) + "</td>" +
+      "<td>" + st + "</td></tr>"
+    );
+  });
+  body.innerHTML = html.length ? html.join("") : "<tr><td colspan='16' class='empty'>该业务员暂无订单</td></tr>";
+}
+
+function clearRepOrders() {
+  state.selectedRep = "";
+  var panel = document.getElementById("repOrdersPanel");
+  if (panel) panel.style.display = "none";
+  renderRepSummary();
+}
+
+function focusOrderDetail(rowKey) {
+  state.expandedId = rowKey;
+  var detailCard = document.getElementById("detailCard");
+  if (detailCard) detailCard.classList.remove("collapsed");
+  var fRep = document.getElementById("fRep");
+  if (fRep && state.selectedRep) fRep.value = state.selectedRep;
+  var fPeriod = document.getElementById("fPeriod");
+  if (fPeriod) fPeriod.value = "all";
+  state.detailPage = 1;
+  renderDetails();
+  if (detailCard) try { detailCard.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+}
+
+function exportRepOrdersCsv() {
+  if (!state.selectedRep) { toast("请先点击一名业务员"); return; }
+  var list = getOrdersForRep(state.selectedRep, "all");
+  if (!list.length) { toast("无订单可导出"); return; }
+  var headers = ["order_id","sku","product_line","order_date","payment_date","payment_status","amount","commission_base","rate_pct","sku_coeff","scheme","base_commission","return_deduct","final_commission","attr_ym","anomalies"];
+  var lines = [headers.join(",")];
+  list.forEach(function (d) {
+    lines.push([
+      d.order_id, d.sku, d.product_line, d.order_date, d.payment_date || "",
+      d.payment_status || "", Number(d.amount).toFixed(2),
+      Number(d.commissionBase != null ? d.commissionBase : d.amount).toFixed(2),
+      d.ratePct != null ? d.ratePct : "", d.coeff != null ? d.coeff : "",
+      d.schemeName || "", Number(d.baseCommission).toFixed(2),
+      Number(d.returnDeduct || 0).toFixed(2), Number(d.finalCommission).toFixed(2),
+      d.attrYm || "", (d.anomalies || []).join("|")
+    ].map(csvEscape).join(","));
+  });
+  downloadCsv("orders_" + state.selectedRep + ".csv", lines.join("\n"));
+  toast("已导出 " + list.length + " 单");
+}
+
+function drillToRep(repFull) {
+  state.selectedRep = repFull;
+  renderRepSummary();
+  renderRepOrders(repFull);
+  var panel = document.getElementById("repOrdersPanel");
+  if (panel) try { panel.scrollIntoView({ behavior: "smooth", block: "nearest" }); } catch (e) {}
+  /* 同步下方总明细筛选，默认看全部月份 */
+  var detailCard = document.getElementById("detailCard");
+  if (detailCard) detailCard.classList.remove("collapsed");
+  var fRep = document.getElementById("fRep");
+  if (fRep) {
+    var found = false;
+    for (var i = 0; i < fRep.options.length; i++) {
+      if (fRep.options[i].value === repFull) { found = true; break; }
+    }
+    if (!found) {
+      var opt = document.createElement("option");
+      opt.value = repFull; opt.textContent = repFull;
+      fRep.appendChild(opt);
+    }
+    fRep.value = repFull;
+  }
+  var fPeriod = document.getElementById("fPeriod");
+  if (fPeriod) fPeriod.value = "all";
+  state.detailPage = 1;
+  renderDetails();
+  toast(repFull + "：已展开订单一览");
+}
+
+function exportPayrollCsv() {
+  if (!state.repList || !state.repList.length) { toast("无月结数据可导出"); return; }
+  var headers = ["rank","sales_rep","period_sales","base_commission","return_deduct","final_commission","anomaly_count","payroll_status","neg_clamped"];
+  var list = state.repList.slice().sort(function (a, b) { return b.final - a.final; });
+  var lines = [headers.join(",")];
+  list.forEach(function (r, i) {
+    lines.push([
+      i + 1, r.rep, r.sales.toFixed(2), r.base.toFixed(2), r.deduct.toFixed(2),
+      r.final.toFixed(2), r.anom, r.block ? "需处理" : "可发薪",
+      (r.negClamped || 0).toFixed(2)
+    ].map(csvEscape).join(","));
+  });
+  var period = state.summary ? state.summary.period : "na";
+  downloadCsv("payroll_summary_" + period + ".csv", lines.join("\n"));
+}
+
+function exportPayrollOkCsv() {
+  if (!state.repList || !state.repList.length) { toast("无月结数据可导出"); return; }
+  var headers = ["rank","sales_rep","period_sales","base_commission","return_deduct","final_commission"];
+  var list = state.repList.filter(function (r) { return !r.block; }).sort(function (a, b) { return b.final - a.final; });
+  if (!list.length) { toast("当前无「可发薪」人员"); return; }
+  var lines = [headers.join(",")];
+  list.forEach(function (r, i) {
+    lines.push([
+      i + 1, r.rep, r.sales.toFixed(2), r.base.toFixed(2), r.deduct.toFixed(2), r.final.toFixed(2)
+    ].map(csvEscape).join(","));
+  });
+  var period = state.summary ? state.summary.period : "na";
+  downloadCsv("payroll_ready_" + period + ".csv", lines.join("\n"));
+  toast("已导出可发薪 " + list.length + " 人");
 }
 
 function setBar(id, w, valId, val) {
@@ -2628,7 +3730,7 @@ function renderCharts() {
   setBar("barBase", base / m * 100, "barBaseVal", formatMoney(base));
   setBar("barDeduct", deduct / m * 100, "barDeductVal", formatMoney(deduct));
   setBar("barFinal", fin / m * 100, "barFinalVal", formatMoney(fin));
-  var types = ["退货冲销", "跨期归属", "重复计算", "规则未匹配"];
+  var types = ["退货冲销", "跨期归属", "重复计算", "规则未匹配", "待回款", "超额退货"];
   var counts = {};
   var seen = {};
   types.forEach(function (t) { counts[t] = 0; seen[t] = {}; });
@@ -2656,13 +3758,13 @@ function renderCharts() {
 }
 
 function init() {
-  renderTierEditor(defaultTiers.slice());
-  renderSkuEditor(defaultSkuCoeffs.map(function (x) {
-    return { productLine: x.productLine, skuPrefix: x.skuPrefix, coeff: x.coeff };
-  }));
+  state.schemes = buildDefaultSchemes();
+  state.activeSchemeId = state.schemes[0].id;
+  renderSchemeSelect();
+  loadSchemeToEditors(state.schemes[0]);
   setCalcStatus("等待计算 — 请先加载数据并确认规则完整", "");
   syncAttrRadios();
-  var radios = document.querySelectorAll("input[name='attrRule']");
+  var radios = document.querySelectorAll("input[name='attrRule'], input[name='ruleDateMode']");
   for (var i = 0; i < radios.length; i++) {
     radios[i].addEventListener("change", syncAttrRadios);
   }
