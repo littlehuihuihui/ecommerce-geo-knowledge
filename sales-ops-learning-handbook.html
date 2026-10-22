@@ -1,0 +1,4039 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>高级销售运营 / 销售数据分析 · 面试知识手册（概念 · 场景 · 话术）</title>
+<style>
+
+:root {
+  --bg: #0b1220;
+  --bg-elev: #121a2b;
+  --bg-card: #162033;
+  --bg-card-hover: #1a2740;
+  --border: #243047;
+  --border-hl: #3b82f6;
+  --text: #e8eef8;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --accent: #38bdf8;
+  --green: #22c55e;
+  --green-bg: rgba(34, 197, 94, 0.12);
+  --blue: #3b82f6;
+  --blue-bg: rgba(59, 130, 246, 0.12);
+  --red: #ef4444;
+  --orange: #f97316;
+  --warn-bg: rgba(249, 115, 22, 0.14);
+  --red-bg: rgba(239, 68, 68, 0.14);
+  --radius: 10px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --font: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: Consolas, "Courier New", monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(56, 189, 248, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(59, 130, 246, 0.06), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+header.hero {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+header.hero h1 {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+header.hero .sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 720px;
+}
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.chip {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--bg-elev);
+}
+.progress-panel {
+  background: rgba(18, 26, 43, 0.92);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.progress-head strong { color: var(--text); }
+.progress-track {
+  height: 8px;
+  background: #1e293b;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0ea5e9, #22c55e, #a3e635);
+  transition: width 0.35s ease;
+}
+nav.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+nav.toc a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.82rem;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+  transition: border-color 0.2s, background 0.2s;
+}
+nav.toc a:hover {
+  border-color: var(--border-hl);
+  background: var(--bg-card-hover);
+}
+section { margin-bottom: 40px; }
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title::before {
+  content: "";
+  width: 4px;
+  height: 1.1em;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.section-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+.search-box {
+  flex: 1 1 240px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  padding: 10px 14px 10px 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.92rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-box input:focus { border-color: var(--border-hl); }
+.search-box::before {
+  content: "\2315";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+.filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.filter-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover { border-color: var(--text-dim); color: var(--text); }
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.1);
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+.tag-weak {
+  background: var(--warn-bg);
+  color: var(--orange);
+  border: 1px solid rgba(249, 115, 22, 0.35);
+}
+.tag-weak::before { content: "\26A0 "; }
+.tag-strength {
+  background: var(--green-bg);
+  color: var(--green);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+.tag-transfer {
+  background: var(--blue-bg);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+.cards { display: grid; gap: 12px; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: #3d4f6f;
+  box-shadow: var(--shadow);
+}
+.card.weak-card { border-left: 3px solid var(--orange); }
+.card.strength-card { border-left: 3px solid var(--green); }
+.card.transfer-card { border-left: 3px solid var(--blue); }
+.card.hidden { display: none; }
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-head .mastered {
+  margin-top: 3px;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--green);
+}
+.card-title-block { flex: 1; min-width: 0; }
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 650;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.card-en {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-weight: 400;
+  font-family: var(--mono);
+}
+.card-one-liner {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.chevron {
+  color: var(--text-dim);
+  transition: transform 0.25s;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.card.open .chevron { transform: rotate(180deg); color: var(--accent); }
+.card.mastered-done .card-title { color: var(--green); }
+.card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+.card.open .card-body { max-height: 6000px; }
+.card-body-inner {
+  padding: 0 16px 18px 46px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.field { margin-bottom: 14px; }
+.field-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.field p, .field li {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.field ul { padding-left: 1.2em; }
+.field li { margin-bottom: 4px; }
+.bonus {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.bonus .field-label { color: #7dd3fc; }
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-dim);
+  display: none;
+}
+.empty-state.show { display: block; }
+.timeline-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.timeline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  margin: 24px 0 8px;
+  padding: 0 8px;
+  overflow-x: auto;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 40px;
+  right: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, #1e3a5f, #38bdf8, #1e3a5f);
+  border-radius: 2px;
+  z-index: 0;
+}
+.tl-node {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  padding: 0 4px;
+}
+.tl-dot {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 3px solid #334155;
+  transition: all 0.25s;
+}
+.tl-node.active .tl-dot {
+  border-color: var(--accent);
+  background: #0c4a6e;
+  box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5);
+  animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.45); }
+  70% { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+}
+.tl-day { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+.tl-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+.tl-node.active .tl-day { color: var(--accent); }
+.tl-detail {
+  margin-top: 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+}
+.tl-detail h3 { font-size: 1rem; margin-bottom: 10px; color: var(--accent); }
+.tl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.tl-item {
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.tl-item strong {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+.tl-item p { font-size: 0.88rem; }
+.table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elev);
+}
+table.weak-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 700px;
+}
+table.weak-table th,
+table.weak-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+table.weak-table th {
+  background: #1a2438;
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+table.weak-table th:hover { color: var(--accent); }
+table.weak-table th .sort-ind { opacity: 0.5; margin-left: 4px; font-size: 0.75rem; }
+table.weak-table tr:hover td { background: rgba(56, 189, 248, 0.04); }
+table.weak-table tr.hidden-row { display: none; }
+table.weak-table td:first-child { font-weight: 600; color: var(--orange); white-space: nowrap; }
+.graph-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+}
+.graph {
+  position: relative;
+  width: 100%;
+  min-width: 720px;
+  height: 420px;
+}
+.g-node {
+  position: absolute;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.g-node.n-weak { border-color: rgba(249,115,22,0.6); color: var(--orange); }
+.g-node.n-str { border-color: rgba(34,197,94,0.6); color: var(--green); }
+.g-node.n-tr { border-color: rgba(59,130,246,0.6); color: #60a5fa; }
+.g-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+.g-svg line { stroke: #334155; stroke-width: 1.5; }
+.g-svg text {
+  fill: var(--text-dim);
+  font-size: 10px;
+  font-family: var(--font);
+}
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.graph-legend span::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  border: 1px solid;
+}
+.graph-legend .l-weak::before { border-color: var(--orange); background: var(--warn-bg); }
+.graph-legend .l-str::before { border-color: var(--green); background: var(--green-bg); }
+.graph-legend .l-tr::before { border-color: var(--blue); background: var(--blue-bg); }
+.quiz-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.quiz-item {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.quiz-item:last-of-type { border-bottom: none; }
+.quiz-q {
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+.quiz-q .q-num { color: var(--accent); margin-right: 6px; }
+.quiz-opts { display: grid; gap: 6px; }
+.quiz-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--bg-card);
+  transition: border-color 0.2s, background 0.2s;
+  font-size: 0.88rem;
+}
+.quiz-opt:hover:not(.disabled) { border-color: #475569; }
+.quiz-opt input { margin-top: 3px; accent-color: var(--accent); }
+.quiz-opt.correct {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.quiz-opt.wrong {
+  border-color: var(--red);
+  background: var(--red-bg);
+}
+.quiz-opt.disabled { cursor: default; opacity: 0.85; }
+.quiz-explain {
+  display: none;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: rgba(0,0,0,0.25);
+  color: var(--text-muted);
+}
+.quiz-explain.show { display: block; }
+.quiz-result {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.quiz-result.show { display: block; }
+.quiz-result h3 { margin-bottom: 8px; }
+.score-big {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.btn-reset {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.product-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.product-hero {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.product-hero h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.product-hero h3 .en {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-weight: 400;
+  font-family: var(--mono);
+  margin-top: 4px;
+}
+.product-hero p { color: var(--text-muted); font-size: 0.9rem; max-width: 720px; }
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.btn-link, .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  font-family: inherit;
+}
+.btn-link {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.45);
+  color: var(--accent);
+  font-weight: 600;
+}
+.btn-link:hover { background: rgba(56, 189, 248, 0.2); }
+.btn-ghost {
+  background: var(--bg-card);
+  color: var(--text-muted);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.product-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: flex-start;
+  max-width: 280px;
+}
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 640px) {
+  .product-grid { grid-template-columns: 1fr; }
+}
+.product-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+.product-block.full { margin-top: 12px; }
+.product-block h4 {
+  font-size: 0.92rem;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.product-block ol, .product-block ul {
+  padding-left: 1.15em;
+  font-size: 0.88rem;
+}
+.product-block li { margin-bottom: 6px; }
+.product-block .formula {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  background: rgba(0,0,0,0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  color: #cbd5e1;
+}
+.product-block .mini {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.pros-cons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pros-cons .ok { color: var(--green); }
+.pros-cons .warn { color: var(--orange); }
+.steps li { margin-bottom: 8px; }
+.deep-panel {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+}
+.deep-intro {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 16px;
+  max-width: 860px;
+}
+.deep-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.deep-tab {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+.deep-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56, 189, 248, 0.1);
+}
+.deep-pane { display: none; }
+.deep-pane.active { display: block; }
+.deep-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.deep-block h3 {
+  font-size: 0.98rem;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+.deep-block h4 {
+  font-size: 0.88rem;
+  margin: 12px 0 6px;
+  color: #7dd3fc;
+}
+.deep-block p, .deep-block li {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+.deep-block ul, .deep-block ol { padding-left: 1.2em; }
+.deep-block li { margin-bottom: 5px; }
+.answer-frame {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.answer-frame strong { color: var(--green); }
+.tool-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+}
+.tool-chip {
+  font-size: 0.75rem;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.2);
+  color: var(--text-muted);
+}
+.q-list li { margin-bottom: 10px; }
+.q-list .q { color: #fbbf24; font-weight: 600; }
+.q-list .a { color: var(--text-muted); display: block; margin-top: 3px; }
+/* scrollspy 偏移修正 */
+section { scroll-margin-top: 76px; }
+
+/* ===== 升级增强：深入讲解 / 职责分区 / 滚动导航 / 错题本 / 关系图交互 / 新板块 ===== */
+.card.open .card-body { max-height: 90000px; }
+.field p, .field li { white-space: pre-line; }
+.deep-box { margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--border); }
+.deep-title { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em; }
+.deep-item { margin-bottom: 10px; }
+.deep-item-t { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.deep-item-c { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; white-space: pre-line; }
+
+.area-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 28px 0 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(56,189,248,0.10), rgba(56,189,248,0.02));
+  border-left: 3px solid var(--accent);
+}
+.area-head h3 { font-size: 1.02rem; color: var(--text); margin: 0; }
+.area-head .en { font-size: 0.75rem; color: var(--text-dim); font-family: var(--mono); margin-left: 4px; }
+.area-head .count { margin-left: auto; font-size: 0.8rem; color: var(--text-dim); }
+
+.area-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-btn.area-btn { font-size: 0.8rem; padding: 5px 10px; }
+.filter-btn.area-btn .n { opacity: 0.7; margin-left: 2px; font-size: 0.75rem; }
+
+nav.toc a { transition: color .2s, border-color .2s; }
+nav.toc a.active { color: var(--accent); border-color: var(--accent); background: rgba(56,189,248,0.08); }
+
+.graph-hint { margin-top: 8px; font-size: 0.78rem; color: var(--text-dim); text-align: center; }
+.g-node { cursor: pointer; transition: opacity .25s, transform .25s, filter .25s; }
+.g-node:hover { filter: brightness(1.25); transform: scale(1.05); }
+.g-node.dim, .g-svg line.dim, .g-svg text.dim { opacity: 0.15; }
+.g-node.hl { filter: brightness(1.35); }
+.g-svg line.hl { stroke: var(--accent); stroke-width: 3; }
+.g-svg text.hl { fill: var(--accent); font-weight: 700; }
+
+.quiz-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.btn-mini {
+  display: inline-flex; align-items: center;
+  padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-elev); color: var(--text-muted);
+  font-family: inherit; font-size: 0.8rem; cursor: pointer;
+}
+.btn-mini:hover { border-color: var(--accent); color: var(--accent); }
+.btn-mini.warn:hover { border-color: var(--orange); color: var(--orange); }
+.btn-mini:disabled { opacity: 0.5; cursor: not-allowed; }
+.quiz-mode-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.quiz-mode-bar .mode-tag { font-size: 0.78rem; color: var(--text-dim); }
+.quiz-mode-bar .badge { padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; background: rgba(239,68,68,0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.35); }
+.progress-actions { display: flex; gap: 8px; align-items: center; }
+
+.advice-section { margin-top: 36px; }
+.panel-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.panel-card h3 { font-size: 0.95rem; margin-bottom: 10px; color: var(--accent); }
+.talk-script { font-size: 0.9rem; line-height: 1.8; color: var(--text); white-space: pre-line; }
+.talk-script strong { color: var(--accent); }
+.tip-line {
+  margin-top: 10px; padding: 8px 12px; border-radius: 8px;
+  background: rgba(56,189,248,0.07); border: 1px dashed rgba(56,189,248,0.3);
+  font-size: 0.82rem; color: var(--text-muted);
+}
+.q-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.q-cat { background: var(--bg-elev); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.q-cat h3 { font-size: 0.9rem; margin-bottom: 8px; color: var(--accent); }
+.q-cat ul { padding-left: 1.1em; margin: 0; }
+.q-cat li { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.6; }
+.scenario .scenario-ans p { font-size: 0.88rem; line-height: 1.75; color: var(--text-muted); margin-bottom: 8px; }
+.scenario .scenario-ans em { color: var(--accent); font-style: normal; }
+.scenario .scenario-ans p:last-child { margin-bottom: 0; }
+.scenario .scenario-ans p strong { color: var(--text); }
+@media (max-width: 760px) {
+  .q-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 16px 12px 60px; }
+  .card-body-inner { padding-left: 16px; }
+  .tl-node { min-width: 80px; }
+  .graph { height: 480px; min-width: 640px; }
+  .pros-cons { grid-template-columns: 1fr; }
+}
+
+</style>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="%230b1220"/><path d="M30 30h12v40H30zM44 46h12v24H44zM58 38h12v32H58z" fill="%2338bdf8"/></svg>'>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>高级销售运营 / 销售数据分析岗位<br />面试知识手册</h1>
+    <p class="sub">按 JD 六大职责组织：流程与运营卓越、数字化工具与自动化、AI 智能运营、数据管道与质量、佣金与销售激励、指标协同与治理。40 张概念卡（含深入讲解）、面试深挖、错题本、场景应用题示范，帮你把「知道」变成「会答」。</p>
+    <div class="meta-row">
+      <span class="chip">按 JD 职责分区 · 40 概念卡</span>
+      <span class="chip">错题本自动收集</span>
+      <span class="chip">本地勾选进度（localStorage）</span>
+      <span class="chip">纯单文件 · 无外部依赖</span>
+    </div>
+  </header>
+
+  <div class="progress-panel" id="progressPanel">
+    <div class="progress-head">
+      <span>学习进度：已掌握 <strong id="masteredCount">0</strong> / <strong id="totalCount">0</strong></span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-actions">
+      <button type="button" class="btn-mini" id="resetProgress" title="清空已掌握标记与错题本">重置学习进度</button>
+    </div>
+  </div>
+
+  <nav class="toc" aria-label="页面导航">
+    <a href="#cards">概念卡片</a>
+    <a href="#calc-product">佣金处理台速通</a>
+    <a href="#interview-deep">面试深挖</a>
+    <a href="#timeline-section">SLA 时间线</a>
+    <a href="#weak-table">短板速查表</a>
+    <a href="#graph">概念关系图</a>
+    <a href="#quiz">小测验</a>
+    <a href="#talk">自我介绍</a>
+    <a href="#questions">反问清单</a>
+    <a href="#scenarios">场景应用</a>
+  </nav>
+
+  <section id="cards">
+    <h2 class="section-title">概念卡片</h2>
+    <p class="section-desc">40 张概念卡按 JD 六大职责分区；点击卡片展开详情（含「深入讲解」子主题）。勾选「已掌握」计入顶部进度。</p>
+    <div class="toolbar">
+      <div class="search-box">
+        <input type="search" id="cardSearch" placeholder="搜索概念名、标签、关键词…" autocomplete="off" />
+      </div>
+      <div class="filters" id="cardFilters">
+        <button type="button" class="filter-btn active" data-filter="all">全部</button>
+        <button type="button" class="filter-btn" data-filter="weak">仅看短板</button>
+        <button type="button" class="filter-btn" data-filter="strength">仅看优势</button>
+        <button type="button" class="filter-btn" data-filter="transfer">仅看可迁移</button>
+      </div>
+    </div>
+    <div class="area-filters" id="areaFilters"></div>
+    <div class="cards" id="cardsContainer"></div>
+    <div class="empty-state" id="cardsEmpty">没有匹配的概念，试试其他关键词。</div>
+  </section>
+
+  <section id="calc-product">
+    <h2 class="section-title">佣金处理台 · 产品速通</h2>
+    <p class="section-desc">对应文件 <code style="color:var(--accent)">commission-calculator.html</code>。用 5–10 分钟搞清：它是什么、有哪些模块、为何这样设计、优缺点、以及如何用来补齐「佣金 SLA」短板。</p>
+    <div class="product-panel">
+      <div class="product-hero">
+        <div>
+          <h3>月度佣金处理台 <span class="en">Monthly Commission Processing Workbench</span></h3>
+          <p>港资电信设备销售场景的<strong>每月佣金处理演示工具</strong>：先产出「销售员 × 销售额 × 应发佣金」月结主交付，再用规则引擎、退货冲销、回款归属、异常闸门与勾稽校验，守住发薪前的质量（SLA）。</p>
+          <div class="product-actions">
+            <a class="btn-link" href="commission-calculator.html" target="_blank" rel="noopener">打开处理台实操 →</a>
+            <button type="button" class="btn-ghost" id="markWorkbenchMastered">标记「已掌握」该产品卡片</button>
+          </div>
+        </div>
+        <div class="product-badges">
+          <span class="tag tag-strength">优势 · 产品实战</span>
+          <span class="chip">规则可配置</span>
+          <span class="chip">发薪质量闸门</span>
+          <span class="chip">可映射 ETL / Power Platform</span>
+        </div>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-block">
+          <h4>它包括什么（模块地图）</h4>
+          <ol>
+            <li><strong>概念与计算逻辑</strong>：周期/归属/规则表/基础佣金/退货冲销/跨期/异常；七步计算顺序与字段词典。</li>
+            <li><strong>规则配置</strong>：计算周期、回款/订单归属、dim_rule 规则表 CRUD（阶梯/封顶/保底/加速器/SPIFF）、退货扣减与锁原单政策。</li>
+            <li><strong>数据导入</strong>：CSV 粘贴或加载约 300 业务员虚拟数据。</li>
+            <li><strong>本期处理总览</strong>：销售额/最终佣金/可发薪人数/异常数、政策覆盖预检、SLA 质量状态、勾稽校验。</li>
+            <li><strong>销售员佣金月结表（主交付）</strong>：按人汇总，下钻订单，导出发薪 CSV。</li>
+            <li><strong>订单明细 + 异常质量闸门</strong>：展开计算链路；四类异常可导出处理。</li>
+            <li><strong>数据模型 / Power 落地 / 设计说明</strong>：讲清如何从演示走向生产。</li>
+          </ol>
+        </div>
+        <div class="product-block">
+          <h4>核心公式（记住这一组）</h4>
+          <div class="formula">
+            基础佣金 = 销售额 × 阶梯比例 × SKU 系数<br />
+            退货扣减 = 退货金额 × 阶梯比例 × SKU 系数（可锁原单政策）<br />
+            最终佣金（本期）= 基础佣金 − 退货扣减
+          </div>
+          <p class="mini">默认归属按<strong>回款月</strong>（钱到账才发佣）；可切换订单月做口径对比。汇总/勾稽/月结表均为<strong>本期口径</strong>。</p>
+        </div>
+        <div class="product-block">
+          <h4>为什么这样设计</h4>
+          <ul>
+            <li><strong>先月结、再闸门：</strong>运营第一交付是「每人该发多少」；异常服务于发薪就绪，不喧宾夺主。</li>
+            <li><strong>回款归属：</strong>通信设备常有账期，开单≠收入确认，避免未回款先发佣。</li>
+            <li><strong>退货单独冲销 + 锁原单政策：</strong>保留痕迹，防止月中改政策导致「发 3%、退按 3.5% 扣」。</li>
+            <li><strong>规则表可配置：</strong>改政策改数据，不改代码；对应「规则引擎」面试话术。</li>
+            <li><strong>异常分型：</strong>重复/未匹配阻塞发薪；跨期/退货需披露与处理，支撑佣金 SLA。</li>
+            <li><strong>单文件演示：</strong>降低讲解成本；计算与门禁逻辑可迁移到 SQL/ETL/Power Platform。</li>
+          </ul>
+        </div>
+        <div class="product-block">
+          <h4>优点 / 局限</h4>
+          <div class="pros-cons">
+            <div>
+              <strong class="ok">优点</strong>
+              <ul>
+                <li>端到端可演示：规则→计算→月结→闸门→导出</li>
+                <li>口径讲得清：归属、跨期、本期/全量</li>
+                <li>质量意识完整：勾稽恒等式 + 发薪阻断</li>
+                <li>直接映射 JD 短板词：SLA、ETL、异常监控、规则引擎</li>
+              </ul>
+            </div>
+            <div>
+              <strong class="warn">局限</strong>
+              <ul>
+                <li>浏览器前端批处理，不是生产调度系统</li>
+                <li>宽表入湖简化了订单/回款拆表</li>
+                <li>无真实审批流/权限/审计落库</li>
+                <li>并发、断点续跑、容量需在平台层补齐</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-block full">
+        <h4>10 分钟上手路径（建议照做一遍）</h4>
+        <ol class="steps">
+          <li>打开处理台 → 加载 300 业务员虚拟数据 → 确认规则表有生效规则。</li>
+          <li>点击「执行月结计算」→ 看总览：可发薪人数、需处理人数、SLA/勾稽状态。</li>
+          <li>进入销售员月结表 → 点开一名「需处理」人员 → 看订单命中规则与异常。</li>
+          <li>打开异常质量闸门 → 区分阻塞项（重复/未匹配）与披露项（跨期/退货）。</li>
+          <li>改一条规则或切换归属口径 → 重算 → 观察结果变化，练习「政策版本」表达。</li>
+          <li>回到本手册「佣金 SLA」卡片，用处理台现象回答：如何守发放日质量。</li>
+        </ol>
+      </div>
+
+      <div class="product-block full">
+        <h4>和手册概念怎么连</h4>
+        <p class="mini">佣金规则引擎 / 佣金模型（优势）→ 本处理台 → 佣金 SLA / 数据质量 / 异常监控（短板话术）。面试一句话：「我用可配置规则引擎产出月结发薪包，并用异常闸门与勾稽作为发放前的 SLA 质量门禁；生产上可落到 ETL + BPM/Power Platform。」</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="interview-deep">
+    <h2 class="section-title">面试深挖：发薪就绪 &amp; 跨部门流程</h2>
+    <p class="section-desc">预判高频追问：「数据怎么按时、可恢复地进到可发薪状态？」以及「跨部门流程怎么跑？」下面按「考什么 → 原理 → 怎么做 → 工具 → 口述框架 → 追问」展开，可直接背结构，不必背全文。</p>
+
+    <div class="deep-panel">
+      <p class="deep-intro">
+        面试官很少真的要你现场写一套生产 ETL。他们在听三件事：
+        <strong style="color:var(--text)">你有没有端到端画面</strong>、
+        <strong style="color:var(--text)">失败时会不会可控恢复</strong>、
+        <strong style="color:var(--text)">跨角色扯皮时你能不能把责任和路径说清楚</strong>。
+        结合你的佣金模型、Python/SQL、算子建模优势，用「迁移话术」补齐 ETL / DQ / 断点续跑 / BPM 短板即可。
+      </p>
+
+      <div class="deep-tabs" id="deepTabs">
+        <button type="button" class="deep-tab active" data-pane="pane-payroll">A. 按时可恢复 → 可发薪</button>
+        <button type="button" class="deep-tab" data-pane="pane-bpm">B. 跨部门流程怎么跑</button>
+        <button type="button" class="deep-tab" data-pane="pane-combo">C. 一分钟串联话术</button>
+      </div>
+
+      <!-- ========== Pane A ========== -->
+      <div class="deep-pane active" id="pane-payroll">
+
+        <div class="deep-block">
+          <h3>1. 面试官到底在考什么</h3>
+          <ul>
+            <li><strong>时效：</strong>你是否能把「锁数→计算→校验→审批→发放」压进 SLA 时间盒，而不是靠加班碰运气。</li>
+            <li><strong>正确性：</strong>调度成功 ≠ 业务正确；有没有质量门禁挡住错发。</li>
+            <li><strong>可恢复：</strong>凌晨失败后，能否分区/断点续跑，并保证幂等（不双倍发佣）。</li>
+            <li><strong>发薪就绪定义：</strong>你是否区分「算完了」和「可以发了」（无阻塞异常、勾稽通过、审批完成）。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>2. 原理：把月结看成「受控状态机」，不是一次脚本</h3>
+          <p>可发薪不是一个金额字段，而是一组状态同时满足：</p>
+          <ol>
+            <li><strong>数据就绪</strong>：源系统锁数完成，规则版本冻结（有 batch_no / rule_version）。</li>
+            <li><strong>管道跑通</strong>：ETL/作业 DAG 各节点成功，或失败后已按检查点恢复。</li>
+            <li><strong>质量门禁通过</strong>：完整性/唯一性/勾稽差 &lt; 阈值；P0 规则不过则阻断下游。</li>
+            <li><strong>业务异常可决策</strong>：重复计算、规则未匹配等阻塞项已清零或进争议队列隔离。</li>
+            <li><strong>组织签字完成</strong>：按 RACI，Accountable 已批准主批次；争议单不混入主发薪包。</li>
+          </ol>
+          <h4>关键原理词（口述时甩出来就加分）</h4>
+          <div class="tool-chip-row">
+            <span class="tool-chip">幂等 Idempotent</span>
+            <span class="tool-chip">检查点 Checkpoint</span>
+            <span class="tool-chip">质量门禁 Quality Gate</span>
+            <span class="tool-chip">主批次 / 争议队列</span>
+            <span class="tool-chip">锁数快照</span>
+            <span class="tool-chip">SLA 倒计时</span>
+          </div>
+          <p>一句话原理：<em>用版本化输入 + 可重跑作业 + 断言门禁，把「不确定的人工赶工」变成「可观测的状态推进」。</em></p>
+        </div>
+
+        <div class="deep-block">
+          <h3>3. 怎么做：端到端操作路径（你可以按此讲）</h3>
+          <h4>阶段 0 · 发薪就绪定义（先对齐，再动手）</h4>
+          <ul>
+            <li>写下 Ready 条件：勾稽通过、阻塞异常 = 0、可发薪人数清单导出、财务 A 已签。</li>
+            <li>明确非目标：争议单可以 T+2 补发，但不得拖垮主批次 SLA。</li>
+          </ul>
+          <h4>阶段 1 · 锁数与输入冻结</h4>
+          <ul>
+            <li>冻结订单/回款/规则版本；迟到数据进例外清单，禁止静默混入。</li>
+            <li>产出「输入清单」：行数、金额合计、规则版本号，供事后审计。</li>
+          </ul>
+          <h4>阶段 2 · 管道执行（ETL / 仓内变换）</h4>
+          <ul>
+            <li>按依赖跑：源校验 → 清洗映射 → 关联规则维 → 计算佣金事实 → 写异常表。</li>
+            <li>节点带：开始/结束时间、影响行数、失败原因码；超时自动告警。</li>
+          </ul>
+          <h4>阶段 3 · 失败恢复（断点续跑）</h4>
+          <ul>
+            <li>检查点按账期/渠道/规则版本切；只重跑失败分区。</li>
+            <li>写入用「覆盖或合并键」保证幂等；涉及外部发放的步骤必须有状态机（pending/sent/acked）。</li>
+            <li>上游补数时：先判定是否需要全量重算，还是增量补差。</li>
+          </ul>
+          <h4>阶段 4 · 质量门禁与发薪闸门</h4>
+          <ul>
+            <li>技术断言：主键唯一、空值、总额勾稽、明细加总 = 汇总。</li>
+            <li>业务闸门：重复计算/规则未匹配 → 阻断该销售员或整包（按严重度）。</li>
+            <li>通过后才生成「可发薪 CSV / 发薪包」；未通过只给差异报告。</li>
+          </ul>
+          <h4>阶段 5 · 披露、升级与复盘</h4>
+          <ul>
+            <li>延迟按原因分类：源延迟 / 规则缺陷 / 算力 / 审批缺席。</li>
+            <li>月结后 30 分钟复盘：一次通过率、续跑次数、阻塞类型 TopN → 进 OE 改进。</li>
+          </ul>
+          <div class="answer-frame">
+            <strong>口述骨架（约 90 秒）：</strong>
+            「我把可发薪定义成状态，不是感觉。先锁数锁规则，再跑依赖作业；失败按分区断点续跑且保证幂等；用勾稽和阻塞异常做质量门禁，门禁不过不进发薪包；争议单隔离补发，主批次守 SLA。我现有的佣金处理台已经演示了闸门与勾稽，生产上会落到调度 + 质量规则库 + 告警。」
+          </div>
+        </div>
+
+        <div class="deep-block">
+          <h3>4. 用什么工具（按场景选型，别背品牌）</h3>
+          <ul>
+            <li><strong>编排调度：</strong>Airflow / DolphinScheduler / 云调度 / 数仓任务依赖；小团队也可用定时作业 + 依赖检查脚本。</li>
+            <li><strong>变换计算：</strong>SQL（窗口函数、对账）、Spark/大数据算子、Python 批处理；你的舒适区直接迁移。</li>
+            <li><strong>质量：</strong>规则库（Great Expectations 思路 / 自建断言表）、勾稽 SQL、异常事实表。</li>
+            <li><strong>观测：</strong>作业成功率、耗时、业务波动告警（阈值/环比）；告警带 runbook。</li>
+            <li><strong>消费与发放：</strong>月结表/发薪包导出、财务系统接口；演示层可用你的佣金处理台。</li>
+            <li><strong>低代码过渡：</strong>Power Automate 做通知与审批催办；核心计算仍归 SQL/引擎。</li>
+          </ul>
+          <p>选型原则：<em>有接口走接口/ETL；无接口才 RPA；计算要可审计；展示与审批可低代码。</em></p>
+        </div>
+
+        <div class="deep-block">
+          <h3>5. 结合你背景的「迁移答案」</h3>
+          <ul>
+            <li><strong>佣金模型/处理台 →</strong>证明你会定发薪就绪与异常分型（阻塞 vs 披露）。</li>
+            <li><strong>Python 自动化 →</strong>证明你会做失败通知、非零退出、断言拦截错误分发。</li>
+            <li><strong>SQL 窗口/对账 →</strong>证明质量门禁你会写，不是只会看仪表盘绿灯。</li>
+            <li><strong>大数据算子建模 →</strong>证明懂 DAG、分区重跑、血缘，映射 ETL + 断点续跑。</li>
+            <li><strong>流失预警 →</strong>映射业务异常监控（佣金环比暴涨同样可分层预警）。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>6. 高频追问 · 预判答法</h3>
+          <ul class="q-list">
+            <li>
+              <span class="q">Q：5 号校验发现大额勾稽差，还要不要守 10 号发放？</span>
+              <span class="a">A：先分级。P0 差阻断主包；能定位的渠道/规则做隔离；可信子集先发，争议队列补发。同时升级数据/规则 Owner，记录违约原因，不装没看见。</span>
+            </li>
+            <li>
+              <span class="q">Q：续跑会不会发两次佣金？</span>
+              <span class="a">A：不会，如果设计对。事实表按 order_id+batch 幂等写入；发放层有状态机；重跑前先看「已发送」标记。没幂等就禁止续跑尾部发放步骤。</span>
+            </li>
+            <li>
+              <span class="q">Q：调度全绿但业务错了怎么办？</span>
+              <span class="a">A：这就是假成功。必须有业务断言（总额、抽样、Top 渠道波动）。技术成功只是必要非充分条件。</span>
+            </li>
+            <li>
+              <span class="q">Q：你没带过企业级 ETL 平台怎么办？</span>
+              <span class="a">A：承认工具名可能不同，但范式相同：依赖、增量、门禁、血缘、重跑。用算子/Python 流水线举例，说明上岗后对齐现场调度器即可。</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>7. 常见翻车（千万别这样答）</h3>
+          <ul>
+            <li>「我们尽量快点算完」——没有 Ready 定义与门禁。</li>
+            <li>「失败就全部重跑」——不懂成本与幂等风险。</li>
+            <li>「Excel 人工再核一遍就行」——无法规模化，也说不清责任边界。</li>
+            <li>只谈工具菜单，不谈业务断言与发薪包隔离。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ========== Pane B ========== -->
+      <div class="deep-pane" id="pane-bpm">
+
+        <div class="deep-block">
+          <h3>1. 面试官到底在考什么</h3>
+          <ul>
+            <li>跨业务 / IT / 财务 / 渠道时，你是否能把流程从「靠人喊」变成「可见、可催、可审计」。</li>
+            <li>出争议时，谁 Accountable、谁执行、多久升级，你能不能当场画清。</li>
+            <li>你是否理解 BPM 不是画流程图交差，而是实例数据可用来做时效与瓶颈分析。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>2. 原理：流程 = 状态机 + 角色 + SLA + 证据</h3>
+          <p>一条佣金争议单，最少要能回答四个问题：</p>
+          <ol>
+            <li><strong>现在在哪个节点？</strong>（状态）</li>
+            <li><strong>谁必须拍板？</strong>（Accountable 唯一）</li>
+            <li><strong>还剩多少时间？</strong>（节点 SLA）</li>
+            <li><strong>依据是什么？</strong>（规则版本、订单、计算链路、附件）</li>
+          </ol>
+          <p>这四件事对应 BPM 数据模型的最小集：流程定义、流程实例、任务实例、业务主键关联、审计日志。你熟悉的算子 DAG，本质上就是「机器侧流程」；BPM 是「人机混合流程」。</p>
+          <div class="tool-chip-row">
+            <span class="tool-chip">RACI</span>
+            <span class="tool-chip">BPMN 泳道</span>
+            <span class="tool-chip">节点 SLA</span>
+            <span class="tool-chip">一次通过率</span>
+            <span class="tool-chip">争议队列</span>
+            <span class="tool-chip">升级路径</span>
+          </div>
+        </div>
+
+        <div class="deep-block">
+          <h3>3. 怎么做：用「佣金争议」当标准故事</h3>
+          <h4>As-Is 先画丑样子</h4>
+          <ul>
+            <li>现状常见：销售微信群喊冤 → 运营翻 Excel → 财务口头答复 → 无时限无归档。</li>
+            <li>痛点标签：丢失、重复、责任不清、无法统计周期时间。</li>
+          </ul>
+          <h4>To-Be 标准路径（可画 BPMN）</h4>
+          <ol>
+            <li>提报（销售/渠道）→ 自动带出订单与计算链路。</li>
+            <li>初审（运营 R）→ 金额网关：低额快速通道 / 高额升级。</li>
+            <li>规则/数据确认（IT 或规则 Owner C）→ 必要时重算。</li>
+            <li>财务确认（A）→ 补发或驳回，原因码必填。</li>
+            <li>关闭 → 写入实例时效，进入月报。</li>
+          </ol>
+          <h4>配套机制</h4>
+          <ul>
+            <li><strong>RACI 表：</strong>每个节点唯一 A；R 可多人，但超时找 A。</li>
+            <li><strong>节点 SLA：</strong>如初审 24h、财务 48h；超时自动升级与抄送。</li>
+            <li><strong>与发薪解耦：</strong>争议进旁路队列，不阻塞已通过质量门禁的主批次。</li>
+            <li><strong>证据包：</strong>规则版本、命中路径、勾稽截图/字段，减少来回问。</li>
+          </ul>
+          <div class="answer-frame">
+            <strong>口述骨架（约 90 秒）：</strong>
+            「跨部门我先定 RACI 和节点 SLA，再谈系统。争议单有标准路径：提报带证据 → 运营初审 → 金额分流 → 财务终审，超时升级。主发薪包和争议队列分开，避免一人扯皮拖垮全体。流程实例数据用来看瓶颈和一次通过率，这就是 BPM 数据模型的价值。工具可以是 BPM 平台或 Power Automate + 工单表，关键是状态与审计，不是商标。」
+          </div>
+        </div>
+
+        <div class="deep-block">
+          <h3>4. 用什么工具</h3>
+          <ul>
+            <li><strong>流程承载：</strong>企业 BPM / 工单系统 / Power Automate 审批流 / 自建状态表。</li>
+            <li><strong>表单入口：</strong>Power Apps / 内部提报页（你可类比内部小工具）。</li>
+            <li><strong>协同：</strong>Teams/邮件只做通知，真相以系统状态为准。</li>
+            <li><strong>分析：</strong>用任务日志做简易流程挖掘（SQL 窗口算停留时长、退回次数）。</li>
+            <li><strong>规则与计算：</strong>仍回规则引擎/数仓，不在审批意见里「口头改佣金」。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>5. 结合你背景怎么说</h3>
+          <ul>
+            <li>跨层级沟通经验 → 映射 RACI 与升级话术（对上选项，对下操作）。</li>
+            <li>算子建模/血缘 → 映射 BPM 数据模型与可追溯。</li>
+            <li>佣金处理台异常闸门 → 映射「哪些进争议队列、哪些阻塞发薪」。</li>
+            <li>AI Agent → 只能做预审建议与材料聚合，终审必须人/财务（AI 治理边界）。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>6. 高频追问 · 预判答法</h3>
+          <ul class="q-list">
+            <li>
+              <span class="q">Q：业务坚持改规则立刻重算全量，你怎么办？</span>
+              <span class="a">A：讲清影响面与 SLA 风险；给选项：下月生效 / 本月仅争议单特批 / 全量重算但延期发放。用 RACI 让 A 做决策，你提供事实与选项。</span>
+            </li>
+            <li>
+              <span class="q">Q：BPM 和 RPA 谁先上？</span>
+              <span class="a">A：先把流程与数据状态理清（BPM/工单），重复纯点击再 RPA。没有状态机的 RPA 只是更快地制造混乱。</span>
+            </li>
+            <li>
+              <span class="q">Q：如何证明流程变好了？</span>
+              <span class="a">A：周期时间、一次通过率、超时率、返工次数、主批次是否仍按期发放。不要只报「上线了系统」。</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>7. 常见翻车</h3>
+          <ul>
+            <li>流程图很美，但现场仍微信审批，系统当摆设。</li>
+            <li>多个 Accountable，出事后互推。</li>
+            <li>让流程承载核心佣金计算（计算应在引擎/数仓，流程只管决策与授权）。</li>
+            <li>为上 BPM 而上，节点过多，比邮件还慢。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ========== Pane C ========== -->
+      <div class="deep-pane" id="pane-combo">
+        <div class="deep-block">
+          <h3>把两条线串成一段「高级销售运营」回答</h3>
+          <p>当面试官问得很宽：「你怎么保证每月佣金又准又按时发出去？」用下面这段结构（2–3 分钟）：</p>
+          <ol>
+            <li><strong>定义：</strong>可发薪 = 锁数完成 + 作业成功 + 质量门禁过 + 阻塞异常清零 + 审批完成。</li>
+            <li><strong>系统路径：</strong>规则版本化 → ETL/计算 → 勾稽与异常闸门 → 发薪包；失败则分区续跑且幂等。</li>
+            <li><strong>组织路径：</strong>RACI + 节点 SLA；主批次与争议队列分离；超时升级。</li>
+            <li><strong>证据：</strong>佣金处理台演示闸门/勾稽；用 SQL/对账/算子经验证明门禁与重跑；承认企业 BPM/调度器名词要对齐现场，但范式已熟。</li>
+            <li><strong>改进：</strong>月结复盘一次通过率与阻塞 TopN，纳入 OE，而不是靠英雄救火。</li>
+          </ol>
+          <div class="answer-frame">
+            <strong>可直接改编的收尾句：</strong>
+            「准，靠规则版本、勾稽和发薪闸门；按时，靠 SLA 时间盒、断点续跑和争议旁路；跨部门，靠 RACI 与节点升级。工具可以换，这三层不能缺。」
+          </div>
+        </div>
+
+        <div class="deep-block">
+          <h3>建议你课下做的最小准备（不必先做新作品）</h3>
+          <ul>
+            <li>在佣金处理台走一遍：制造/查看「需处理」→ 说明哪些该进争议队列。</li>
+            <li>手写一张月结 RACI（锁数/计算/校验/审批/发放）。</li>
+            <li>准备一个真实失败故事：如何定位、是否重跑、如何沟通延期或拆包发放。</li>
+            <li>若有余力，再做「管道工作台」作品把 DAG+门禁+续跑可视化；当前阶段用本页话术已够面试。</li>
+          </ul>
+        </div>
+
+        <div class="deep-block">
+          <h3>对应手册概念（复习导航）</h3>
+          <p class="mini" style="color:var(--text-muted)">短板：SLA、佣金 SLA、ETL、数据质量体系、异常监控、断点续跑、BPM、BPM 数据模型、OE。<br />优势/桥梁：佣金模型、月度佣金处理台、SQL、Python 自动化、大数据算子建模、跨层级沟通、RACI、UAT。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline-section">
+    <h2 class="section-title">SLA 时间线演示</h2>
+    <p class="section-desc">模拟佣金月结 SLA：点击节点查看该节点的 SLA 要求、风险、兜底与升级机制。</p>
+    <div class="timeline-panel">
+      <div class="timeline" id="timeline" role="tablist"></div>
+      <div class="tl-detail" id="tlDetail"></div>
+    </div>
+  </section>
+
+  <section id="weak-table">
+    <h2 class="section-title">短板速查表</h2>
+    <p class="section-desc">面试前 10 分钟速览：概念 → 你熟悉的等价物 → 怎么答。点击表头可排序。</p>
+    <div class="table-toolbar">
+      <div class="search-box" style="max-width:360px">
+        <input type="search" id="tableSearch" placeholder="搜索短板表…" autocomplete="off" />
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="weak-table" id="weakTable">
+        <thead>
+          <tr>
+            <th data-key="name">概念 <span class="sort-ind">↕</span></th>
+            <th data-key="one">一句话解释 <span class="sort-ind">↕</span></th>
+            <th data-key="equiv">你熟悉的等价物 <span class="sort-ind">↕</span></th>
+            <th data-key="answer">面试应对方向 <span class="sort-ind">↕</span></th>
+          </tr>
+        </thead>
+        <tbody id="weakTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="graph">
+    <h2 class="section-title">概念关系图</h2>
+    <p class="section-desc">从你的优势能力迁移到 JD 短板关键词的主路径（纯 CSS/JS，无外部图库）。</p>
+    <div class="graph-panel">
+      <div class="graph" id="conceptGraph"></div>
+      <div class="graph-legend">
+        <span class="l-weak">短板 / JD 关键词</span>
+        <span class="l-str">你的优势</span>
+        <span class="l-tr">可迁移桥梁</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <h2 class="section-title">小测验 · 短板概念自测</h2>
+    <p class="section-desc">12 道选择题，覆盖主要短板与新增职责（管理报表设计、销售运营全景）。答错的题自动进错题本，可随时重测；选完立即显示对错与解释。</p>
+    <div class="quiz-panel" id="quizPanel"></div>
+  </section>
+
+  <section id="talk" class="advice-section">
+    <h2 class="section-title">3 分钟自我介绍模板</h2>
+    <p class="section-desc">两种版本：投递版（线上/HR 面）与现场版（技术/业务面）。核心叙事：算得对（佣金模型）→ 看得清（分析/报表）→ 自动得快（Python/AI）→ 管得稳（SLA/OE 迁移）。</p>
+
+    <div class="panel-card">
+      <h3>版本 A · 投递 / HR 面（约 200 字，1 分钟）</h3>
+      <p class="talk-script">「我有 8 年多数据与运营经验，最近两年专注把复杂业务规则变成可落地的计算与自动化。我的三个关键词：<strong>算得对、看得清、自动得快</strong>。算得对——我做过电信设备与套餐的复杂佣金模型，处理过累进区间、封顶、退货冲销、回款归属这些边界；看得清——我把指标做成了体系化的看板，让管理层能一眼看到达成与异常；自动得快——我用 Python 和 AI 把重复报表和人工核对流程自动化，把运营时间从几天压到几小时。我看到这个岗位要求推动流程转型、用 SQL/RPA/Python 自动化佣金流程、落地 ETL/BPM——这正是我想把『单点经验』升级成『体系能力』的方向，所以来应聘。」</p>
+      <div class="tip-line">要点：先给结论标签（三关键词），再给证据，最后主动接到 JD 关键词。不要背简历。</div>
+    </div>
+
+    <div class="panel-card">
+      <h3>版本 B · 技术 / 业务面（约 400 字，2-3 分钟）</h3>
+      <p class="talk-script">「我按 JD 的六块职责来介绍自己。第一块，<strong>佣金计算与规则引擎</strong>——这是我最深的地方。我做过电信设备加套餐的佣金模型，难点在累进区间、设备与套餐绑定、退货跨期和回款归属；最近我还做了一个月度佣金处理台，把规则表、七步计算、异常闸门、勾稽校验做成了可演示的产品，直接对应月结交付和质量门禁。第二块，<strong>流程与 OE</strong>——我习惯把隐性流程显性化：定 RACI、写 SOP、做复盘；我理解 OE 不是态度而是机制，我缺的是 BPM 平台的实操，但流程抽象和数据建模的功底在。第三块，<strong>数据管道与质量</strong>——我的报表流水线本质就是 ETL，大数据算子建模更是分布式 ETL；我知道怎么用对账断言、断点续跑、质量门禁守住「调度成功不等于业务正确」。第四块，<strong>自动化与工具</strong>——Python 自动化是我的日常，我懂失败可见性、幂等、密钥管理；RPA 和 Power Apps 我了解选型逻辑，愿意快速上手。第五块，<strong>分析与看板</strong>——我做过 Superset 看板和 BI 网站，设计原则是『先定决策再定指标，异常优先暴露』。最后一块，<strong>AI 与治理</strong>——我做过 Agent 和知识图谱，知道人机边界：AI 建议、规则引擎裁决、人工终审。总结一句：我具备把佣金算对、把数据管稳、把重复自动化的实战，正在把经验升级成销售运营的体系能力。」</p>
+      <div class="tip-line">要点：按 JD 六职责逐个给证据，结尾一句总结定位。每个模块 20-30 秒，讲「做了什么 + 对应 JD 哪句」。</div>
+    </div>
+  </section>
+
+  <section id="questions" class="advice-section">
+    <h2 class="section-title">高质量反问清单</h2>
+    <p class="section-desc">面试最后「你有什么想问的」不是走过场——它决定你「懂不懂这个岗位」。按你真正关心的维度选 2-3 个，按角色挑着问。</p>
+
+    <div class="q-grid">
+      <div class="q-cat">
+        <h3>关于岗位本身（必问，体现你懂销售运营）</h3>
+        <ul>
+          <li>这个岗位未来 6-12 个月的三个核心目标是？优先级怎么排？（判断岗位价值与考核）</li>
+          <li>目前佣金月结最大的痛点是什么：时效、准确率、还是争议处理？（判断你的经验是否正中要害）</li>
+          <li>销售运营团队现在多少人、分工怎么样的？我和谁协作最紧密？（判断团队成熟度与你的位置）</li>
+          <li>这个岗位是「建设者」还是「维护者」为主？比如 BPM/ETL 是从零搭还是已有基础？（判断是创业期还是守成期）</li>
+        </ul>
+      </div>
+      <div class="q-cat">
+        <h3>关于技术栈与系统（体现你懂工具与数据）</h3>
+        <ul>
+          <li>佣金计算现在是规则引擎、SQL 批处理、还是 Excel/人工为主？（判断自动化空间）</li>
+          <li>数据平台现状：数仓分层、ETL 调度、BI 工具分别是哪些？指标口径有统一字典吗？（判断数据基础）</li>
+          <li>Power Apps / Power Automate 目前用在哪几个场景？RPA 有在跑的吗？（判断技术落地深度）</li>
+          <li>AI 在运营侧有试点吗？对引入 AI 的态度是激进还是谨慎？（判断 AI 治理空间）</li>
+        </ul>
+      </div>
+      <div class="q-cat">
+        <h3>关于业务与挑战（体现你懂电信与激励）</h3>
+        <ul>
+          <li>渠道佣金结构大概什么样：直销、渠道分层、还是含设备与套餐组合？（判断你的模型经验是否直接适用）</li>
+          <li>佣金争议最多的三类问题是什么？（判断是否涉及政策模糊、口径不清等你能解决的）</li>
+          <li>SLA 目前有正式的书面承诺吗？有没有违约案例？（判断是否从「口头时效」向「制度 SLA」过渡）</li>
+        </ul>
+      </div>
+      <div class="q-cat">
+        <h3>关于团队与成长（体现你的长期性）</h3>
+        <ul>
+          <li>团队里最强的成员擅长什么？你希望新同事补上哪块拼图？（判断你的定位与差距）</li>
+          <li>这个岗位 1 年后你会希望我做成什么样？（判断期望值，也帮你规划试用期目标）</li>
+          <li>团队如何做知识沉淀？有 playbook 或复盘机制吗？（判断 OE 成熟度）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip-line">规则：问 2-3 个即可；别问「我表现怎么样」（尴尬且无用）；反问环节也是你展示「我很懂这个领域」的最后机会——问题质量 = 专业度。</div>
+  </section>
+
+  <section id="scenarios" class="advice-section">
+    <h2 class="section-title">场景应用题示范（一题多卡串讲）</h2>
+    <p class="section-desc">面试官很少问「什么是 ETL」，而是给场景让你拆。下面 5 个高频场景，每个都串起多张概念卡——按「场景 → 拆解 → 卡片引用」练习，训练把知识点变成答案。</p>
+
+    <div class="panel-card scenario">
+      <h3>场景 1 · 「佣金月结总延迟，你怎么改进？」</h3>
+      <div class="scenario-ans">
+        <p><strong>拆解：</strong>先诊断再改进。① 用<em>流程挖掘</em>从日志找真实瓶颈（哪一步最慢、退回最多）；② 把月结拆成节点 SLA（锁数/计算/校验/审批/发放），量化每个节点的目标与现状；③ 对瓶颈动手：数据源延迟→定源数据 OLA+前置告警；计算慢→断点续跑+分区重跑；校验返工→把质量规则自动化（数据质量体系）；④ 用 RACI 明确每个节点 Owner；⑤ 用 PDCA 固化改进并监控防回潮。</p>
+        <p><strong>串讲卡片：</strong>流程挖掘 → 佣金 SLA → 断点续跑 → 数据质量体系 → RACI → PDCA。</p>
+      </div>
+    </div>
+
+    <div class="panel-card scenario">
+      <h3>场景 2 · 「业务说规则改了，明天就要按新政策算佣金」</h3>
+      <div class="scenario-ans">
+        <p><strong>拆解：</strong>不能直接改代码就上线，要走变更管理闭环。① 评估影响面：涉及多少单、是否要重算历史（佣金模型/规则引擎）；② 用规则引擎的<em>试算</em>能力跑新旧对比报表，给业务看数字差异（UAT）；③ 明确归属与边界案例：新规则生效日怎么切、退货按哪个政策（SCD/规则版本）；④ 定版本与生效区间，锁数快照留存（可回溯）；⑤ 走审批流（BPM）并签 RACI；⑥ 上线后监控异常（异常监控）+ 向一线解释政策（变革管理）。</p>
+        <p><strong>串讲卡片：</strong>规则引擎 → UAT → SCD → BPM → 变革管理 → 异常监控。</p>
+      </div>
+    </div>
+
+    <div class="panel-card scenario">
+      <h3>场景 3 · 「领导要一个销售运营看板，你从哪开始？」</h3>
+      <div class="scenario-ans">
+        <p><strong>拆解：</strong>绝不从画图开始。① 问清楚：谁看、看完做什么决策（管理报表设计五步法）；② 定指标：结果（达成率/发放率）+ 过程（校验通过率）+ 健康（准确率），口径统一（指标体系/指标字典）；③ 数据来源：从数仓/集市取数，不直接查生产库（数仓/集市）；④ 分三层：总览 → 异常明细 → 下钻；⑤ 用 Power BI/Superset 落地，行级安全保护渠道数据；⑥ 标注数据截止时间与口径。</p>
+        <p><strong>串讲卡片：</strong>管理报表与仪表盘设计 → 指标体系 → 数仓/集市 → Power BI → 数据质量体系。</p>
+      </div>
+    </div>
+
+    <div class="panel-card scenario">
+      <h3>场景 4 · 「渠道新增暴涨但 ARPU 崩了，你怎么看？」</h3>
+      <div class="scenario-ans">
+        <p><strong>拆解：</strong>平均数的陷阱。① 拆层看：高/中/低价值用户各自的 ARPU 与 Churn（电信指标口径）；② 归因：是渠道刷量（低质量用户）还是产品结构变化？用 SQL 按渠道×套餐×ARPU 交叉分析；③ 反哺政策：把质量指标写进佣金规则（存续 N 个月、ARPU 达标才发佣），加追回机制（佣金模型/规则引擎）；④ 建渠道质量看板持续监控，防复发（异常监控）。</p>
+        <p><strong>串讲卡片：</strong>电信指标 → SQL → 佣金模型/规则引擎 → 异常监控。</p>
+      </div>
+    </div>
+
+    <div class="panel-card scenario">
+      <h3>场景 5 · 「公司想引入 AI 自动处理佣金争议，你怎么设计？」</h3>
+      <div class="scenario-ans">
+        <p><strong>拆解：</strong>先定边界再谈能力。① 人机分工：AI 做政策问答、争议分类、草拟处理建议；金额裁决、对外承诺必须人工（AI 治理）；② 技术底座：RAG 接政策知识库（带版本、带来源），工具白名单控权限（AI Agent）；③ 评估：评估集测准确率与幻觉率，涉及金额的必须人工确认；④ 与现有系统配合：AI 产出工单建议 → BPM 走正式审批 → 结果回写（Agent/RPA/BPM 分工）；⑤ 监控：审计日志、错误反馈闭环、定期评估集回测。</p>
+        <p><strong>串讲卡片：</strong>AI 治理 → AI Agent → BPM → 异常监控 → 变革管理。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    高级销售运营 / 销售数据分析 · 面试知识手册 · 本地单文件学习页 · 进度与错题本保存在本机浏览器
+  </footer>
+</div>
+
+<script>
+/* 概念数据（由构建脚本嵌入） */
+const CONCEPTS = [
+  {
+    "id": "sla",
+    "name": "SLA",
+    "en": "Service Level Agreement",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "SLA",
+      "服务级别",
+      "时效",
+      "承诺"
+    ],
+    "one": "对服务交付时效、质量、可用性等可量化承诺的协议，超时即违约并触发升级。",
+    "detail": "SLA（服务级别协议）原本来自 IT 运维与外包服务：甲乙双方事先约定「在什么时限内、以什么质量完成什么事」。对销售运营与佣金场景，SLA 不是口号，而是把「月初锁数、几号算完、几号发完」写成可考核的时间盒与质量盒。核心要素通常包括：指标定义（如 T+3 出具结果）、度量方式、例外条款、升级路径、违约后果。没有 SLA，团队只会「尽量快」；有了 SLA，才能做容量规划、风险预警和事后复盘。它与 KPI 的区别在于：KPI 偏结果导向，SLA 偏过程承诺与服务边界。",
+    "deep": [
+      {
+        "t": "SLA 常见指标类型",
+        "c": "可用性类（系统/作业可用率，如 99.5%）；时效类（OTD 按时交付率、平均处理时长、P95 延迟）；质量类（准确率、一次通过率 FPY、返工率）；容量类（并发处理量、积压量）。佣金月结最常用：节点按时完成率 + 金额勾稽差异率 + 一次通过率。"
+      },
+      {
+        "t": "SLA 怎么定才科学",
+        "c": "三步法：① 基线测量——先跑 2-3 个账期，记录每个节点真实耗时与差错；② 目标设定——按 P50/P80 分位定目标（不要按最好成绩定，否则必违约）；③ 干系人评审——与业务、IT、财务共同签字确认，写明例外与升级。"
+      },
+      {
+        "t": "SLA 相关术语：OLA 与 UC",
+        "c": "OLA（Operational Level Agreement，内部运营协议）是团队之间互签的内部承诺，支撑外部 SLA 达成；UC（Underpinning Contract，支撑合同）是供应商对 SLA 的支撑条款。面试提一句「我会把对客户的 SLA 拆成内部 OLA 层层支撑」，能显示体系思维。"
+      },
+      {
+        "t": "SLA 违约怎么处理",
+        "c": "标准流程：识别违约→记录原因分类（系统/数据/人为/上游）→按 RACI 升级→应急兜底（重跑、抽样、拆分）→事后复盘（PIR）→改进项进 OE 看板。关键是分类统计违约原因，找出高频根因，而不是每次都救火。"
+      }
+    ],
+    "analogy": "你做过复杂佣金模型与报表自动化：业务方说「下周一前要出账」其实就是隐性 SLA。你熟悉的窗口函数分区结算、套餐到期计算，本质都在赶一个「截止时间盒」。把「自我质量要求」显性化为「可度量时限 + 失败升级」，就是 SLA。",
+    "jd": "JD 里通常指佣金出具、对账、异常处理、数据交付的时效与准确率承诺，例如「每月 7 日前完成校验并通过审批」。",
+    "questions": [
+      "你如何定义佣金计算链路的 SLA？关键节点有哪些？",
+      "SLA 违约时你会如何升级与沟通？",
+      "如何用监控数据证明你在守 SLA，而不是凭感觉？"
+    ],
+    "answer": "先画端到端时间线（锁数→计算→校验→审批→发放），给每个节点写「截止日 + 准确率 + Owner」。结合你做过的佣金区间/设备模型，说明你会把历史跑批时长做成基线，超阈值自动告警；超时先走兜底（重跑/抽样复核），再按 RACI 升级到业务/IT。强调：我过去虽未正式用 SLA 术语，但一直在用「截止日期 + 质量门槛」约束交付。",
+    "pitfalls": "把 SLA 当成口号写在 PPT；只定时间不定质量；没有例外条款导致每次都「违约」；没有升级机制导致一线硬扛。",
+    "bonus": "我会把佣金月结做成可监控的 SLA 看板：节点完成率、平均延迟、一次通过率，并与发放日强绑定。"
+  },
+  {
+    "id": "commission-sla",
+    "name": "佣金 SLA",
+    "en": "Commission SLA",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "佣金",
+      "SLA",
+      "月结",
+      "发放",
+      "处理台",
+      "质量闸门"
+    ],
+    "one": "把佣金从取数到发放整条链路的时效与准确率写成可考核服务承诺。",
+    "detail": "佣金 SLA 是 SLA 在销售激励领域的特化：关注「业务结果数据何时冻结」「规则引擎何时算完」「争议何时闭环」「佣金何时到账」。典型节点包括：源数据就绪、规则版本锁定、跑批完成、抽检/全量校验、业务签字、财务发放。核心要素是时间盒、准确率（一次通过率）、争议处理时效、以及跨部门依赖的清晰边界。对高级销售运营岗位，佣金 SLA 往往是「能不能拿结果」的硬指标，而不是技术炫技。",
+    "deep": [
+      {
+        "t": "佣金月结节点 SLA 示例",
+        "c": "锁数：账期数据 1 号 18:00 前冻结；计算：3 号 12:00 前跑完，失败可分区重跑；校验：5 号 18:00 前完成勾稽与抽检，差异率超阈值阻断；审批：7 号前业务/财务签字；发放：10 号 12:00 前完成推送。争议单单独队列，5 个工作日内闭环。"
+      },
+      {
+        "t": "兜底策略（当 SLA 快守不住时）",
+        "c": "① 可信子集优先发放：先发无争议的 95%，风险批次单独验证；② 拆分发放：主批次+补发批次；③ 争议隔离：争议单不进主批次，避免全链路阻塞；④ 并行人工复核：规则缺陷时抽样+公式校验代替全量重跑。用月度佣金处理台演示：可发薪人先出包，争议单进异常闸门单独队列。"
+      },
+      {
+        "t": "与跨部门依赖管理",
+        "c": "佣金月结是「接力赛」：IT 供数→运营计算→业务确认→财务发放。每个交接点都应有 OLA。常见失败模式：上游延迟被「静默吞掉」，到 5 号才发现算不了。对策：依赖节点设前置告警（如 28 号检查源数据就绪状态），而不是等 SLA 违约才爆雷。"
+      },
+      {
+        "t": "争议处理 SLA",
+        "c": "争议单要有生命周期：提交→受理→调查→结论→补偿/追回→关闭。指标：平均关闭时长、超龄争议数（如 >15 天）、重复争议率。争议高频往往暴露规则解释不清或政策模糊，应反哺规则文档与培训。"
+      }
+    ],
+    "analogy": "你做过设备/时间/区间的复杂佣金模型，也做过移动项目套餐到期计算——这些都是佣金 SLA 的「计算内核」。工作区里的「月度佣金处理台」(commission-calculator.html) 把内核又往前推了一步：先产出销售员月结，再用异常闸门与勾稽校验卡住发薪质量。缺的只是把这套节奏写成组织契约：哪天锁规则、哪天必须出结果、失败谁负责。",
+    "jd": "指销售佣金/渠道佣金月结过程中，对各计算与审批节点的时限、准确率、争议关闭时效的明确要求。",
+    "questions": [
+      "假如 5 号校验发现大额差异，如何仍尽量守住 10 号发放？",
+      "规则变更与历史重算如何纳入 SLA？",
+      "如何区分系统故障导致的违约与业务数据延迟？"
+    ],
+    "answer": "用你真实佣金项目 + 月度佣金处理台举例：说明规则版本管理、回款归属、退货锁原单政策、分区/按人重算与对账抽样；提出「主路径 + 兜底路径」（可发薪人先出包，争议单进异常闸门单独队列）。承认 SLA 术语是短板，但交付节奏与质量门禁你已具备，进入岗位会把时间线显性化并做节点监控。",
+    "pitfalls": "只盯计算完成日，忽略源数据 SLA；争议无限期堆积；发放日一刀切导致大规模返工。",
+    "bonus": "面试可打开月度佣金处理台演示：政策覆盖预检 → 月结表 → 异常闸门 → 勾稽通过，把抽象 SLA 变成可见质量状态。"
+  },
+  {
+    "id": "commission-workbench",
+    "name": "月度佣金处理台（佣金计算器）",
+    "en": "Monthly Commission Processing Workbench",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "产品实战",
+      "佣金计算器",
+      "规则引擎",
+      "质量闸门",
+      "SLA",
+      "月结"
+    ],
+    "one": "港资电信设备场景的前端月结工作台：规则可配、回款归属、退货冲销、销售员发薪包、异常闸门与勾稽，用来演示「算得对 + 发得稳」。",
+    "detail": "「月度佣金处理台」不是简单的比例计算器，而是面向销售运营月结的单文件演示产品。它的主交付是「销售员佣金月结表」（每人销售额、基础佣金、退货扣减、最终佣金、可发薪/需处理），再用规则引擎处理阶梯比例、SKU 系数、封顶/保底/加速器/SPIFF，以及退货冲销与回款归属。质量侧包含四类异常闸门（退货冲销、跨期归属、重复计算、规则未匹配）、政策覆盖预检、汇总勾稽与 SLA 质量状态。设计原则是「先月结产出、再质量闸门」：异常清单服务于发薪就绪，而不是替代主报表。七步计算顺序固定：过滤退货 → 判定归属月 → 匹配规则 → 按规则类型计算 → 基础佣金 → 退货冲销 → 输出明细与异常。它同时映射到生产路径：dim_rule / fact_commission / fact_anomaly，以及 Power Apps、Automate、BI、ETL/BPM。对你而言，这是把佣金模型优势翻译成 JD 话语（佣金 SLA、数据质量、异常监控）的最佳实战教具。",
+    "analogy": "把它想成你过去复杂佣金模型的「运营外壳」：内核仍是区间/设备/系数/版本，外壳多了归属口径、发薪阻断、勾稽与导出。相对纯 Python 出表，它把过程做成可点选、可下钻、可讲解的工作台；相对正式 ETL，它用单文件降低演示成本，规则与闸门逻辑可迁移。",
+    "jd": "对应 JD 中的佣金规则引擎、月结交付、质量门禁与佣金 SLA：能讲清如何把政策变成可配置规则，如何在发薪前用异常与勾稽守住准确率，以及如何把演示能力升级为平台化（ETL/Power Platform/BPM）。",
+    "questions": [
+      "这个处理台的主交付是什么？为什么不是先做异常报表？",
+      "为什么默认按回款月而不是订单月计提？什么时候会切换？",
+      "退货为什么要「锁定原单政策」？不锁会出什么问题？",
+      "四类异常里，哪些应阻塞发薪，哪些只需披露？",
+      "若要把本工具生产化，规则表、事实表、异常表分别怎么落？"
+    ],
+    "answer": "按产品叙事答：①主交付=销售员月结发薪包；②默认回款归属对齐现金流，订单月用于对比口径；③退货锁原单政策避免「发 3%、退按 3.5% 扣」；④重复计算/规则未匹配阻塞，跨期与退货以披露+处理为主；⑤生产化：dim_rule 配置、fact_commission 批处理、fact_anomaly 派单，外挂 Automate 审批与 BI。最后主动连到佣金 SLA：质量闸门通过率与可发薪人数，就是发放日前的就绪指标。",
+    "pitfalls": "把它讲成「只会前端小工具」而忽略规则版本、归属、冲销与闸门；面试只炫 UI 不讲七步顺序与勾稽恒等式；把演示宽表当成生产唯一模型，说不清拆订单/回款表后如何迁移；混淆「计算成功」与「发薪就绪」。",
+    "bonus": "准备 3 分钟演示脚本：加载 300 人样例 → 执行月结 → 指出可发薪/需处理 → 点开异常闸门与勾稽 → 改一条规则重算 → 说明这就是佣金 SLA 的质量门禁落地。文件：commission-calculator.html",
+    "link": "commission-calculator.html",
+    "linkLabel": "打开月度佣金处理台实操"
+  },
+  {
+    "id": "payroll-ready",
+    "name": "发薪就绪链路（按时可恢复）",
+    "en": "Payroll-Ready Pipeline",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "发薪就绪",
+      "ETL",
+      "断点续跑",
+      "质量门禁",
+      "SLA",
+      "面试深挖"
+    ],
+    "one": "把「算完」升级为「可发薪」：锁数、作业、质量门禁、阻塞异常清零、审批完成，且失败可幂等续跑。",
+    "detail": "发薪就绪不是金额算出来就结束，而是一组状态同时为真：输入已锁数且规则版本冻结；ETL/计算作业按依赖跑通或已从检查点恢复；业务与技术质量门禁通过；重复计算/规则未匹配等阻塞项清零或隔离；财务或业务 Accountable 完成主批次审批。原理是受控状态机：版本化输入 + 可重跑幂等作业 + 断言门禁 + 主批次/争议队列分离。它直接串联 ETL、数据质量、异常监控、断点续跑与佣金 SLA，是面试官追问「怎么保证又准又按时」时的主战场。详见手册「面试深挖」A 区。",
+    "analogy": "你的佣金处理台已有勾稽与发薪闸门；Python/算子经验对应作业与分区重跑。缺的是把这些显式说成 Ready 定义与续跑幂等策略。",
+    "jd": "对应数据管道稳定产出、质量体系、异常恢复与发放时效承诺。",
+    "questions": [
+      "如何定义可发薪？",
+      "失败如何续跑且不双倍发放？",
+      "调度绿但业务错怎么发现？"
+    ],
+    "answer": "用状态定义 Ready；讲锁数→DAG→门禁→发薪包；续跑按分区且幂等；业务断言防假成功。指向面试深挖 A 区口述骨架。",
+    "pitfalls": "把算完当发薪；全量盲目重跑；没有争议旁路导致一人拖死全体。",
+    "bonus": "准靠门禁，按时靠 SLA+续跑+旁路，三者缺一不可。"
+  },
+  {
+    "id": "cross-dept-flow",
+    "name": "跨部门流程协同（争议与审批）",
+    "en": "Cross-department Process Collaboration",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "跨部门",
+      "BPM",
+      "RACI",
+      "争议",
+      "面试深挖"
+    ],
+    "one": "用 RACI、节点 SLA 与可审计状态，让佣金争议/审批从微信群喊话变成可催、可追、不拖垮主发薪。",
+    "detail": "跨部门流程考察的是组织协同能力：每个节点谁执行、谁最终负责、超时如何升级；流程实例是否留下状态与证据，从而可做时效与瓶颈分析。标准故事是佣金争议：提报带计算链路 → 运营初审 → 金额分流 → 财务终审 → 关闭。主发薪包与争议队列必须解耦。工具可以是 BPM 平台或 Power Automate + 工单表，关键是状态机与审计，不是商标。算子 DAG 经验可迁移为 BPM 数据模型思维。详见手册「面试深挖」B 区。",
+    "analogy": "你有跨层级沟通与异常闸门经验；把它结构化成 RACI + 节点时限 + 证据包，就是 BPM 协同。",
+    "jd": "对应 BPM、审批流、变革落地与跨角色推动交付。",
+    "questions": [
+      "画一下争议流程 RACI",
+      "BPM 与 RPA 谁先上？",
+      "如何证明流程变好了？"
+    ],
+    "answer": "先 RACI 与节点 SLA，再选工具；争议旁路；用周期时间/一次通过率说话。指向面试深挖 B 区。",
+    "pitfalls": "多 A 互推；流程承载核心计算；系统上线但现场仍微信审批。",
+    "bonus": "流程管授权与时效，引擎管计算，两者不要反了。"
+  },
+  {
+    "id": "rpa",
+    "name": "RPA",
+    "en": "Robotic Process Automation",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "RPA",
+      "自动化",
+      "机器人",
+      "UI自动化"
+    ],
+    "one": "用软件机器人模拟人在系统界面上的操作，自动化重复的业务点击与填报。",
+    "detail": "RPA 面向「系统没有 API、但流程高度重复」的场景：登录、翻页、复制粘贴、下载报表、录入工单。与你写的 Python 脚本不同，RPA 往往运行在桌面/虚拟机里，通过 UI 选择器驱动。常见产品有 UiPath、Automation Anywhere、Power Automate Desktop。核心要素：流程选择（ROI）、异常处理、凭证安全、变更脆弱性（界面一改机器人就挂）。销售运营里常见用途：从多个门户扒数、把结果贴进 BPM、催办邮件自动发。",
+    "deep": [
+      {
+        "t": "什么场景适合 RPA（五要素判断）",
+        "c": "① 高频：每天/每周重复执行；② 规则明确：步骤固定、逻辑清晰，不需要人脑判断；③ 系统稳定：界面少改版、流程少变更；④ 无 API/接口不可用：否则直接做集成更稳；⑤ 异常率低：异常分支少。满足 4/5 项才值得做。可以用「流程挖掘 + 工时统计」先找高频耗时环节，再决定自动化方案。"
+      },
+      {
+        "t": "RPA 实施流程",
+        "c": "POC（小范围验证可行性）→ 流程文档（AS-IS/TO-BE）→ 开发（录制+选择器+脚本）→ 测试（正常路径+异常路径）→ 部署（无人值守调度）→ 运维（监控+版本管理+变更适配）。关键产出物：流程文档、异常处理清单、运维手册。"
+      },
+      {
+        "t": "RPA 的常见坑",
+        "c": "① 静默失败：机器人「假装成功」但实际没操作——必须有日志+结果断言；② 凭证硬编码：密码写死在脚本里，泄露风险；③ 界面改版即失效：页面一改，选择器全挂；④ 用 RPA 掩盖烂系统：本应做系统改造，却用 RPA 打补丁，长期维护成本高；⑤ 无监控：跑挂了没人知道。"
+      },
+      {
+        "t": "RPA 与 AI/API 的关系",
+        "c": "RPA 解决「手」的问题（模拟操作），API/ETL 解决「管道」的问题（数据集成），AI/Agent 解决「脑」的问题（判断与决策）。三者配合：AI 判断→RPA 执行→API 传数据。面试可以讲「我会上 RPA 前先问：为什么没有 API？能不能推动源系统开放数据接口？」——这体现工程判断力。"
+      }
+    ],
+    "analogy": "你的 Python 报表自动化 ≈ 「有 API/有库就能干」的后端自动化；RPA ≈ 「只能点网页/桌面客户端」时的兜底自动化。同一目标（减少人工），不同接入层。Python→RPA 是高度可迁移的。",
+    "jd": "可能要求用 RPA 承接佣金核对、跨系统取数、单据搬运等高频手工环节，降低人力与差错。",
+    "questions": [
+      "什么场景选 RPA，什么场景应优先做接口/ETL？",
+      "RPA 失败了你会如何监控与重试？",
+      "如何评估一个流程值不值得做 RPA？"
+    ],
+    "answer": "先讲原则：有接口就走接口/ETL，没有接口且稳定重复才上 RPA。用你 Python 自动化经验证明你懂异常捕获、日志、重跑；说明你会把 RPA 当过渡方案，并推动源头系统开放数据。可补一句愿意快速上手 Power Automate Desktop / UiPath 基础。",
+    "pitfalls": "用 RPA 掩盖烂系统；不做异常监控导致「静默失败」；凭证明文；流程变更无人维护。",
+    "bonus": "我会先做流程挖掘找高频步骤，再决定 RPA 还是系统改造。"
+  },
+  {
+    "id": "power-apps",
+    "name": "Power Apps",
+    "en": "Microsoft Power Apps",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "Power Apps",
+      "低代码",
+      "Microsoft",
+      "表单"
+    ],
+    "one": "微软低代码应用平台，用于快速搭建业务表单、审批入口与轻量内部工具。",
+    "detail": "Power Apps 属于 Microsoft Power Platform，让业务/运营用拖拽+少量公式（Power Fx）做出 Canvas/Model-driven 应用，常与 SharePoint、Dataverse、Teams、Power Automate 联动。目的是缩短「提需求→排期→开发」周期，把销售运营的小工具（提报、查询、核对确认）产品化。核心要素：数据源选型、权限、ALM（环境/解决方案）、与正式系统边界。对 JD，它代表「能用低代码承接一线诉求」的能力，不一定要你成为专业前端。",
+    "deep": [
+      {
+        "t": "Power Platform 全家桶",
+        "c": "Power Apps（低代码应用）+ Power Automate（工作流/RPA）+ Power BI（可视化分析）+ Power Pages（对外网站）+ Power Virtual Agents / Copilot Studio（对话机器人）+ Dataverse（底层数据平台，类似一张可配置的数据库）。理解全家桶的关系：数据进 Dataverse，应用用 Power Apps 搭，流程用 Automate 编排，报表用 BI 呈现。"
+      },
+      {
+        "t": "Canvas 与 Model-driven 怎么选",
+        "c": "Canvas：像素级自由布局，适合高交互定制（如特殊录入界面），开发灵活但难治理；Model-driven：一切围绕 Dataverse 数据模型自动生成，适合流程型/表单型（审批、工单、CRM 式），标准化强、权限天然。面试可以说：交互复杂用 Canvas，数据驱动用 Model-driven。"
+      },
+      {
+        "t": "Dataverse 是什么",
+        "c": "Dataverse 是 Power Platform 的底层数据存储：标准表（客户、订单等）+ 自定义表，支持列、关系、权限（列级安全）、审计。它解决「Excel 当数据库」的痛点：多人并发、权限、审计、备份。佣金敏感数据应放受控数据源（Dataverse 或受控 SQL），并启用审计与行级权限。"
+      },
+      {
+        "t": "Power Fx 与生命周期管理",
+        "c": "Power Fx 是类 Excel 的低代码公式语言（如 Filter、LookUp、Patch 操作数据）。ALM（应用生命周期管理）三件套：环境（开发/测试/生产）、解决方案（打包可迁移）、版本管理。面试提 ALM 显示你不是「随便搭个表单」的水准。"
+      }
+    ],
+    "analogy": "你做过内部小工具/报表自动化：那是「代码版内部产品」。Power Apps 是同一诉求的「低代码版」——更快给业务试错，但要接受平台约束。你的产品感与数据模型经验可以迁移。",
+    "jd": "可能用于佣金争议提报、规则确认、门店/渠道自助查询、轻量审批表单，减少邮件与 Excel 往返。",
+    "questions": [
+      "什么需求适合 Power Apps，什么该走正式系统？",
+      "如何设计权限避免泄露佣金敏感数据？",
+      "Power Apps 与 BPM 表单如何分工？"
+    ],
+    "answer": "用「内部工具经验」类比：你会先澄清数据主权与权限，再选 Canvas 做交互或 Model-driven 做流程型。强调敏感佣金数据走受控数据源（Dataverse/受控 SQL），并配合 Automate 做通知。坦诚未深度使用，但学习曲线对你可接受，可给出 2 周上手计划。",
+    "pitfalls": "把核心佣金引擎塞进低代码；环境混乱无版本；忽略审计与权限。",
+    "bonus": "低代码解决 80% 提报体验，20% 核心计算仍归规则引擎/数仓。"
+  },
+  {
+    "id": "power-automate",
+    "name": "Power Automate",
+    "en": "Microsoft Power Automate",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "Power Automate",
+      "工作流",
+      "RPA",
+      "自动化"
+    ],
+    "one": "微软云工作流/自动化服务，连接器驱动的流程编排，含桌面 RPA 能力。",
+    "detail": "Power Automate 用触发器+动作连接数百种服务：邮件到达、SharePoint 更新、审批、HTTP 调用等。Desktop 版可做 UI 自动化，接近传统 RPA。在销售运营中常用于：异常告警通知、审批流转、文件落库、定时拉取报表。核心要素：触发条件、错误处理、并发控制、与 Power Apps/Dataverse 的协同。它是把「人肉转发」变成「事件驱动」的粘合剂。",
+    "deep": [
+      {
+        "t": "触发器与连接器",
+        "c": "触发器：定时（Recurrence）、事件（邮件到达/SharePoint 变更/Teams 消息）、手动。连接器：封装好第三方 API 的可视化组件（Outlook、SQL、Excel、HTTP）。理解「连接器 ≈ 现成的 API 客户端」即可迁移你调 API 的经验。"
+      },
+      {
+        "t": "错误处理与重试设计",
+        "c": "用「作用域（Scope）」分组动作并统一捕获异常；对临时性失败（网络/超时）配置退避重试（如 3 次，间隔递增）；关键动作后加「条件判断」验证结果；失败分支发告警。这与你的 Python 重试+死信思路同构。"
+      },
+      {
+        "t": "云流 vs 桌面 RPA",
+        "c": "云流：跑在云端，连接 SaaS 服务，稳定、可扩展，适合 API 类；桌面流：跑在指定机器上，操作遗留系统 UI，接近 UiPath。选型原则：能用连接器就不上桌面 RPA。"
+      },
+      {
+        "t": "自动化风暴与治理",
+        "c": "常见事故：流程触发条件过宽导致循环触发（A 流触发 B 流又触发 A）、并发重复执行。对策：触发条件加幂等键、执行去重、限制并发、监控运行成功率。把关键流运行成功率纳入运营周报，防止「黑盒流」。密钥放环境变量/Key Vault，不硬编码。"
+      }
+    ],
+    "analogy": "类似你用 Python 写定时任务 + 发邮件/写库，只不过编排界面化、连接器开箱即用。你的自动化经验可直接迁移到「流程设计思维」。",
+    "jd": "常与 Power Apps、Teams 审批一起出现，承接通知、审批、轻量集成与桌面自动化。",
+    "questions": [
+      "云流程与桌面 RPA 如何选型？",
+      "如何避免自动化风暴（循环触发）？",
+      "失败重试策略怎么设计？"
+    ],
+    "answer": "对照你的 Python 调度经验讲：幂等、重试退避、死信队列（失败列表）、告警。说明云流程适合 SaaS 连接，桌面适合遗留客户端。可表态愿用 Automate 快速承接运营通知类需求。",
+    "pitfalls": "无监控的「黑盒流」；密钥硬编码；过度自动化导致难排查。",
+    "bonus": "把关键流的运行成功率纳入运营周报。"
+  },
+  {
+    "id": "power-bi",
+    "name": "Power BI",
+    "en": "Microsoft Power BI",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "Power BI",
+      "可视化",
+      "报表",
+      "语义模型"
+    ],
+    "one": "微软商业智能工具，负责语义模型、可视化看板与自助分析分发。",
+    "detail": "Power BI 不仅是「画图」，更核心是数据集/语义模型（关系、度量值 DAX、行列级安全）。销售运营用它看佣金达成、渠道漏斗、异常分布、SLA 达成率。与你熟悉的 Python 出表不同，Power BI 强调可分发、可钻取、受治理的度量定义。核心要素：星型模型友好、单一事实来源、工作区权限、刷新调度。",
+    "deep": [
+      {
+        "t": "语义模型 vs 报表",
+        "c": "语义模型（Dataset）= 数据层：表关系、度量值、DAX、刷新；报表（Report）= 展示层：页面、视觉对象、切片器。最佳实践：先建好语义模型，多张报表共享；不要在每张报表里各算各的 KPI——那是口径分裂的根源。"
+      },
+      {
+        "t": "DAX 必知概念",
+        "c": "度量值（CALCULATE、FILTER）、上下文（行上下文/筛选上下文）、时间智能（DATESYTD、PREVIOUSMONTH）、关系（一对多、交叉筛选）。面试不要求精通，但能说出「度量值统一口径、CALCULATE 改筛选上下文」就够专业。"
+      },
+      {
+        "t": "直连 vs 导入",
+        "c": "导入模式（Import）：数据进内存，快、功能全，但有时延；直连（DirectQuery）：实时查源库，数据新鲜但慢、有性能限制。选型：明细量大且需实时→直连；BI 层分析→导入+定时刷新。佣金月结适合导入（数据已冻结）。"
+      },
+      {
+        "t": "行级安全（RLS）与治理",
+        "c": "RLS 按用户角色过滤行（如区域经理只看本区域）。治理三件套：Workspace 权限（谁能看/谁能编辑）、数据刷新监控（刷新失败告警）、发布流程（开发→测试→生产工作区）。与 Superset 的权限体系思路一致，可类比迁移。"
+      }
+    ],
+    "analogy": "你用 Python 自动化出报表 ≈ 生产「结果表」；Power BI ≈ 把结果表变成「可交互、可权限控制的分析产品」。指标口径治理经验可迁移。",
+    "jd": "可能要求搭建销售/佣金运营看板，或对接数仓主题表做管理层汇报。",
+    "questions": [
+      "如何保证看板指标与佣金结算口径一致？",
+      "直连与导入模式怎么选？",
+      "如何做行级安全保护渠道数据？"
+    ],
+    "answer": "强调「指标字典先于视觉」：度量从数仓/规则引擎出，BI 只做展示与轻度聚合。用你做过的报表自动化证明你懂刷新失败与数据延迟沟通。可快速补 DAX 与星型建模常识。",
+    "pitfalls": "每个报表各算各的 KPI；把复杂佣金逻辑全写进 DAX；刷新失败无人管。",
+    "bonus": "看板首页放 SLA 达成与异常 TopN，而不是只放好看的达成率。"
+  },
+  {
+    "id": "bpm",
+    "name": "BPM",
+    "en": "Business Process Management",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "BPM",
+      "流程",
+      "审批",
+      "运营"
+    ],
+    "one": "对端到端业务流程进行建模、执行、监控与持续优化的管理方法与系统能力。",
+    "detail": "BPM 既是管理学科，也常指流程平台（工作流引擎）。它关注：流程是否标准、瓶颈在哪、合规是否可审计、例外如何处理。销售运营中的佣金争议、规则变更审批、渠道准入、合同折扣审批，都适合 BPM。核心要素：流程主人（Process Owner）、流程模型、实例监控、KPI（周期时间、一次通过率）、持续改进闭环。与「写个脚本跑一下」不同，BPM 强调组织协同与可治理。",
+    "deep": [
+      {
+        "t": "BPM 生命周期与流程分层",
+        "c": "生命周期：设计（梳理流程）→ 建模（画 BPMN/定义规则）→ 执行（引擎跑实例）→ 监控（看板看 KPI）→ 优化（改流程/自动化）→ 回到设计。流程分层 L1-L5：L1 端到端价值流（如「从订单到收款」）→ L2 子流程（佣金结算）→ L3 活动（计算）→ L4 任务（跑批）→ L5 步骤。面试讲「我习惯先 L1 对齐价值，再 L2/L3 落执行」很加分。"
+      },
+      {
+        "t": "常见 BPM 平台",
+        "c": "国际：Camunda、Flowable、Activiti（开源工作流引擎，BPMN 2.0）；SAP、Salesforce Flow。国内：钉钉宜搭/审批、泛微、蓝凌、奥哲、炎黄盈动。理解「流程引擎 + 表单 + 审批流 + 流程分析」四件套即可，不必精通具体产品。"
+      },
+      {
+        "t": "BPM 与 OA 审批、RPA 的区别",
+        "c": "OA 审批：通用办公审批，流程简单，治理弱；BPM：端到端流程管理，可建模可监控可优化，强调流程资产；RPA：替代人工操作，不改变流程本身。一句话：BPM 管「流程怎么走」，RPA 管「动作谁来点」。BPM 优化流程，RPA 自动化步骤，两者经常组合使用。"
+      },
+      {
+        "t": "流程治理三件套",
+        "c": "① Process Owner：每个关键流程必须有唯一 Owner，负责 KPI 与改进；② 流程资产库：流程文档+版本统一管理；③ 流程 KPI 看板：周期时间、积压量、一次通过率、退回率。面试答「先画 As-Is，定 RACI，再上系统」比「我会用 XX 平台」更有说服力。"
+      }
+    ],
+    "analogy": "你做过跨系统的佣金与项目流程，脑子里已有泳道；BPM 是把隐性流程显性化，并让系统强制按节点走。大数据算子建模里的「有向阶段」与 BPM 的「活动节点」高度同构。",
+    "jd": "指用流程平台管理销售/佣金相关审批与作业流，并基于流程数据做运营分析与优化。",
+    "questions": [
+      "如何识别一个流程该不该上 BPM？",
+      "流程过长导致拖延，你会怎么拆？",
+      "BPM 与 RPA 的边界是什么？"
+    ],
+    "answer": "用一次真实跨部门协作（如佣金争议）说明现状痛点：邮件丢失、责任不清。提出：先画 As-Is，定 RACI，再上系统；用周期时间与积压量监控。承认工具经验不足，但流程抽象与数据建模是你强项。",
+    "pitfalls": "为上系统而上系统；流程节点过多；把决策逻辑藏进无法审计的人工环节。",
+    "bonus": "BPM 先解决可见与可控，再谈智能。"
+  },
+  {
+    "id": "bpm-model",
+    "name": "BPM 数据模型",
+    "en": "BPM Data Model",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "BPM",
+      "数据模型",
+      "实体",
+      "流程实例"
+    ],
+    "one": "支撑流程运行与分析的数据结构：流程定义、实例、任务、业务实体与状态。",
+    "detail": "BPM 数据模型通常包含：流程定义（版本化）、流程实例、用户任务、网关决策日志、业务主键关联、附件与审计轨迹。分析侧还会沉淀「节点停留时长、退回次数、处理人」等事实，用于流程挖掘。目的是让流程不仅「能跑」，还能「可算」。核心要素：业务键设计、状态机清晰、与主数据/佣金单的关联、历史版本可追溯。面试时能画出简化 ER 并说明如何支撑 SLA 时效分析，比背名词更有说服力。",
+    "deep": [
+      {
+        "t": "核心实体与字段（简化 ER）",
+        "c": "ProcessDef（流程定义：id、key、版本、BPMN 文件、状态）；ProcessInstance（流程实例：id、def_id、业务键 business_key、状态、开始/结束时间）；TaskInst（任务实例：id、instance_id、节点 key、处理人、接收/完成时间、结果）；Variable（流程变量：key/value，如审批结论）；AuditLog（审计轨迹：操作人、动作、时间）。面试能画出这 5 张表的关系就达标。"
+      },
+      {
+        "t": "与业务单据如何关联",
+        "c": "核心是 business_key（业务键）：流程实例通过 business_key 关联业务表（佣金争议单号、订单号、审批单号）。查询路径：单据 → 关联的流程实例 → 任务记录 → 处理人/耗时。不要用流程实例 ID 当业务键（业务方记不住，也没业务含义）。"
+      },
+      {
+        "t": "如何支撑 SLA 时效分析",
+        "c": "关键字段：每个任务节点的接收时间/完成时间。分析 SQL：节点停留时长 = 完成时间 - 接收时间；超时 = 停留时长 > 该节点 SLA；积压 = 当前状态未完成且超过截止时间。汇总维度：按流程版本、按节点、按处理人、按业务类型。这正是你的 SQL 舒适区。"
+      },
+      {
+        "t": "版本与历史追溯",
+        "c": "流程定义要版本化（v1/v2/v3），实例必须记录「用的是哪个版本」，否则流程改了历史数据无法解释。佣金规则版本同理。建模要点：历史实例按当时版本解释，当前分析默认最新版本。这与你处理套餐/规则版本的经验完全一致。"
+      },
+      {
+        "t": "与大数据算子建模的映射",
+        "c": "算子 DAG（节点=算子、边=依赖、实例=一次运行）≈ BPM（节点=活动、边=顺序/网关、实例=流程运行）；作业血缘 ≈ 流程审计；分区重跑 ≈ 实例重试。这是你迁移到 JD 的最短路径，面试主动讲这个映射非常加分。"
+      }
+    ],
+    "analogy": "你的大数据算子建模：输入表→算子→输出表→血缘，非常像流程定义→活动→实例数据→审计。把「作业 DAG」翻译成「人机混合流程的状态与事实表」，就是 BPM 数据模型思维。",
+    "jd": "可能要求能读懂/设计流程相关表结构，或把流程数据接入分析，支撑时效与瓶颈分析。",
+    "questions": [
+      "流程实例与业务单据如何关联？",
+      "如何建模支持版本变更后的历史查询？",
+      "从 BPM 数据如何做瓶颈分析？"
+    ],
+    "answer": "画一张简化 ER：ProcessDef、ProcessInst、TaskInst、BusinessRef。说明状态字段与时间戳用于算 SLA。用算子/血缘经验强调可追溯。表态可快速对齐现有平台表结构并建分析主题。",
+    "pitfalls": "只有流程没有业务键；状态枚举混乱；分析库与生产库强耦合。",
+    "bonus": "流程事实表 + 佣金事实表关联，才能解释「算得慢还是批得慢」。"
+  },
+  {
+    "id": "bpmn",
+    "name": "BPMN",
+    "en": "Business Process Model and Notation",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "BPMN",
+      "流程图",
+      "标准符号"
+    ],
+    "one": "业务流程建模的国际标准图形语言，用统一符号描述活动、网关、事件与泳道。",
+    "detail": "BPMN 2.0 提供事件、活动、网关（排他/并行/包容）、泳道、消息流等符号，让业务与 IT 用同一张图沟通。目的是减少「口头流程」歧义，并可作为部分引擎的可执行输入。核心要素：正确使用网关、区分编排与协作、控制细节粒度。销售运营面试里，能画清晰 BPMN 比背定义更重要。掌握常用网关与边界事件后，就能在白板上把佣金争议与升级路径讲清楚。",
+    "deep": [
+      {
+        "t": "三种网关怎么用",
+        "c": "排他网关（X）：多选一，条件互斥（如金额 > 5 万走高级审批，否则走普通审批）；并行网关（+）：全部分支都执行（如计算完成后同时发财务和业务）；包容网关（O）：满足条件的都执行（如风险检查中，命中 A 规则就查 A，命中 B 规则就查 B）。画错网关是 BPMN 最常见错误。"
+      },
+      {
+        "t": "边界事件表示超时升级",
+        "c": "在任务上挂「定时边界事件」（时钟图标）：任务超过 48 小时未完成 → 触发升级子流程（通知上级、转派）。这是把 SLA 落到流程图的直接方式，面试画这个非常加分。"
+      },
+      {
+        "t": "编排 vs 协作",
+        "c": "同一泳道内的流程叫「编排（Orchestration）」（一个组织视角）；跨泳道的消息流叫「协作（Collaboration）」（多个参与者）。佣金月结跨 IT/运营/财务，适合协作图：每个部门一个 Pool，消息流连接。"
+      },
+      {
+        "t": "画图粒度",
+        "c": "管理层看 L1（粗粒度价值流），执行层看 L2/L3（含具体任务与条件）。不要在管理图里画到字段级，也不要在执行图里省略关键分支。带一份你过去项目的流程图，现场改成 BPMN 是很好的面试展示。"
+      }
+    ],
+    "analogy": "类似你给数据作业画 DAG/泳道流程图，只是符号标准化了。你已有「阶段+分支+并行」直觉，补齐符号即可。",
+    "jd": "用于描述佣金审批、争议处理、变更发布等流程，便于评审与落系统。",
+    "questions": [
+      "排他网关与并行网关区别？",
+      "如何表示超时升级？",
+      "画一张佣金争议处理简图。"
+    ],
+    "answer": "现场白板：开始→初审→金额网关→高额升级→财务→结束；旁路画超时边界事件。强调粒度：管理层看 L1，执行看 L2。",
+    "pitfalls": "图上节点过多像程序流程图；把组织问题画成技术分叉却不标 Owner。",
+    "bonus": "带一份你过去项目的非标准流程图，并说明如何改成 BPMN。"
+  },
+  {
+    "id": "etl",
+    "name": "ETL",
+    "en": "Extract Transform Load",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "ETL",
+      "数据集成",
+      "数仓",
+      "管道"
+    ],
+    "one": "先抽取、在中间层完成清洗转换，再加载到目标库的经典数据集成范式。",
+    "detail": "ETL 是数仓建设的主流管道形态：从业务库/文件/API 抽取，在 staging 做清洗、关联、标准化，再装入维度与事实表。目的是保证分析层口径一致、可重跑、可审计。核心要素：调度依赖、增量策略、质量校验、失败告警、血缘。销售运营依赖 ETL 把订单、套餐、渠道、佣金中间结果变成可信指标。你虽可能没用过「ETL 平台」这个词，但报表流水线本质常是 ETL。",
+    "deep": [
+      {
+        "t": "三步详解：抽取",
+        "c": "全量抽取（整表拉取，适合小表/首次）；增量抽取（按时间戳/自增 ID/水位线，只取变化数据）；CDC（Change Data Capture，基于日志捕获变更，如 Debezium，适合高频大表）。选型：数据量、变更频率、实时性要求决定。佣金月结账期数据通常「按账期切片全量」，天然是分区。"
+      },
+      {
+        "t": "三步详解：转换",
+        "c": "清洗（去重、去空、格式统一、异常值处理）；标准化（编码统一：渠道编码、币种、时区）；关联（多源合并、维度补齐）；聚合（明细→汇总，但要保留明细层以便追溯）。佣金转换重点：金额精度、时间口径（自然月/账期）、规则版本打标。"
+      },
+      {
+        "t": "三步详解：加载",
+        "c": "三种模式：全量覆盖（小维表）、追加（日志型事实）、拉链/合并（缓慢变化维与可重算事实）。加载的关键是幂等：同一批次重跑 N 次结果一致，否则重跑会翻倍或脏数据。"
+      },
+      {
+        "t": "调度、依赖与质量门禁",
+        "c": "调度（Airflow/Cron/DataWorks 等）：定义作业依赖，上游完成才跑下游；失败重试与告警。质量门禁：每个关键管道出口做断言（行数、金额勾稽、主键唯一），不过关不向下游发布。「调度成功 ≠ 业务正确」——这是面试必说的一句。"
+      },
+      {
+        "t": "常用工具",
+        "c": "商业：Informatica、IBM DataStage、Talend；开源：Apache Airflow（编排）、dbt（SQL 转换）、Kettle/PDI、Singer；云：AWS Glue、Azure Data Factory、阿里云 DataWorks、Flink（流）。国内运营商/电信场景常见 DataWorks/DSG 或自研调度。"
+      }
+    ],
+    "analogy": "你的 Python 报表流程：读源→清洗映射→写结果表/Excel，就是小型 ETL。大数据算子建模更是分布式 ETL。缺的是平台化术语与企业级调度/质量门禁表述。",
+    "jd": "指建设或维护销售/佣金相关数据管道，保障日/月任务稳定产出。",
+    "questions": [
+      "增量与全量如何选择？",
+      "上游延迟时管道如何降级？",
+      "如何做字段级数据质量检查？"
+    ],
+    "answer": "用一次真实跑批说明：依赖检查→转换→对账→发布。引入「质量门禁不过不下游」。把算子经验映射为作业依赖图。承认商业 ETL 工具需对齐现场，但范式已熟。",
+    "pitfalls": "无幂等导致重跑翻倍；静默脏数据；调度成功但业务错。",
+    "bonus": "调度成功不等于业务正确；要对关键金额做对账断言。"
+  },
+  {
+    "id": "elt",
+    "name": "ELT",
+    "en": "Extract Load Transform",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "ELT",
+      "数仓",
+      "云数仓"
+    ],
+    "one": "先把原始数据载入仓库/湖，再在仓内用 SQL/算子做转换的现代范式。",
+    "detail": "ELT 随云数仓兴起：存储与计算弹性后，「先入湖/入仓再变换」更划算。原始层保留，用视图/模型层做转换，便于审计与回溯。与 ETL 对比：转换发生位置不同。核心要素：分层（ODS/DWD/DWS/ADS）、计算成本、权限、变换代码版本管理。销售分析主题常在仓内用 SQL 窗口函数完成，这与你的技能栈高度契合。",
+    "deep": [
+      {
+        "t": "数仓分层",
+        "c": "ODS（贴源层）：原样存放原始数据，只做简单清洗；DWD（明细层）：明细事实+维度，标准化、去重、清洗，是最重要的模型层；DWS（汇总层）：按主题轻度汇总（渠道日汇总）；ADS（应用层）：面向报表/应用的定制结果。层与层之间通过任务依赖串起来。"
+      },
+      {
+        "t": "ETL vs ELT 怎么选",
+        "c": "数据量小/转换复杂/中间计算用专有工具 → ETL；数据量大/云数仓强/团队擅长 SQL → ELT。现实是混合：抽取统一，转换部分在管道部分在仓内。面试答「先分层后选型，ODS 全量保留，DWD 用 SQL 建模」即可。"
+      },
+      {
+        "t": "原始层要不要永久保留",
+        "c": "建议保留（成本可控时）：原始层是「真相基准」，后续口径变更、审计、回溯都依赖它。控制成本：冷存储、压缩、分区清理策略（如保留 24 个月）。"
+      },
+      {
+        "t": "dbt 是什么",
+        "c": "dbt（Data Build Tool）把 SQL 转换代码化、版本化、可测试：模型 = SELECT 语句，支持依赖管理、测试（unique/not_null）、文档生成。它是「变换即代码、PR 评审」的典型实践。面试提到「变换代码进 Git、评审后部署」体现工程化意识。"
+      }
+    ],
+    "analogy": "你在大数据平台先落原始再算子加工，更接近 ELT。SQL 窗口函数做的指标层就是仓内 Transform。",
+    "jd": "若团队云数仓化，可能要求仓内建模与调度，而非传统中间服务器转换。",
+    "questions": [
+      "ETL 与 ELT 如何选型？",
+      "原始层要不要永久保留？",
+      "如何控制仓内变换的计算成本？"
+    ],
+    "answer": "按数据体量、合规、团队技能选型；强调分层与增量模型。用你的 SQL/算子背景证明仓内变换是舒适区。",
+    "pitfalls": "原始层变垃圾场；无质量门禁直接进应用层。",
+    "bonus": "提到「变换即代码、PR 评审」，显示工程化意识。"
+  },
+  {
+    "id": "dw-lake",
+    "name": "数据仓库 / 数据湖 / 数据集市",
+    "en": "Data Warehouse / Data Lake / Data Mart",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "数仓",
+      "数据湖",
+      "数据集市",
+      "架构"
+    ],
+    "one": "三类数据存放与服务形态：仓注重治理结构，湖注重原始多样，集市注重主题消费。",
+    "detail": "数据仓库：结构化、主题导向、强治理，服务报表与指标。数据湖：多形态原始数据低成本存放，适合探索与机器学习。数据集市：面向部门/主题的子集（如销售集市、佣金集市），降低消费复杂度。目的是在成本、治理、消费效率间取得架构平衡。核心要素：分层、所有权、生命周期、服务等级（与数据 SLA 相关）。对你而言，关键是能讲清「生产库保交易、仓保分析、集市保消费」。",
+    "deep": [
+      {
+        "t": "Kimball vs Inmon",
+        "c": "Kimball（自底向上）：先做数据集市再整合，快速见效、适合业务部门；Inmon（自顶向下）：先建企业级 3NF 模型再派生集市，一致性强但周期长。现实多为 Kimball 变体。面试提「维度建模优先、一致性维度复用」即可。"
+      },
+      {
+        "t": "湖仓一体（Lakehouse）",
+        "c": "解决「湖无治理、仓太贵」的痛点：数据以开放格式（Parquet/Delta/Iceberg/Hudi）存对象存储，同时提供 ACID 事务、SQL 查询、治理与 BI 能力（如 Databricks、Snowflake）。一句话：让数据科学家和 BI 用同一份数据。"
+      },
+      {
+        "t": "为什么佣金分析不直接查生产库",
+        "c": "生产库（CRM/计费系统）是交易系统：查询会抢占资源影响业务、无历史快照、口径随时变。分析必须走数仓快照层：锁数时点的数据冻结快照。这是佣金「锁数」机制的数据侧解释。"
+      },
+      {
+        "t": "如何避免集市口径分裂",
+        "c": "全局指标字典 + 一致性维度（Conformed Dimensions）：所有集市共用同一套渠道/产品/时间维度，指标公式唯一来源。集市之间通过同一事实来源聚合，禁止各集市各自定义 KPI。"
+      }
+    ],
+    "analogy": "你的佣金明细宽表/汇总表 ≈ 集市；大数据原始落库 ≈ 湖；经过维度建模的指标层 ≈ 仓。电信 ARPU/Churn 类指标通常落在销售/客户集市。",
+    "jd": "可能要求基于仓/集市取数做销售分析，或参与主题模型设计。",
+    "questions": [
+      "湖仓一体怎么理解？",
+      "为什么佣金分析不建议直接查生产库？",
+      "集市与仓库如何避免口径分裂？"
+    ],
+    "answer": "强调生产库保交易、仓保分析；集市必须挂全局指标字典。用你做过的分析表分层经验举例。",
+    "pitfalls": "集市各自为政；湖无治理变成沼泽。",
+    "bonus": "佣金集市的第一公民是规则版本与锁数快照。"
+  },
+  {
+    "id": "dq",
+    "name": "数据质量体系",
+    "en": "Data Quality Framework",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "数据质量",
+      "DQ",
+      "完整性",
+      "一致性"
+    ],
+    "one": "用制度化指标与规则，持续度量并提升数据的完整性、准确性、一致性、时效性等。",
+    "detail": "数据质量体系不只是「发现几条脏数据」，而是：质量维度定义、规则库、检测嵌入流水线、分级响应、责任人、改进闭环。常见维度：完整性、唯一性、准确性、一致性、时效性、合法性。对佣金，金额勾稽、重复发佣、维度缺失、迟到数据都是高危。核心要素：规则与阈值、监控看板、问题工单、与发布门禁绑定。把个人经验沉淀为组织能力，才叫「体系」。",
+    "deep": [
+      {
+        "t": "为佣金事实表设计质量规则（示例）",
+        "c": "主键唯一：销售员×账期×订单×规则 无重复；金额非空且 > 0；勾稽：明细 SUM = 汇总表金额，差异 < 0.01%；与源系统对账：佣金总额 vs 计费/CRM 汇总，差异率 < 阈值；锁数后禁止静默变更：监控锁数快照哈希；日期合法：归属月 ∈ 账期集合。规则要分层：硬规则（阻断）与软规则（告警）。"
+      },
+      {
+        "t": "质量问题分级（P0/P1/P2）",
+        "c": "P0：影响发放/合规（重复发佣、金额错误），立即阻断、连夜修复；P1：影响报表/分析（字段缺失、口径错），当日处理；P2：影响体验/长期（格式问题），排期修复。分级决定响应时效与升级路径，也直接服务 SLA。"
+      },
+      {
+        "t": "质量度量与考核",
+        "c": "指标示例：DQ Score（规则通过率加权）、问题工单数、平均修复时长（MTTR）、漏检率。考核要落到团队：质量指标进月结复盘，Owner 认领。防止「规则很多但没人看」——监控看板 + 周例会过一遍是基本操作。"
+      },
+      {
+        "t": "质量门禁与发布绑定",
+        "c": "关键下游（发放、审批、对外报表）设置门禁：质量不达标自动阻断发布，而不是「先发出去再修」。把门禁写进管道与审批流（BPM），形成制度而不是依赖个人自觉。"
+      }
+    ],
+    "analogy": "你做佣金时一定会对账、抽检、防重复——这是「个人版质量」。体系化是把它变成规则库+自动断言+Owner+周会复盘。自我质量要求可迁移到 SLA 与 DQ。",
+    "jd": "要求建立或执行销售/佣金数据的质量标准、监控与治理机制，降低错发漏发。",
+    "questions": [
+      "你会为佣金事实表设计哪些质量规则？",
+      "质量问题如何分级（P0/P1）？",
+      "质量指标如何进团队考核？"
+    ],
+    "answer": "列出规则样例：主键唯一、金额非空、与源系统勾稽差小于阈值、锁数后禁止静默变更。说明 P0（影响发放）阻断发布。用历史对账故事证明敏感度，并承认要把「经验」沉淀为体系。",
+    "pitfalls": "规则过多全是噪音；只度量不追责；发现了仍放行。",
+    "bonus": "质量门禁与佣金 SLA 绑定：不达标不进入审批。"
+  },
+  {
+    "id": "anomaly",
+    "name": "异常监控",
+    "en": "Anomaly Monitoring",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "监控",
+      "告警",
+      "异常",
+      "可观测"
+    ],
+    "one": "对作业、指标、流程的偏离进行探测、告警与响应，避免静默失败。",
+    "detail": "异常监控覆盖技术与业务两层：作业失败/耗时飙升，以及「跑成功但金额异常」「渠道佣金环比暴涨」。方法包括阈值、同比环比、统计分布、模型检测。核心要素：信号、告警路由、抑制与聚合、值班响应、事后复盘。销售运营场景特别要防「假成功」——调度绿灯但业务结果错了。监控必须带 runbook，否则只会制造焦虑。",
+    "deep": [
+      {
+        "t": "技术层 vs 业务层监控",
+        "c": "技术层：作业状态（成功/失败/超时）、资源（内存/CPU）、数据量骤变（行数比昨天少 50%）；业务层：金额勾稽差异、佣金环比暴涨暴跌、异常单数量、SLA 节点超时率。业务层监控才是防「假成功」的关键——技术全绿不代表业务对。"
+      },
+      {
+        "t": "如何降低误报",
+        "c": "分级阈值：告警（WARN，观察）vs 严重（CRIT，响应）；抑制：同一根因只发一条（聚合）；静默窗口：已知问题维护期间不重复告警；动态基线：用历史分位（P95）而不是固定值；告警必须带上下文（作业名、数据、链接），否则值班无法判断。"
+      },
+      {
+        "t": "异常检测方法",
+        "c": "阈值（最简单）；同比环比（本月 vs 上月 vs 去年同月）；3σ / 分位数（统计分布）；时序模型（移动平均、指数平滑、Prophet）；ML 检测（隔离森林等，适合高维）。佣金日环比用同比+环比+3σ 组合通常够用，不一定要上 ML。"
+      },
+      {
+        "t": "runbook（处理手册）",
+        "c": "每个告警配 runbook：现象→排查步骤（查哪个表/哪个日志）→常见根因→修复动作→升级条件→联系方式。没有 runbook 的告警只制造焦虑。面试说「每个告警必须带 runbook 链接」是专业信号。"
+      }
+    ],
+    "analogy": "你做过流失预警模型——那是业务异常的高级形态；跑批日志与对账断言是工程异常监控。把模型思维用到「日佣金波动」上即可迁移。",
+    "jd": "对数据管道、佣金结果、流程时效建立监控告警，保障运营稳定。",
+    "questions": [
+      "如何降低误报？",
+      "业务异常与系统异常如何分流？",
+      "举一个你会监控的佣金指标。"
+    ],
+    "answer": "分层：基础设施/作业/业务断言。举例监控「计算前后总额勾稽」「Top 渠道波动」。告警进群并带上下文链接。关联你的预警模型经验说明阈值可动态化。",
+    "pitfalls": "告警风暴；只监技术不监业务；无人值班。",
+    "bonus": "每个告警必须有 runbook 链接。"
+  },
+  {
+    "id": "checkpoint",
+    "name": "断点续跑",
+    "en": "Checkpoint / Resume from Failure",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "断点续跑",
+      "重跑",
+      "幂等",
+      "容错"
+    ],
+    "one": "作业失败后从最近检查点继续，而不是每次都全量重来，且保证结果正确。",
+    "detail": "断点续跑依赖：阶段切分、检查点状态、幂等写入、依赖恢复。大数据与 ETL 长任务尤其需要。目的是降低失败成本、缩短 SLA 违约窗口。核心要素：可恢复状态、恰好一次或至少一次语义、下游兼容、人工介入点。与「重新点运行」的差别是工程可控性。没有幂等的续跑比全量重跑更危险，因为可能双倍发佣。月结窗口很紧时，续跑能力往往直接决定能否守住发放日。",
+    "deep": [
+      {
+        "t": "检查点设计",
+        "c": "按什么切：按分区（账期/渠道/区域）、按阶段（抽→转→载）、按批次（每 N 条）。检查点状态存哪里：状态表/文件/协调服务（如 ZooKeeper）。粒度权衡：太细管理成本高，太粗失败损失大。佣金场景按账期+规则版本切最自然。"
+      },
+      {
+        "t": "幂等是关键前提",
+        "c": "幂等 = 同一输入跑 N 次结果一致。实现方式：唯一约束（主键冲突跳过/更新）；写入用「覆盖式」（按业务键 UPSERT）；外部副作用（发邮件/发钱）必须状态机保护。续跑安全第一原则：不确定是否执行过，就查状态再决定。防双倍发佣靠的是「发放状态机 + 唯一发放流水号」。"
+      },
+      {
+        "t": "至少一次 vs 恰好一次",
+        "c": "至少一次（At-least-once）：可能重复执行，靠幂等去重；恰好一次（Exactly-once）：靠事务/状态协调保证（如 Kafka 幂等、Spark 端到端）。工程现实：多数场景用「至少一次 + 幂等」组合达到业务上的恰好一次。面试能讲清这对概念很加分。"
+      },
+      {
+        "t": "哪些步骤不能只续跑尾部",
+        "c": "有外部副作用的步骤（发放、通知、开票）必须整体事务化或状态机化：先标记「待发放」，成功回调才置「已发放」；依赖下游快照的步骤，重跑要先通知下游冻结。总结：重跑前先想「下游看到什么」。"
+      },
+      {
+        "t": "与 SLA 的关系",
+        "c": "续跑能力 = SLA 的兜底能力：月结窗口内，某分区失败只重跑该分区（分钟级恢复），而不是全量重来（小时级）。面试话术：「断点续跑写进佣金 SLA 的兜底方案，是守发放日的工程底座」。参考你的算子分区重跑经验。"
+      }
+    ],
+    "analogy": "你跑复杂佣金或大数据作业时，若某分区失败只重跑该分区——就是断点续跑思想。窗口函数分区、按账期切片，都是天然检查点边界。",
+    "jd": "要求管道具备失败恢复能力，保障月结窗口内可完成重算。",
+    "questions": [
+      "如何设计幂等避免续跑重复发佣？",
+      "哪些步骤不能只续跑尾部？",
+      "检查点粒度如何权衡？"
+    ],
+    "answer": "按账期/渠道/规则版本分区；写结果用覆盖或合并键；涉及外部发放的步骤必须强幂等与状态机。用真实重跑经验说明你会先定「可安全重跑边界」。",
+    "pitfalls": "无幂等导致双倍佣金；检查点过细管理成本高；忽略上游补数。",
+    "bonus": "续跑策略写进佣金 SLA 的兜底方案。"
+  },
+  {
+    "id": "oe",
+    "name": "OE",
+    "en": "Operational Excellence",
+    "type": "weak",
+    "tags": [
+      "短板",
+      "OE",
+      "运营卓越",
+      "持续改进",
+      "标准化"
+    ],
+    "one": "通过标准化、度量、问题暴露与持续改进，让运营结果稳定、可预期、可扩展。",
+    "detail": "Operational Excellence（运营卓越）来自精益与卓越运营体系：强调流程标准、视觉管理、异常即暴露、根因改进，而不是英雄救火。在销售运营中体现为：佣金月结 playbook、变更管理、质量回顾、能力复制。核心要素：标准作业程序（SOP）、指标、层级例会、改进项目（常结合 PDCA/DMAIC）。面试里谈 OE，要落到机制，而不是态度或加班精神。OE 与 SLA、数据质量、流程挖掘是一套组合拳。",
+    "deep": [
+      {
+        "t": "OE 的五个关键支柱",
+        "c": "① 标准化：SOP/playbook 把关键流程写下来、跑起来、定期更新；② 度量：每个关键流程有 KPI（周期、质量、成本）；③ 问题暴露：异常可见（看板/告警），不掩盖；④ 根因改进：用 5-Why/鱼骨图找真因，不只表面修复；⑤ 层级例会：日报看执行、周会看趋势、月会看改进，问题有人认领。"
+      },
+      {
+        "t": "OE 与精益、六西格玛的关系",
+        "c": "OE 是目标（稳定卓越的运营）；Lean 提供工具（消除 7 大浪费：等待、返工、过量、搬运等）；Six Sigma 提供方法（DMAIC 降变异）。销售运营常见浪费：等待上游数据（等待）、返工重算（返工）、重复手工操作（过量处理）。"
+      },
+      {
+        "t": "如何衡量团队是否具备 OE",
+        "c": "看信号：有 playbook 吗？异常有看板吗？缺陷有分类和趋势吗？改进项目有结果数字吗（差错率从 x 到 y）？还是每次都在救火？面试答「我用三个信号判断：标准化文档、指标看板、改进闭环」。"
+      },
+      {
+        "t": "怎么推动 OE（落地路径）",
+        "c": "先选 1 个高痛流程（如月结）→ 建基线（当前差错率/耗时）→ 标准化（SOP）→ 度量（看板）→ 找根因（5-Why）→ 改进（自动化/校验）→ 控制（监控防回潮）→ 复盘 → 复制到下一个流程。展示「自动化+对账清单+交接文档」降波动的真实经验。"
+      }
+    ],
+    "analogy": "你把复杂佣金做成可重复的自动化与文档，已经是 OE 的种子。差在「组织级」：例会节奏、缺陷分类、改进看板。",
+    "jd": "期望候选人能推动销售运营从「能做」到「稳定做得好」，减少人为波动。",
+    "questions": [
+      "如何衡量一个运营团队是否具备 OE？",
+      "救火与改进如何分配时间？",
+      "举一个你推动标准化的例子。"
+    ],
+    "answer": "用「自动化+对账清单+交接文档」证明你在降波动；提出进入岗位后建立月结复盘与缺陷标签。把 OE 与 SLA、DQ、流程挖掘串起来讲。",
+    "pitfalls": "把 OE 说成鸡汤；只加管控不加赋能；指标过多。",
+    "bonus": "OE 的对手是隐性知识，武器是 SOP、度量与复盘。"
+  },
+  {
+    "id": "process-mining",
+    "name": "流程挖掘",
+    "en": "Process Mining",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "流程挖掘",
+      "日志",
+      "瓶颈",
+      "合规"
+    ],
+    "one": "从系统事件日志自动还原真实流程，发现偏差、瓶颈与合规风险。",
+    "detail": "流程挖掘用事件日志（案例ID、活动、时间戳）发现 As-Is 流程，做一致性检查、绩效分析、变体分析。比访谈更客观。销售运营可用它看审批真实路径、退回热点、SLA 超时环节。核心要素：日志质量、案例定义、隐私、改进闭环。它常为 BPM 改造与 RPA 选型提供证据，避免拍脑袋上工具。用数据证明瓶颈，比凭感觉要求加人更能推动 BPM 与 RPA 决策。",
+    "deep": [
+      {
+        "t": "最小数据要求（事件日志三要素）",
+        "c": "Case ID（案例标识，如一张佣金争议单）、Activity（活动名，如「提交」「初审」「审批」）、Timestamp（时间戳）。可选：资源（处理人）、属性（金额）。没有这三个字段，流程挖掘做不了——这是面试常问点。"
+      },
+      {
+        "t": "三类分析",
+        "c": "发现（Discovery）：从日志还原真实流程路径图（不是访谈画的）；一致性检查（Conformance）：实际路径 vs 设计流程的偏差（该走审批没走？）；增强（Enhancement）：结合绩效数据找瓶颈、预测风险。销售运营最常用：发现 + 绩效（哪步耗时最长、退回最多）。"
+      },
+      {
+        "t": "发现大量变体怎么办",
+        "c": "变体（Variant）= 不同的路径组合，长尾变体可能成百上千。策略：Top 变体优先（80/20 分析）、变体聚类（按业务类型分组）、异常变体单独治理（是不是绕过审批？）。不要试图标准化所有变体，先治高频与高风险。"
+      },
+      {
+        "t": "用 SQL 做轻量流程挖掘",
+        "c": "步骤：日志表（case_id, activity, ts, actor）→ 按 case 排序生成路径序列（listagg/窗口函数）→ 聚合路径频次 → 算节点停留时长（lead 取下一活动时间）→ 找超时节点。你用窗口函数做会话序列的经验直接适用，面试可以现场讲思路。"
+      }
+    ],
+    "analogy": "类似你对用户行为/流失路径做漏斗与序列分析；也像作业血缘耗时分析。有 SQL 窗口函数做会话序列的经验非常加分。",
+    "jd": "可能用于优化佣金/销售审批流程，或证明改造收益。",
+    "questions": [
+      "流程挖掘需要哪些最小字段？",
+      "发现大量变体怎么办？",
+      "如何与 BPM 项目结合？"
+    ],
+    "answer": "说明日志字段与案例粒度；用 Top 变体优先治理；把发现输入 BPM 改造与 RPA 选型。展示你会用 SQL 做初步挖掘。",
+    "pitfalls": "日志不全就下结论；只可视化不推动改流程。",
+    "bonus": "先挖瓶颈，再决定上 RPA 还是改规则。"
+  },
+  {
+    "id": "pdca",
+    "name": "PDCA / DMAIC / Lean / Six Sigma",
+    "en": "Continuous Improvement Toolkits",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "PDCA",
+      "DMAIC",
+      "Lean",
+      "Six Sigma"
+    ],
+    "one": "一组持续改进方法论：循环改进、六西格玛项目路径、精益消除浪费、降低变异。",
+    "detail": "PDCA（计划-执行-检查-处理）适合日常改进；DMAIC（定义-测量-分析-改进-控制）适合有数据的六西格玛项目；Lean 关注流动与浪费；Six Sigma 关注缺陷与变异。销售运营用它们结构化地降低错发率、缩短周期时间。核心是问题定义、基线度量、根因、控制计划，而不是证书名称。与 OE 配套使用时，这些方法提供「怎么改」的路径。",
+    "deep": [
+      {
+        "t": "PDCA 四步详解",
+        "c": "P（Plan）：定义问题、定目标、制定方案（含数据基线）；D（Do）：小范围试点执行；C（Check）：对比结果与目标，分析差距根因；A（Act）：标准化成功做法或回到 P 迭代。适合日常小改进（如月结提速）。"
+      },
+      {
+        "t": "DMAIC 五步详解",
+        "c": "D（Define）：定义问题、范围、客户影响；M（Measure）：度量基线（当前差错率 3%、周期 5 天）；A（Analyze）：根因分析（数据延迟？规则不清？）；I（Improve）：实施改进（自动化校验/规则文档化）；C（Control）：控制（监控+告警防回潮）。适合需要数据的项目级改进。"
+      },
+      {
+        "t": "Lean 的 7 大浪费（TIMWOOD）",
+        "c": "T 运输、I 库存、M 动作、W 等待、O 过量生产、O 过度处理、D 缺陷。销售运营最常见：等待（等上游数据）、缺陷（返工重算）、过度处理（重复手工操作）。面试答「报表运营里最典型是等待与返工」即显示理解。"
+      },
+      {
+        "t": "控制阶段如何防止回潮",
+        "c": "改进上线后必须留下监控：质量规则常驻管道（门禁）、异常告警、月度复盘看趋势、SOP 更新并培训。没有控制的改进是「一次性运动」，3 个月后回潮。面试强调「改进完撤监控」是反面教材。"
+      },
+      {
+        "t": "六西格玛的量化思维",
+        "c": "六西格玛 ≈ 每百万次机会 3.4 个缺陷（过程能力）。面试不需要背数字，但要体现「用数据定义问题、用基线衡量改善」的量化思维：把改进成果写成差错率从 x 到 y、周期从 a 到 b。"
+      }
+    ],
+    "analogy": "你做模型迭代与佣金规则调优，天然走「假设→上线→观察→修正」。把它命名为 PDCA/DMAIC 即可与 OE 话语体系对齐。",
+    "jd": "体现候选人具备体系化改进能力，能支撑 OE 与流程优化。",
+    "questions": [
+      "用 DMAIC 讲一次降低佣金差错的经历",
+      "Lean 里哪类浪费最常见于报表运营？",
+      "控制阶段如何防止回潮？"
+    ],
+    "answer": "选一个真实差错/延迟案例，按 DMAIC 五步讲：定义问题、度量基线、分析根因、改自动化/校验、控制用监控。不必夸大认证。",
+    "pitfalls": "方法论堆砌无数据；改进完撤监控。",
+    "bonus": "把改进成果写成差错率从 x 到 y、周期从 a 到 b。"
+  },
+  {
+    "id": "dim-model",
+    "name": "维度建模 / 星型 / 雪花",
+    "en": "Dimensional Modeling / Star / Snowflake",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "维度建模",
+      "星型",
+      "雪花",
+      "事实表"
+    ],
+    "one": "以事实表+维度表组织分析数据；星型直接连维，雪花维表再规范化拆分。",
+    "detail": "维度建模由 Kimball 普及：业务过程对应事实，描述性属性进维度。星型模型查询简单、BI 友好；雪花节省存储但增加连接。核心要素：粒度声明、一致性维度、事实类型（事务/快照/累积）。佣金分析常见事实：佣金明细；维度：员工、渠道、产品、账期、规则版本。没有粒度声明，SUM 就没有正确性可言。这与你日常写分析 SQL 的习惯高度一致。",
+    "deep": [
+      {
+        "t": "粒度声明为什么最重要",
+        "c": "粒度（Grain）= 一行事实代表什么。佣金明细的粒度可以是「订单×规则×员工」（一行一个订单命中一条规则）或「员工×账期汇总」。粒度不清，SUM 重复计算（如员工汇总行混进明细再 SUM）。面试答「先声明粒度，再谈模型」是专业分水岭。"
+      },
+      {
+        "t": "事务/快照/累积事实",
+        "c": "事务事实（Transaction）：每发生一次记一行（每笔佣金）；周期快照（Periodic Snapshot）：每周期一行（每月员工佣金余额）；累积快照（Accumulating）：流程状态一行、字段随时间更新（一张佣金单从提交到发放的里程碑时间）。佣金月结主用事务+累积。"
+      },
+      {
+        "t": "星型 vs 雪花怎么选",
+        "c": "星型：查询快、易理解、BI 友好，主流选择；雪花：省存储、维表规范，但 join 多、查询慢。现代数仓存储便宜，默认星型；除非维表极大或维护痛点明显才雪花。面试答「默认星型，性能或治理需要才雪花」。"
+      },
+      {
+        "t": "退化维度（Degenerate Dimension）",
+        "c": "没有独立维表、直接放在事实表里的维度属性（如订单号、发票号、规则版本号）。用途：保留明细颗粒度、支持下钻。佣金事实表常放规则版本号作为退化维度——直接支撑「按规则版本审计」。"
+      },
+      {
+        "t": "一致性维度",
+        "c": "跨主题共享的维度（渠道、产品、时间）必须全局统一：同一渠道 ID 在销售集市和佣金集市含义相同。否则口径分裂。治理手段：维度表单一来源 + 指标字典。"
+      }
+    ],
+    "analogy": "你写窗口函数做的明细+维表关联，本质就是星型查询。电信套餐、设备、账期维你都很熟。",
+    "jd": "设计或消费销售主题模型，支撑自助分析与佣金复盘。",
+    "questions": [
+      "如何声明佣金事实粒度？",
+      "星型与雪花如何选择？",
+      "退化维度用在什么场景？"
+    ],
+    "answer": "明确「一笔佣金明细一行」或「订单×规则一行」；优先星型服务 BI；规则版本号可做退化维。结合你的指标经验讲一致性维。",
+    "pitfalls": "粒度不清导致重复计算；雪花过度。",
+    "bonus": "没有粒度声明就没有正确的 SUM。"
+  },
+  {
+    "id": "scd",
+    "name": "缓慢变化维",
+    "en": "Slowly Changing Dimension (SCD)",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "SCD",
+      "历史",
+      "维度",
+      "拉链"
+    ],
+    "one": "处理维度属性随时间变化并需要保留历史的技术，常见 Type1/2/3 与拉链。",
+    "detail": "渠道归属、员工组织、套餐属性会变。SCD1 覆盖；SCD2 增行保留历史（生效/失效时间）；SCD3 加列存有限历史。目的是让历史事实仍按「当时」属性正确归因。佣金回溯尤其依赖 SCD2/拉链。核心是代理键与生效区间，避免用当前维表重刷历史导致归因漂移。电信组织与套餐变更频繁，这个概念几乎必然用到。",
+    "deep": [
+      {
+        "t": "SCD1/2/3 怎么选",
+        "c": "Type1：历史无所谓（如修正姓名拼写），覆盖即可；Type2：历史归因重要（组织调整、渠道归属、套餐属性）——佣金场景默认 Type2；Type3：只关心「现在 vs 上一个值」（如对比新老渠道名）。面试答「渠道/组织/规则用 Type2，纯修正用 Type1」。"
+      },
+      {
+        "t": "SCD2 与事实表如何关联",
+        "c": "事实表存维度代理键（surrogate key），维度表通过生效区间（valid_from/valid_to）查询：事实发生时间 ∈ 维度行的生效区间 → 找到当时的属性。不能用当前维表直接 join 历史事实，否则归因漂移。"
+      },
+      {
+        "t": "拉链表与 SCD2",
+        "c": "拉链表 = SCD2 的工程实现：一行记录一个版本的生效区间（start_date/end_date/is_current），新变更插入新行并关闭旧行。SQL 要点：更新旧行 end_date、插入新行、维护当前标志；查询用「时间点 in 区间」。你熟悉区间重叠判断，这是舒适区。"
+      },
+      {
+        "t": "规则版本也可以当 SCD",
+        "c": "佣金政策版本（规则 v1/v2）本质是缓慢变化维：事实记录命中的规则版本号 + 版本生效区间，可精确回溯「当时按什么政策算的」。面试提「规则版本本身也可视为一种 SCD」很显深度。"
+      },
+      {
+        "t": "常见坑",
+        "c": "只用当前维表刷历史（归因漂移）；没有代理键（用自然键导致历史混乱）；生效区间重叠未处理；未设当前标志导致查询慢。"
+      }
+    ],
+    "analogy": "套餐到期、号卡归属变更、组织调整——你都处理过「当时有效」逻辑，这就是 SCD。SQL 区间重叠判断是你的舒适区。",
+    "jd": "保障历史佣金按变更前组织/产品正确归因，支持审计。",
+    "questions": [
+      "组织架构调整如何不影响历史报表？",
+      "SCD2 与事实表如何关联？",
+      "拉链与 SCD2 关系？"
+    ],
+    "answer": "讲生效区间关联；举例组织调整前后渠道业绩归属。展示你对时间区间建模的熟练。",
+    "pitfalls": "只用当前维表刷历史；没有代理键。",
+    "bonus": "规则版本本身也可视为一种 SCD。"
+  },
+  {
+    "id": "kpi",
+    "name": "指标体系 / 北极星 / KPI 拆解",
+    "en": "Metrics System / North Star / KPI Tree",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "指标",
+      "北极星",
+      "KPI",
+      "拆解"
+    ],
+    "one": "用分层指标对齐战略与执行：北极星指引方向，KPI 树把目标拆到可行动杠杆。",
+    "detail": "好的指标体系有定义、口径、负责人、更新频率、应用场景。北极星指标反映长期价值（如健康收入），下方拆为投入/过程/结果指标。销售运营常用：达成率、佣金成本率、渠道产出、周期时间、一次通过率。核心是避免指标打架与虚荣指标。对你这类复合背景，把「准时准确发放率」纳入运营北极星，能把技术交付与业务结果连起来。",
+    "deep": [
+      {
+        "t": "北极星指标怎么选",
+        "c": "北极星应反映「用户/业务长期价值」，且可拆解、可影响。销售运营示例：健康收入（而非纯放号量）、准时准确发放率（运营质量）。自检问题：这个指标涨了，业务真的变好了吗？若「放号量」涨但 ARPU 崩，说明北极星选错。"
+      },
+      {
+        "t": "领先指标 vs 滞后指标",
+        "c": "滞后：结果指标（收入、达成率），事后看；领先：过程指标（DOU、套餐续约率、审批一次通过率），可预测未来结果。销售运营组合：滞后看结果、领先抓过程。佣金场景：发放完成率是滞后，「校验一次通过率」是领先。"
+      },
+      {
+        "t": "KPI 树/拆解示例",
+        "c": "北极星：健康佣金收入 = 放号量 × 单号佣金 × 留存质量。拆：放号量（渠道产能×转化率）、单号佣金（产品结构×单价）、留存（ARPU×存续时长）。每个叶子都有 Owner 和动作。面试用电信指标拆解（ARPU/Churn）最有说服力。"
+      },
+      {
+        "t": "指标口径治理",
+        "c": "同一指标多个口径是数据团队最大痛点：指标字典（唯一公式+数据源+Owner）+ 指标血缘 + 变更评审（改口径要公示）。用你做过指标层的经验讲「口径在数仓层定义，报表只引用」。与 Power BI 语义模型治理联动。"
+      }
+    ],
+    "analogy": "你做过流失预警与电信指标（ARPU/Churn），天然理解「结果指标+过程杠杆」。把佣金 SLA 达成率纳入过程指标即可与 JD 对齐。",
+    "jd": "搭建销售运营看板与管理驾驶舱，支持目标拆解与复盘。",
+    "questions": [
+      "如何选销售运营的北极星？",
+      "领先指标与滞后指标例子？",
+      "指标口径冲突如何治理？"
+    ],
+    "answer": "结合电信经验谈 ARPU/Churn 与过程指标（DOU、套餐续约率）；提出佣金场景可用「准时准确发放率」作运营北极星之一。强调指标字典与数仓一致性。",
+    "pitfalls": "指标过多；只有结果没有过程；口径多头。",
+    "bonus": "每个 KPI 写清：公式、数据源、Owner、刷新、用途。"
+  },
+  {
+    "id": "rule-engine",
+    "name": "佣金规则引擎",
+    "en": "Commission Rule Engine",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "佣金",
+      "规则引擎",
+      "计算"
+    ],
+    "one": "把佣金政策配置化执行的系统能力：规则、优先级、版本、试算与批量计算。",
+    "detail": "规则引擎将「人读的政策」变成「可执行的规则集」，支持条件、公式、封顶、拆分、追回等。核心要素：版本与生效期、优先级冲突、试算、审计日志、与主数据对齐。高级岗位要懂业务翻译与边界案例，而不只是编码。可解释性决定争议能否快速关闭，也直接影响佣金 SLA。你在设备/时间/区间模型上的深度是面试主叙事。高级岗位考察的是业务翻译、边界案例与审计解释，而不只是会写公式。",
+    "deep": [
+      {
+        "t": "规则表设计（dim_rule 示例）",
+        "c": "字段：rule_id、rule_name、rule_type（阶梯/封顶/保底/加速器/SPIFF）、优先级、生效区间、适用条件（产品线/SKU/渠道/客户类型）、计算参数（比例、阈值、系数）、状态（草稿/生效/停用）。政策变更 = 新增版本 + 切换生效，不改历史。"
+      },
+      {
+        "t": "规则冲突如何裁决",
+        "c": "两类冲突：同层规则命中多条 → 按优先级（数字小者优先）或互斥条件设计；跨层（基础 vs 加码）→ 计算顺序固定（先基础、后加码、再封顶）。面试讲「规则命中路径可解释：这条佣金是命中哪条规则、什么参数算出来的」。"
+      },
+      {
+        "t": "试算与历史重算",
+        "c": "试算：用候选规则跑历史数据，对比新旧结果差异报表，业务确认后再切换（避免上线暴雷）；历史重算：政策追溯（如补发）时用当时规则版本重算。要点：试算不改正式数据、重算有版本快照。与 UAT 联动。"
+      },
+      {
+        "t": "可解释性设计",
+        "c": "每笔佣金可回溯：命中规则、参数、计算步骤（审计日志）。争议处理时能回答「这笔为什么是这个数」。这是佣金 SLA 的「争议关闭时效」的技术前提。面试主叙事：设计取舍（区间还是阶梯、封顶口径）、对账策略、边界案例。"
+      },
+      {
+        "t": "引擎与处理台的关系",
+        "c": "你的 commission-calculator.html 就是规则引擎的演示：规则表 CRUD、七步计算顺序、异常闸门。面试打开演示：改一条规则 → 重算 → 观察变化 → 讲「政策版本」表达。这把优势变成可演示的实战资产。"
+      }
+    ],
+    "analogy": "这正是你的强项：设备/时间/区间模型、套餐到期、复杂条件组合。面试应主导讲述设计取舍与对账策略。",
+    "jd": "维护或优化佣金计算逻辑，保障政策落地与可解释。",
+    "questions": [
+      "规则冲突如何裁决？",
+      "如何支持政策试算？",
+      "历史重算策略？"
+    ],
+    "answer": "详细讲你的模型：区间命中、优先级、封顶、回溯。强调版本锁定与锁数快照。把引擎与 SLA、DQ 串联。",
+    "pitfalls": "规则硬编码难变更；无试算直接全量；解释性差。",
+    "bonus": "每笔佣金可回溯到规则版本与命中路径。"
+  },
+  {
+    "id": "uat",
+    "name": "UAT",
+    "en": "User Acceptance Testing",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "UAT",
+      "验收",
+      "测试",
+      "上线"
+    ],
+    "one": "由业务用户在类生产环境验证系统是否满足业务需求的验收测试。",
+    "detail": "UAT 关注「能不能拿来做生意」，不是单元测试替身。包含用例、数据准备、缺陷分级、签字、回滚标准。佣金规则上线前 UAT 尤为关键：抽样案例、边界账期、负向用例。核心要素：业务 Owner、通过标准、环境与权限、痕迹保留。没有 UAT 的规则上线，等于把生产当试验场，极易打穿佣金 SLA。把 UAT 退出标准与规则版本绑定，是防止生产试错的关键组织习惯。",
+    "deep": [
+      {
+        "t": "UAT 与 QA/开发自测的分工",
+        "c": "开发自测：单元/接口层，验证「代码按需求实现」；QA：系统级功能/回归，验证「系统功能完整」；UAT：业务用户验证「能不能支撑真实业务」（真实场景、真实口径）。开发自测冒充 UAT 是常见错误——UAT 必须有业务人员参与并签字。"
+      },
+      {
+        "t": "佣金 UAT 用例设计",
+        "c": "正向：各规则类型至少一例（阶梯/封顶/SPIFF/加速器）；边界：封顶临界、区间临界、退货全额/部分；负向：规则未匹配、重复单、跨期单；抽样：按金额分层（高金额全验、中低金额抽样）。准备「预期结果对照表」，逐条核对差异。"
+      },
+      {
+        "t": "退出标准（Exit Criteria）",
+        "c": "写清楚才算结束：所有 P0/P1 缺陷关闭；抽样通过率 ≥ 99%；关键业务场景（如发放包）验证通过；业务签字归档。退出标准与规则版本号绑定存档——「UAT 签字 + 版本号」是上线审计证据。"
+      },
+      {
+        "t": "UAT 时间不够怎么压缩风险",
+        "c": "风险优先：高金额、新规则、历史易错渠道先验；对照组：与现系统并行跑一个账期对比；补测清单：未覆盖项明确列出并给后续补测计划。诚实暴露未覆盖范围，比假装全测完更安全。"
+      }
+    ],
+    "analogy": "你上线佣金或报表前的业务核对，就是 UAT。AI Agent 上线前的人工抽检也是同类门禁。",
+    "jd": "参与或组织佣金/流程/报表变更的业务验收。",
+    "questions": [
+      "UAT 与 QA 测试如何分工？",
+      "如何设计佣金 UAT 用例？",
+      "UAT 时间不够怎么压缩风险？"
+    ],
+    "answer": "按风险抽样：高金额、新规则、历史易错渠道；明确退出标准。说明你会准备对照表与差异解释。",
+    "pitfalls": "开发自测冒充 UAT；无业务签字；环境数据失真。",
+    "bonus": "UAT 签字与规则版本号绑定归档。"
+  },
+  {
+    "id": "raci",
+    "name": "RACI",
+    "en": "Responsible Accountable Consulted Informed",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "RACI",
+      "职责",
+      "协同",
+      "治理"
+    ],
+    "one": "用四类角色澄清每个活动的执行者、最终负责者、咨询方与知会方。",
+    "detail": "RACI 矩阵把「谁该干什么」写清楚，避免都负责等于都不负责。Accountable 必须唯一。销售运营跨业务、财务、IT、渠道时尤其有用。核心要素：活动拆解、角色真实、与流程节点对齐、定期修订。它是落地 SLA 与变革管理的组织底座：没有清晰 A/R，超时只能互相指责。矩阵要足够细到可执行，并在月结手册中定期回顾，否则会沦为墙上装饰。",
+    "deep": [
+      {
+        "t": "佣金月结 RACI 示例",
+        "c": "锁数：IT 数据组 R，销售运营 A；计算：运营 R，IT C；校验：运营 R，财务 A（金额正确性）；审批：财务 A，业务 C；发放：财务 R，运营 I；规则变更：运营 R，销售/财务 A。要点：每个节点有且仅有一个 A。"
+      },
+      {
+        "t": "A 与 R 可以是同一人吗",
+        "c": "可以（小团队常见），但「同一活动的 A 不能多于一个」。A 不一定是干活的，而是最终负责拍板与担责的人。面试答「A 唯一是铁律，A 与 R 可以合一，但绝不能有两个 A」。"
+      },
+      {
+        "t": "出现扯皮如何用 RACI 止损",
+        "c": "争议时查矩阵：这事 A 是谁？A 拍板。如果矩阵没写，先补矩阵再谈责任。落地动作：把 RACI 挂进月结手册首页 + 审批流（BPM）里配置节点 Owner，从「人治」变「制度」。"
+      },
+      {
+        "t": "与 SLA 的关系",
+        "c": "SLA 每个节点的 Owner 就是 RACI 的 A/R。没有 RACI，SLA 违约了都不知道该找谁。面试组合拳：SLA 定目标 → RACI 定责任 → 监控定证据 → 复盘定改进。"
+      }
+    ],
+    "analogy": "你有跨层级沟通经验：把沟通对象映射为 R/A/C/I，就是结构化协同。佣金 SLA 每个节点都应有 A 与 R。",
+    "jd": "推动跨部门项目时明确职责，保障交付。",
+    "questions": [
+      "佣金月结的 RACI 怎么画？",
+      "A 与 R 可以是同一人吗？",
+      "出现扯皮如何用 RACI 止损？"
+    ],
+    "answer": "现场举节点：锁数 IT 为 R、业务为 A；计算运营为 R；审批财务为 A 等。强调 A 唯一。结合你跨层级沟通案例。",
+    "pitfalls": "多个 A；矩阵太粗无用；写完不执行。",
+    "bonus": "把 RACI 贴进月结手册首页。"
+  },
+  {
+    "id": "change",
+    "name": "变革管理",
+    "en": "Change Management",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "变革",
+      "推广",
+      "培训",
+      "采纳"
+    ],
+    "one": "有计划地推动组织接受新流程/系统，管理阻力并提升采纳率。",
+    "detail": "技术上线不等于价值实现。变革管理覆盖利益相关方分析、沟通、培训、激励机制、反馈与加固。ADKAR 等模型常用。销售运营上新佣金规则或 BPM 时，一线不理解会导致阴奉阳违与数据质量崩盘。核心衡量是采纳率与行为改变，而不是培训场次。你推自动化时遇到的习惯阻力，正是变革管理现场。衡量变革成功要看行为与采纳指标，而不是培训场次或系统上线日。",
+    "deep": [
+      {
+        "t": "ADKAR 模型",
+        "c": "Awareness（认知：为什么变）；Desire（渴望：个人利益相关）；Knowledge（知识：怎么用）；Ability（能力：真的会用）；Reinforcement（巩固：激励与支持）。逐层推进：先讲清「为什么」，再谈「怎么用」。跳过认知直接培训，是最常见失败。"
+      },
+      {
+        "t": "如何识别变革阻力",
+        "c": "阻力信号：口头应付、私下抱怨、继续用老办法、数据异常（不按新规则录入）。识别方法：利益相关方分析（谁会赢/谁会输）、种子用户访谈、使用数据监控。阻力往往来自「担心自己没价值」或「习惯成本」。对策：拉利益相关方参与设计，给缓冲与试点。"
+      },
+      {
+        "t": "培训之后如何衡量采纳",
+        "c": "行为指标：新流程使用率、工单通过率、录入质量（字段缺失率）；业务指标：差错率下降、周期缩短。定期（30/60/90 天）追踪采纳曲线，找「不会用」还是「不想用」。培训场次和满意度问卷不是采纳证据。"
+      },
+      {
+        "t": "规则变化怎么沟通不翻车",
+        "c": "提前沟通 + 给过渡期 + 试算结果对比（业务看到自己佣金变化）+ FAQ + 反馈通道。最差做法：发个通知就上线。你的经验：推自动化时先给「旧流程对照」演示，降低恐惧。"
+      }
+    ],
+    "analogy": "你推自动化或新报表时遇到的「业务不愿改习惯」，就是变革管理现场。AI Agent 落地更需要信任建设。",
+    "jd": "新工具/新流程推广，不只交付系统。",
+    "questions": [
+      "如何识别变革阻力？",
+      "培训之后如何衡量采纳？",
+      "规则变化如何沟通才不翻车？"
+    ],
+    "answer": "讲一次推动经历：种子用户、前后对比、反馈迭代。提出采纳指标（使用率、工单下降）。",
+    "pitfalls": "只发通知当变革；忽视中层经理；变更过频。",
+    "bonus": "先赢一场小胜利再铺开。"
+  },
+  {
+    "id": "ai-gov",
+    "name": "AI 治理",
+    "en": "AI Governance",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "AI",
+      "治理",
+      "合规",
+      "Agent"
+    ],
+    "one": "对 AI 系统的数据、模型、风险、伦理与运营进行制度化管控，确保可用可信。",
+    "detail": "AI 治理包括：用例准入、数据合规、模型评估、幻觉/偏见风险、人工复核、监控与下线、权限与审计。对销售运营，可能涉及智能问答政策、异常检测、Agent 自动处理工单。核心是「人机边界」与可追责。金额类与合规类决策应提高人工门槛。你的 Agent、知识图谱、流失预警实践，可以直接映射为治理案例。把治理要求写进上线检查清单，比事后追责更能保护佣金与客户体验。",
+    "deep": [
+      {
+        "t": "AI 治理的六个要素",
+        "c": "① 用例准入：什么场景允许用 AI（影响面、出错代价评估）；② 数据合规：训练/检索数据脱敏、授权、保留期限；③ 模型评估：离线评估集 + 上线前红线测试（幻觉率、关键事实错误率）；④ 人机边界：哪些决策必须人工（金额、合规、对外承诺）；⑤ 监控：输入输出审计、漂移检测、错误率趋势；⑥ 下线机制：表现恶化如何回退。"
+      },
+      {
+        "t": "Agent 自动处理争议的边界",
+        "c": "分层授权：Agent 可做的事（检索政策、起草回复、归类工单）vs 必须人工的事（金额裁决、对外承诺、补偿方案）。设计原则：置信度阈值 + 人工确认路由 + 全量审计日志。佣金争议金额类决策默认人工终审。"
+      },
+      {
+        "t": "如何监控模型漂移",
+        "c": "输入漂移：用户提问分布变化；输出漂移：回答风格/事实变化；业务漂移：知识库更新后回答正确率波动。监控手段：定期评估集回测、线上抽样人工标注、错误反馈闭环（用户纠错回流训练/知识库）。"
+      },
+      {
+        "t": "知识库过期治理",
+        "c": "RAG 场景的知识库要管生命周期：内容所有者、更新频率、版本、过期标记、来源溯源（回答必须可引到原文）。你的知识图谱/行业百科经验直接适用：答案带来源、知识库有版本。"
+      },
+      {
+        "t": "AI 治理与销售运营结合",
+        "c": "场景示例：AI 政策问答（治理：知识库权威来源+人工复核按钮）、AI 异常初筛（治理：阈值+人工确认）、AI 催办助手（治理：话术模板+不自动对外承诺）。面试话术：「AI 建议，规则引擎裁决，人工终审——三条线」。"
+      }
+    ],
+    "analogy": "你做过 AI Agent、知识图谱、流失预警——直接讲模型监控、人工闭环、错误案例库，就是 AI 治理实践。",
+    "jd": "在运营场景引入 AI 时控制风险，避免自动化误伤佣金与客户。",
+    "questions": [
+      "Agent 自动处理争议的边界怎么定？",
+      "如何监控模型漂移？",
+      "知识库过期如何治理？"
+    ],
+    "answer": "用你的 Agent/预警项目：人类在环、置信度阈值、审计日志、回滚。强调佣金金额类决策需更高人工门槛。",
+    "pitfalls": "为 AI 而 AI；无审计；训练数据含敏感未脱敏。",
+    "bonus": "AI 建议，规则引擎裁决，人工终审——三条线。"
+  },
+  {
+    "id": "telecom-kpi",
+    "name": "电信行业指标：ARPU / Churn / MOU / DOU",
+    "en": "ARPU, Churn, MOU, DOU",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "电信",
+      "ARPU",
+      "Churn",
+      "MOU",
+      "DOU"
+    ],
+    "one": "电信常用经营指标：每用户收入、流失率、语音时长、流量使用量。",
+    "detail": "ARPU（Average Revenue Per User）衡量用户价值；Churn 衡量流失；MOU（Minutes of Use）看语音；DOU（Data of Use，常指人均流量）看数据使用。它们支撑套餐设计、渠道效能、挽留策略与佣金政策评估。口径需注意：出账收入还是现金、是否含税、用户分母定义、主动/被动流失。高级销售运营要把这些质量指标反哺渠道佣金，而不是只冲放号量。",
+    "deep": [
+      {
+        "t": "口径细节（面试深挖点）",
+        "c": "ARPU 分子：出账收入 vs 现金收入 vs 含税；分母：平均在网用户（期初+期末）/2。Churn：主动流失（销户/携转）vs 被动（欠费停机）；分母用期初还是平均。MOU/DOU：全量用户还是活跃用户。口径不同数字天差地别，横向对比必须对齐口径。"
+      },
+      {
+        "t": "ARPU 上升但 Churn 恶化说明什么",
+        "c": "典型解释：大额存量用户（高价值）流失，新用户拉低了平均但规模扩大，或提价导致低价值用户离网。这是「平均数的陷阱」：要看分层分布（高/中/低价值用户各自 ARPU 与 Churn），而不是只看均值。面试答出「拆层看分布」就是高级分析。"
+      },
+      {
+        "t": "如何避免渠道「刷」低质量用户",
+        "c": "佣金与质量挂钩：发佣条件加「在网存续 N 个月」「ARPU 达标」「套餐结构达标」；追回机制：未达标扣回前期佣金；质量监控：渠道新增用户的 90 天 Churn 率看板。这正对应你佣金模型 + 电信指标的组合优势。"
+      },
+      {
+        "t": "与销售运营结合",
+        "c": "渠道管理看板：各渠道新增量、新增用户质量（ARPU/Churn/DOU）、佣金成本率（佣金 ÷ 新增收入）、单位获客成本（CAC）。优化目标：不是放号量最大，而是「质量调整后的净收入」最大。"
+      }
+    ],
+    "analogy": "这是你的行业母语。与销售运营结合：渠道佣金是否带来高质量 ARPU、低 Churn 用户，而不是只冲装机量。",
+    "jd": "用行业指标解读销售结果，反哺佣金与渠道政策。",
+    "questions": [
+      "ARPU 上升但 Churn 恶化说明什么？",
+      "如何避免渠道「刷」低质量用户？",
+      "DOU 与套餐匹配如何影响投诉与佣金追回？"
+    ],
+    "answer": "用移动项目经验给出口径与案例；提出佣金应挂钩质量指标（存续、套餐结构），不只看放号量。",
+    "pitfalls": "口径不统一横向乱比；忽略欠费与折扣。",
+    "bonus": "把质量指标写进佣金规则，比事后追回更有效。"
+  },
+  {
+    "id": "sql",
+    "name": "SQL",
+    "en": "Structured Query Language",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "SQL",
+      "窗口函数",
+      "分析"
+    ],
+    "one": "结构化查询语言，是取数、对账、指标计算与数据质量探查的基础工具。",
+    "detail": "在销售运营中，SQL 用于明细对账、窗口排名、账期区间、漏斗与留存、质量规则探查。窗口函数是处理「分区内排序/累计/前后值」的核心能力。高级岗位要求的不只是语法，而是用 SQL 表达业务正确性，并把探查规则沉淀进质量体系。你已具备窗口函数能力，应把 SQL 当作连接 ETL、DQ、流程挖掘的通用语言来展示。",
+    "deep": [
+      {
+        "t": "面试高频：窗口函数四题",
+        "c": "① 连续流失标记：LAG(月份) 判断上月是否在网，GROUP BY 用户找断档；② 佣金区间重叠检测：区间 [start,end] 两两判断 start < b.end AND end > b.start；③ 累计佣金排名：RANK() OVER (PARTITION BY 账期 ORDER BY 佣金 DESC)；④ 会话序列：按时间排序取 LEAD 算间隔。每个都准备一个真实业务故事。"
+      },
+      {
+        "t": "对账 SQL 思路（佣金）",
+        "c": "三查：明细 SUM vs 汇总表（勾稽）；本期 vs 上期差异（波动）；按渠道/产品分层汇总 vs 源系统（交叉验证）。实现：HAVING 聚合断言语 + CASE WHEN 异常标记 + 差异报表。把对账 SQL 写成语料（模板）复用，就是 DQ 规则的雏形。"
+      },
+      {
+        "t": "大表增量对账",
+        "c": "水位线（watermark）取增量 + 主键去重 + 汇总行数对比；性能：分区裁剪、索引、EXISTS 替代 IN。面试答「先定口径（以哪个系统为准），再设计增量窗口，最后断言行数与金额」。"
+      },
+      {
+        "t": "SQL 在数据质量/流程分析中的应用",
+        "c": "质量规则即 SQL 断言（NOT NULL、UNIQUE、金额范围、跨表勾稽）；流程挖掘可用 SQL 还原路径（listagg 聚合路径）。把 SQL 从「取数工具」升级为「治理工具」，是高级运营的关键转变。"
+      },
+      {
+        "t": "性能与正确性平衡",
+        "c": "正确性优先：先保证结果对（粒度、口径、边界），再优化性能（EXPLAIN、分区、避免笛卡尔积）。面试故事里体现「先对后快」是加分点。"
+      }
+    ],
+    "analogy": "你已熟悉窗口函数——这是明确优势。面试可用佣金区间命中、连续流失、套餐切换序列等题展示。",
+    "jd": "日常分析、校验、临时取数、与数仓协同的必备技能。",
+    "questions": [
+      "用窗口函数做连续流失标记",
+      "如何写佣金区间重叠检测",
+      "大表增量对账思路"
+    ],
+    "answer": "准备一到两个你真实的复杂 SQL 故事：业务问题、关键语句思路、性能处理。主动连接质量断言。",
+    "pitfalls": "只会点点击 BI；忽视执行计划；用错误粒度聚合。",
+    "bonus": "带脱敏 SQL 片段比空谈熟练度更强。"
+  },
+  {
+    "id": "python-auto",
+    "name": "Python 自动化",
+    "en": "Python Automation",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "Python",
+      "自动化",
+      "报表"
+    ],
+    "one": "用 Python 完成取数、转换、校验、分发的脚本化与调度化，减少手工。",
+    "detail": "报表自动化常见链路：连接库或 API、清洗、校验、导出或邮件或落表、日志。工程要点：配置化、异常处理、重试、密钥管理、可观测。它是迈向 ETL、RPA、OE 的能力底座。面试时不要只说「我会写脚本」，而要说「我如何保证脚本失败可见、结果可断言、可交接给平台」。把脚本的失败可见性、断言与交接路径讲清楚，就能自然过渡到 ETL/RPA 话题。",
+    "deep": [
+      {
+        "t": "自动化脚本的结构模板",
+        "c": "标准骨架：配置加载（config.yaml/环境变量）→ 连接与鉴权 → 抽取 → 转换 → 断言校验（assert 关键金额/行数）→ 输出（文件/库/邮件）→ 日志（结构化）→ 异常通知（失败即告警）。面试展示你会按这个骨架写，就是「工程化脚本」。"
+      },
+      {
+        "t": "失败可见性设计",
+        "c": "三件套：日志（执行到哪步）、退出码（失败非 0）、告警（邮件/群消息/任务平台）。关键金额断言失败即非零退出，阻止错误分发——这是脚本版的质量门禁。"
+      },
+      {
+        "t": "如何避免脚本变成影子 IT",
+        "c": "个人电脑跑关键任务是大忌：代码进 Git（版本管理）、依赖锁定（requirements/环境）、关键任务迁移到调度平台（Airflow/Windows 计划任务+监控）、文档化（运行手册）。面试话术：「脚本试点 → 平台沉淀」路径。"
+      },
+      {
+        "t": "与 ETL/RPA 的交接",
+        "c": "脚本积累到一定程度应沉淀为正式管道：同一逻辑从 Python 迁移到 ETL 平台（或保留 Python 但纳入调度与告警体系）；界面操作部分移交 RPA。面试主动讲这个演进路径，显示你不是「只会写脚本」而是有平台观。"
+      },
+      {
+        "t": "密钥与安全",
+        "c": "凭据不进代码：环境变量/Key Vault/配置文件（.gitignore 排除）；最小权限；审计。销售数据敏感（佣金金额），更要讲安全习惯。"
+      }
+    ],
+    "analogy": "你的现有强项。迁移话术：Python 到 ETL 范式；Python 到 RPA 选型互补；脚本质量门禁到数据质量体系。",
+    "jd": "提升运营效率，承接重复性数据工作，并为平台化打基础。",
+    "questions": [
+      "自动化失败如何通知？",
+      "如何避免脚本变成影子 IT？",
+      "与正式 ETL 平台如何交接？"
+    ],
+    "answer": "讲你的自动化项目结构、日志、校验；提出「脚本试点→平台沉淀」路径，显示全局观。",
+    "pitfalls": "个人电脑跑关键任务；无版本管理；无校验。",
+    "bonus": "关键金额断言失败即非零退出，阻止错误分发。"
+  },
+  {
+    "id": "commission-model",
+    "name": "佣金模型",
+    "en": "Commission Modeling",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "佣金模型",
+      "政策",
+      "计算"
+    ],
+    "one": "将销售激励政策抽象为可计算、可解释、可审计的数据与规则结构。",
+    "detail": "复杂佣金涉及产品或设备、时间生效、区间累进、封顶、拆分、追回、多角色分润。模型质量决定能否按时准确发放。你需要在业务灵活与系统稳定之间平衡。高级销售运营岗位会把佣金模型与 SLA、UAT、数据质量、规则引擎一起考察：你不仅要算得对，还要讲得清、发得稳。把模型与锁数快照、版本、对账门禁一起讲，能显示你具备运营级交付意识。",
+    "deep": [
+      {
+        "t": "如何建模累进区间",
+        "c": "两种主流：阶梯式（超过阈值部分按新比例，如 0-10 万 3%、10 万以上 5% 只对超出部分）；全额式（达到阈值整单按新比例）。口径必须与业务确认并写文档——这是最容易扯皮的坑。实现：CASE WHEN 区间判断 + 分段计算。"
+      },
+      {
+        "t": "设备与套餐绑定如何影响佣金",
+        "c": "典型场景：卖合约机 + 套餐组合，佣金按设备毛利 + 套餐在网时长分月返还。复杂度：捆绑拆分（设备佣金一次性、套餐佣金分期）、解约扣回、换机续约衔接。你的套餐到期经验直接适用：到期月、续约月、解约月的佣金逻辑不同。"
+      },
+      {
+        "t": "如何解释一笔异常佣金",
+        "c": "可解释性三件套：输入快照（当时的数据）、规则版本（命中的政策）、计算步骤（参数代入过程）。异常佣金调查路径：明细→命中规则→规则参数→源数据。这对应处理台里的「订单明细 + 异常质量闸门」。"
+      },
+      {
+        "t": "佣金模型与 SLA/DQ 串联",
+        "c": "模型正确性（算得对）是 SLA（发得准）与 DQ（质量门禁）的输入。面试叙事：模型 → 勾稽 → 门禁 → 发放 SLA。锁数快照 + 规则版本 + 对账断言是「运营级交付意识」的体现。"
+      },
+      {
+        "t": "多角色分润与追回",
+        "c": "分润：一笔收入分给多个角色（直销/渠道/督导/区域）按比例与条件；追回：解约/退货时按当时规则扣回。坑：分润比例变更的历史处理、追回与当期佣金合并口径。"
+      }
+    ],
+    "analogy": "你的核心优势领域，应作为面试主叙事：复杂度、坑、对账、沟通。",
+    "jd": "理解并优化现有佣金计算，支持政策迭代。",
+    "questions": [
+      "如何建模累进区间？",
+      "设备与套餐绑定如何影响佣金？",
+      "如何解释一笔异常佣金？"
+    ],
+    "answer": "用具体项目讲输入输出、关键表、边界案例、与业务共创规则的过程。主动挂上 SLA/DQ 意识显示成长。",
+    "pitfalls": "过度拟合特例；文档缺失；无法重放。",
+    "bonus": "可重放、可解释、可版本化——三件套。"
+  },
+  {
+    "id": "ai-agent",
+    "name": "AI Agent",
+    "en": "AI Agent",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "AI Agent",
+      "智能体",
+      "自动化"
+    ],
+    "one": "能感知目标、调用工具、多步推理并行动的 AI 系统，而不仅是单次问答。",
+    "detail": "Agent 通常包含规划、工具调用（检索/SQL/工单）、记忆与反馈。在销售运营可用于：政策问答、异常初筛、催办助手。必须配合权限与治理。金额与合规决策要有人类在环。你的实践是差异化优势，面试应主动对比 Agent、RPA、BPM 的边界，显示你不是只会追新技术。清楚人机边界后，Agent 才能成为运营助手，而不是不可审计的黑盒风险。",
+    "deep": [
+      {
+        "t": "Agent 架构四要素",
+        "c": "规划（任务拆解：把「整理月结报告」拆成取数→算指标→生成→发送）；工具（白名单：SQL 查询器、政策检索器、邮件发送器）；记忆（短期：当前任务上下文；长期：常用政策/历史决策）；反馈（执行结果校验、失败重试、人工反馈回流）。"
+      },
+      {
+        "t": "Agent 与 RPA/BPM 如何配合",
+        "c": "分工：Agent 负责「判断与生成」（决策辅助：政策问答、异常初筛、草拟建议）；RPA 负责「界面操作执行」（点按钮、搬运）；BPM 负责「流程状态与审批」（正式流转）。示例：Agent 产出工单建议 → BPM 走审批 → RPA 落库执行。三者互补而非替代。"
+      },
+      {
+        "t": "如何评估 Agent 是否可上线",
+        "c": "评估集（QA 集）：覆盖常见/边界/陷阱问题，测准确率与幻觉率；红线测试：金额类、合规类问题必须拒绝或转人工；成本评估：单次调用成本 × 量；灰度：先内部小范围再扩大。你的经验：评估集 + 人工抽检 + 错误案例库。"
+      },
+      {
+        "t": "幻觉导致错答政策怎么办",
+        "c": "多层防线：检索增强（RAG 带来源引用，答案必须可溯源）；置信度阈值（低置信转人工）；知识库权威管理（政策原文唯一来源）；人工确认按钮（涉及金额/承诺必须人确认）；错误反馈闭环（用户纠错回流更新知识库）。"
+      },
+      {
+        "t": "与知识图谱/RAG 结合",
+        "c": "你的知识图谱/行业百科经验：政策知识图谱（概念-规则-流程关联）+ RAG 检索 = Agent 的事实底座。面试讲「我给 Agent 配了带版本的知识库和审计日志，回答必须带来源」。"
+      }
+    ],
+    "analogy": "直接讲你的 Agent 与知识图谱经验：工具边界、失败回退、评估集。",
+    "jd": "探索智能化运营，降本增效，但需可控。",
+    "questions": [
+      "Agent 与 RPA 如何配合？",
+      "如何评估 Agent 是否可上线？",
+      "幻觉导致错答政策怎么办？"
+    ],
+    "answer": "强调工具白名单、检索增强、人工确认；与 RPA/BPM 分工：Agent 决策辅助，RPA 执行点击，BPM 管流程。",
+    "pitfalls": "无限工具权限；无评估集；替代关键审批。",
+    "bonus": "Agent 产出工单建议，BPM 走正式审批。"
+  },
+  {
+    "id": "churn-model",
+    "name": "流失预警模型",
+    "en": "Churn Prediction Model",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "流失",
+      "预警",
+      "模型"
+    ],
+    "one": "预测用户或客户流失风险并驱动干预动作的模型与运营闭环。",
+    "detail": "包含标签定义、特征、算法、阈值、干预策略、效果回测。关键不只是 AUC，而是「预警→动作→挽留」闭环与成本收益。与销售运营结合可优化渠道质量与佣金追回。你可以把这套闭环迁移到异常监控：把「日佣金波动」当成另一种预警对象，用分层阈值与干预手册响应。把预警当运营系统而不是算法作业，才能迁移到异常监控与质量改进场景。",
+    "deep": [
+      {
+        "t": "标签定义（业务可用性）",
+        "c": "流失定义：90 天无出账/无使用/销户？主动 vs 被动（欠费停机）？标签窗口：观察期（特征用 T-90 到 T-30）+ 表现期（T-30 到 T 是否流失）。标签定义错误，模型再准也没用——先和业务对齐「什么算流失」。"
+      },
+      {
+        "t": "如何避免预警过多销售疲劳",
+        "c": "分层策略：高危（精准率高，销售必跟）/中危（批量策略：短信/优惠券）/低危（观察）。阈值选择看成本：干预成本 vs 挽留价值，不是单纯调阈值。监控「干预覆盖率」与「有效干预率」。你的经验：把「预警→动作→回测」闭环讲清楚。"
+      },
+      {
+        "t": "如何评估干预增量效果",
+        "c": "不能简单比较「挽留的 vs 没挽留的」（选择性偏差：高危用户才被干预）。方法：随机实验（理想）、准实验（PSM 倾向匹配、DID 双重差分）、对比「干预前-干预后」同一用户组趋势。面试提到「增量效果而不是 AUC」非常加分。"
+      },
+      {
+        "t": "迁移到异常监控",
+        "c": "流失预警（用户行为波动）→ 佣金异常检测（金额/渠道波动）：同构的「信号→阈值→响应→回测」框架。分层阈值 + 干预手册（runbook）+ 效果回测 = 业务级监控体系。"
+      }
+    ],
+    "analogy": "你的项目经验；可迁移到异常监控（业务波动探测）与 OE 改进项目。",
+    "jd": "用数据科学方法支撑销售质量与存量经营。",
+    "questions": [
+      "标签如何定义才业务可用？",
+      "如何避免预警过多销售疲劳？",
+      "如何评估干预增量效果？"
+    ],
+    "answer": "讲清标签窗口、精准率与召回权衡、分层策略、对照实验或准实验。连接到渠道佣金质量。",
+    "pitfalls": "只做模型不上干预；阈值过松导致疲劳；忽略成本。",
+    "bonus": "用增量效果而不是 AUC 向业务汇报。"
+  },
+  {
+    "id": "telecom-exp",
+    "name": "电信行业经验",
+    "en": "Telecom Domain Experience",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "电信",
+      "套餐",
+      "移动",
+      "到期"
+    ],
+    "one": "对电信套餐、渠道、到期续约、计费与销售激励场景的业务理解与项目经验。",
+    "detail": "电信销售运营涉及号卡、套餐、融合业务、渠道分层、佣金与质量考核。到期计算、合约约束、存续期与追回规则是常见复杂度来源。有移动项目与套餐到期经验，意味着你能更快读懂业务语言，减少「技术正确但业务错」的风险。这在对接 BPM、佣金 SLA、指标体系时是隐性加速器。行业语言熟练能显著缩短读懂政策与渠道规则的时间，降低口径误解风险。",
+    "deep": [
+      {
+        "t": "套餐生命周期 × 佣金事件",
+        "c": "开卡月（首月佣金+设备补贴）、正常在网月（月返/分成）、到期月（续约触发点：续约佣金）、解约月（扣回/追回）。准备一张对照表：生命周期阶段 × 佣金事件 × 规则要点。面试主动画这张表，比讲「我在移动做过」有说服力十倍。"
+      },
+      {
+        "t": "渠道分层政策常见坑",
+        "c": "分层（省级/市级/门店/线上）比例不同；跨层串货（低层渠道卖高层政策）；渠道任务达标率影响结算（达标才给全比例）；结算主体（对公/对私）与税务。坑：渠道编码不统一导致归因错误——这正对 DQ 里的「一致性」。你的分析经验可以现场举例。"
+      },
+      {
+        "t": "如何用数据发现套餐错配",
+        "c": "信号：高 DOU 用户用低流量套餐、低用量用户占高套餐、投诉高频用户套餐与用量不匹配。方法：用量 vs 套餐容量分箱对比、ARPU 与套餐档位矩阵。发现后驱动营销（升档/降档）——这是销售运营增值点。"
+      },
+      {
+        "t": "电信术语速览",
+        "c": "BSS/OSS（业务支撑/运营支撑系统）、CRM、计费（Billing）、账期（出账月）、融合业务（宽带+手机+IPTV）、携号转网、存量经营（在网用户经营）vs 增量（新用户）。面试中准确使用这些术语，本身就是行业经验的证明。"
+      }
+    ],
+    "analogy": "你的背景本身：移动项目、套餐、到期计算。把它讲成「业务建模能力」而不只是「做过项目」。",
+    "jd": "岗位常服务电信或类似高复杂度激励行业，需要快速理解政策与渠道逻辑。",
+    "questions": [
+      "套餐到期如何影响当月佣金？",
+      "渠道分层政策常见坑？",
+      "如何用数据发现套餐错配？"
+    ],
+    "answer": "用具体到期/区间案例说明你如何把业务规则落成计算与校验；强调跨部门翻译能力。",
+    "pitfalls": "只谈技术不谈业务口径；忽略追回与合规。",
+    "bonus": "准备一张「套餐生命周期 × 佣金事件」对照表。"
+  },
+  {
+    "id": "cross-comm",
+    "name": "跨层级沟通",
+    "en": "Cross-level Communication",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "沟通",
+      "协同",
+      "汇报",
+      "对齐"
+    ],
+    "one": "在一线执行、中层协调与高层决策之间切换表达粒度，推动对齐与落地。",
+    "detail": "高级销售运营大量时间在对齐：政策意图、系统约束、财务口径、一线可执行性。跨层级沟通要求：对上讲风险与选项，对中讲路径与 RACI，对下讲操作与例外。它决定 SLA 能否被组织认领，也决定变革能否被采纳。你的复杂项目经历若包含多方拉通，就是优势证据。同一事实对不同层级用不同粒度表达，是推动 SLA 被认领的关键软技能。",
+    "deep": [
+      {
+        "t": "「事实-影响-选项-建议」四段式",
+        "c": "汇报模板：事实（发生了什么，数据/时间/范围）→ 影响（对发放/报表/业务意味着什么，量化）→ 选项（2-3 个可行方案及代价）→ 建议（你推荐哪个，为什么）。对管理层汇报必用：一句话讲完事实+影响，再展开选项。你的数据延迟汇报场景直接套用。"
+      },
+      {
+        "t": "数据延迟时如何向管理层汇报",
+        "c": "错误示范：直接说「ETL 挂了」。正确：①事实：「佣金计算任务因源数据延迟未按时完成，预计影响 3 号节点」；②影响：「若 5 号前无法补齐，10 号发放存在延后风险，涉及约 X 人」；③选项：A 加班补齐（代价）、B 拆分发放（风险）、C 顺延（影响）；④建议：B + 责任人 + 时间点。这就是 SLA 沟通的实操。"
+      },
+      {
+        "t": "如何拒绝不合理的紧急规则变更",
+        "c": "不直接说「不行」，讲代价与替代：①影响评估：「此变更涉及本月已算数据，需要重算 X 单，且 UAT 未覆盖，风险高」；②给替代：下月生效 + 本月用过渡规则（试算对比）；③升级：请业务 A 角色决策并签字。用 RACI 和 SLA 框架把「拒绝」变成「风险管理决策」。"
+      },
+      {
+        "t": "让一线接受新流程",
+        "c": "讲「对他们的好处」而不是「公司的要求」；先试点出案例（前/后对比）；倾听痛点并给缓冲；配套 FAQ 与支持通道。把变革管理方法论落成日常沟通动作。"
+      },
+      {
+        "t": "重要对齐会后输出",
+        "c": "一页书面结论：决定、Owner、截止日期、待办清单。会后邮件/文档把口头共识固化，防止「会后各说各话」——这是高级运营的基本功。"
+      }
+    ],
+    "analogy": "佣金争议、规则上线、数据延迟解释——你多半已经在做。把它结构化为受众分层话术。",
+    "jd": "需要推动业务、IT、财务多方协同，而不是单点做表。",
+    "questions": [
+      "数据延迟时如何向管理层汇报？",
+      "如何拒绝不合理的紧急规则变更？",
+      "如何让一线接受新流程？"
+    ],
+    "answer": "用「事实-影响-选项-建议」四段式；结合 RACI 与变革管理；给真实沟通案例。",
+    "pitfalls": "对谁都讲技术细节；隐瞒风险；承诺无法交付的时点。",
+    "bonus": "重要对齐会后输出一页书面结论：决定、Owner、截止日期。"
+  },
+  {
+    "id": "bigdata-ops",
+    "name": "大数据算子建模",
+    "en": "Big Data Operator Modeling",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "大数据",
+      "算子",
+      "血缘",
+      "DAG"
+    ],
+    "one": "用可视化或代码化算子编排分布式数据处理作业，并管理依赖与血缘。",
+    "detail": "大数据平台算子建模把抽取、关联、聚合、写出等步骤编排成 DAG，强调分区、调度、血缘与重跑。它与 ETL/ELT、断点续跑、数据质量门禁直接相关，也与 BPM 数据模型同构：都是状态化的阶段网络。你的经验是通向 JD「数据管道与流程数据」的最短迁移桥。把血缘、分区重跑与业务断言串起来讲，就能覆盖 ETL、DQ、断点续跑三个短板点。",
+    "deep": [
+      {
+        "t": "如何设计作业依赖避免环依赖",
+        "c": "原则：单向分层（ODS→DWD→DWS→ADS），禁止跨层回环；公共依赖抽象成共享算子；依赖用「就绪条件」而非「时间硬编码」。环依赖检测：拓扑排序/血缘图扫描。面试答「先分层定边界，再用血缘工具防环」。"
+      },
+      {
+        "t": "算子失败如何影响下游 SLA",
+        "c": "关键路径分析：血缘图里找出「锁数→计算→校验→发放」链路，链路中每个算子都有预期完成时间；失败影响评估：影响哪些下游、波及多少业务。这就是把大数据 DAG 与 SLA 结合：关键路径上的算子优先保障。"
+      },
+      {
+        "t": "血缘在争议追溯里怎么用",
+        "c": "血缘回答「这个数怎么来的」：从最终报表反查→中间模型→源表→取数逻辑。争议场景：财务质疑佣金总额，用血缘定位「哪个环节、哪条规则、哪批数据」产生差异。你做过知识图谱（节点-关系）——血缘本质就是数据版知识图谱。"
+      },
+      {
+        "t": "分区与重跑策略",
+        "c": "分区（账期/日期/渠道）设计决定重跑粒度：按分区重跑 vs 全量重跑的成本差几十倍。策略：分区重跑 + 血缘通知下游（下游看到上游重跑，自动重算或告警）。与断点续跑、佣金账期切片一体。"
+      },
+      {
+        "t": "成本与治理",
+        "c": "资源成本：分区裁剪、压缩、冷热分层；治理：作业分级（关键/普通）、告警分级、SLA 绑定。展示你会算「一次全量重跑的成本 vs 分区重跑」。"
+      }
+    ],
+    "analogy": "这是你已有能力。迁移话术：算子建模 → BPM 数据模型；作业监控 → 异常监控；分区重跑 → 断点续跑。",
+    "jd": "支撑销售主题数据生产，或理解现有平台作业以便优化时效与质量。",
+    "questions": [
+      "如何设计作业依赖避免环依赖？",
+      "算子失败如何影响下游 SLA？",
+      "血缘在争议追溯里怎么用？"
+    ],
+    "answer": "讲清 DAG、分区、重跑与对账；主动映射到 ETL、DQ、SLA 术语，显示你能快速融入对方话语体系。",
+    "pitfalls": "只谈工具菜单；不谈业务断言；忽视成本。",
+    "bonus": "带一张脱敏血缘图，标注 SLA 关键路径。"
+  },
+  {
+    "id": "sales-ops",
+    "name": "销售运营全景",
+    "en": "Sales Operations Overview",
+    "type": "transfer",
+    "tags": [
+      "可迁移",
+      "销售运营",
+      "全景",
+      "流程",
+      "赋能"
+    ],
+    "one": "销售运营是连接销售、财务、IT 与市场的枢纽职能：管流程、数据、激励与工具，让销售「卖得更顺、算得更清」。",
+    "detail": "销售运营（Sales Ops）不是单一岗位，而是一组职能的组合：① 流程与治理（SOP、审批流、BPM）；② 数据与洞察（看板、分析、预测）；③ 激励与佣金（政策、计算、发放 SLA）；④ 工具与赋能（CRM、Power Platform、RPA、AI）；⑤ 目标与绩效（配额、KPI、复盘）。\n\n高级销售运营 = 用系统化方法把这五块串成闭环：目标→执行→度量→激励→复盘→改进。它与 OE（运营卓越）天然一体：销售运营就是销售侧的 OE 落地。\n\n面试时把 JD 里的每个关键词放进这五块里定位，能展示你对岗位的整体理解，而不是零散知识点。",
+    "deep": [
+      {
+        "t": "销售运营五大职能详解",
+        "c": "① 流程与治理：渠道准入、合同审批、佣金争议流程（BPM+RACI）；② 数据与洞察：销售漏斗、渠道效能、预测（SQL+BI）；③ 激励与佣金：政策设计、规则引擎、月结 SLA；④ 工具与赋能：CRM 配置、Power Apps 提报、RPA 自动化、AI 助手；⑤ 目标与绩效：配额拆解、达成复盘、KPI 体系。JD 关键词几乎全部落在③④①②。"
+      },
+      {
+        "t": "销售运营 vs 数据分析 vs 业务运营",
+        "c": "数据分析：偏「看」（分析、建模、洞察）；业务运营：偏「跑」（日常执行、协调）；销售运营：偏「管+建」（搭流程、建体系、管激励、推改进）。销售运营要用数据手段，但落脚点是「运营机制」——这是面试定位的关键。"
+      },
+      {
+        "t": "销售运营的核心 KPI",
+        "c": "效率类：佣金发放准时率、准确率、争议关闭时长、流程周期；效果类：达成率、渠道产出、佣金成本率；健康类：一次通过率、返工率、质量分数。面试可自选 3-5 个串成「运营北极星」故事。"
+      },
+      {
+        "t": "如何把 JD 关键词串成全景",
+        "c": "一句话模板：「我理解这个岗位是销售侧的运营中枢——用 BPM/RACI 管好佣金与审批流程（流程层），用 ETL/数据模型保证数据可信（数据层），用规则引擎+SQL/Python 把政策落成计算（计算层），用 Power Apps/Automate/RPA 把重复操作自动化（自动化层），用 BI 看板支撑复盘决策（洞察层），最后用 OE/PDCA 持续改进闭环（改进层）。」"
+      }
+    ],
+    "analogy": "你过去是「单点专家」：佣金模型、报表自动化、流失预警各自很强。销售运营要求你把它们连成体系——这恰好是你的成长叙事：从专家到体系架构者。",
+    "jd": "JD 的所有职责（OE、自动化、AI、ETL/BPM、可视化、SLA）都是销售运营全景的分支，先有全景再谈分支。",
+    "questions": [
+      "你怎么理解销售运营这个岗位？",
+      "销售运营最该对什么结果负责？",
+      "你过去哪些经验能直接迁移到销售运营？",
+      "销售运营与数据分析的区别？"
+    ],
+    "answer": "用五职能框架回答 + 明确你的定位（激励与数据为切入点，扩展到流程与体系）；把 JD 关键词逐条放进框架。强调你已具备「算得对」（佣金）、「看得清」（分析）、「自动得快」（脚本/Agent），缺的是「管得稳」（BPM/OE），而这是成长最快的一段。",
+    "pitfalls": "把销售运营讲成数据分析或客服；只讲单点技能不讲体系；不展示对岗位价值的理解。",
+    "bonus": "「我面试的不只是一份数据岗，是销售侧的运营中枢。」"
+  },
+  {
+    "id": "dashboard-design",
+    "name": "管理报表与仪表盘设计",
+    "en": "Management Reporting & Dashboard Design",
+    "type": "strength",
+    "tags": [
+      "优势",
+      "报表",
+      "仪表盘",
+      "可视化",
+      "管理驾驶舱"
+    ],
+    "one": "把数据变成决策的仪表盘设计：先定用户与决策，再定指标层级与布局，最后才是视觉。",
+    "detail": "好的管理仪表盘（Management Dashboard / 驾驶舱）设计五步：① 定用户与决策（谁看、看完做什么决定）；② 定指标（决策需要的 KPI，分结果/过程/健康）；③ 定层级（总览-明细-下钻）；④ 定布局（信息优先级：核心指标左上，异常优先暴露）；⑤ 视觉呈现（一致性、对比、避免噪装饰）。\n\n常见类型：运营监控盘（盯异常）、绩效复盘盘（看达成）、决策分析盘（找原因）。你做过 Superset 看板与 BI 网站，有实战基础；面试要点是讲「指标先于视觉」的体系化方法，而不是只会画图。",
+    "deep": [
+      {
+        "t": "看板五步法详解",
+        "c": "① 用户与决策：管理层看「要不要干预、资源往哪投」；运营看「今天哪里异常要处理」；② 指标：结果（达成率、发放率）+ 过程（校验通过率、积压）+ 健康（准确率、返工）；③ 层级：总览页（3-5 个核心指标+异常红点）→ 明细页 → 下钻（点击进明细）；④ 布局：核心指标左上（F 型视线）、异常置顶、趋势与对比并排；⑤ 视觉：统一配色、明确层级、标注口径与数据截止时间。"
+      },
+      {
+        "t": "佣金运营看板示例",
+        "c": "总览：本月应发/实发/待处理人数、发放准时率、勾稽差异率（红黄绿状态）；第二屏：异常分类计数（阻塞 vs 披露）与 Top 渠道；第三屏：规则版本覆盖率、政策覆盖预检。下钻：点击渠道 → 明细 → 订单 → 规则命中。这个看板你完全能搭（处理台 + Superset/BI）。"
+      },
+      {
+        "t": "常见错误（面试避坑）",
+        "c": "指标堆砌无决策含义；只放好看的达成率不放异常；口径不标导致误读；图表类型乱用（趋势用折线、占比用饼、比较用柱，别乱来）；移动端不做适配；数据截止时间不标注。"
+      },
+      {
+        "t": "与 Power BI/Superset 的关系",
+        "c": "方法论与工具解耦：先设计（五步法），再选工具实现（Power BI 语义模型、Superset 看板、ECharts 内嵌）。你的 Superset 经验 + 本手册的 BI 卡可组合成「设计方法 + 工具落地」双证明。"
+      },
+      {
+        "t": "异常优先设计",
+        "c": "运营盘的第一价值是「异常可见」：SLA 超时、质量不达标、波动超阈值都要一眼可见（红黄绿/告警图标），而不是藏在明细里。把异常监控（anomaly）与看板设计联动——看板是监控的出口。"
+      }
+    ],
+    "analogy": "你做过 Superset 看板、BI 网站、HTML 数据页——工具已熟；缺的是把「设计方法」讲成体系：用户→决策→指标→层级→布局。",
+    "jd": "JD 明确要求「设计、开发并优化管理报表和仪表盘，支持决策制定和业务绩效复盘」——这是可展示的直接经验。",
+    "questions": [
+      "你设计看板的第一步是什么？",
+      "管理看板与运营监控盘有什么区别？",
+      "指标口径如何在看板上保证一致？",
+      "看板做出来没人看，你会怎么改进？"
+    ],
+    "answer": "用五步法回答 + 展示你的 Superset/处理台实战。强调「先定决策再定指标，异常优先暴露，口径标注完整」，并用佣金看板举例（总览→异常→下钻）。",
+    "pitfalls": "从视觉开始做（本末倒置）；指标无决策含义；口径不标；只展示不暴露异常。",
+    "bonus": "「先有决策，后有指标，最后才有像素。」"
+  }
+];
+
+/* 交互逻辑 */
+
+/* ===== 交互逻辑（升级版：职责分区 / 深入讲解 / 错题本 / 关系图交互 / 滚动导航） ===== */
+const STORAGE_KEY = "sales-ops-handbook-mastered-v1";
+const WRONG_KEY = "sales-ops-handbook-wrong-v1";
+const TYPE_META = {
+  weak: { label: "短板", cls: "tag-weak", card: "weak-card" },
+  strength: { label: "优势", cls: "tag-strength", card: "strength-card" },
+  transfer: { label: "可迁移", cls: "tag-transfer", card: "transfer-card" }
+};
+const AREA_META = {
+  flow: { label: "流程与运营卓越", en: "Process & OE" },
+  tools: { label: "数字化工具与自动化", en: "Tools & Automation" },
+  ai: { label: "AI 与智能运营", en: "AI & Intelligent Ops" },
+  data: { label: "数据管道与质量", en: "Data Pipeline & Quality" },
+  comm: { label: "佣金与销售激励", en: "Commission & Incentive" },
+  soft: { label: "指标、协同与治理", en: "Metrics & Governance" }
+};
+const AREA_ORDER = ["flow", "tools", "ai", "data", "comm", "soft"];
+const AREA_MAP = {
+  sla: "comm", "commission-sla": "comm", "commission-workbench": "comm",
+  rpa: "tools", "power-apps": "tools", "power-automate": "tools", "power-bi": "tools", "dashboard-design": "tools",
+  bpm: "flow", "bpm-model": "flow", bpmn: "flow",
+  etl: "data", elt: "data", "dw-lake": "data", dq: "data", anomaly: "data", checkpoint: "data",
+  oe: "flow", "process-mining": "flow", pdca: "flow",
+  "dim-model": "data", scd: "data",
+  kpi: "soft", "rule-engine": "comm",
+  uat: "flow", raci: "flow", change: "flow",
+  "ai-gov": "ai", "telecom-kpi": "comm",
+  sql: "tools", "python-auto": "tools", "commission-model": "comm",
+  "ai-agent": "ai", "churn-model": "ai", "telecom-exp": "comm",
+  "cross-comm": "soft", "bigdata-ops": "data",
+  "payroll-ready": "comm", "cross-dept-flow": "flow",
+  "sales-ops": "flow"
+};
+
+const WEAK_EQUIV = {
+  "sla": { equiv: "自我质量要求 + 报表截止日期", answer: "把隐性截止显性化为节点 SLA，并讲监控与升级" },
+  "commission-sla": { equiv: "复杂佣金月结节奏", answer: "画锁数→发放时间线，讲兜底与争议队列" },
+  "rpa": { equiv: "Python 报表自动化", answer: "有接口走接口，无接口才 RPA；强调监控重试" },
+  "power-apps": { equiv: "内部小工具", answer: "低代码承接提报查询，核心计算仍归引擎" },
+  "bpm": { equiv: "跨系统协作泳道/作业阶段", answer: "先 As-Is + RACI，再谈上系统" },
+  "bpm-model": { equiv: "大数据算子建模/血缘", answer: "用 ER：定义/实例/任务/业务键讲可追溯" },
+  "etl": { equiv: "Python 报表流水线 + 算子作业", answer: "讲依赖、增量、对账门禁、幂等" },
+  "dq": { equiv: "佣金对账/抽检经验", answer: "规则库 + 分级 + 发布阻断" },
+  "anomaly": { equiv: "流失预警 + 跑批校验", answer: "技术/业务分层监控 + runbook" },
+  "checkpoint": { equiv: "按分区/账期重跑", answer: "检查点 + 幂等，防双倍发佣" },
+  "oe": { equiv: "自动化沉淀与标准化习惯", answer: "SOP + 度量 + 复盘，落到机制" },
+  "payroll-ready": { equiv: "佣金处理台闸门 + 算子/Python 重跑", answer: "Ready 状态机 + 门禁 + 幂等续跑 + 争议旁路" },
+  "cross-dept-flow": { equiv: "跨层级沟通 + 异常分型", answer: "RACI + 节点 SLA + 主批次/争议队列分离" }
+};
+
+const TIMELINE = [
+  {
+    day: "1号",
+    label: "锁数",
+    sla: "账期数据与规则版本冻结；逾期源数据进入例外清单，不得静默混入。",
+    risk: "上游延迟、规则临时变更、锁数后仍有补录。",
+    fallback: "锁定主快照；补录进下账期或争议队列；关键字段出差异报告。",
+    escalate: "T+0 18:00 未就绪 → 通知数据 Owner；影响发放则升级业务 A 角色。"
+  },
+  {
+    day: "3号",
+    label: "计算",
+    sla: "规则引擎/批处理完成；产出可核对明细与汇总；失败可分区重跑。",
+    risk: "长任务超时、资源争用、规则缺陷导致大面积错算。",
+    fallback: "断点续跑热点分区；必要时降级为可信子集优先出账。",
+    escalate: "预计无法在校验窗前完成 → 同步运营与 IT，启动应急算力/人手。"
+  },
+  {
+    day: "5号",
+    label: "校验",
+    sla: "完成勾稽/抽检/异常扫描；一次通过率达标才可提交审批。",
+    risk: "假成功（作业绿但金额错）、阈值过松漏检、争议爆发。",
+    fallback: "阻断发布；定位规则/数据根因；高风险渠道单独隔离。",
+    escalate: "勾稽差超 P0 阈值 → 财务/业务联合裁决，评估是否拆分发放。"
+  },
+  {
+    day: "7号",
+    label: "审批",
+    sla: "业务/财务按 RACI 完成审批；退回须带原因码与时限。",
+    risk: "审批人缺席、材料不清、反复退回压缩发放窗口。",
+    fallback: "代理人机制；预审包；并行预览低风险批次。",
+    escalate: "超时未批 → 升级 Accountable；记录违约原因分类。"
+  },
+  {
+    day: "10号",
+    label: "发放",
+    sla: "通过审批的批次完成发放/推送；未决争议不混入主批次。",
+    risk: "重复发放、账户信息错、最后时刻规则回滚。",
+    fallback: "幂等发放状态机；争议单延迟发放；保留完整审计包。",
+    escalate: "发放失败影响大盘 → 立即冻结推送并启动事故沟通模板。"
+  }
+];
+
+const GRAPH_NODES = [
+  { id: "py", label: "Python 自动化", x: 10, y: 20, kind: "str" },
+  { id: "sql", label: "SQL / 窗口函数", x: 10, y: 42, kind: "str" },
+  { id: "comm", label: "佣金模型", x: 10, y: 64, kind: "str" },
+  { id: "ops", label: "大数据算子建模", x: 10, y: 86, kind: "tr" },
+  { id: "wb", label: "月度佣金处理台", x: 34, y: 52, kind: "str" },
+  { id: "tool", label: "内部小工具", x: 34, y: 18, kind: "tr" },
+  { id: "selfq", label: "自我质量要求", x: 34, y: 34, kind: "tr" },
+  { id: "rpt", label: "报表流程", x: 34, y: 78, kind: "tr" },
+  { id: "rpa", label: "RPA", x: 58, y: 16, kind: "weak" },
+  { id: "apps", label: "Power Apps", x: 58, y: 32, kind: "weak" },
+  { id: "sla", label: "SLA / 佣金SLA", x: 58, y: 50, kind: "weak" },
+  { id: "etl", label: "ETL / ELT", x: 58, y: 68, kind: "weak" },
+  { id: "bpm", label: "BPM 数据模型", x: 58, y: 86, kind: "weak" },
+  { id: "dq", label: "数据质量体系", x: 80, y: 40, kind: "weak" },
+  { id: "mon", label: "异常监控", x: 80, y: 60, kind: "weak" },
+  { id: "oe", label: "OE", x: 92, y: 26, kind: "weak" },
+  { id: "chk", label: "断点续跑", x: 92, y: 74, kind: "weak" }
+];
+
+const GRAPH_EDGES = [
+  ["py", "rpa", "迁移"],
+  ["tool", "apps", "迁移"],
+  ["selfq", "sla", "迁移"],
+  ["rpt", "etl", "迁移"],
+  ["ops", "bpm", "迁移"],
+  ["comm", "wb", "产品化"],
+  ["sql", "wb", "校验"],
+  ["wb", "sla", "质量门禁"],
+  ["wb", "dq", "勾稽/异常"],
+  ["wb", "etl", "可迁移"],
+  ["sql", "etl", "支撑"],
+  ["etl", "dq", "门禁"],
+  ["dq", "sla", "保障"],
+  ["etl", "mon", "观测"],
+  ["mon", "chk", "恢复"],
+  ["sla", "oe", "机制化"],
+  ["dq", "oe", "闭环"]
+];
+
+const QUIZ = [
+  {
+    q: "SLA 最核心的含义是？",
+    options: [
+      "团队加班越多越好的态度要求",
+      "对时效/质量等可度量承诺及违约升级机制",
+      "只用于机房可用性的运维术语，与佣金无关",
+      "等同于 KPI，只看最终业绩结果"
+    ],
+    answer: 1,
+    explain: "SLA 是可度量的服务承诺（时限+质量+升级），佣金月结完全适用。",
+    weak: "SLA"
+  },
+  {
+    q: "相对 Python 脚本，RPA 更适合什么场景？",
+    options: [
+      "已有稳定 API 的批量取数",
+      "需要在数据库内做复杂 SQL 转换",
+      "只能通过 UI 操作、且高度重复的跨系统搬运",
+      "实时流式计算"
+    ],
+    answer: 2,
+    explain: "RPA 擅长无 API 的 UI 自动化；有接口应优先接口/ETL。",
+    weak: "RPA"
+  },
+  {
+    q: "Power Apps 在销售运营里较合理的定位是？",
+    options: [
+      "替代核心佣金规则引擎",
+      "快速搭建提报/查询/轻量审批等内部应用",
+      "专门做大规模分布式计算",
+      "只能做对外官网"
+    ],
+    answer: 1,
+    explain: "低代码适合体验与提报；核心计算与敏感逻辑应留在受控系统。",
+    weak: "Power Apps"
+  },
+  {
+    q: "BPM 与「写个脚本跑一下」的关键差别是？",
+    options: [
+      "BPM 一定更慢",
+      "BPM 强调端到端流程的标准、协同、监控与可审计",
+      "BPM 不能有人工节点",
+      "BPM 只画图不能执行"
+    ],
+    answer: 1,
+    explain: "BPM 管流程治理与执行可见性，不只是自动化脚本。",
+    weak: "BPM"
+  },
+  {
+    q: "把大数据算子建模经验迁移到 BPM 数据模型，最贴近的映射是？",
+    options: [
+      "算子 = 审批人姓名",
+      "DAG/阶段/血缘 ≈ 流程定义/活动/实例与审计轨迹",
+      "分区字段 = 只读报表",
+      "完全无法迁移"
+    ],
+    answer: 1,
+    explain: "作业网络与流程实例数据在抽象上高度同构。",
+    weak: "BPM 数据模型"
+  },
+  {
+    q: "ETL 的典型顺序是？",
+    options: [
+      "先转换，再抽取，最后加载",
+      "抽取 → 转换 → 加载",
+      "只加载不转换",
+      "只能在仓内转换，所以不叫 ETL"
+    ],
+    answer: 1,
+    explain: "Extract-Transform-Load；仓内变换则更接近 ELT。",
+    weak: "ETL"
+  },
+  {
+    q: "OE（运营卓越）更强调什么？",
+    options: [
+      "靠英雄救火解决一切",
+      "标准化、度量、暴露问题并持续改进，使结果稳定可预期",
+      "取消所有人工审批",
+      "只追求工具数量最多"
+    ],
+    answer: 1,
+    explain: "OE 是机制化稳定交付，不是态度口号。",
+    weak: "OE"
+  },
+  {
+    q: "佣金 SLA 时间线中，「校验」节点最应守住的是？",
+    options: [
+      "视觉好看即可放行",
+      "勾稽/抽检达标，否则阻断进入审批",
+      "只要作业调度成功就一定业务正确",
+      "校验可以放到发放之后"
+    ],
+    answer: 1,
+    explain: "校验是质量门禁，防假成功进入审批与发放。",
+    weak: "佣金 SLA"
+  },
+  {
+    q: "数据质量体系与「我对结果很认真」的差别是？",
+    options: [
+      "没有差别",
+      "体系要求规则库、监控、分级响应、Owner 与改进闭环",
+      "体系只检查字段非空",
+      "体系禁止人工复核"
+    ],
+    answer: 1,
+    explain: "个人认真是态度；体系是可复制的制度与自动化门禁。",
+    weak: "数据质量体系"
+  },
+  {
+    q: "断点续跑必须同时满足的关键条件是？",
+    options: [
+      "越细越好，无需幂等",
+      "有检查点边界，且写入幂等，避免重复副作用（如双倍发佣）",
+      "失败后总是从第一步全量重来才叫续跑",
+      "只重跑 UI，不重跑数据"
+    ],
+    answer: 1,
+    explain: "续跑的安全前提是幂等与清晰可恢复边界。",
+    weak: "异常监控与断点续跑"
+  },
+  {
+    q: "设计管理仪表盘时，第一步应该做什么？",
+    options: [
+      "先选最好看的图表类型",
+      "先确定谁看、看完做什么决策，再定指标与层级",
+      "先把所有指标都放上去再删",
+      "先调配色和字体"
+    ],
+    answer: 1,
+    explain: "先定用户与决策，再定指标层级与布局，最后才是视觉——指标先于像素。",
+    weak: "管理报表与仪表盘设计"
+  },
+  {
+    q: "销售运营岗位最核心的定位是？",
+    options: [
+      "只负责出报表的数据岗",
+      "连接销售/财务/IT 的运营中枢：管流程、数据、激励与工具",
+      "只负责客户投诉处理",
+      "只管销售人员的招聘"
+    ],
+    answer: 1,
+    explain: "销售运营是销售侧的运营中枢，流程、数据、激励、工具、绩效五块闭环。",
+    weak: "销售运营全景"
+  }
+];
+
+function loadMastered() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"));
+  } catch (e) {
+    return new Set();
+  }
+}
+function saveMastered(set) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...set]));
+}
+function loadWrong() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(WRONG_KEY) || "[]"));
+  } catch (e) {
+    return new Set();
+  }
+}
+function saveWrong(set) {
+  localStorage.setItem(WRONG_KEY, JSON.stringify([...set]));
+}
+
+let mastered = loadMastered();
+let wrongSet = loadWrong();
+let activeFilter = "all";
+let activeArea = "all";
+let quizMode = "all";
+let tableSort = { key: "name", dir: 1 };
+let graphSel = null;
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function tagHtml(type) {
+  const m = TYPE_META[type];
+  return `<span class="tag ${m.cls}">${m.label}</span>`;
+}
+
+function deepHtml(list) {
+  if (!list || !list.length) return "";
+  return `<div class="deep-box"><div class="deep-title">深入讲解 · 面试深挖</div>` +
+    list.map((d) => `<div class="deep-item"><div class="deep-item-t">${escapeHtml(d.t)}</div><div class="deep-item-c">${escapeHtml(d.c)}</div></div>`).join("") +
+    `</div>`;
+}
+
+function renderCards() {
+  const box = document.getElementById("cardsContainer");
+  let html = "";
+  AREA_ORDER.forEach((area) => {
+    const cards = CONCEPTS.filter((c) => (AREA_MAP[c.id] || "flow") === area);
+    if (!cards.length) return;
+    const meta = AREA_META[area];
+    html += `<div class="area-head" data-area="${area}"><h3>${meta.label}<span class="en">${meta.en}</span></h3><span class="count">${cards.length} 张卡</span></div>`;
+    html += cards.map((c) => {
+      const m = TYPE_META[c.type];
+      const done = mastered.has(c.id);
+      const q = c.questions.map((x) => `<li>${escapeHtml(x)}</li>`).join("");
+      return `
+<article class="card ${m.card}${done ? " mastered-done" : ""}" data-id="${c.id}" data-type="${c.type}" data-area="${AREA_MAP[c.id] || "flow"}" data-search="${escapeHtml([c.name, c.en, m.label, c.one, ...(c.tags || [])].join(" ").toLowerCase())}">
+  <div class="card-head">
+    <input type="checkbox" class="mastered" ${done ? "checked" : ""} title="已掌握" aria-label="已掌握：${escapeHtml(c.name)}" />
+    <div class="card-title-block">
+      <div class="card-title">
+        <span>${escapeHtml(c.name)}</span>
+        <span class="card-en">${escapeHtml(c.en)}</span>
+        ${tagHtml(c.type)}
+      </div>
+      <p class="card-one-liner">${escapeHtml(c.one)}</p>
+    </div>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="card-body"><div class="card-body-inner">
+    <div class="field"><div class="field-label">详细解释</div><p>${escapeHtml(c.detail)}</p></div>
+    ${deepHtml(c.deep)}
+    <div class="field"><div class="field-label">用你熟悉的场景类比</div><p>${escapeHtml(c.analogy)}</p></div>
+    <div class="field"><div class="field-label">在这个 JD 里具体指什么</div><p>${escapeHtml(c.jd)}</p></div>
+    <div class="field"><div class="field-label">面试可能怎么问</div><ul>${q}</ul></div>
+    <div class="field"><div class="field-label">你可以怎么回答</div><p>${escapeHtml(c.answer)}</p></div>
+    <div class="field"><div class="field-label">常见误区</div><p>${escapeHtml(c.pitfalls)}</p></div>
+    ${c.bonus ? `<div class="field bonus"><div class="field-label">加分话术</div><p>${escapeHtml(c.bonus)}</p></div>` : ""}
+    ${c.link ? `<div class="field"><div class="field-label">实操入口</div><p><a href="${escapeHtml(c.link)}" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;">${escapeHtml(c.linkLabel || c.link)} →</a></p></div>` : ""}
+  </div></div>
+</article>`;
+    }).join("");
+  });
+  box.innerHTML = html;
+
+  box.querySelectorAll(".card-head").forEach((head) => {
+    head.addEventListener("click", (e) => {
+      if (e.target.classList.contains("mastered")) return;
+      head.parentElement.classList.toggle("open");
+    });
+  });
+  box.querySelectorAll(".mastered").forEach((cb) => {
+    cb.addEventListener("click", (e) => e.stopPropagation());
+    cb.addEventListener("change", () => {
+      const card = cb.closest(".card");
+      const id = card.dataset.id;
+      if (cb.checked) mastered.add(id); else mastered.delete(id);
+      card.classList.toggle("mastered-done", cb.checked);
+      saveMastered(mastered);
+      updateProgress();
+    });
+  });
+
+  document.getElementById("totalCount").textContent = String(CONCEPTS.length);
+  updateProgress();
+  applyCardFilter();
+}
+
+function updateProgress() {
+  const total = CONCEPTS.length;
+  const n = [...mastered].filter((id) => CONCEPTS.some((c) => c.id === id)).length;
+  const pct = total ? Math.round((n / total) * 100) : 0;
+  document.getElementById("masteredCount").textContent = String(n);
+  document.getElementById("progressPct").textContent = pct + "%";
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+function applyCardFilter() {
+  const q = (document.getElementById("cardSearch").value || "").trim().toLowerCase();
+  let shown = 0;
+  const areaShown = {};
+  AREA_ORDER.forEach((a) => { areaShown[a] = 0; });
+  document.querySelectorAll("#cardsContainer .card").forEach((card) => {
+    const typeOk = activeFilter === "all" || card.dataset.type === activeFilter;
+    const areaOk = activeArea === "all" || card.dataset.area === activeArea;
+    const textOk = !q || (card.dataset.search || "").includes(q);
+    const ok = typeOk && areaOk && textOk;
+    card.classList.toggle("hidden", !ok);
+    if (ok) { shown += 1; areaShown[card.dataset.area] += 1; }
+  });
+  document.querySelectorAll("#cardsContainer .area-head").forEach((h) => {
+    h.classList.toggle("hidden", areaShown[h.dataset.area] === 0);
+  });
+  document.getElementById("cardsEmpty").classList.toggle("show", shown === 0);
+}
+
+function initFilters() {
+  document.getElementById("cardSearch").addEventListener("input", applyCardFilter);
+  document.querySelectorAll("#cardFilters .filter-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#cardFilters .filter-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeFilter = btn.dataset.filter;
+      applyCardFilter();
+    });
+  });
+}
+
+function renderAreaFilters() {
+  const bar = document.getElementById("areaFilters");
+  if (!bar) return;
+  const counts = {};
+  CONCEPTS.forEach((c) => {
+    const a = AREA_MAP[c.id] || "flow";
+    counts[a] = (counts[a] || 0) + 1;
+  });
+  const all = `<button type="button" class="filter-btn area-btn active" data-area="all">全部 <span class="n">${CONCEPTS.length}</span></button>`;
+  const btns = AREA_ORDER.map((a) =>
+    `<button type="button" class="filter-btn area-btn" data-area="${a}">${AREA_META[a].label} <span class="n">${counts[a] || 0}</span></button>`
+  ).join("");
+  bar.innerHTML = all + btns;
+  bar.querySelectorAll(".area-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      bar.querySelectorAll(".area-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeArea = btn.dataset.area;
+      applyCardFilter();
+    });
+  });
+}
+
+function renderTimeline() {
+  const bar = document.getElementById("timeline");
+  bar.innerHTML = TIMELINE.map((n, i) => `
+<button type="button" class="tl-node${i === 0 ? " active" : ""}" data-idx="${i}" role="tab">
+  <div class="tl-dot"></div>
+  <div class="tl-day">${n.day}</div>
+  <div class="tl-label">${n.label}</div>
+</button>`).join("");
+
+  const show = (idx) => {
+    bar.querySelectorAll(".tl-node").forEach((el, i) => el.classList.toggle("active", i === idx));
+    const n = TIMELINE[idx];
+    document.getElementById("tlDetail").innerHTML = `
+<h3>${n.day} · ${n.label}</h3>
+<div class="tl-grid">
+  <div class="tl-item"><strong>SLA 要求</strong><p>${escapeHtml(n.sla)}</p></div>
+  <div class="tl-item"><strong>风险</strong><p>${escapeHtml(n.risk)}</p></div>
+  <div class="tl-item"><strong>兜底方案</strong><p>${escapeHtml(n.fallback)}</p></div>
+  <div class="tl-item"><strong>升级机制</strong><p>${escapeHtml(n.escalate)}</p></div>
+</div>`;
+  };
+  bar.querySelectorAll(".tl-node").forEach((btn) => {
+    btn.addEventListener("click", () => show(Number(btn.dataset.idx)));
+  });
+  show(0);
+}
+
+function weakRows() {
+  return CONCEPTS.filter((c) => c.type === "weak").map((c) => {
+    const extra = WEAK_EQUIV[c.id] || { equiv: c.analogy.slice(0, 40) + "…", answer: c.answer.slice(0, 40) + "…" };
+    return {
+      name: c.name,
+      one: c.one,
+      equiv: extra.equiv,
+      answer: extra.answer
+    };
+  });
+}
+
+function renderWeakTable() {
+  const rows = weakRows();
+  rows.sort((a, b) => String(a[tableSort.key]).localeCompare(String(b[tableSort.key]), "zh") * tableSort.dir);
+  const q = (document.getElementById("tableSearch").value || "").trim().toLowerCase();
+  const body = document.getElementById("weakTableBody");
+  body.innerHTML = rows.map((r) => {
+    const blob = (r.name + r.one + r.equiv + r.answer).toLowerCase();
+    const hide = q && !blob.includes(q);
+    return `<tr class="${hide ? "hidden-row" : ""}">
+      <td>${escapeHtml(r.name)}</td>
+      <td>${escapeHtml(r.one)}</td>
+      <td>${escapeHtml(r.equiv)}</td>
+      <td>${escapeHtml(r.answer)}</td>
+    </tr>`;
+  }).join("");
+}
+
+function initWeakTable() {
+  document.getElementById("tableSearch").addEventListener("input", renderWeakTable);
+  document.querySelectorAll("#weakTable th").forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.dataset.key;
+      if (tableSort.key === key) tableSort.dir *= -1;
+      else { tableSort.key = key; tableSort.dir = 1; }
+      renderWeakTable();
+    });
+  });
+  renderWeakTable();
+}
+
+function renderGraph() {
+  const el = document.getElementById("conceptGraph");
+  const w = 1000, h = 420;
+  const pos = {};
+  GRAPH_NODES.forEach((n) => {
+    pos[n.id] = { x: (n.x / 100) * w, y: (n.y / 100) * h };
+  });
+  const lines = GRAPH_EDGES.map(([a, b, label]) => {
+    const p1 = pos[a], p2 = pos[b];
+    const mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
+    return `<line x1="${p1.x}" y1="${p1.y}" x2="${p2.x}" y2="${p2.y}"></line>
+      <text x="${mx}" y="${my - 4}" text-anchor="middle">${label}</text>`;
+  }).join("");
+  const nodes = GRAPH_NODES.map((n) => {
+    const p = pos[n.id];
+    return `<div class="g-node n-${n.kind}" data-id="${n.id}" style="left:${(p.x / w) * 100}%;top:${(p.y / h) * 100}%">${escapeHtml(n.label)}</div>`;
+  }).join("");
+  el.innerHTML = `<svg class="g-svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">${lines}</svg>${nodes}`;
+
+  const nodeEls = el.querySelectorAll(".g-node");
+  const lineEls = el.querySelectorAll(".g-svg line");
+  const textEls = el.querySelectorAll(".g-svg text");
+  nodeEls.forEach((node) => {
+    node.addEventListener("click", () => {
+      const id = node.dataset.id;
+      graphSel = (graphSel === id) ? null : id;
+      const nb = new Set();
+      if (graphSel) {
+        nb.add(graphSel);
+        GRAPH_EDGES.forEach(([a, b]) => {
+          if (a === graphSel) nb.add(b);
+          if (b === graphSel) nb.add(a);
+        });
+      }
+      nodeEls.forEach((n) => {
+        const on = graphSel && nb.has(n.dataset.id);
+        n.classList.toggle("dim", !!graphSel && !on);
+        n.classList.toggle("hl", on);
+      });
+      lineEls.forEach((ln, i) => {
+        const [a, b] = GRAPH_EDGES[i];
+        const on = graphSel && (a === graphSel || b === graphSel);
+        ln.classList.toggle("dim", !!graphSel && !on);
+        ln.classList.toggle("hl", on);
+      });
+      textEls.forEach((tx, i) => {
+        const [a, b] = GRAPH_EDGES[i];
+        const on = graphSel && (a === graphSel || b === graphSel);
+        tx.classList.toggle("dim", !!graphSel && !on);
+        tx.classList.toggle("hl", on);
+      });
+    });
+  });
+}
+
+function updateWrongBadge() {
+  const badge = document.getElementById("wrongBadge");
+  if (badge) {
+    if (wrongSet.size > 0) {
+      badge.textContent = "错题本 " + wrongSet.size;
+      badge.style.display = "inline-block";
+    } else {
+      badge.style.display = "none";
+    }
+  }
+  const modeInfo = document.getElementById("quizModeInfo");
+  if (modeInfo) {
+    modeInfo.textContent = quizMode === "wrong"
+      ? "正在重测错题（" + wrongSet.size + " 题）"
+      : "全量 12 题模式";
+  }
+}
+
+function renderQuiz() {
+  const panel = document.getElementById("quizPanel");
+  const items = quizMode === "wrong"
+    ? QUIZ.map((q, i) => ({ q, i })).filter(({ i }) => wrongSet.has(i))
+    : QUIZ.map((q, i) => ({ q, i }));
+  const answers = new Array(items.length).fill(null);
+  updateWrongBadge();
+
+  panel.innerHTML = `
+<div class="quiz-mode-bar">
+  <span class="mode-tag" id="quizModeInfo">全量 12 题模式</span>
+  <span class="badge" id="wrongBadge" style="display:none">错题本 0</span>
+</div>
+${items.length === 0 ? `<div class="quiz-explain show" style="display:block">错题本已清空，太棒了。切回全量模式再来一轮巩固。</div>` : items.map(({ q, i }, qi) => `
+<div class="quiz-item" data-qi="${qi}" data-gi="${i}">
+  <div class="quiz-q"><span class="q-num">Q${qi + 1}.</span>${escapeHtml(q.q)}</div>
+  <div class="quiz-opts">
+    ${q.options.map((op, oi) => `
+      <label class="quiz-opt">
+        <input type="radio" name="q${qi}" value="${oi}" />
+        <span>${escapeHtml(op)}</span>
+      </label>`).join("")}
+  </div>
+  <div class="quiz-explain" id="explain${qi}"></div>
+</div>`).join("")}
+<div class="quiz-result" id="quizResult"></div>
+<div class="quiz-actions">
+  <button type="button" class="btn-reset" id="quizReset">重置本轮</button>
+  <button type="button" class="btn-mini" id="quizWrongBtn" ${wrongSet.size === 0 || quizMode === "wrong" ? "disabled" : ""}>重测错题（${wrongSet.size}）</button>
+  <button type="button" class="btn-mini warn" id="quizClearWrong" ${wrongSet.size === 0 ? "disabled" : ""}>清空错题本</button>
+</div>`;
+
+  const maybeFinish = () => {
+    if (answers.some((a) => a === null)) return;
+    let score = 0;
+    const weakHit = {};
+    items.forEach(({ q, i }, qi) => {
+      const ok = answers[qi] === q.answer;
+      if (ok) score += 1;
+      else weakHit[q.weak] = (weakHit[q.weak] || 0) + 1;
+    });
+    const weakList = Object.keys(weakHit);
+    const advice = weakList.length
+      ? `建议优先复习：${weakList.join("、")}。回到上方「仅看短板」过滤，并结合短板速查表准备 1 分钟口述。`
+      : "全部答对，掌握扎实。下一步把优势故事与 SLA/ETL/BPM 迁移话术串成 3 分钟自我介绍（见页面顶部「自我介绍模板」）。";
+    const box = document.getElementById("quizResult");
+    box.classList.add("show");
+    box.innerHTML = `<h3>${quizMode === "wrong" ? "错题重测结果" : "测验结果"}</h3>
+      <div class="score-big">${score} / ${items.length}</div>
+      <p style="margin-top:8px;color:var(--text-muted)">${escapeHtml(advice)}</p>`;
+    if (quizMode === "wrong" && wrongSet.size === 0) {
+      box.innerHTML += `<p style="margin-top:6px;color:var(--green);font-size:0.85rem">错题本已全部清空，可以切回全量模式。</p>`;
+    }
+  };
+
+  panel.querySelectorAll(".quiz-item").forEach((item) => {
+    const qi = Number(item.dataset.qi);
+    const gi = Number(item.dataset.gi);
+    item.querySelectorAll("input[type=radio]").forEach((input) => {
+      input.addEventListener("change", () => {
+        if (answers[qi] !== null) return;
+        const chosen = Number(input.value);
+        answers[qi] = chosen;
+        const correct = QUIZ[gi].answer;
+        const ok = chosen === correct;
+        if (ok) { wrongSet.delete(gi); } else { wrongSet.add(gi); }
+        saveWrong(wrongSet);
+        updateWrongBadge();
+        item.querySelectorAll(".quiz-opt").forEach((lab, oi) => {
+          lab.classList.add("disabled");
+          const inp = lab.querySelector("input");
+          inp.disabled = true;
+          if (oi === correct) lab.classList.add("correct");
+          if (oi === chosen && chosen !== correct) lab.classList.add("wrong");
+        });
+        const ex = document.getElementById("explain" + qi);
+        ex.classList.add("show");
+        ex.innerHTML = (ok ? "✓ 正确。" : "✗ 不正确。") + " " + escapeHtml(QUIZ[gi].explain) +
+          (ok && quizMode === "wrong" ? " <span style=\"color:var(--green)\">（已从错题本移除）</span>" : "");
+        maybeFinish();
+      });
+    });
+  });
+
+  document.getElementById("quizReset").addEventListener("click", () => { quizMode = "all"; renderQuiz(); });
+  document.getElementById("quizWrongBtn").addEventListener("click", () => {
+    if (wrongSet.size === 0) return;
+    quizMode = "wrong";
+    renderQuiz();
+  });
+  document.getElementById("quizClearWrong").addEventListener("click", () => {
+    wrongSet.clear();
+    saveWrong(wrongSet);
+    quizMode = "all";
+    renderQuiz();
+  });
+}
+
+function resetProgress() {
+  if (!window.confirm("确定重置全部学习进度（已掌握标记）和错题本？此操作不可撤销。")) return;
+  mastered.clear();
+  saveMastered(mastered);
+  wrongSet.clear();
+  saveWrong(wrongSet);
+  document.querySelectorAll(".card.mastered-done").forEach((c) => c.classList.remove("mastered-done"));
+  document.querySelectorAll(".mastered").forEach((cb) => { cb.checked = false; });
+  const wbBtn = document.getElementById("markWorkbenchMastered");
+  if (wbBtn) wbBtn.textContent = "标记「已掌握」该产品卡片";
+  quizMode = "all";
+  updateProgress();
+  renderQuiz();
+}
+
+function initScrollSpy() {
+  const links = document.querySelectorAll("nav.toc a");
+  const targets = [];
+  links.forEach((a) => {
+    const id = a.getAttribute("href").slice(1);
+    const el = document.getElementById(id);
+    if (el) targets.push({ id, el });
+  });
+  if (!targets.length) return;
+  window.addEventListener("scroll", () => {
+    let cur = "";
+    const pos = window.scrollY + 130;
+    targets.forEach(({ id, el }) => {
+      if (pos >= el.offsetTop) cur = id;
+    });
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 80 && targets.length) {
+      cur = targets[targets.length - 1].id;
+    }
+    links.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + cur));
+  }, { passive: true });
+}
+
+function initProductSpotlight() {
+  const btn = document.getElementById("markWorkbenchMastered");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    mastered.add("commission-workbench");
+    saveMastered(mastered);
+    const card = document.querySelector('.card[data-id="commission-workbench"]');
+    if (card) {
+      card.classList.add("mastered-done");
+      const cb = card.querySelector(".mastered");
+      if (cb) cb.checked = true;
+    }
+    updateProgress();
+    btn.textContent = "已标记掌握 ✓";
+  });
+}
+
+function initDeepTabs() {
+  const tabs = document.querySelectorAll("#deepTabs .deep-tab");
+  if (!tabs.length) return;
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      document.querySelectorAll(".deep-pane").forEach((p) => p.classList.remove("active"));
+      const pane = document.getElementById(tab.dataset.pane);
+      if (pane) pane.classList.add("active");
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initDeepTabs();
+  renderAreaFilters();
+  renderCards();
+  initFilters();
+  initProductSpotlight();
+  renderTimeline();
+  initWeakTable();
+  renderGraph();
+  renderQuiz();
+  initScrollSpy();
+  const rp = document.getElementById("resetProgress");
+  if (rp) rp.addEventListener("click", resetProgress);
+});
+
+</script>
+</body>
+</html>
